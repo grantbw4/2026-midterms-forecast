@@ -196,7 +196,7 @@ class SenateForecastModel:
         logger.info(f"  Median Dem seats: {np.median(self.seat_simulations):.0f}")
         logger.info(f"  90% CI: [{np.percentile(self.seat_simulations, 5):.0f}, "
                    f"{np.percentile(self.seat_simulations, 95):.0f}]")
-        logger.info(f"  P(Dem control): {np.mean(self.seat_simulations >= 50):.1%}")
+        logger.info(f"  P(Dem control): {np.mean(self.seat_simulations >= 51):.1%}")
 
         return self.seat_simulations
 
@@ -223,8 +223,8 @@ class SenateForecastModel:
             self.simulate_elections()
 
         return {
-            "prob_dem_control": float(np.mean(self.seat_simulations >= 50)),
-            "prob_rep_control": float(np.mean(self.seat_simulations < 50)),
+            "prob_dem_control": float(np.mean(self.seat_simulations >= 51)),
+            "prob_rep_control": float(np.mean(self.seat_simulations < 51)),
             "median_dem_seats": int(np.median(self.seat_simulations)),
             "mean_dem_seats": float(np.mean(self.seat_simulations)),
             "ci_90_low": int(np.percentile(self.seat_simulations, 5)),

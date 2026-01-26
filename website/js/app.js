@@ -42,29 +42,6 @@ const FIPS_TO_STATE = {
     "56": "WY", "72": "PR"
 };
 
-// States that have NO Senate race in 2026 (17 states)
-// These states' senators are in Class 1 or 3, not Class 2
-// Color indicates the party that holds the seat(s) in that state
-const SENATE_GUARANTEED = {
-    "CA": "D",  // Padilla (D), Schiff (D)
-    "CT": "D",  // Blumenthal (D), Murphy (D)
-    "FL": "R",  // Scott (R), vacant/appointed (R)
-    "HI": "D",  // Schatz (D), Hirono (D)
-    "IN": "R",  // Young (R), Banks (R)
-    "MD": "D",  // Van Hollen (D), Alsobrooks (D)
-    "MO": "R",  // Hawley (R), Schmitt (R)
-    "NV": "D",  // Cortez Masto (D), Rosen (D)
-    "NJ": "D",  // Booker (D), Kim (D)
-    "NY": "D",  // Schumer (D), Gillibrand (D)
-    "ND": "R",  // Cramer (R), Hoeven (R)
-    "OH": "R",  // Moreno (R), appointed (R)
-    "PA": "D",  // Fetterman (D) - McCormick (R) but showing D for the non-2024 seat
-    "UT": "R",  // Lee (R), Curtis (R)
-    "VT": "D",  // Sanders (I-D), Welch (D)
-    "WA": "D",  // Murray (D), Cantwell (D)
-    "WI": "D"   // Baldwin (D) - Johnson (R) but showing D for the Class 1 seat
-};
-
 // Load all data
 async function loadData() {
     const paths = ['./forecast.json', '../outputs/forecast.json'];
@@ -177,29 +154,60 @@ function updateSenateStats() {
     document.getElementById('senate-dem-defending').textContent = summary.dem_defending;
     document.getElementById('senate-rep-defending').textContent = summary.rep_defending;
 
-    updateCategoriesBar('senate-categories-bar', categories, summary.seats_up);
+    updateCategoriesBar('senate-categories-bar', categories, 100, true);
 }
 
 // Update categories bar
-function updateCategoriesBar(elementId, categories, total) {
-    const segments = [
-        { class: 'safe-d', count: categories.safe_d || categories.dem?.safe || 0 },
-        { class: 'likely-d', count: categories.likely_d || categories.dem?.likely || 0 },
-        { class: 'lean-d', count: categories.lean_d || categories.dem?.lean || 0 },
-        { class: 'tossup', count: categories.toss_up || 0 },
-        { class: 'lean-r', count: categories.lean_r || categories.rep?.lean || 0 },
-        { class: 'likely-r', count: categories.likely_r || categories.rep?.likely || 0 },
-        { class: 'safe-r', count: categories.safe_r || categories.rep?.safe || 0 },
-    ];
-
+function updateCategoriesBar(elementId, categories, total, isSenate = false) {
     const bar = document.getElementById(elementId);
     if (!bar) return;
 
-    bar.innerHTML = segments.map(seg => {
-        const pct = (seg.count / total * 100).toFixed(1);
-        return `<div class="cat-segment ${seg.class}" style="flex-basis: ${pct}%"
-                     title="${seg.count}">${seg.count > (total / 20) ? seg.count : ''}</div>`;
-    }).join('');
+    if (isSenate && senateData) {
+        // For Senate, show all 100 seats with guaranteed seats at the ends
+        const seatsUp = senateData.summary.seats_up || 33;
+        const seatsNotUp = 100 - seatsUp;
+
+        // Seats not up: 100 - seatsUp, split roughly
+        // Current Senate is roughly 47D-53R, so seats not up follow that pattern
+        const demNotUp = Math.round(seatsNotUp * 0.47);
+        const repNotUp = seatsNotUp - demNotUp;
+
+        const segments = [
+            { class: 'guaranteed-d', count: demNotUp, label: 'Not Up (D)' },
+            { class: 'safe-d', count: categories.safe_d || 0 },
+            { class: 'likely-d', count: categories.likely_d || 0 },
+            { class: 'lean-d', count: categories.lean_d || 0 },
+            { class: 'tossup', count: categories.toss_up || 0 },
+            { class: 'lean-r', count: categories.lean_r || 0 },
+            { class: 'likely-r', count: categories.likely_r || 0 },
+            { class: 'safe-r', count: categories.safe_r || 0 },
+            { class: 'guaranteed-r', count: repNotUp, label: 'Not Up (R)' },
+        ];
+
+        bar.innerHTML = segments.map(seg => {
+            const pct = (seg.count / 100 * 100).toFixed(1);
+            const title = seg.label || seg.count;
+            return `<div class="cat-segment ${seg.class}" style="flex-basis: ${pct}%"
+                         title="${title}">${seg.count > 4 ? seg.count : ''}</div>`;
+        }).join('');
+    } else {
+        // House - original behavior
+        const segments = [
+            { class: 'safe-d', count: categories.safe_d || categories.dem?.safe || 0 },
+            { class: 'likely-d', count: categories.likely_d || categories.dem?.likely || 0 },
+            { class: 'lean-d', count: categories.lean_d || categories.dem?.lean || 0 },
+            { class: 'tossup', count: categories.toss_up || 0 },
+            { class: 'lean-r', count: categories.lean_r || categories.rep?.lean || 0 },
+            { class: 'likely-r', count: categories.likely_r || categories.rep?.likely || 0 },
+            { class: 'safe-r', count: categories.safe_r || categories.rep?.safe || 0 },
+        ];
+
+        bar.innerHTML = segments.map(seg => {
+            const pct = (seg.count / total * 100).toFixed(1);
+            return `<div class="cat-segment ${seg.class}" style="flex-basis: ${pct}%"
+                         title="${seg.count}">${seg.count > (total / 20) ? seg.count : ''}</div>`;
+        }).join('');
+    }
 }
 
 // Initialize Leaflet map
@@ -356,25 +364,13 @@ function renderSenateMap() {
             };
         }
 
-        // State not up in 2026 - show as guaranteed
-        const guaranteed = SENATE_GUARANTEED[stateAbbr];
-        if (guaranteed) {
-            return {
-                fillColor: guaranteed === 'D' ? COLORS.guaranteed_d : COLORS.guaranteed_r,
-                weight: 1,
-                opacity: 0.5,
-                color: '#333',
-                fillOpacity: 0.5
-            };
-        }
-
-        // Unknown state
+        // State not up in 2026 - show as dark grey
         return {
-            fillColor: '#333',
-            weight: 0.5,
+            fillColor: '#444',
+            weight: 1,
             opacity: 0.5,
-            color: '#555',
-            fillOpacity: 0.3
+            color: '#333',
+            fillOpacity: 0.4
         };
     }
 
@@ -421,14 +417,11 @@ function renderSenateMap() {
                         <p class="up-2026">Up in 2026</p>
                     </div>
                 `, { sticky: true });
-            } else if (SENATE_GUARANTEED[stateAbbr]) {
+            } else if (stateAbbr) {
                 // State not up in 2026
-                const party = SENATE_GUARANTEED[stateAbbr];
-                const partyName = party === 'D' ? 'Democratic' : 'Republican';
                 layer.bindTooltip(`
                     <div class="district-popup">
                         <h4>${stateName} (${stateAbbr})</h4>
-                        <p class="guaranteed ${party}">Guaranteed ${partyName}</p>
                         <p class="not-up">Not up in 2026</p>
                     </div>
                 `, { sticky: true });
@@ -729,10 +722,9 @@ function updateMapLegend() {
         }
     } else {
         if (mapTitle) mapTitle.textContent = 'Senate Race Map';
-        if (mapDesc) mapDesc.textContent = 'Click any state with a 2026 race for details. Darker colors indicate seats not up for election.';
+        if (mapDesc) mapDesc.textContent = 'Click any state with a 2026 race for details. Grey states are not up for election.';
         if (legendContainer) {
             legendContainer.innerHTML = `
-                <span class="legend-item guaranteed-d">Guaranteed D</span>
                 <span class="legend-item safe-d">Safe D</span>
                 <span class="legend-item likely-d">Likely D</span>
                 <span class="legend-item lean-d">Lean D</span>
@@ -740,7 +732,7 @@ function updateMapLegend() {
                 <span class="legend-item lean-r">Lean R</span>
                 <span class="legend-item likely-r">Likely R</span>
                 <span class="legend-item safe-r">Safe R</span>
-                <span class="legend-item guaranteed-r">Guaranteed R</span>
+                <span class="legend-item not-up">Not Up</span>
             `;
         }
     }
@@ -775,5 +767,29 @@ function debounce(fn, delay) {
     };
 }
 
+// Mobile menu toggle
+function setupMobileMenu() {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    if (menuBtn && mobileNav) {
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+    }
+}
+
 // Initialize
-document.addEventListener('DOMContentLoaded', loadData);
+document.addEventListener('DOMContentLoaded', () => {
+    loadData();
+    setupMobileMenu();
+});

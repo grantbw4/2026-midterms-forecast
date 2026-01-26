@@ -8,22 +8,22 @@
     "districts_total": 435
   },
   "summary": {
-    "prob_dem_control": 0.8422,
-    "prob_rep_control": 0.1578,
+    "prob_dem_control": 0.7115,
+    "prob_rep_control": 0.2885,
     "median_dem_seats": 52,
     "mean_dem_seats": 51.9271,
     "ci_90_low": 48,
     "ci_90_high": 56,
-    "seats_up": 33,
-    "dem_defending": 12,
-    "rep_defending": 21
+    "seats_up": 35,
+    "dem_defending": 13,
+    "rep_defending": 22
   },
   "categories": {
-    "safe_d": 12,
-    "likely_d": 2,
+    "safe_d": 13,
+    "likely_d": 1,
     "lean_d": 1,
     "toss_up": 0,
-    "lean_r": 4,
+    "lean_r": 6,
     "likely_r": 5,
     "safe_r": 9
   },
@@ -136,7 +136,7 @@
     },
     {
       "state": "KS",
-      "incumbent": "Jerry Moran",
+      "incumbent": "Roger Marshall",
       "incumbent_party": "R",
       "prob_dem": 0.284,
       "category": "likely_r",
@@ -165,14 +165,14 @@
       "special": false
     },
     {
-      "state": "AZ",
-      "incumbent": "Vacant",
+      "state": "FL",
+      "incumbent": "Ashley Moody",
       "incumbent_party": "R",
-      "prob_dem": 0.78,
-      "category": "likely_d",
-      "pvi": 0,
-      "open_seat": true,
-      "special": false
+      "prob_dem": 0.35,
+      "category": "lean_r",
+      "pvi": 6,
+      "open_seat": false,
+      "special": true
     },
     {
       "state": "MT",
@@ -186,7 +186,7 @@
     },
     {
       "state": "NE",
-      "incumbent": "Deb Fischer",
+      "incumbent": "Pete Ricketts",
       "incumbent_party": "R",
       "prob_dem": 0.162,
       "category": "likely_r",
@@ -196,7 +196,7 @@
     },
     {
       "state": "AL",
-      "incumbent": "Katie Britt",
+      "incumbent": "Tommy Tuberville",
       "incumbent_party": "R",
       "prob_dem": 0.146,
       "category": "safe_r",
@@ -305,12 +305,12 @@
       "special": false
     },
     {
-      "state": "OK",
-      "incumbent": "Jim Inhofe",
-      "incumbent_party": "R",
-      "prob_dem": 0.067,
-      "category": "safe_r",
-      "pvi": 20,
+      "state": "NJ",
+      "incumbent": "Cory Booker",
+      "incumbent_party": "D",
+      "prob_dem": 0.95,
+      "category": "safe_d",
+      "pvi": -7,
       "open_seat": false,
       "special": false
     },
@@ -401,6 +401,26 @@
       "prob_dem": 0.0,
       "category": "safe_r",
       "pvi": 40,
+      "open_seat": true,
+      "special": false
+    },
+    {
+      "state": "OH",
+      "incumbent": "Jon Husted",
+      "incumbent_party": "R",
+      "prob_dem": 0.42,
+      "category": "lean_r",
+      "pvi": 6,
+      "open_seat": false,
+      "special": true
+    },
+    {
+      "state": "OK",
+      "incumbent": "Markwayne Mullin",
+      "incumbent_party": "R",
+      "prob_dem": 0.05,
+      "category": "safe_r",
+      "pvi": 20,
       "open_seat": false,
       "special": false
     }

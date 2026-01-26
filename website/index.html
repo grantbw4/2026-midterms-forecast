@@ -28,30 +28,40 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="/" class="logo">Grant Williams</a>
+                <a href="/" class="logo">Grant's Election Forecast</a>
                 <nav class="nav">
-                    <a href="#house">House</a>
-                    <a href="#senate">Senate</a>
+                    <a href="#forecast">Forecast</a>
                     <a href="#map">Map</a>
-                    <a href="#districts">Districts</a>
+                    <a href="#districts">Races</a>
                     <a href="#methodology">Methodology</a>
                 </nav>
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
+            <nav class="mobile-nav" id="mobile-nav">
+                <a href="#forecast">Forecast</a>
+                <a href="#map">Map</a>
+                <a href="#districts">Races</a>
+                <a href="#methodology">Methodology</a>
+            </nav>
         </div>
     </header>
 
-    <!-- Chamber Toggle -->
-    <section class="chamber-toggle-section">
+    <!-- Forecast Section -->
+    <section id="forecast" class="hero">
+        <!-- Chamber Toggle -->
         <div class="container">
             <div class="chamber-toggle">
                 <button class="chamber-btn active" data-chamber="house">House</button>
                 <button class="chamber-btn" data-chamber="senate">Senate</button>
             </div>
         </div>
-    </section>
 
-    <!-- House Hero Section -->
-    <section id="house" class="hero chamber-section active" data-chamber="house">
+    <!-- House Content -->
+    <div class="chamber-section active" data-chamber="house">
         <div class="container">
             <div class="hero-header">
                 <h1>2026 House Forecast</h1>
@@ -115,10 +125,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Senate Hero Section -->
-    <section id="senate" class="hero chamber-section" data-chamber="senate">
+    <!-- Senate Content -->
+    <div class="chamber-section" data-chamber="senate">
         <div class="container">
             <div class="hero-header">
                 <h1>2026 Senate Forecast</h1>
@@ -130,12 +140,12 @@
                 <div class="stat-card primary dem">
                     <div class="stat-value" id="senate-dem-prob">--</div>
                     <div class="stat-label">Democratic Control</div>
-                    <div class="stat-sublabel">Probability (50 seats + VP)</div>
+                    <div class="stat-sublabel">Probability (51 seats needed)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="senate-median-seats">--</div>
                     <div class="stat-label">Median Dem Seats</div>
-                    <div class="stat-sublabel">50 needed for control</div>
+                    <div class="stat-sublabel">51 needed for majority</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="senate-confidence-interval">--</div>
@@ -146,9 +156,10 @@
 
             <!-- Senate Categories -->
             <div class="categories-section">
-                <h3>Race Ratings (<span id="senate-seats-up">33</span> seats up)</h3>
+                <h3>All 100 Senate Seats (<span id="senate-seats-up">33</span> up in 2026)</h3>
                 <div class="categories-bar" id="senate-categories-bar"></div>
                 <div class="categories-legend">
+                    <span class="legend-item not-up">Not Up</span>
                     <span class="legend-item safe-d">Safe D</span>
                     <span class="legend-item likely-d">Likely D</span>
                     <span class="legend-item lean-d">Lean D</span>
@@ -174,6 +185,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </section>
 
     <!-- Interactive Map -->
