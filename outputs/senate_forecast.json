@@ -1,0 +1,408 @@
+{
+  "metadata": {
+    "updated_at": "2026-01-26T00:26:44.549158Z",
+    "model_version": "1.0.0",
+    "election_date": "2026-11-03",
+    "days_until_election": 280,
+    "n_simulations": 10000,
+    "districts_total": 435
+  },
+  "summary": {
+    "prob_dem_control": 0.8422,
+    "prob_rep_control": 0.1578,
+    "median_dem_seats": 52,
+    "mean_dem_seats": 51.9271,
+    "ci_90_low": 48,
+    "ci_90_high": 56,
+    "seats_up": 33,
+    "dem_defending": 12,
+    "rep_defending": 21
+  },
+  "categories": {
+    "safe_d": 12,
+    "likely_d": 2,
+    "lean_d": 1,
+    "toss_up": 0,
+    "lean_r": 4,
+    "likely_r": 5,
+    "safe_r": 9
+  },
+  "seat_distribution": {
+    "dem_seats": [
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "probabilities": [
+      0.0002,
+      0.0006,
+      0.0021,
+      0.0065,
+      0.0187,
+      0.0459,
+      0.0838,
+      0.1307,
+      0.156,
+      0.1592,
+      0.1384,
+      0.1097,
+      0.0717,
+      0.0427,
+      0.0203,
+      0.0089,
+      0.0031,
+      0.0007,
+      0.0006,
+      0.0002
+    ]
+  },
+  "races": [
+    {
+      "state": "IA",
+      "incumbent": "Joni Ernst",
+      "incumbent_party": "R",
+      "prob_dem": 0.433,
+      "category": "lean_r",
+      "pvi": 6,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "TX",
+      "incumbent": "John Cornyn",
+      "incumbent_party": "R",
+      "prob_dem": 0.429,
+      "category": "lean_r",
+      "pvi": 6,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "NC",
+      "incumbent": "Thom Tillis",
+      "incumbent_party": "R",
+      "prob_dem": 0.59,
+      "category": "lean_d",
+      "pvi": 2,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "AK",
+      "incumbent": "Dan Sullivan",
+      "incumbent_party": "R",
+      "prob_dem": 0.36,
+      "category": "lean_r",
+      "pvi": 8,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "SC",
+      "incumbent": "Lindsey Graham",
+      "incumbent_party": "R",
+      "prob_dem": 0.359,
+      "category": "lean_r",
+      "pvi": 8,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "MS",
+      "incumbent": "Cindy Hyde-Smith",
+      "incumbent_party": "R",
+      "prob_dem": 0.29,
+      "category": "likely_r",
+      "pvi": 10,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "KS",
+      "incumbent": "Jerry Moran",
+      "incumbent_party": "R",
+      "prob_dem": 0.284,
+      "category": "likely_r",
+      "pvi": 10,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "ME",
+      "incumbent": "Susan Collins",
+      "incumbent_party": "R",
+      "prob_dem": 0.75,
+      "category": "likely_d",
+      "pvi": -3,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "LA",
+      "incumbent": "Bill Cassidy",
+      "incumbent_party": "R",
+      "prob_dem": 0.228,
+      "category": "likely_r",
+      "pvi": 12,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "AZ",
+      "incumbent": "Vacant",
+      "incumbent_party": "R",
+      "prob_dem": 0.78,
+      "category": "likely_d",
+      "pvi": 0,
+      "open_seat": true,
+      "special": false
+    },
+    {
+      "state": "MT",
+      "incumbent": "Steve Daines",
+      "incumbent_party": "R",
+      "prob_dem": 0.218,
+      "category": "likely_r",
+      "pvi": 12,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "NE",
+      "incumbent": "Deb Fischer",
+      "incumbent_party": "R",
+      "prob_dem": 0.162,
+      "category": "likely_r",
+      "pvi": 14,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "AL",
+      "incumbent": "Katie Britt",
+      "incumbent_party": "R",
+      "prob_dem": 0.146,
+      "category": "safe_r",
+      "pvi": 15,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "TN",
+      "incumbent": "Bill Hagerty",
+      "incumbent_party": "R",
+      "prob_dem": 0.144,
+      "category": "safe_r",
+      "pvi": 15,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "KY",
+      "incumbent": "Mitch McConnell",
+      "incumbent_party": "R",
+      "prob_dem": 0.121,
+      "category": "safe_r",
+      "pvi": 16,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "GA",
+      "incumbent": "Jon Ossoff",
+      "incumbent_party": "D",
+      "prob_dem": 0.88,
+      "category": "safe_d",
+      "pvi": 0,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "AR",
+      "incumbent": "Tom Cotton",
+      "incumbent_party": "R",
+      "prob_dem": 0.108,
+      "category": "safe_r",
+      "pvi": 17,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "MI",
+      "incumbent": "Gary Peters",
+      "incumbent_party": "D",
+      "prob_dem": 0.901,
+      "category": "safe_d",
+      "pvi": -1,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "NH",
+      "incumbent": "Jeanne Shaheen",
+      "incumbent_party": "D",
+      "prob_dem": 0.913,
+      "category": "safe_d",
+      "pvi": -2,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "SD",
+      "incumbent": "Mike Rounds",
+      "incumbent_party": "R",
+      "prob_dem": 0.085,
+      "category": "safe_r",
+      "pvi": 18,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "MN",
+      "incumbent": "Tina Smith",
+      "incumbent_party": "D",
+      "prob_dem": 0.929,
+      "category": "safe_d",
+      "pvi": -3,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "VA",
+      "incumbent": "Mark Warner",
+      "incumbent_party": "D",
+      "prob_dem": 0.931,
+      "category": "safe_d",
+      "pvi": -3,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "DE",
+      "incumbent": "Vacant",
+      "incumbent_party": "D",
+      "prob_dem": 0.932,
+      "category": "safe_d",
+      "pvi": -7,
+      "open_seat": true,
+      "special": false
+    },
+    {
+      "state": "OK",
+      "incumbent": "Jim Inhofe",
+      "incumbent_party": "R",
+      "prob_dem": 0.067,
+      "category": "safe_r",
+      "pvi": 20,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "NM",
+      "incumbent": "Martin Heinrich",
+      "incumbent_party": "D",
+      "prob_dem": 0.952,
+      "category": "safe_d",
+      "pvi": -5,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "CO",
+      "incumbent": "John Hickenlooper",
+      "incumbent_party": "D",
+      "prob_dem": 0.954,
+      "category": "safe_d",
+      "pvi": -5,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "ID",
+      "incumbent": "Jim Risch",
+      "incumbent_party": "R",
+      "prob_dem": 0.044,
+      "category": "safe_r",
+      "pvi": 22,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "OR",
+      "incumbent": "Jeff Merkley",
+      "incumbent_party": "D",
+      "prob_dem": 0.961,
+      "category": "safe_d",
+      "pvi": -6,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "IL",
+      "incumbent": "Dick Durbin",
+      "incumbent_party": "D",
+      "prob_dem": 0.976,
+      "category": "safe_d",
+      "pvi": -8,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "WV",
+      "incumbent": "Shelley Moore Capito",
+      "incumbent_party": "R",
+      "prob_dem": 0.01,
+      "category": "safe_r",
+      "pvi": 28,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "RI",
+      "incumbent": "Sheldon Whitehouse",
+      "incumbent_party": "D",
+      "prob_dem": 0.991,
+      "category": "safe_d",
+      "pvi": -12,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "MA",
+      "incumbent": "Ed Markey",
+      "incumbent_party": "D",
+      "prob_dem": 0.999,
+      "category": "safe_d",
+      "pvi": -20,
+      "open_seat": false,
+      "special": false
+    },
+    {
+      "state": "WY",
+      "incumbent": "John Barrasso",
+      "incumbent_party": "R",
+      "prob_dem": 0.0,
+      "category": "safe_r",
+      "pvi": 40,
+      "open_seat": false,
+      "special": false
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+# Environment and secrets
+.env
+*.env.local
+
+# Data files (fetch fresh, don't commit large files)
+data/raw/
+data/processed/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+env/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Outputs (regenerate from code)
+outputs/*.csv
+outputs/*.png
+outputs/*.html
