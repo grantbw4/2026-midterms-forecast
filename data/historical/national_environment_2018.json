@@ -1,0 +1,18 @@
+{
+  "year": 2018,
+  "election_date": "2018-11-06",
+  "generic_ballot_final": 8.4,
+  "dem_pct": 53.4,
+  "rep_pct": 45.0,
+  "presidential_approval": 43.0,
+  "presidential_disapproval": 52.0,
+  "net_approval": -9.0,
+  "president_party": "R",
+  "is_midterm": true,
+  "actual_house_result": {
+    "dem_seats": 235,
+    "rep_seats": 200,
+    "dem_popular_vote_pct": 53.4
+  },
+  "notes": "Trump midterm. Blue wave - Democrats gained 40 seats."
+}

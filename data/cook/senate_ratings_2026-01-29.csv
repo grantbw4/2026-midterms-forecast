@@ -1,0 +1,36 @@
+state,cook_rating,cook_pvi,incumbent,incumbent_party,is_open,seat_class
+AK,Lean R,-3.0,Sullivan,R,False,2
+AL,Solid R,-12.0,OPEN,R,True,2
+AR,Solid R,-12.0,Cotton,R,False,2
+CO,Solid D,12.0,Hickenlooper,D,False,2
+DE,Solid D,12.0,Coons,D,False,2
+FL,Solid R,-12.0,Moody,R,False,2
+GA,Toss-up,0.0,Ossoff,D,False,2
+IA,Likely R,-7.0,OPEN,R,True,2
+ID,Solid R,-12.0,Risch,R,False,2
+IL,Solid D,12.0,OPEN,D,True,2
+KS,Solid R,-12.0,Marshall,R,False,2
+KY,Solid R,-12.0,OPEN,R,True,2
+LA,Solid R,-12.0,Cassidy,R,False,2
+MA,Solid D,12.0,Markey,D,False,2
+ME,Toss-up,0.0,Collins,R,False,2
+MI,Toss-up,0.0,OPEN,D,True,2
+MN,Likely D,7.0,OPEN,D,True,2
+MS,Solid R,-12.0,Hyde-Smith,R,False,2
+MT,Solid R,-12.0,Daines,R,False,2
+NC,Toss-up,0.0,OPEN,R,True,2
+NE,Solid R,-12.0,Ricketts,R,False,2
+NH,Lean D,3.0,OPEN,D,True,2
+NJ,Solid D,12.0,Booker,D,False,2
+NM,Solid D,12.0,Luján,D,False,2
+OH,Lean R,-3.0,Husted,R,False,2
+OK,Solid R,-12.0,Mullin,R,False,2
+OR,Solid D,12.0,Merkley,D,False,2
+RI,Solid D,12.0,Reed,D,False,2
+SC,Solid R,-12.0,Graham,R,False,2
+SD,Solid R,-12.0,Rounds,R,False,2
+TN,Solid R,-12.0,Hagerty,R,False,2
+TX,Likely R,-7.0,Cornyn,R,False,2
+VA,Solid D,12.0,Warner,D,False,2
+WV,Solid R,-12.0,Capito,R,False,2
+WY,Solid R,-12.0,OPEN,R,True,2

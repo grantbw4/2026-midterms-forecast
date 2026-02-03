@@ -1,0 +1,18 @@
+{
+  "year": 2022,
+  "election_date": "2022-11-08",
+  "generic_ballot_final": -2.8,
+  "dem_pct": 47.8,
+  "rep_pct": 50.6,
+  "presidential_approval": 41.0,
+  "presidential_disapproval": 54.0,
+  "net_approval": -13.0,
+  "president_party": "D",
+  "is_midterm": true,
+  "actual_house_result": {
+    "dem_seats": 213,
+    "rep_seats": 222,
+    "dem_popular_vote_pct": 47.8
+  },
+  "notes": "Biden midterm. Republicans won House by narrow margin."
+}
