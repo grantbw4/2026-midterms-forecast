@@ -1,0 +1,49 @@
+{
+  "date": "2026-01-27",
+  "raw_index": -6.9,
+  "normalized_index": -3.52,
+  "components": {
+    "consumer_sentiment": {
+      "yoy_change": -20.0,
+      "weight": 0.35,
+      "contribution": -7.0
+    },
+    "unemployment_rate": {
+      "yoy_change": -0.33,
+      "weight": 0.25,
+      "contribution": -0.08
+    },
+    "real_disposable_income": {
+      "yoy_change": 0.89,
+      "weight": 0.2,
+      "contribution": 0.18
+    },
+    "gdp": {
+      "yoy_change": 2.51,
+      "weight": 0.15,
+      "contribution": 0.38
+    },
+    "cpi": {
+      "yoy_change": -7.43,
+      "weight": 0.05,
+      "contribution": -0.37
+    }
+  },
+  "interpretation": "Very unfavorable for incumbent party",
+  "calculated_at": "2026-01-27T22:27:17.054295",
+  "historical_comparison": {
+    "current_index": -3.52,
+    "percentile": 20.0,
+    "similar_years": [
+      2022,
+      2006
+    ],
+    "historical_indices": {
+      "2006": 0,
+      "2010": 0,
+      "2014": 0,
+      "2018": 0,
+      "2022": -4.29
+    }
+  }
+}

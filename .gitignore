@@ -2,9 +2,8 @@
 .env
 *.env.local
 
-# Data files (fetch fresh, don't commit large files)
+# Data files (large raw files)
 data/raw/
-data/processed/
 
 # Python
 __pycache__/

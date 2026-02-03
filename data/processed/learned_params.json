@@ -1,0 +1,44 @@
+{
+  "beta_pvi_mean": 0.4778896133243882,
+  "beta_pvi_std": 0.006755395748376225,
+  "beta_inc_mean": 2.155647508571265,
+  "beta_inc_std": 0.220993979385717,
+  "beta_national_mean": 0.6602935313742149,
+  "beta_national_std": 0.22806102326697492,
+  "regional_effects": {
+    "New_England": 0.3195870247283299,
+    "Mid_Atlantic_Northeast": 0.17850776446861527,
+    "Rust_Belt": 0.23201984194607034,
+    "Southeast": -0.15593361281295903,
+    "Deep_South": -0.3863465035305272,
+    "Texas_Region": 0.17478977450715835,
+    "Plains": 0.2735804603287335,
+    "Mountain": 0.08952096648235908,
+    "Southwest": 0.09172990764158923,
+    "Pacific": -0.6825759986113409
+  },
+  "regional_effects_std": {
+    "New_England": 0.48981088916586596,
+    "Mid_Atlantic_Northeast": 0.33809574665693876,
+    "Rust_Belt": 0.3093699499193979,
+    "Southeast": 0.33178707398451873,
+    "Deep_South": 0.38223050821418186,
+    "Texas_Region": 0.3585332451578454,
+    "Plains": 0.5088054644158835,
+    "Mountain": 0.4652509872272812,
+    "Southwest": 0.40246379997796583,
+    "Pacific": 0.4064098626755017
+  },
+  "sigma_national": 2.162782949690581,
+  "sigma_regional": 0.541916262460925,
+  "sigma_district": 3.686361342238787,
+  "n_districts_fitted": 797,
+  "years_used": [
+    2018,
+    2022
+  ],
+  "rmse": 3.913107931895193,
+  "r_squared": 0.9443237395362148,
+  "fitted_at": "2026-01-29T22:43:27.890302",
+  "method": "pymc"
+}

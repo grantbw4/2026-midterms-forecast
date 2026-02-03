@@ -1,0 +1,17 @@
+{
+  "beta_polls": 1.0,
+  "beta_econ": 0.3398713339574644,
+  "beta_econ_std": 0.3297860319455457,
+  "beta_econ_ols": 1.2422075800001753e-15,
+  "shrinkage_factor": 0.679742667914928,
+  "prior_mean": 0.5,
+  "prior_std": 0.4,
+  "rmse": 1.0309956441309103,
+  "n_elections": 2,
+  "years_used": [
+    2018,
+    2022
+  ],
+  "method": "bayesian_shrinkage",
+  "fitted_at": "2026-01-29T23:09:12.225284"
+}
