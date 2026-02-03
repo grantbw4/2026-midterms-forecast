@@ -1,20 +1,33 @@
-# 2026 House Forecast
+# 2026 Midterms Forecast
 
-A Bayesian hierarchical forecasting model for the 2026 U.S. House of Representatives elections.
+A Bayesian hierarchical forecasting model for the 2026 U.S. House and Senate elections.
 
-## Live Demo
+## Live Forecast
 
-View the forecast at: `website/index.html` (open in browser)
+**[grantbw4.github.io/2026-midterms-forecast](https://grantbw4.github.io/2026-midterms-forecast/)**
+
+Updated daily at 9am ET via GitHub Actions.
 
 ## Features
 
-- **Probabilistic Predictions**: Full probability distributions for all 435 districts
-- **Monte Carlo Simulation**: 10,000 election scenarios with proper uncertainty
-- **Three-Layer Model**:
-  - National environment (polls + fundamentals)
-  - Regional effects (Northeast, South, Midwest, West)
-  - District-level predictions (PVI + incumbency)
-- **Interactive Website**: Hero dashboard, district table, seat distribution chart
+- **House & Senate Forecasts**: Full probability distributions for all 435 House districts and 33 Senate races
+- **Bayesian Inference**: National environment estimated via PyMC with pollster house effects
+- **Monte Carlo Simulation**: 10,000 election scenarios with correlated regional effects
+- **Hierarchical Model**:
+  - National environment (generic ballot polls + presidential approval)
+  - Regional effects (10 FiveThirtyEight-style political regions)
+  - District/state-level predictions (PVI + incumbency)
+- **Interactive Website**: Live probability dashboard, interactive maps, race tables, and historical timeline
+
+## Model Overview
+
+The model combines polling data with district fundamentals to generate probabilistic forecasts:
+
+1. **National Environment**: Bayesian inference on generic ballot polls with pollster house effects, adjusted for presidential approval
+2. **District Vote Share**: `vote_share = 50 + β_pvi × PVI + β_inc × Inc + μ_region + β_nat × μ_national + ε`
+3. **Monte Carlo**: 10,000 simulations sampling from posterior distributions at each level
+
+Parameters were fitted on 2018 and 2022 midterm results (R² = 0.94, RMSE = 3.9 points).
 
 ## Quick Start
 
@@ -26,12 +39,14 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 # 2. Install dependencies
 pip install -r requirements.txt
 
-# 3. Create .env with your FRED API key
+# 3. Create .env with your API keys
 cp .env.example .env
-# Edit .env and add your key
+# Edit .env and add your keys
 
 # 4. Fetch data
 python scripts/fetch_data.py
+python scripts/fetch_votehub.py
+python scripts/fetch_cook_ratings.py
 
 # 5. Generate forecast
 python scripts/generate_forecast.py
@@ -45,84 +60,64 @@ open website/index.html
 ```
 2026-midterms-forecast/
 ├── data/
-│   ├── raw/                    # Fetched data (polls, economic)
+│   ├── raw/                    # Fetched data
 │   │   ├── generic_ballot.csv
 │   │   ├── approval.csv
-│   │   └── economic/
+│   │   └── cook_ratings.json
 │   └── processed/
-│       └── districts.csv       # 435 district fundamentals
+│       ├── districts.csv       # 435 House district fundamentals
+│       ├── senate_races.csv    # 33 Senate races
+│       └── learned_params.json # Fitted model parameters
 ├── models/
-│   └── forecast.py             # Bayesian hierarchical model
+│   ├── national_environment.py # PyMC Bayesian inference
+│   ├── hierarchical_model.py   # House Monte Carlo simulation
+│   ├── senate_forecast.py      # Senate Monte Carlo simulation
+│   ├── parameter_fitting.py    # Historical parameter training
+│   └── forecast.py             # Main forecast orchestration
 ├── scripts/
-│   ├── fetch_data.py           # Data pipeline
+│   ├── fetch_data.py           # FRED economic data
+│   ├── fetch_votehub.py        # Polling data from VoteHub API
+│   ├── fetch_cook_ratings.py   # Cook Political ratings scraper
 │   └── generate_forecast.py    # Run model, output JSON
 ├── outputs/
-│   ├── forecast.json           # Model predictions
-│   └── timeline.csv            # Historical tracking
+│   ├── forecast.json           # House predictions
+│   ├── senate_forecast.json    # Senate predictions
+│   └── timeline.json           # Historical tracking
 ├── website/
-│   ├── index.html              # Main page
+│   ├── index.html
 │   ├── css/style.css
 │   ├── js/app.js
-│   └── forecast.json           # Copy for website
-├── requirements.txt
-└── README.md
+│   ├── forecast.json
+│   └── senate_forecast.json
+├── .github/workflows/
+│   ├── daily-forecast.yml      # Daily update automation
+│   └── deploy-pages.yml        # GitHub Pages deployment
+└── requirements.txt
 ```
 
 ## Data Sources
 
-- **FRED API**: Economic indicators (unemployment, GDP, income)
-- **Polling**: Generic ballot and presidential approval
-- **Fundamentals**: District PVI from 2024 presidential results
+| Data | Source |
+|------|--------|
+| Generic Ballot Polls | [VoteHub API](https://votehub.com) |
+| Presidential Approval | [VoteHub API](https://votehub.com) |
+| District PVI | Wikipedia (2024 presidential results) |
+| Race Ratings | [Cook Political Report](https://cookpolitical.com) |
+| Congressional Maps | U.S. Census TIGER/Line |
 
-## Model Parameters
+## Fitted Parameters
 
 | Parameter | Value | Description |
 |-----------|-------|-------------|
-| Incumbency Advantage | 3.0 pts | Boost for incumbent party |
-| Midterm Penalty | 3.5 pts | Out-party bonus in midterms |
-| National Uncertainty | 3.0 SD | Uncertainty in national environment |
-| District Uncertainty | 4.5 SD | District-level variation |
+| β_pvi | 0.48 | PVI coefficient |
+| β_inc | 2.2 | Incumbency advantage |
+| β_nat | 0.66 | National environment coefficient |
+| σ_regional | 0.54 | Regional effect standard deviation |
+| σ_district | 3.7 | Base district uncertainty |
 
-## Output Format
+## Methodology
 
-`forecast.json` contains:
-
-```json
-{
-  "metadata": {
-    "updated_at": "2026-01-25T...",
-    "days_until_election": 281
-  },
-  "summary": {
-    "prob_dem_majority": 0.82,
-    "median_dem_seats": 273,
-    "ci_90_low": 174,
-    "ci_90_high": 364
-  },
-  "categories": {
-    "dem": { "safe": 151, "likely": 60, "lean": 41 },
-    "toss_up": 35,
-    "rep": { "safe": 38, "likely": 45, "lean": 65 }
-  },
-  "districts": [
-    {
-      "id": "CA-13",
-      "prob_dem": 0.63,
-      "category": "lean_d",
-      ...
-    }
-  ]
-}
-```
-
-## Automation
-
-Run daily with cron or GitHub Actions:
-
-```bash
-# Fetch fresh data and regenerate forecast
-python scripts/fetch_data.py && python scripts/generate_forecast.py
-```
+See [METHODOLOGY.md](METHODOLOGY.md) for full technical details, or the methodology section on the [live website](https://grantbw4.github.io/2026-midterms-forecast/#methodology).
 
 ## License
 
