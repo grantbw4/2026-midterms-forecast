@@ -11,6 +11,10 @@ let map = null;
 let geoLayer = null;
 let currentChamber = 'house';
 let seatChart = null;
+let timelineChart = null;
+let houseTimeline = null;
+let senateTimeline = null;
+let currentTimelineChamber = 'house';
 let sortColumn = 'prob_dem';
 let sortDirection = 'desc';
 
@@ -42,12 +46,41 @@ const FIPS_TO_STATE = {
     "56": "WY", "72": "PR"
 };
 
+// Parse CSV data
+function parseCSV(csvText) {
+    const lines = csvText.trim().split('\n');
+    if (lines.length < 2) return [];
+
+    const headers = lines[0].split(',');
+    const data = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',');
+        const row = {};
+        headers.forEach((header, idx) => {
+            const val = values[idx];
+            // Keep date column as string, parse others as numbers
+            if (header === 'date') {
+                row[header] = val;
+            } else {
+                const num = parseFloat(val);
+                row[header] = isNaN(num) ? val : num;
+            }
+        });
+        data.push(row);
+    }
+
+    return data;
+}
+
 // Load all data
 async function loadData() {
     const paths = ['./forecast.json', '../outputs/forecast.json'];
     const senatePaths = ['./senate_forecast.json', '../outputs/senate_forecast.json'];
     const geoPaths = ['./data/districts.geojson', '../website/data/districts.geojson'];
     const statePaths = ['./data/states.geojson', '../website/data/states.geojson'];
+    const houseTimelinePaths = ['./timeline.csv', '../outputs/timeline.csv'];
+    const senateTimelinePaths = ['./senate_timeline.csv', '../outputs/senate_timeline.csv'];
 
     // Load House forecast
     for (const path of paths) {
@@ -93,6 +126,30 @@ async function loadData() {
         } catch (e) { }
     }
 
+    // Load House timeline
+    for (const path of houseTimelinePaths) {
+        try {
+            const response = await fetch(path);
+            if (response.ok) {
+                const csvText = await response.text();
+                houseTimeline = parseCSV(csvText);
+                break;
+            }
+        } catch (e) { }
+    }
+
+    // Load Senate timeline
+    for (const path of senateTimelinePaths) {
+        try {
+            const response = await fetch(path);
+            if (response.ok) {
+                const csvText = await response.text();
+                senateTimeline = parseCSV(csvText);
+                break;
+            }
+        } catch (e) { }
+    }
+
     if (!houseData) {
         document.body.innerHTML = `
             <div style="padding: 48px; text-align: center; color: #888;">
@@ -112,6 +169,7 @@ function initializePage() {
     if (senateData) updateSenateStats();
     if (districtGeoJSON) initializeMap();
     createSeatChart();
+    if (houseTimeline || senateTimeline) createTimelineChart();
     populateStateFilter();
     renderTable();
     setupEventListeners();
@@ -498,6 +556,111 @@ function createSeatChart() {
     `;
 }
 
+// Create timeline chart
+function createTimelineChart() {
+    const data = currentTimelineChamber === 'house' ? houseTimeline : senateTimeline;
+    if (!data || data.length === 0) {
+        document.getElementById('timeline-stats').innerHTML = '<p style="color: var(--color-text-muted);">No timeline data available yet.</p>';
+        return;
+    }
+
+    const ctx = document.getElementById('timeline-chart').getContext('2d');
+
+    // Destroy existing chart
+    if (timelineChart) timelineChart.destroy();
+
+    const probKey = currentTimelineChamber === 'house' ? 'prob_dem_majority' : 'prob_dem_control';
+
+    // Format dates for display (parse as local time to avoid timezone issues)
+    const labels = data.map(d => {
+        const dateStr = String(d.date);
+        const [year, month, day] = dateStr.split('-').map(Number);
+        const date = new Date(year, month - 1, day);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    });
+
+    const probabilities = data.map(d => d[probKey] * 100);
+
+    // Calculate gradient based on 50% threshold
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(0, 21, 188, 0.3)');
+    gradient.addColorStop(0.5, 'rgba(136, 136, 136, 0.1)');
+    gradient.addColorStop(1, 'rgba(188, 0, 0, 0.3)');
+
+    timelineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Dem Win Probability',
+                data: probabilities,
+                borderColor: '#3b82f6',
+                backgroundColor: gradient,
+                borderWidth: 3,
+                fill: true,
+                tension: 0.3,
+                pointRadius: 4,
+                pointBackgroundColor: '#3b82f6',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointHoverRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => `${ctx.parsed.y.toFixed(1)}% probability`,
+                        afterLabel: (ctx) => {
+                            const idx = ctx.dataIndex;
+                            const row = data[idx];
+                            return `Median: ${row.median_dem_seats} seats`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: { display: true, text: 'Date', color: '#888' },
+                    ticks: { color: '#888' },
+                    grid: { display: false }
+                },
+                y: {
+                    title: { display: true, text: 'Dem Win Probability (%)', color: '#888' },
+                    ticks: { color: '#888' },
+                    grid: { color: 'rgba(255,255,255,0.1)' },
+                    min: 0,
+                    max: 100,
+                    // Add a line at 50%
+                }
+            },
+            annotation: {
+                annotations: {
+                    line1: {
+                        type: 'line',
+                        yMin: 50,
+                        yMax: 50,
+                        borderColor: 'rgba(255, 255, 255, 0.3)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                    }
+                }
+            }
+        }
+    });
+
+    // Update timeline stats
+    updateTimelineStats();
+}
+
+// Update timeline statistics
+function updateTimelineStats() {
+    document.getElementById('timeline-stats').innerHTML = '';
+}
+
 // Populate state filter
 function populateStateFilter() {
     const races = currentChamber === 'house' ? houseData.districts : (senateData?.races || []);
@@ -603,6 +766,16 @@ function setupEventListeners() {
             createSeatChart();
             populateStateFilter();
             renderTable();
+        });
+    });
+
+    // Timeline toggle
+    document.querySelectorAll('.timeline-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.timeline-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentTimelineChamber = btn.dataset.timeline;
+            createTimelineChart();
         });
     });
 

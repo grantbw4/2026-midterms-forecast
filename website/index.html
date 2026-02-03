@@ -33,6 +33,7 @@
                     <a href="#forecast">Forecast</a>
                     <a href="#map">Map</a>
                     <a href="#districts">Races</a>
+                    <a href="#timeline">Timeline</a>
                     <a href="#methodology">Methodology</a>
                 </nav>
                 <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
@@ -45,6 +46,7 @@
                 <a href="#forecast">Forecast</a>
                 <a href="#map">Map</a>
                 <a href="#districts">Races</a>
+                <a href="#timeline">Timeline</a>
                 <a href="#methodology">Methodology</a>
             </nav>
         </div>
@@ -272,6 +274,25 @@
         </div>
     </section>
 
+    <!-- Timeline -->
+    <section id="timeline" class="section">
+        <div class="container">
+            <h2>Forecast Timeline</h2>
+            <p class="section-desc">How the probability of Democratic control has changed over time</p>
+
+            <div class="timeline-toggle">
+                <button class="timeline-btn active" data-timeline="house">House</button>
+                <button class="timeline-btn" data-timeline="senate">Senate</button>
+            </div>
+
+            <div class="chart-container timeline-chart-container">
+                <canvas id="timeline-chart"></canvas>
+            </div>
+
+            <div class="timeline-stats" id="timeline-stats"></div>
+        </div>
+    </section>
+
     <!-- Methodology -->
     <section id="methodology" class="section bg-alt">
         <div class="container">
@@ -279,44 +300,126 @@
 
             <div class="methodology-content">
                 <div class="method-section">
-                    <h3>Model Overview</h3>
-                    <p>This is a <strong>Bayesian hierarchical forecasting model</strong> that produces probabilistic predictions for all 435 House races and 33 Senate races. The model has three layers:</p>
+                    <h3>Step 1: Data Collection</h3>
+                    <p><strong>Polling data</strong> is fetched daily from the <a href="https://votehub.com" target="_blank">VoteHub API</a>. Generic ballot polls and presidential approval polls from the last 180 days are collected. Each poll is weighted by pollster quality (using FiveThirtyEight-style grades: A+ = 3.0, A = 2.7, down to C = 1.0) and recency.</p>
+                    <p><strong>District fundamentals</strong> include Partisan Voter Index (PVI) calculated from 2024 presidential results by congressional district (sourced from Wikipedia), and incumbency status for all 435 House seats.</p>
+                    <p><strong>Cook Political ratings</strong> are scraped daily from cookpolitical.com. For redistricted states, Cook ratings are used to adjust PVI values where the 2024 presidential baseline may not reflect the new district lines.</p>
+                </div>
+
+                <div class="method-section">
+                    <h3>Step 2: Infer National Environment</h3>
+                    <p>The national political environment is inferred from generic ballot polls using <strong>PyMC Bayesian inference</strong>. The model treats each poll as a noisy observation of the true latent national sentiment:</p>
+                    <pre><code>y_i ~ Normal(μ + house_effect[pollster], σ_i)
+μ ~ Normal(0, 5)                    # latent national environment
+house_effect ~ Normal(0, σ_house)   # pollster bias
+σ_house ~ HalfNormal(2)             # magnitude of house effects</code></pre>
+                    <p>The prior <code>μ ~ Normal(0, 5)</code> is a weakly informative prior centered at a neutral national environment. The standard deviation of 5 points assigns roughly 95% probability to environments between D+10 and R+10, covering essentially all plausible national environments in modern U.S. elections while letting the polling data drive the posterior.</p>
+                    <p>The posterior is sampled via MCMC with 4 chains × 500 draws each. After sampling, a deterministic adjustment is applied for presidential approval:</p>
+                    <pre><code>μ_adjusted = μ + (-0.3 × 0.3 × net_approval)</code></pre>
+                    <p>This reflects the historical relationship where each point of net presidential approval corresponds to roughly 0.1 points on the generic ballot (with 30% weight given to approval data).</p>
+                </div>
+
+                <div class="method-section">
+                    <h3>Step 3: Parameter Training</h3>
+                    <p>Model parameters were fitted using <strong>PyMC on 2018 and 2022 midterm election results</strong> (797 total district-races). The training process learned:</p>
+                    <ul>
+                        <li><strong>β_pvi = 0.48:</strong> Each point of PVI translates to ~0.48 points of Dem vote share</li>
+                        <li><strong>β_inc = 2.2:</strong> Incumbency advantage of ~2.2 points</li>
+                        <li><strong>β_nat = 0.66:</strong> National environment coefficient</li>
+                        <li><strong>σ_regional = 0.54:</strong> Standard deviation of regional effects</li>
+                        <li><strong>σ_district = 3.7:</strong> Base district-level uncertainty</li>
+                    </ul>
+                    <p>The fitted model achieves <strong>R² = 0.94</strong> and <strong>RMSE = 3.9 points</strong> on historical data. Parameters are stored in <code>data/processed/learned_params.json</code>.</p>
+                </div>
+
+                <div class="method-section">
+                    <h3>Step 4: District Vote Share Model</h3>
+                    <p>For each district, the expected Democratic vote share is:</p>
+                    <pre><code>vote_share = 50 + β_pvi × PVI + β_inc × Inc + μ_region + β_nat × μ_national + ε</code></pre>
+                    <p>Where:</p>
+                    <ul>
+                        <li><strong>PVI:</strong> Partisan Voter Index (D+10 = +10, R+10 = -10)</li>
+                        <li><strong>Inc:</strong> Incumbency (+1 = Dem incumbent, -1 = Rep incumbent, 0 = open seat)</li>
+                        <li><strong>μ_region:</strong> Regional effect for one of 10 political regions (see below)</li>
+                        <li><strong>μ_national:</strong> National environment from Step 2</li>
+                        <li><strong>ε:</strong> District-level noise, scaled by competitiveness</li>
+                    </ul>
+                    <p>District uncertainty (σ_d) is scaled using a logistic function on |PVI|: safe districts (|PVI| > 15) have less uncertainty (~2 points), while competitive districts have full uncertainty (~4.5 points).</p>
+                </div>
+
+                <div class="method-section">
+                    <h3>Step 5: Monte Carlo Simulation</h3>
+                    <p><strong>10,000 simulations</strong> propagate uncertainty through the entire model. For each simulation:</p>
                     <ol>
-                        <li><strong>National Layer:</strong> Combines fundamentals (approval ratings, economic conditions, midterm dynamics) with polling (generic ballot) to estimate the overall political environment.</li>
-                        <li><strong>Regional Layer:</strong> Captures how different regions respond to the national environment.</li>
-                        <li><strong>District/State Layer:</strong> Predicts vote share using partisan lean (PVI) and incumbency advantage.</li>
+                        <li>Sample μ_national from the PyMC posterior distribution</li>
+                        <li>Sample β_pvi, β_inc, β_nat from their fitted posterior distributions</li>
+                        <li>Sample regional effects: μ_region ~ Normal(0, 0.54) for each region</li>
+                        <li>Sample district noise: ε ~ Normal(0, σ_d) for each district</li>
+                        <li>Compute vote share for all 435 districts</li>
+                        <li>Determine winner in each district (>50% = Dem win)</li>
+                        <li>Count total Democratic seats</li>
+                    </ol>
+                    <p>This produces a distribution of 10,000 possible seat outcomes. The probability of Democratic majority is the fraction of simulations where Dems win ≥218 seats.</p>
+                </div>
+
+                <div class="method-section">
+                    <h3>Regional Structure</h3>
+                    <p>The model uses <strong><a href="https://abcnews.go.com/538/538s-2024-presidential-election-forecast-works/story?id=113068753" target="_blank">FiveThirtyEight's 10 political regions</a></strong> to capture geographic correlation in election outcomes. During each simulation, a regional effect is sampled for each region, and all districts within that region share the same effect.</p>
+                    <table class="params-table">
+                        <tr><td><strong>New England</strong></td><td>ME, NH, VT, MA</td></tr>
+                        <tr><td><strong>Mid-Atlantic</strong></td><td>NY, NJ, DE, MD, RI, CT</td></tr>
+                        <tr><td><strong>Rust Belt</strong></td><td>IL, IN, OH, MI, WI, PA, MN, IA</td></tr>
+                        <tr><td><strong>Southeast</strong></td><td>FL, GA, NC, VA</td></tr>
+                        <tr><td><strong>Deep South</strong></td><td>SC, AL, MS, AR, TN, KY, WV, MO</td></tr>
+                        <tr><td><strong>Texas Region</strong></td><td>TX, OK, LA</td></tr>
+                        <tr><td><strong>Plains</strong></td><td>ND, SD, NE, KS</td></tr>
+                        <tr><td><strong>Mountain</strong></td><td>ID, MT, WY, UT, AK</td></tr>
+                        <tr><td><strong>Southwest</strong></td><td>AZ, NV, NM, CO</td></tr>
+                        <tr><td><strong>Pacific</strong></td><td>CA, OR, WA, HI</td></tr>
+                    </table>
+                </div>
+
+                <div class="method-section">
+                    <h3>Step 6: Daily Updates</h3>
+                    <p>A GitHub Actions workflow runs daily at 9am ET:</p>
+                    <ol>
+                        <li>Fetch latest polls from VoteHub API</li>
+                        <li>Scrape current Cook Political ratings</li>
+                        <li>Re-run PyMC inference for national environment</li>
+                        <li>Run 10,000 Monte Carlo simulations</li>
+                        <li>Update forecast JSON and website</li>
+                        <li>Commit and push changes</li>
                     </ol>
                 </div>
 
                 <div class="method-section">
-                    <h3>Uncertainty Quantification</h3>
-                    <p>The model runs <strong>10,000 Monte Carlo simulations</strong> to generate probability distributions. This captures:</p>
-                    <ul>
-                        <li>Uncertainty in the national environment</li>
-                        <li>Regional variation</li>
-                        <li>State/district-level polling error</li>
-                        <li>Correlated errors (races don't move independently)</li>
-                    </ul>
-                </div>
-
-                <div class="method-section">
                     <h3>Data Sources</h3>
+                    <table class="params-table">
+                        <tr><td>Generic Ballot Polls</td><td><a href="https://votehub.com" target="_blank">VoteHub API</a></td></tr>
+                        <tr><td>Presidential Approval</td><td><a href="https://votehub.com" target="_blank">VoteHub API</a></td></tr>
+                        <tr><td>District PVI</td><td>Wikipedia (2024 results)</td></tr>
+                        <tr><td>Race Ratings</td><td><a href="https://cookpolitical.com" target="_blank">Cook Political Report</a></td></tr>
+                        <tr><td>Congressional Maps</td><td><a href="https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html" target="_blank">U.S. Census TIGER/Line</a></td></tr>
+                    </table>
+                </div>
+
+                <div class="method-section">
+                    <h3>Limitations</h3>
+                    <p>This model has several known limitations:</p>
                     <ul>
-                        <li><strong>Polling:</strong> Generic ballot and presidential approval polls</li>
-                        <li><strong>Economic:</strong> FRED API (unemployment, GDP, disposable income)</li>
-                        <li><strong>Fundamentals:</strong> District/state PVI from 2024 presidential results</li>
-                        <li><strong>Map Data:</strong> <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html" target="_blank">U.S. Census Bureau TIGER/Line</a></li>
+                        <li><strong>No race-level polling:</strong> All predictions are driven by fundamentals (PVI, incumbency) and the national environment. District-level and state-level polls are not yet incorporated.</li>
+                        <li><strong>No candidate quality:</strong> The model treats all candidates as generic party representatives. It does not account for candidate quality, fundraising, scandals, or other race-specific factors.</li>
+                        <li><strong>No special election data:</strong> Recent special election results, which can be leading indicators, are not systematically incorporated.</li>
+                        <li><strong>Limited historical data:</strong> Parameters are fitted on only 2018 and 2022 midterms, which may not capture the full range of electoral dynamics.</li>
+                        <li><strong>Staged inference:</strong> Parameters, national environment, and forecasts are estimated separately rather than jointly, which may underestimate total uncertainty.</li>
                     </ul>
                 </div>
 
                 <div class="method-section">
-                    <h3>Key Parameters</h3>
-                    <table class="params-table">
-                        <tr><td>Incumbency Advantage (House)</td><td>~3 points</td></tr>
-                        <tr><td>Incumbency Advantage (Senate)</td><td>~4 points</td></tr>
-                        <tr><td>Midterm Penalty</td><td>~3.5 points against president's party</td></tr>
-                        <tr><td>District Uncertainty</td><td>~4.5 point standard deviation</td></tr>
-                    </table>
+                    <h3>Source Code</h3>
+                    <p>The complete model implementation is open source:</p>
+                    <p><a href="https://github.com/grantbw4/2026-midterms-forecast" target="_blank"><strong>github.com/grantbw4/2026-midterms-forecast</strong></a></p>
+                    <p>Key files: <code>models/national_environment.py</code> (PyMC inference), <code>models/hierarchical_model.py</code> (Monte Carlo simulation), <code>models/parameter_fitting.py</code> (historical training).</p>
                 </div>
             </div>
         </div>
@@ -326,10 +429,6 @@
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 Grant Williams. Model updates daily.</p>
-            <p class="footer-links">
-                <a href="https://github.com" target="_blank">GitHub</a>
-                <a href="mailto:grant@example.com">Contact</a>
-            </p>
         </div>
     </footer>
 
