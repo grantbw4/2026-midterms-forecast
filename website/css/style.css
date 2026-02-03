@@ -560,8 +560,8 @@ a:hover {
 /* Methodology */
 .methodology-content {
     display: grid;
-    gap: 40px;
-    max-width: 900px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
 }
 
 .method-section {
@@ -569,6 +569,13 @@ a:hover {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: 24px;
+}
+
+/* Full-width sections for complex content */
+.method-section:has(pre),
+.method-section:has(.params-table),
+.method-section.full-width {
+    grid-column: 1 / -1;
 }
 
 .method-section h3 {
@@ -607,6 +614,8 @@ a:hover {
     padding: 16px;
     margin: 16px 0;
     overflow-x: auto;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
 }
 
 .method-section code {
@@ -1115,14 +1124,69 @@ a:hover {
     }
 
     /* Methodology */
+    .methodology-content {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .method-section {
+        padding: 20px;
+    }
+
+    .method-section h3 {
+        font-size: 1rem;
+    }
+
+    .method-section p,
+    .method-section li {
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+
+    .method-section pre {
+        padding: 12px;
+        font-size: 0.75rem;
+    }
+
+    .method-section code {
+        font-size: 0.75rem;
+    }
+
+    .params-table {
+        font-size: 0.85rem;
+    }
+
     .params-table td {
         padding: 6px 8px;
         font-size: 0.85rem;
     }
 
+    .params-table td:last-child {
+        text-align: left;
+        word-break: break-word;
+    }
+
     /* Footer */
     .footer {
         padding: 32px 0;
+    }
+}
+
+/* Tablet screens */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .methodology-content {
+        grid-template-columns: 1fr;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .stat-value {
+        font-size: 2.5rem;
     }
 }
 
@@ -1151,5 +1215,52 @@ a:hover {
 
     .legend-item {
         flex: 0 0 auto;
+    }
+
+    /* Methodology extra small */
+    .method-section {
+        padding: 16px;
+    }
+
+    .method-section h3 {
+        font-size: 0.95rem;
+    }
+
+    .method-section p,
+    .method-section li {
+        font-size: 0.85rem;
+    }
+
+    .method-section pre {
+        padding: 10px;
+        margin: 12px -16px;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .method-section ul,
+    .method-section ol {
+        padding-left: 20px;
+    }
+
+    .params-table td {
+        display: block;
+        padding: 4px 0;
+        border-bottom: none;
+    }
+
+    .params-table td:first-child {
+        font-weight: 500;
+        color: var(--color-text);
+    }
+
+    .params-table td:last-child {
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .params-table tr:last-child td:last-child {
+        border-bottom: none;
     }
 }

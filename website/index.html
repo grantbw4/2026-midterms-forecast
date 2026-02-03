@@ -306,7 +306,7 @@
                     <p><strong>Cook Political ratings</strong> are scraped daily from cookpolitical.com. For redistricted states, Cook ratings are used to adjust PVI values where the 2024 presidential baseline may not reflect the new district lines.</p>
                 </div>
 
-                <div class="method-section">
+                <div class="method-section full-width">
                     <h3>Step 2: Infer National Environment</h3>
                     <p>The national political environment is inferred from generic ballot polls using <strong>PyMC Bayesian inference</strong>. The model treats each poll as a noisy observation of the true latent national sentiment:</p>
                     <pre><code>y_i ~ Normal(μ + house_effect[pollster], σ_i)
@@ -332,7 +332,7 @@ house_effect ~ Normal(0, σ_house)   # pollster bias
                     <p>The fitted model achieves <strong>R² = 0.94</strong> and <strong>RMSE = 3.9 points</strong> on historical data. Parameters are stored in <code>data/processed/learned_params.json</code>.</p>
                 </div>
 
-                <div class="method-section">
+                <div class="method-section full-width">
                     <h3>Step 4: District Vote Share Model</h3>
                     <p>For each district, the expected Democratic vote share is:</p>
                     <pre><code>vote_share = 50 + β_pvi × PVI + β_inc × Inc + μ_region + β_nat × μ_national + ε</code></pre>
@@ -362,7 +362,7 @@ house_effect ~ Normal(0, σ_house)   # pollster bias
                     <p>This produces a distribution of 10,000 possible seat outcomes. The probability of Democratic majority is the fraction of simulations where Dems win ≥218 seats.</p>
                 </div>
 
-                <div class="method-section">
+                <div class="method-section full-width">
                     <h3>Regional Structure</h3>
                     <p>The model uses <strong><a href="https://abcnews.go.com/538/538s-2024-presidential-election-forecast-works/story?id=113068753" target="_blank">FiveThirtyEight's 10 political regions</a></strong> to capture geographic correlation in election outcomes. During each simulation, a regional effect is sampled for each region, and all districts within that region share the same effect.</p>
                     <table class="params-table">
@@ -392,7 +392,7 @@ house_effect ~ Normal(0, σ_house)   # pollster bias
                     </ol>
                 </div>
 
-                <div class="method-section">
+                <div class="method-section full-width">
                     <h3>Data Sources</h3>
                     <table class="params-table">
                         <tr><td>Generic Ballot Polls</td><td><a href="https://votehub.com" target="_blank">VoteHub API</a></td></tr>
