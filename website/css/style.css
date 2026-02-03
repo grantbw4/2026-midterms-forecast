@@ -562,6 +562,8 @@ a:hover {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .method-section {
