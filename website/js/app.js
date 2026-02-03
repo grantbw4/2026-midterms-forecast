@@ -75,6 +75,9 @@ function parseCSV(csvText) {
 
 // Load all data
 async function loadData() {
+    // Cache-busting timestamp to prevent stale data
+    const cacheBuster = `?v=${Date.now()}`;
+
     const paths = ['./forecast.json', '../outputs/forecast.json'];
     const senatePaths = ['./senate_forecast.json', '../outputs/senate_forecast.json'];
     const geoPaths = ['./data/districts.geojson', '../website/data/districts.geojson'];
@@ -85,7 +88,7 @@ async function loadData() {
     // Load House forecast
     for (const path of paths) {
         try {
-            const response = await fetch(path);
+            const response = await fetch(path + cacheBuster);
             if (response.ok) {
                 houseData = await response.json();
                 break;
@@ -96,7 +99,7 @@ async function loadData() {
     // Load Senate forecast
     for (const path of senatePaths) {
         try {
-            const response = await fetch(path);
+            const response = await fetch(path + cacheBuster);
             if (response.ok) {
                 senateData = await response.json();
                 break;
@@ -104,7 +107,7 @@ async function loadData() {
         } catch (e) { }
     }
 
-    // Load district GeoJSON
+    // Load district GeoJSON (static, no cache bust needed)
     for (const path of geoPaths) {
         try {
             const response = await fetch(path);
@@ -115,7 +118,7 @@ async function loadData() {
         } catch (e) { }
     }
 
-    // Load states GeoJSON
+    // Load states GeoJSON (static, no cache bust needed)
     for (const path of statePaths) {
         try {
             const response = await fetch(path);
@@ -129,7 +132,7 @@ async function loadData() {
     // Load House timeline
     for (const path of houseTimelinePaths) {
         try {
-            const response = await fetch(path);
+            const response = await fetch(path + cacheBuster);
             if (response.ok) {
                 const csvText = await response.text();
                 houseTimeline = parseCSV(csvText);
@@ -141,7 +144,7 @@ async function loadData() {
     // Load Senate timeline
     for (const path of senateTimelinePaths) {
         try {
-            const response = await fetch(path);
+            const response = await fetch(path + cacheBuster);
             if (response.ok) {
                 const csvText = await response.text();
                 senateTimeline = parseCSV(csvText);
