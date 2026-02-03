@@ -1,0 +1,45 @@
+name: Daily Forecast Update
+
+on:
+  schedule:
+    # 9am ET = 14:00 UTC (EST) or 13:00 UTC (EDT)
+    # Using 14:00 for EST; adjust to 13:00 during daylight saving
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+    inputs:
+      skip_timeline:
+        description: 'Skip timeline update (for manual reruns)'
+        type: boolean
+        default: false
+
+jobs:
+  update-forecast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run forecast
+        run: python scripts/generate_forecast.py ${{ inputs.skip_timeline && '--skip-timeline' || '' }}
+
+      - name: Copy outputs to website
+        run: |
+          cp outputs/forecast.json website/
+          cp outputs/senate_forecast.json website/
+          cp outputs/timeline.csv website/
+          cp outputs/senate_timeline.csv website/ 2>/dev/null || true
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "Daily forecast update $(date -u +%Y-%m-%d)"
+          git push
