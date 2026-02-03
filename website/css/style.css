@@ -560,9 +560,9 @@ a:hover {
 /* Methodology */
 .methodology-content {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 24px;
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
@@ -573,12 +573,6 @@ a:hover {
     padding: 24px;
 }
 
-/* Full-width sections for complex content */
-.method-section:has(pre),
-.method-section:has(.params-table),
-.method-section.full-width {
-    grid-column: 1 / -1;
-}
 
 .method-section h3 {
     font-size: 1.1rem;
