@@ -564,6 +564,8 @@ a:hover {
     gap: 24px;
     max-width: 900px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .method-section {
@@ -571,6 +573,9 @@ a:hover {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: 24px;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 
@@ -612,6 +617,8 @@ a:hover {
     overflow-x: auto;
     max-width: 100%;
     -webkit-overflow-scrolling: touch;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .method-section code {
@@ -625,6 +632,7 @@ a:hover {
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 0.85em;
+    word-break: break-word;
 }
 
 .method-section strong {

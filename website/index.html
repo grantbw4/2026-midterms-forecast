@@ -21,7 +21,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
     <!-- Header -->
@@ -309,14 +309,16 @@
                 <div class="method-section full-width">
                     <h3>Step 2: Infer National Environment</h3>
                     <p>The national political environment is inferred from generic ballot polls using <strong>PyMC Bayesian inference</strong>. The model treats each poll as a noisy observation of the true latent national sentiment:</p>
-                    <pre><code>y_i ~ Normal(μ + house_effect[pollster], σ_i)
-μ ~ Normal(0, 5)                    # latent national environment
-house_effect ~ Normal(0, σ_house)   # pollster bias
-σ_house ~ HalfNormal(2)             # magnitude of house effects</code></pre>
+                    <table class="params-table">
+                        <tr><td><code>y_i ~ Normal(μ + house_effect[pollster], σ_i)</code></td><td>Poll observation model</td></tr>
+                        <tr><td><code>μ ~ Normal(0, 5)</code></td><td>Latent national environment</td></tr>
+                        <tr><td><code>house_effect ~ Normal(0, σ_house)</code></td><td>Pollster bias</td></tr>
+                        <tr><td><code>σ_house ~ HalfNormal(2)</code></td><td>Magnitude of house effects</td></tr>
+                    </table>
                     <p>The prior <code>μ ~ Normal(0, 5)</code> is a weakly informative prior centered at a neutral national environment. The standard deviation of 5 points assigns roughly 95% probability to environments between D+10 and R+10, covering essentially all plausible national environments in modern U.S. elections while letting the polling data drive the posterior.</p>
                     <p>The posterior is sampled via MCMC with 4 chains × 500 draws each. After sampling, a deterministic adjustment is applied for presidential approval:</p>
                     <pre><code>μ_adjusted = μ + (-0.3 × 0.3 × net_approval)</code></pre>
-                    <p>This reflects the historical relationship where each point of net presidential approval corresponds to roughly 0.1 points on the generic ballot (with 30% weight given to approval data).</p>
+                    <p>This reflects the <a href = "https://www.cambridge.org/core/journals/ps-political-science-and-politics/article/forecasting-partisan-collective-accountability-during-the-2024-us-presidential-and-congressional-elections/9D6C577734D4FDB6CEED4256C60EE4BD?utm_campaign=shareaholic&utm_medium=copy_link&utm_source=bookmark" target= "_blank">historical relationship</a> where each point of net presidential approval corresponds to roughly 0.1 points on the generic ballot (with 30% weight given to approval data).</p>
                 </div>
 
                 <div class="method-section">
