@@ -1,0 +1,11 @@
+date,pollster,sample_size,dem,rep,margin
+2026-01-20,NPR/Marist,1200,47,45,2
+2026-01-18,Quinnipiac,1500,48,46,2
+2026-01-15,CNN/SSRS,1100,46,45,1
+2026-01-12,Fox News,1000,45,46,-1
+2026-01-10,ABC/WaPo,1200,47,44,3
+2026-01-08,Monmouth,800,48,45,3
+2026-01-05,Emerson,1100,46,46,0
+2026-01-03,YouGov,1500,47,45,2
+2025-12-28,Reuters/Ipsos,1000,46,44,2
+2025-12-20,Pew Research,5000,47,45,2

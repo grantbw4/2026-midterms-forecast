@@ -2,9 +2,6 @@
 .env
 *.env.local
 
-# Data files (large raw files)
-data/raw/
-
 # Python
 __pycache__/
 *.py[cod]

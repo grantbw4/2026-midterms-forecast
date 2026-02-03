@@ -1,0 +1,13 @@
+{
+  "generic_ballot": {
+    "weighted_margin": 4.08,
+    "n_polls": 176,
+    "latest_date": "2026-01-22"
+  },
+  "trump_approval": {
+    "weighted_approve": 42.1,
+    "weighted_net": -12.6,
+    "n_polls": 306,
+    "latest_date": "2026-01-22"
+  }
+}
