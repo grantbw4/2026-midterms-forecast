@@ -1,0 +1,52 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Run after daily forecast update
+  workflow_run:
+    workflows: ["Daily Forecast Update"]
+    types:
+      - completed
+  # Allow manual deployment
+  workflow_dispatch:
+  # Deploy on pushes to website directory
+  push:
+    branches:
+      - master
+    paths:
+      - 'website/**'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # Only run if workflow_run succeeded (or if triggered manually/by push)
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'website'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
