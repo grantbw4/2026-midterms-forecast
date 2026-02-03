@@ -17,6 +17,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Debug - List data files
+        run: |
+          echo "Current commit: $(git rev-parse HEAD)"
+          echo "Files in data/processed/:"
+          ls -la data/processed/ || echo "Directory does not exist"
 
       - name: Set up Python
         uses: actions/setup-python@v5
