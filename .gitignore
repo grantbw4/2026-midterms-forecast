@@ -22,6 +22,6 @@ env/
 .DS_Store
 
 # Outputs (regenerate from code)
-outputs/*.csv
 outputs/*.png
 outputs/*.html
+# Note: timeline CSVs are tracked to preserve historical data
