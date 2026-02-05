@@ -1,0 +1,436 @@
+district_id,cook_rating,cook_pvi,incumbent,incumbent_party,is_open
+AK-01,Likely R,-7.0,Begich III,R,False
+AL-01,Solid R,-12.0,OPEN (Moore),R,True
+AL-02,Solid D,12.0,Figures,D,False
+AL-03,Solid R,-12.0,Rogers,R,False
+AL-04,Solid R,-12.0,Aderholt,R,False
+AL-05,Solid R,-12.0,Strong,R,False
+AL-06,Solid R,-12.0,Palmer,R,False
+AL-07,Solid D,12.0,Sewell,D,False
+AR-01,Solid R,-12.0,Crawford,R,False
+AR-02,Solid R,-12.0,Hill,R,False
+AR-03,Solid R,-12.0,Womack,R,False
+AR-04,Solid R,-12.0,Westerman,R,False
+AZ-01,Toss-up,0.0,OPEN (Schweikert),R,True
+AZ-02,Likely R,-7.0,Crane,R,False
+AZ-03,Solid D,12.0,Ansari,D,False
+AZ-04,Solid D,12.0,Stanton,D,False
+AZ-05,Solid R,-12.0,OPEN (Biggs),R,True
+AZ-06,Toss-up,0.0,Ciscomani,R,False
+AZ-07,Solid D,12.0,Grijalva,D,False
+AZ-08,Solid R,-12.0,Hamadeh,R,False
+AZ-09,Solid R,-12.0,Gosar,R,False
+CA-01,Solid D,12.0,VACANT,R,True
+CA-02,Solid D,12.0,Huffman,D,False
+CA-03,Solid D,12.0,Kiley,R,False
+CA-04,Solid D,12.0,Thompson,D,False
+CA-05,Solid R,-12.0,McClintock,R,False
+CA-06,Solid D,12.0,OPEN (Bera),D,True
+CA-07,Solid D,12.0,Matsui,D,False
+CA-08,Solid D,12.0,Garamendi,D,False
+CA-09,Solid D,12.0,Harder,D,False
+CA-10,Solid D,12.0,DeSaulnier,D,False
+CA-11,Solid D,12.0,OPEN (Pelosi),D,True
+CA-12,Solid D,12.0,Simon,D,False
+CA-13,Lean D,3.0,Gray,D,False
+CA-14,Solid D,12.0,OPEN (Swalwell),D,True
+CA-15,Solid D,12.0,Mullin,D,False
+CA-16,Solid D,12.0,Liccardo,D,False
+CA-17,Solid D,12.0,Khanna,D,False
+CA-18,Solid D,12.0,Lofgren,D,False
+CA-19,Solid D,12.0,Panetta,D,False
+CA-20,Solid R,-12.0,Fong,R,False
+CA-21,Likely D,7.0,Costa,D,False
+CA-22,Toss-up,0.0,Valadao,R,False
+CA-23,Solid R,-12.0,Obernolte,R,False
+CA-24,Solid D,12.0,Carbajal,D,False
+CA-25,Solid D,12.0,Ruiz,D,False
+CA-26,Solid D,12.0,OPEN (Brownley),D,True
+CA-27,Solid D,12.0,Whitesides,D,False
+CA-28,Solid D,12.0,Chu,D,False
+CA-29,Solid D,12.0,Rivas,D,False
+CA-30,Solid D,12.0,Friedman,D,False
+CA-31,Solid D,12.0,Cisneros,D,False
+CA-32,Solid D,12.0,Sherman,D,False
+CA-33,Solid D,12.0,Aguilar,D,False
+CA-34,Solid D,12.0,Gomez,D,False
+CA-35,Solid D,12.0,Torres,D,False
+CA-36,Solid D,12.0,Lieu,D,False
+CA-37,Solid D,12.0,Kamlager-Dove,D,False
+CA-38,Solid D,12.0,OPEN (Sánchez),D,True
+CA-39,Solid D,12.0,Takano,D,False
+CA-40,Solid R,-12.0,MERGED SEAT,R,False
+CA-41,Solid D,12.0,Sánchez,D,False
+CA-42,Solid D,12.0,Garcia,D,False
+CA-43,Solid D,12.0,Waters,D,False
+CA-44,Solid D,12.0,Barragán,D,False
+CA-45,Lean D,3.0,Tran,D,False
+CA-46,Solid D,12.0,Correa,D,False
+CA-47,Solid D,12.0,Min,D,False
+CA-48,Toss-up,0.0,Issa,R,False
+CA-49,Solid D,12.0,Levin,D,False
+CA-50,Solid D,12.0,Peters,D,False
+CA-51,Solid D,12.0,Jacobs,D,False
+CA-52,Solid D,12.0,Vargas,D,False
+CO-01,Solid D,12.0,DeGette,D,False
+CO-02,Solid D,12.0,Neguse,D,False
+CO-03,Likely R,-7.0,Hurd,R,False
+CO-04,Solid R,-12.0,Boebert,R,False
+CO-05,Likely R,-7.0,Crank,R,False
+CO-06,Solid D,12.0,Crow,D,False
+CO-07,Solid D,12.0,Pettersen,D,False
+CO-08,Toss-up,0.0,Evans,R,False
+CT-01,Solid D,12.0,Larson,D,False
+CT-02,Solid D,12.0,Courtney,D,False
+CT-03,Solid D,12.0,DeLauro,D,False
+CT-04,Solid D,12.0,Himes,D,False
+CT-05,Solid D,12.0,Hayes,D,False
+DE-01,Solid D,12.0,McBride,D,False
+FL-01,Solid R,-12.0,Patronis,R,False
+FL-02,Solid R,-12.0,OPEN (Dunn),R,True
+FL-03,Solid R,-12.0,Cammack,R,False
+FL-04,Solid R,-12.0,Bean,R,False
+FL-05,Solid R,-12.0,Rutherford,R,False
+FL-06,Solid R,-12.0,Fine,R,False
+FL-07,Likely R,-7.0,Mills,R,False
+FL-08,Solid R,-12.0,Haridopolos,R,False
+FL-09,Solid D,12.0,Soto,D,False
+FL-10,Solid D,12.0,Frost,D,False
+FL-11,Solid R,-12.0,Webster,R,False
+FL-12,Solid R,-12.0,Bilirakis,R,False
+FL-13,Likely R,-7.0,Luna,R,False
+FL-14,Solid D,12.0,Castor,D,False
+FL-15,Solid R,-12.0,Lee,R,False
+FL-16,Solid R,-12.0,OPEN (Buchanan),R,True
+FL-17,Solid R,-12.0,Steube,R,False
+FL-18,Solid R,-12.0,Franklin,R,False
+FL-19,Solid R,-12.0,OPEN (Donalds),R,True
+FL-20,Solid D,12.0,Cherfilus-McCormick,D,False
+FL-21,Solid R,-12.0,Mast,R,False
+FL-22,Solid D,12.0,Frankel,D,False
+FL-23,Lean D,3.0,Moskowitz,D,False
+FL-24,Solid D,12.0,Wilson,D,False
+FL-25,Solid D,12.0,Wasserman Schultz,D,False
+FL-26,Solid R,-12.0,Díaz-Balart,R,False
+FL-27,Solid R,-12.0,Salazar,R,False
+FL-28,Solid R,-12.0,Giménez,R,False
+GA-01,Solid R,-12.0,OPEN (Carter),R,True
+GA-02,Solid D,12.0,Bishop,D,False
+GA-03,Solid R,-12.0,Jack,R,False
+GA-04,Solid D,12.0,Johnson,D,False
+GA-05,Solid D,12.0,Williams,D,False
+GA-06,Solid D,12.0,McBath,D,False
+GA-07,Solid R,-12.0,McCormick,R,False
+GA-08,Solid R,-12.0,Scott,R,False
+GA-09,Solid R,-12.0,Clyde,R,False
+GA-10,Solid R,-12.0,OPEN (Collins),R,True
+GA-11,Solid R,-12.0,Loudermilk,R,False
+GA-12,Solid R,-12.0,Allen,R,False
+GA-13,Solid D,12.0,Scott,D,False
+GA-14,Solid R,-12.0,VACANT,R,True
+HI-01,Solid D,12.0,Case,D,False
+HI-02,Solid D,12.0,Tokuda,D,False
+IA-01,Toss-up,0.0,Miller-Meeks,R,False
+IA-02,Likely R,-7.0,OPEN (Hinson),R,True
+IA-03,Toss-up,0.0,Nunn,R,False
+IA-04,Solid R,-12.0,OPEN (Feenstra),R,True
+ID-01,Solid R,-12.0,Fulcher,R,False
+ID-02,Solid R,-12.0,Simpson,R,False
+IL-01,Solid D,12.0,Jackson,D,False
+IL-02,Solid D,12.0,OPEN (Kelly),D,True
+IL-03,Solid D,12.0,Ramirez,D,False
+IL-04,Solid D,12.0,OPEN (García),D,True
+IL-05,Solid D,12.0,Quigley,D,False
+IL-06,Solid D,12.0,Casten,D,False
+IL-07,Solid D,12.0,OPEN (Davis),D,True
+IL-08,Solid D,12.0,OPEN (Krishnamoorthi),D,True
+IL-09,Solid D,12.0,OPEN (Schakowsky),D,True
+IL-10,Solid D,12.0,Schneider,D,False
+IL-11,Solid D,12.0,Foster,D,False
+IL-12,Solid R,-12.0,Bost,R,False
+IL-13,Solid D,12.0,Budzinski,D,False
+IL-14,Solid D,12.0,Underwood,D,False
+IL-15,Solid R,-12.0,Miller,R,False
+IL-16,Solid R,-12.0,LaHood,R,False
+IL-17,Solid D,12.0,Sorensen,D,False
+IN-01,Likely D,7.0,Mrvan,D,False
+IN-02,Solid R,-12.0,Yakym,R,False
+IN-03,Solid R,-12.0,Stutzman,R,False
+IN-04,Solid R,-12.0,Baird,R,False
+IN-05,Solid R,-12.0,Spartz,R,False
+IN-06,Solid R,-12.0,Shreve,R,False
+IN-07,Solid D,12.0,Carson,D,False
+IN-08,Solid R,-12.0,Messmer,R,False
+IN-09,Solid R,-12.0,Houchin,R,False
+KS-01,Solid R,-12.0,Mann,R,False
+KS-02,Solid R,-12.0,Schmidt,R,False
+KS-03,Solid D,12.0,Davids,D,False
+KS-04,Solid R,-12.0,Estes,R,False
+KY-01,Solid R,-12.0,Comer,R,False
+KY-02,Solid R,-12.0,Guthrie,R,False
+KY-03,Solid D,12.0,McGarvey,D,False
+KY-04,Solid R,-12.0,Massie,R,False
+KY-05,Solid R,-12.0,Rogers,R,False
+KY-06,Solid R,-12.0,OPEN (Barr),R,True
+LA-01,Solid R,-12.0,Scalise,R,False
+LA-02,Solid D,12.0,Carter,D,False
+LA-03,Solid R,-12.0,Higgins,R,False
+LA-04,Solid R,-12.0,Johnson,R,False
+LA-05,Solid R,-12.0,OPEN (Letlow),R,True
+LA-06,Solid D,12.0,Fields,D,False
+MA-01,Solid D,12.0,Neal,D,False
+MA-02,Solid D,12.0,McGovern,D,False
+MA-03,Solid D,12.0,Trahan,D,False
+MA-04,Solid D,12.0,Auchincloss,D,False
+MA-05,Solid D,12.0,Clark,D,False
+MA-06,Solid D,12.0,OPEN (Moulton),D,True
+MA-07,Solid D,12.0,Pressley,D,False
+MA-08,Solid D,12.0,Lynch,D,False
+MA-09,Solid D,12.0,Keating,D,False
+MD-01,Solid R,-12.0,Harris,R,False
+MD-02,Solid D,12.0,Olszewski,D,False
+MD-03,Solid D,12.0,Elfreth,D,False
+MD-04,Solid D,12.0,Ivey,D,False
+MD-05,Solid D,12.0,OPEN (Hoyer),D,True
+MD-06,Solid D,12.0,McClain Delaney,D,False
+MD-07,Solid D,12.0,Mfume,D,False
+MD-08,Solid D,12.0,Raskin,D,False
+ME-01,Solid D,12.0,Pingree,D,False
+ME-02,Likely R,-7.0,OPEN (Golden),D,True
+MI-01,Solid R,-12.0,Bergman,R,False
+MI-02,Solid R,-12.0,Moolenaar,R,False
+MI-03,Solid D,12.0,Scholten,D,False
+MI-04,Likely R,-7.0,Huizenga,R,False
+MI-05,Solid R,-12.0,Walberg,R,False
+MI-06,Solid D,12.0,Dingell,D,False
+MI-07,Toss-up,0.0,Barrett,R,False
+MI-08,Lean D,3.0,McDonald Rivet,D,False
+MI-09,Solid R,-12.0,McClain,R,False
+MI-10,Lean R,-3.0,OPEN (James),R,True
+MI-11,Solid D,12.0,OPEN (Stevens),D,True
+MI-12,Solid D,12.0,Tlaib,D,False
+MI-13,Solid D,12.0,Thanedar,D,False
+MN-01,Solid R,-12.0,Finstad,R,False
+MN-02,Likely D,7.0,OPEN (Craig),D,True
+MN-03,Solid D,12.0,Morrison,D,False
+MN-04,Solid D,12.0,McCollum,D,False
+MN-05,Solid D,12.0,Omar,D,False
+MN-06,Solid R,-12.0,Emmer,R,False
+MN-07,Solid R,-12.0,Fischbach,R,False
+MN-08,Solid R,-12.0,Stauber,R,False
+MO-01,Solid D,12.0,Bell,D,False
+MO-02,Solid R,-12.0,Wagner,R,False
+MO-03,Solid R,-12.0,Onder,R,False
+MO-04,Solid R,-12.0,Alford,R,False
+MO-05,Solid D,12.0,Cleaver,D,False
+MO-06,Solid R,-12.0,Graves,R,False
+MO-07,Solid R,-12.0,Burlison,R,False
+MO-08,Solid R,-12.0,Smith,R,False
+MS-01,Solid R,-12.0,Kelly,R,False
+MS-02,Solid D,12.0,Thompson,D,False
+MS-03,Solid R,-12.0,Guest,R,False
+MS-04,Solid R,-12.0,Ezell,R,False
+MT-01,Likely R,-7.0,Zinke,R,False
+MT-02,Solid R,-12.0,Downing,R,False
+NC-01,Lean R,-3.0,Davis,D,False
+NC-02,Solid D,12.0,Ross,D,False
+NC-03,Solid R,-12.0,Murphy,R,False
+NC-04,Solid D,12.0,Foushee,D,False
+NC-05,Solid R,-12.0,Foxx,R,False
+NC-06,Solid R,-12.0,McDowell,R,False
+NC-07,Solid R,-12.0,Rouzer,R,False
+NC-08,Solid R,-12.0,Harris,R,False
+NC-09,Solid R,-12.0,Hudson,R,False
+NC-10,Solid R,-12.0,Harrigan,R,False
+NC-11,Likely R,-7.0,Edwards,R,False
+NC-12,Solid D,12.0,Adams,D,False
+NC-13,Solid R,-12.0,Knott,R,False
+NC-14,Solid R,-12.0,Moore,R,False
+ND-01,Solid R,-12.0,Fedorchak,R,False
+NE-01,Solid R,-12.0,Flood,R,False
+NE-02,Lean D,3.0,OPEN (Bacon),R,True
+NE-03,Solid R,-12.0,Smith,R,False
+NH-01,Likely D,7.0,OPEN (Pappas),D,True
+NH-02,Likely D,7.0,Goodlander,D,False
+NJ-01,Solid D,12.0,Norcross,D,False
+NJ-02,Solid R,-12.0,Van Drew,R,False
+NJ-03,Solid D,12.0,Conaway,D,False
+NJ-04,Solid R,-12.0,Smith,R,False
+NJ-05,Solid D,12.0,Gottheimer,D,False
+NJ-06,Solid D,12.0,Pallone,D,False
+NJ-07,Toss-up,0.0,Kean Jr.,R,False
+NJ-08,Solid D,12.0,Menendez,D,False
+NJ-09,Lean D,3.0,Pou,D,False
+NJ-10,Solid D,12.0,McIver,D,False
+NJ-11,Solid D,12.0,VACANT,D,True
+NJ-12,Solid D,12.0,OPEN (Watson Coleman),D,True
+NM-01,Solid D,12.0,Stansbury,D,False
+NM-02,Lean D,3.0,Vasquez,D,False
+NM-03,Solid D,12.0,Leger Fernández,D,False
+NV-01,Likely D,7.0,Titus,D,False
+NV-02,Solid R,-12.0,Amodei,R,False
+NV-03,Lean D,3.0,Lee,D,False
+NV-04,Likely D,7.0,Horsford,D,False
+NY-01,Solid R,-12.0,LaLota,R,False
+NY-02,Solid R,-12.0,Garbarino,R,False
+NY-03,Lean D,3.0,Suozzi,D,False
+NY-04,Lean D,3.0,Gillen,D,False
+NY-05,Solid D,12.0,Meeks,D,False
+NY-06,Solid D,12.0,Meng,D,False
+NY-07,Solid D,12.0,OPEN (Velázquez),D,True
+NY-08,Solid D,12.0,Jeffries,D,False
+NY-09,Solid D,12.0,Clarke,D,False
+NY-10,Solid D,12.0,Goldman,D,False
+NY-11,Solid R,-12.0,Malliotakis,R,False
+NY-12,Solid D,12.0,OPEN (Nadler),D,True
+NY-13,Solid D,12.0,Espaillat,D,False
+NY-14,Solid D,12.0,Ocasio-Cortez,D,False
+NY-15,Solid D,12.0,Torres,D,False
+NY-16,Solid D,12.0,Latimer,D,False
+NY-17,Toss-up,0.0,Lawler,R,False
+NY-18,Solid D,12.0,Ryan,D,False
+NY-19,Lean D,3.0,Riley,D,False
+NY-20,Solid D,12.0,Tonko,D,False
+NY-21,Solid R,-12.0,OPEN (Stefanik),R,True
+NY-22,Solid D,12.0,Mannion,D,False
+NY-23,Solid R,-12.0,Langworthy,R,False
+NY-24,Solid R,-12.0,Tenney,R,False
+NY-25,Solid D,12.0,Morelle,D,False
+NY-26,Solid D,12.0,Kennedy,D,False
+OH-01,Toss-up,0.0,Landsman,D,False
+OH-02,Solid R,-12.0,Taylor,R,False
+OH-03,Solid D,12.0,Beatty,D,False
+OH-04,Solid R,-12.0,Jordan,R,False
+OH-05,Solid R,-12.0,Latta,R,False
+OH-06,Solid R,-12.0,Rulli,R,False
+OH-07,Solid R,-12.0,Miller,R,False
+OH-08,Solid R,-12.0,Davidson,R,False
+OH-09,Toss-up,0.0,Kaptur,D,False
+OH-10,Solid R,-12.0,Turner,R,False
+OH-11,Solid D,12.0,Brown,D,False
+OH-12,Solid R,-12.0,Balderson,R,False
+OH-13,Lean D,3.0,Sykes,D,False
+OH-14,Solid R,-12.0,Joyce,R,False
+OH-15,Solid R,-12.0,Carey,R,False
+OK-01,Solid R,-12.0,Hern,R,False
+OK-02,Solid R,-12.0,Brecheen,R,False
+OK-03,Solid R,-12.0,Lucas,R,False
+OK-04,Solid R,-12.0,Cole,R,False
+OK-05,Solid R,-12.0,Bice,R,False
+OR-01,Solid D,12.0,Bonamici,D,False
+OR-02,Solid R,-12.0,Bentz,R,False
+OR-03,Solid D,12.0,Dexter,D,False
+OR-04,Solid D,12.0,Hoyle,D,False
+OR-05,Likely D,7.0,Bynum,D,False
+OR-06,Solid D,12.0,Salinas,D,False
+PA-01,Likely R,-7.0,Fitzpatrick,R,False
+PA-02,Solid D,12.0,Boyle,D,False
+PA-03,Solid D,12.0,OPEN (Evans),D,True
+PA-04,Solid D,12.0,Dean,D,False
+PA-05,Solid D,12.0,Scanlon,D,False
+PA-06,Solid D,12.0,Houlahan,D,False
+PA-07,Toss-up,0.0,Mackenzie,R,False
+PA-08,Lean R,-3.0,Bresnahan,R,False
+PA-09,Solid R,-12.0,Meuser,R,False
+PA-10,Toss-up,0.0,Perry,R,False
+PA-11,Solid R,-12.0,Smucker,R,False
+PA-12,Solid D,12.0,Lee,D,False
+PA-13,Solid R,-12.0,Joyce,R,False
+PA-14,Solid R,-12.0,Reschenthaler,R,False
+PA-15,Solid R,-12.0,Thompson,R,False
+PA-16,Solid R,-12.0,Kelly,R,False
+PA-17,Solid D,12.0,Deluzio,D,False
+RI-01,Solid D,12.0,Amo,D,False
+RI-02,Solid D,12.0,Magaziner,D,False
+SC-01,Solid R,-12.0,OPEN (Mace),R,True
+SC-02,Solid R,-12.0,Wilson,R,False
+SC-03,Solid R,-12.0,Biggs,R,False
+SC-04,Solid R,-12.0,Timmons,R,False
+SC-05,Solid R,-12.0,OPEN (Norman),R,True
+SC-06,Solid D,12.0,Clyburn,D,False
+SC-07,Solid R,-12.0,Fry,R,False
+SD-01,Solid R,-12.0,OPEN (Johnson),R,True
+TN-01,Solid R,-12.0,Harshbarger,R,False
+TN-02,Solid R,-12.0,Burchett,R,False
+TN-03,Solid R,-12.0,Fleischmann,R,False
+TN-04,Solid R,-12.0,DesJarlais,R,False
+TN-05,Likely R,-7.0,Ogles,R,False
+TN-06,Solid R,-12.0,OPEN (Rose),R,True
+TN-07,Solid R,-12.0,Van Epps,R,False
+TN-08,Solid R,-12.0,Kustoff,R,False
+TN-09,Solid D,12.0,Cohen,D,False
+TX-01,Solid R,-12.0,Moran,R,False
+TX-02,Solid R,-12.0,Crenshaw,R,False
+TX-03,Solid R,-12.0,Self,R,False
+TX-04,Solid R,-12.0,Fallon,R,False
+TX-05,Solid R,-12.0,Gooden,R,False
+TX-06,Solid R,-12.0,Ellzey,R,False
+TX-07,Solid D,12.0,Fletcher,D,False
+TX-08,Solid R,-12.0,OPEN (Luttrell),R,True
+TX-09,Solid R,-12.0,OPEN (Green),D,True
+TX-10,Solid R,-12.0,OPEN (McCaul),R,True
+TX-11,Solid R,-12.0,Pfluger,R,False
+TX-12,Solid R,-12.0,Goldman,R,False
+TX-13,Solid R,-12.0,Jackson,R,False
+TX-14,Solid R,-12.0,Weber,R,False
+TX-15,Likely R,-7.0,De La Cruz,R,False
+TX-16,Solid D,12.0,Escobar,D,False
+TX-17,Solid R,-12.0,Sessions,R,False
+TX-18,Solid D,12.0,MERGED SEAT,D,False
+TX-19,Solid R,-12.0,OPEN (Arrington),R,True
+TX-20,Solid D,12.0,Castro,D,False
+TX-21,Solid R,-12.0,OPEN (Roy),R,True
+TX-22,Solid R,-12.0,OPEN (Nehls),R,True
+TX-23,Solid R,-12.0,Gonzales,R,False
+TX-24,Solid R,-12.0,Van Duyne,R,False
+TX-25,Solid R,-12.0,Williams,R,False
+TX-26,Solid R,-12.0,Gill,R,False
+TX-27,Solid R,-12.0,Cloud,R,False
+TX-28,Lean D,3.0,Cuellar,D,False
+TX-29,Solid D,12.0,Garcia,D,False
+TX-30,Solid D,12.0,OPEN (Crockett),D,True
+TX-31,Solid R,-12.0,Carter,R,False
+TX-32,Solid R,-12.0,OPEN (Johnson),D,True
+TX-33,Solid D,12.0,Johnson,D,False
+TX-34,Toss-up,0.0,Gonzalez,D,False
+TX-35,Likely R,-7.0,OPEN (Casar),D,True
+TX-36,Solid R,-12.0,Babin,R,False
+TX-37,Solid D,12.0,Casar,D,False
+TX-38,Solid R,-12.0,OPEN (Hunt),R,True
+UT-01,Solid D,12.0,Moore,R,False
+UT-02,Solid R,-12.0,Maloy,R,False
+UT-03,Solid R,-12.0,Kennedy,R,False
+UT-04,Solid R,-12.0,Owens,R,False
+VA-01,Lean R,-3.0,Wittman,R,False
+VA-02,Toss-up,0.0,Kiggans,R,False
+VA-03,Solid D,12.0,Scott,D,False
+VA-04,Solid D,12.0,McClellan,D,False
+VA-05,Solid R,-12.0,McGuire,R,False
+VA-06,Solid R,-12.0,Cline,R,False
+VA-07,Lean D,3.0,Vindman,D,False
+VA-08,Solid D,12.0,Beyer,D,False
+VA-09,Solid R,-12.0,Griffith,R,False
+VA-10,Solid D,12.0,Subramanyam,D,False
+VA-11,Solid D,12.0,Walkinshaw,D,False
+VT-01,Solid D,12.0,Balint,D,False
+WA-01,Solid D,12.0,DelBene,D,False
+WA-02,Solid D,12.0,Larsen,D,False
+WA-03,Toss-up,0.0,Perez,D,False
+WA-04,Solid R,-12.0,OPEN (Newhouse),R,True
+WA-05,Solid R,-12.0,Baumgartner,R,False
+WA-06,Solid D,12.0,Randall,D,False
+WA-07,Solid D,12.0,Jayapal,D,False
+WA-08,Solid D,12.0,Schrier,D,False
+WA-09,Solid D,12.0,Smith,D,False
+WA-10,Solid D,12.0,Strickland,D,False
+WI-01,Likely R,-7.0,Steil,R,False
+WI-02,Solid D,12.0,Pocan,D,False
+WI-03,Toss-up,0.0,Van Orden,R,False
+WI-04,Solid D,12.0,Moore,D,False
+WI-05,Solid R,-12.0,Fitzgerald,R,False
+WI-06,Solid R,-12.0,Grothman,R,False
+WI-07,Solid R,-12.0,OPEN (Tiffany),R,True
+WI-08,Solid R,-12.0,Wied,R,False
+WV-01,Solid R,-12.0,Miller,R,False
+WV-02,Solid R,-12.0,Moore,R,False
+WY-01,Solid R,-12.0,OPEN (Hageman),R,True
