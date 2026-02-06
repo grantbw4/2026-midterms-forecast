@@ -1,3 +1,4 @@
 date,prob_dem_majority,median_dem_seats,mean_dem_seats,ci_90_low,ci_90_high,national_env,approval,generic_ballot
 2026-02-03,0.882,244,251.4,210,320,5.1,-12.7,4.1
 2026-02-05,0.883,244,251.7,210,321,5.2,-12.9,4.2
+2026-02-06,0.883,244,251.7,210,321,5.2,-12.9,4.2
