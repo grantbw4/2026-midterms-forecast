@@ -124,7 +124,7 @@ GA-07,Solid R,-12.0,McCormick,R,False
 GA-08,Solid R,-12.0,Scott,R,False
 GA-09,Solid R,-12.0,Clyde,R,False
 GA-10,Solid R,-12.0,OPEN (Collins),R,True
-GA-11,Solid R,-12.0,OPEN (Loudermilk),R,True
+GA-11,Solid R,-12.0,Loudermilk,R,False
 GA-12,Solid R,-12.0,Allen,R,False
 GA-13,Solid D,12.0,Scott,D,False
 GA-14,Solid R,-12.0,VACANT,R,True
@@ -268,7 +268,7 @@ NM-01,Solid D,12.0,Stansbury,D,False
 NM-02,Lean D,3.0,Vasquez,D,False
 NM-03,Solid D,12.0,Leger Fernández,D,False
 NV-01,Likely D,7.0,Titus,D,False
-NV-02,Solid R,-12.0,OPEN (Amodei),R,True
+NV-02,Solid R,-12.0,Amodei,R,False
 NV-03,Lean D,3.0,Lee,D,False
 NV-04,Likely D,7.0,Horsford,D,False
 NY-01,Solid R,-12.0,LaLota,R,False
