@@ -249,6 +249,16 @@ def main():
         gb_polls = fetcher.fetch_generic_ballot(days_back=180)
         approval_polls = fetcher.fetch_trump_approval(days_back=180)
         fetcher.save_polls(gb_polls, approval_polls)
+
+        # Fall back to cached data if API returned empty results
+        cached_gb_path = DATA_DIR / "raw" / "polling" / "generic_ballot.csv"
+        cached_app_path = DATA_DIR / "raw" / "polling" / "trump_approval.csv"
+        if gb_polls.empty and cached_gb_path.exists():
+            logger.warning("API returned no generic ballot polls, falling back to cached data")
+            gb_polls = pd.read_csv(cached_gb_path)
+        if approval_polls.empty and cached_app_path.exists():
+            logger.warning("API returned no approval polls, falling back to cached data")
+            approval_polls = pd.read_csv(cached_app_path)
     else:
         logger.info("\n--- Loading Cached Polling Data ---")
         gb_polls = pd.read_csv(DATA_DIR / "raw" / "polling" / "generic_ballot.csv")
