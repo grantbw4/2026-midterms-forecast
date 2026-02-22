@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-02-21T14:24:43.844850Z",
+    "updated_at": "2026-02-22T14:23:58.789239Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 254,
+    "days_until_election": 253,
     "n_simulations": 10000,
     "districts_total": 435
   },
@@ -8369,6 +8369,15 @@
       },
       {
         "date": "2026-02-16",
+        "pollster": "YouGov",
+        "sample_size": 1682,
+        "population": "a",
+        "dem_pct": 39.0,
+        "rep_pct": 33.0,
+        "margin": 6.0
+      },
+      {
+        "date": "2026-02-16",
         "pollster": "Ipsos",
         "sample_size": 1117,
         "population": "a",
@@ -8384,15 +8393,6 @@
         "dem_pct": 41.0,
         "rep_pct": 37.0,
         "margin": 4.0
-      },
-      {
-        "date": "2026-02-16",
-        "pollster": "YouGov",
-        "sample_size": 1682,
-        "population": "a",
-        "dem_pct": 39.0,
-        "rep_pct": 33.0,
-        "margin": 6.0
       },
       {
         "date": "2026-02-16",
@@ -8432,21 +8432,30 @@
       },
       {
         "date": "2026-02-10",
-        "pollster": "The Argument/Verasight",
-        "sample_size": 3003,
+        "pollster": "Focaldata",
+        "sample_size": 500,
         "population": "rv",
+        "dem_pct": 46.0,
+        "rep_pct": 42.0,
+        "margin": 4.0
+      },
+      {
+        "date": "2026-02-10",
+        "pollster": "The Argument/Verasight",
+        "sample_size": 500,
+        "population": "lv",
         "dem_pct": 53.0,
         "rep_pct": 47.0,
         "margin": 6.0
       },
       {
         "date": "2026-02-10",
-        "pollster": "Focaldata",
-        "sample_size": 1148,
-        "population": "a",
-        "dem_pct": 42.0,
-        "rep_pct": 38.0,
-        "margin": 4.0
+        "pollster": "The Argument/Verasight",
+        "sample_size": 3003,
+        "population": "rv",
+        "dem_pct": 53.0,
+        "rep_pct": 47.0,
+        "margin": 6.0
       },
       {
         "date": "2026-02-10",
@@ -8459,30 +8468,12 @@
       },
       {
         "date": "2026-02-10",
-        "pollster": "The Argument/Verasight",
-        "sample_size": 500,
-        "population": "lv",
-        "dem_pct": 53.0,
-        "rep_pct": 47.0,
-        "margin": 6.0
-      },
-      {
-        "date": "2026-02-10",
         "pollster": "Focaldata",
-        "sample_size": 500,
-        "population": "rv",
-        "dem_pct": 46.0,
-        "rep_pct": 42.0,
-        "margin": 4.0
-      },
-      {
-        "date": "2026-02-09",
-        "pollster": "YouGov",
-        "sample_size": 1551,
-        "population": "rv",
-        "dem_pct": 44.0,
+        "sample_size": 1148,
+        "population": "a",
+        "dem_pct": 42.0,
         "rep_pct": 38.0,
-        "margin": 6.0
+        "margin": 4.0
       },
       {
         "date": "2026-02-09",
@@ -8501,6 +8492,15 @@
         "dem_pct": 45.0,
         "rep_pct": 41.0,
         "margin": 4.0
+      },
+      {
+        "date": "2026-02-09",
+        "pollster": "YouGov",
+        "sample_size": 1551,
+        "population": "rv",
+        "dem_pct": 44.0,
+        "rep_pct": 38.0,
+        "margin": 6.0
       },
       {
         "date": "2026-02-08",
@@ -8550,20 +8550,20 @@
       {
         "date": "2026-02-01",
         "pollster": "Morning Consult",
-        "sample_size": 12505,
-        "population": "rv",
-        "dem_pct": 44.0,
-        "rep_pct": 42.0,
-        "margin": 2.0
-      },
-      {
-        "date": "2026-02-01",
-        "pollster": "Morning Consult",
         "sample_size": 2201,
         "population": "rv",
         "dem_pct": 47.0,
         "rep_pct": 42.0,
         "margin": 5.0
+      },
+      {
+        "date": "2026-02-01",
+        "pollster": "Morning Consult",
+        "sample_size": 12505,
+        "population": "rv",
+        "dem_pct": 44.0,
+        "rep_pct": 42.0,
+        "margin": 2.0
       },
       {
         "date": "2026-01-30",
@@ -8576,6 +8576,15 @@
       },
       {
         "date": "2026-01-29",
+        "pollster": "HarrisX/Harris Poll",
+        "sample_size": 2000,
+        "population": "lv",
+        "dem_pct": 52.0,
+        "rep_pct": 48.0,
+        "margin": 4.0
+      },
+      {
+        "date": "2026-01-29",
         "pollster": "TIPP Insights",
         "sample_size": 1126,
         "population": "rv",
@@ -8584,13 +8593,13 @@
         "margin": 3.0
       },
       {
-        "date": "2026-01-29",
-        "pollster": "HarrisX/Harris Poll",
-        "sample_size": 2000,
+        "date": "2026-01-28",
+        "pollster": "Marquette University Law School",
+        "sample_size": 577,
         "population": "lv",
         "dem_pct": 52.0,
-        "rep_pct": 48.0,
-        "margin": 4.0
+        "rep_pct": 45.0,
+        "margin": 7.0
       },
       {
         "date": "2026-01-28",
@@ -8609,15 +8618,6 @@
         "dem_pct": 48.0,
         "rep_pct": 44.0,
         "margin": 4.0
-      },
-      {
-        "date": "2026-01-28",
-        "pollster": "Marquette University Law School",
-        "sample_size": 577,
-        "population": "lv",
-        "dem_pct": 52.0,
-        "rep_pct": 45.0,
-        "margin": 7.0
       },
       {
         "date": "2026-01-28",
@@ -8657,6 +8657,15 @@
       },
       {
         "date": "2026-01-26",
+        "pollster": "Echelon Insights",
+        "sample_size": 1029,
+        "population": "lv",
+        "dem_pct": 49.0,
+        "rep_pct": 44.0,
+        "margin": 5.0
+      },
+      {
+        "date": "2026-01-26",
         "pollster": "Focaldata",
         "sample_size": 2037,
         "population": "a",
@@ -8666,21 +8675,12 @@
       },
       {
         "date": "2026-01-26",
-        "pollster": "Beacon Research/Shaw & Co. Research",
-        "sample_size": 1005,
-        "population": "rv",
-        "dem_pct": 52.0,
-        "rep_pct": 46.0,
-        "margin": 6.0
-      },
-      {
-        "date": "2026-01-26",
-        "pollster": "Echelon Insights",
-        "sample_size": 1029,
-        "population": "lv",
-        "dem_pct": 49.0,
-        "rep_pct": 44.0,
-        "margin": 5.0
+        "pollster": "YouGov",
+        "sample_size": 1684,
+        "population": "a",
+        "dem_pct": 38.0,
+        "rep_pct": 35.0,
+        "margin": 3.0
       },
       {
         "date": "2026-01-26",
@@ -8693,12 +8693,21 @@
       },
       {
         "date": "2026-01-26",
-        "pollster": "YouGov",
-        "sample_size": 1684,
-        "population": "a",
-        "dem_pct": 38.0,
-        "rep_pct": 35.0,
-        "margin": 3.0
+        "pollster": "Beacon Research/Shaw & Co. Research",
+        "sample_size": 1005,
+        "population": "rv",
+        "dem_pct": 52.0,
+        "rep_pct": 46.0,
+        "margin": 6.0
+      },
+      {
+        "date": "2026-01-25",
+        "pollster": "Morning Consult",
+        "sample_size": 2201,
+        "population": "rv",
+        "dem_pct": 45.0,
+        "rep_pct": 43.0,
+        "margin": 2.0
       },
       {
         "date": "2026-01-25",
@@ -8717,15 +8726,6 @@
         "dem_pct": 44.0,
         "rep_pct": 43.0,
         "margin": 1.0
-      },
-      {
-        "date": "2026-01-25",
-        "pollster": "Morning Consult",
-        "sample_size": 2201,
-        "population": "rv",
-        "dem_pct": 45.0,
-        "rep_pct": 43.0,
-        "margin": 2.0
       },
       {
         "date": "2026-01-24",
@@ -8756,15 +8756,6 @@
       },
       {
         "date": "2026-01-20",
-        "pollster": "KFF",
-        "sample_size": 1141,
-        "population": "rv",
-        "dem_pct": 49.0,
-        "rep_pct": 42.0,
-        "margin": 7.0
-      },
-      {
-        "date": "2026-01-20",
         "pollster": "Verasight",
         "sample_size": 500,
         "population": "rv",
@@ -8773,13 +8764,13 @@
         "margin": 8.0
       },
       {
-        "date": "2026-01-19",
-        "pollster": "YouGov",
-        "sample_size": 1549,
+        "date": "2026-01-20",
+        "pollster": "KFF",
+        "sample_size": 1141,
         "population": "rv",
-        "dem_pct": 43.0,
-        "rep_pct": 39.0,
-        "margin": 4.0
+        "dem_pct": 49.0,
+        "rep_pct": 42.0,
+        "margin": 7.0
       },
       {
         "date": "2026-01-19",
@@ -8789,6 +8780,15 @@
         "dem_pct": 39.0,
         "rep_pct": 34.0,
         "margin": 5.0
+      },
+      {
+        "date": "2026-01-19",
+        "pollster": "YouGov",
+        "sample_size": 1549,
+        "population": "rv",
+        "dem_pct": 43.0,
+        "rep_pct": 39.0,
+        "margin": 4.0
       },
       {
         "date": "2026-01-19",
@@ -8839,15 +8839,6 @@
       },
       {
         "date": "2026-02-16",
-        "pollster": "Ipsos",
-        "sample_size": 1117,
-        "population": "a",
-        "approve": 38.0,
-        "disapprove": 60.0,
-        "net_approval": -22.0
-      },
-      {
-        "date": "2026-02-16",
         "pollster": "Morning Consult",
         "sample_size": 2200,
         "population": "rv",
@@ -8872,6 +8863,15 @@
         "approve": 39.0,
         "disapprove": 56.0,
         "net_approval": -17.0
+      },
+      {
+        "date": "2026-02-16",
+        "pollster": "Ipsos",
+        "sample_size": 1117,
+        "population": "a",
+        "approve": 38.0,
+        "disapprove": 60.0,
+        "net_approval": -22.0
       },
       {
         "date": "2026-02-13",
@@ -8911,21 +8911,21 @@
       },
       {
         "date": "2026-02-10",
-        "pollster": "Focaldata",
-        "sample_size": 1148,
-        "population": "a",
-        "approve": 34.0,
-        "disapprove": 53.0,
-        "net_approval": -19.0
-      },
-      {
-        "date": "2026-02-10",
         "pollster": "The Argument/Verasight",
         "sample_size": 3003,
         "population": "rv",
         "approve": 42.0,
         "disapprove": 57.0,
         "net_approval": -15.0
+      },
+      {
+        "date": "2026-02-10",
+        "pollster": "Focaldata",
+        "sample_size": 1148,
+        "population": "a",
+        "approve": 34.0,
+        "disapprove": 53.0,
+        "net_approval": -19.0
       },
       {
         "date": "2026-02-09",
@@ -9199,21 +9199,21 @@
       },
       {
         "date": "2026-01-26",
-        "pollster": "Beacon Research/Shaw & Co. Research",
-        "sample_size": 1005,
-        "population": "rv",
-        "approve": 44.0,
-        "disapprove": 56.0,
-        "net_approval": -12.0
-      },
-      {
-        "date": "2026-01-26",
         "pollster": "YouGov",
         "sample_size": 1520,
         "population": "rv",
         "approve": 41.0,
         "disapprove": 57.0,
         "net_approval": -16.0
+      },
+      {
+        "date": "2026-01-26",
+        "pollster": "Beacon Research/Shaw & Co. Research",
+        "sample_size": 1005,
+        "population": "rv",
+        "approve": 44.0,
+        "disapprove": 56.0,
+        "net_approval": -12.0
       },
       {
         "date": "2026-01-25",
