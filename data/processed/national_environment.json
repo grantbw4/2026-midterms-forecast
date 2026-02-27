@@ -1,10 +1,10 @@
 {
-  "national_environment": 4.46,
+  "national_environment": 4.47,
   "uncertainty": 1.16,
   "method": "weighted_average",
-  "generic_ballot_mean": 4.56,
+  "generic_ballot_mean": 4.59,
   "generic_ballot_std": 1.42,
-  "approval_mean": -14.06,
-  "approval_contribution": 4.22,
-  "updated_at": "2026-02-26T14:44:15.626188"
+  "approval_mean": -13.89,
+  "approval_contribution": 4.17,
+  "updated_at": "2026-02-27T14:37:52.247560"
 }
