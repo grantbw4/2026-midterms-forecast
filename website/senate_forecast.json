@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-03-02T14:41:20.602514Z",
+    "updated_at": "2026-03-03T14:42:08.686015Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 245,
+    "days_until_election": 244,
     "n_simulations": 10000,
     "districts_total": 435
   },
