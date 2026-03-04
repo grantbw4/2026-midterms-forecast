@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-03-03T14:42:08.686015Z",
+    "updated_at": "2026-03-04T14:37:13.336876Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 244,
+    "days_until_election": 243,
     "n_simulations": 10000,
     "districts_total": 435
   },
@@ -8852,21 +8852,21 @@
       },
       {
         "date": "2026-02-26",
-        "pollster": "John Zogby Strategies",
-        "sample_size": 1015,
-        "population": "lv",
-        "approve": 47.0,
-        "disapprove": 50.0,
-        "net_approval": -3.0
-      },
-      {
-        "date": "2026-02-26",
         "pollster": "RMG Research",
         "sample_size": 3000,
         "population": "rv",
         "approve": 45.0,
         "disapprove": 54.0,
         "net_approval": -9.0
+      },
+      {
+        "date": "2026-02-26",
+        "pollster": "John Zogby Strategies",
+        "sample_size": 1015,
+        "population": "lv",
+        "approve": 47.0,
+        "disapprove": 50.0,
+        "net_approval": -3.0
       },
       {
         "date": "2026-02-25",
@@ -8888,30 +8888,21 @@
       },
       {
         "date": "2026-02-23",
-        "pollster": "YouGov",
-        "sample_size": 1551,
+        "pollster": "Echelon Insights",
+        "sample_size": 1002,
+        "population": "lv",
+        "approve": 44.0,
+        "disapprove": 55.0,
+        "net_approval": -11.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "Ipsos",
+        "sample_size": 4638,
         "population": "a",
-        "approve": 39.0,
-        "disapprove": 57.0,
-        "net_approval": -18.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "Global Strategy Group",
-        "sample_size": 1000,
-        "population": "rv",
-        "approve": 41.0,
+        "approve": 40.0,
         "disapprove": 58.0,
-        "net_approval": -17.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "YouGov",
-        "sample_size": 1402,
-        "population": "rv",
-        "approve": 42.0,
-        "disapprove": 57.0,
-        "net_approval": -15.0
+        "net_approval": -18.0
       },
       {
         "date": "2026-02-23",
@@ -8925,6 +8916,33 @@
       {
         "date": "2026-02-23",
         "pollster": "YouGov",
+        "sample_size": 2381,
+        "population": "a",
+        "approve": 40.0,
+        "disapprove": 60.0,
+        "net_approval": -20.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "YouGov",
+        "sample_size": 1402,
+        "population": "rv",
+        "approve": 42.0,
+        "disapprove": 57.0,
+        "net_approval": -15.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "Global Strategy Group",
+        "sample_size": 1000,
+        "population": "rv",
+        "approve": 41.0,
+        "disapprove": 58.0,
+        "net_approval": -17.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "YouGov",
         "sample_size": 1551,
         "population": "a",
         "approve": 39.0,
@@ -8933,30 +8951,12 @@
       },
       {
         "date": "2026-02-23",
-        "pollster": "Ipsos",
-        "sample_size": 4638,
-        "population": "a",
-        "approve": 40.0,
-        "disapprove": 58.0,
-        "net_approval": -18.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "Echelon Insights",
-        "sample_size": 1002,
-        "population": "lv",
-        "approve": 44.0,
-        "disapprove": 55.0,
-        "net_approval": -11.0
-      },
-      {
-        "date": "2026-02-23",
         "pollster": "YouGov",
-        "sample_size": 2381,
+        "sample_size": 1551,
         "population": "a",
-        "approve": 40.0,
-        "disapprove": 60.0,
-        "net_approval": -20.0
+        "approve": 39.0,
+        "disapprove": 57.0,
+        "net_approval": -18.0
       },
       {
         "date": "2026-02-22",
@@ -8978,6 +8978,15 @@
       },
       {
         "date": "2026-02-20",
+        "pollster": "CNN/SSRS",
+        "sample_size": 500,
+        "population": "rv",
+        "approve": 39.0,
+        "disapprove": 61.0,
+        "net_approval": -22.0
+      },
+      {
+        "date": "2026-02-20",
         "pollster": "Verasight",
         "sample_size": 1401,
         "population": "rv",
@@ -8993,15 +9002,6 @@
         "approve": 36.0,
         "disapprove": 63.0,
         "net_approval": -27.0
-      },
-      {
-        "date": "2026-02-20",
-        "pollster": "CNN/SSRS",
-        "sample_size": 500,
-        "population": "rv",
-        "approve": 39.0,
-        "disapprove": 61.0,
-        "net_approval": -22.0
       },
       {
         "date": "2026-02-20",
