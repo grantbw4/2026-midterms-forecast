@@ -1,16 +1,16 @@
 {
   "metadata": {
-    "updated_at": "2026-03-05T14:43:35.737929Z",
+    "updated_at": "2026-03-06T14:36:12.629701Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 242,
+    "days_until_election": 241,
     "n_simulations": 10000,
     "districts_total": 435
   },
   "summary": {
-    "prob_dem_majority": 0.873,
-    "prob_rep_majority": 0.127,
+    "prob_dem_majority": 0.872,
+    "prob_rep_majority": 0.128,
     "median_dem_seats": 242,
     "median_rep_seats": 193,
     "mean_dem_seats": 250.0,
@@ -42,6 +42,7 @@
       148,
       155,
       164,
+      168,
       169,
       172,
       174,
@@ -249,6 +250,7 @@
       380,
       381,
       382,
+      383,
       384,
       385,
       386,
@@ -280,7 +282,8 @@
       0.0001,
       0.0001,
       0.0001,
-      0.0002,
+      0.0001,
+      0.0001,
       0.0001,
       0.0001,
       0.0003,
@@ -292,219 +295,220 @@
       0.0001,
       0.0005,
       0.0004,
-      0.0004,
+      0.0005,
       0.0003,
+      0.0008,
       0.0009,
       0.0008,
-      0.0007,
-      0.0011,
+      0.0009,
       0.0012,
+      0.0009,
       0.0008,
-      0.0008,
-      0.0017,
-      0.0011,
-      0.0022,
+      0.0016,
+      0.0013,
       0.0021,
-      0.0023,
-      0.0027,
-      0.0041,
-      0.0038,
-      0.0031,
-      0.0048,
-      0.0048,
-      0.0051,
-      0.0047,
-      0.0072,
-      0.0083,
-      0.0074,
-      0.0107,
-      0.0087,
-      0.0102,
-      0.0087,
-      0.0129,
-      0.0127,
-      0.0127,
-      0.0142,
-      0.0136,
-      0.0147,
-      0.015,
-      0.0169,
-      0.0146,
-      0.0157,
-      0.0174,
-      0.0134,
-      0.0134,
-      0.0153,
-      0.0144,
-      0.0169,
-      0.0169,
-      0.0167,
-      0.0156,
-      0.0171,
-      0.0145,
-      0.0137,
-      0.0143,
-      0.0144,
-      0.0154,
-      0.014,
-      0.0125,
-      0.015,
-      0.0116,
-      0.014,
-      0.013,
-      0.0122,
-      0.0126,
-      0.0134,
-      0.0105,
-      0.0101,
-      0.0113,
-      0.011,
-      0.0084,
-      0.0114,
-      0.0083,
-      0.0086,
-      0.0091,
-      0.008,
-      0.0096,
-      0.0087,
-      0.008,
-      0.0068,
-      0.0082,
-      0.0076,
-      0.0069,
-      0.008,
-      0.0073,
-      0.0055,
-      0.0068,
-      0.0089,
-      0.0067,
-      0.0065,
-      0.0055,
-      0.007,
-      0.0038,
-      0.0047,
-      0.0054,
+      0.002,
+      0.0026,
+      0.0025,
+      0.0045,
+      0.0033,
+      0.0033,
       0.0048,
       0.0049,
-      0.0051,
-      0.005,
-      0.0046,
-      0.004,
-      0.0054,
+      0.0052,
+      0.0047,
+      0.0069,
+      0.0085,
+      0.0077,
+      0.0102,
+      0.0091,
+      0.0101,
+      0.0088,
+      0.013,
+      0.0126,
+      0.0132,
+      0.014,
+      0.0134,
+      0.0154,
+      0.0147,
+      0.0166,
+      0.0152,
+      0.0152,
+      0.0173,
+      0.0135,
+      0.0134,
+      0.0153,
+      0.0149,
+      0.0171,
+      0.0162,
+      0.0169,
+      0.0156,
+      0.0171,
+      0.014,
+      0.0141,
+      0.0145,
+      0.0145,
+      0.0149,
+      0.0143,
+      0.0129,
+      0.0148,
+      0.0114,
+      0.0135,
+      0.0134,
+      0.0122,
+      0.013,
+      0.0131,
+      0.0104,
+      0.0102,
+      0.0115,
+      0.0112,
+      0.0081,
+      0.0111,
+      0.0081,
+      0.0089,
+      0.0088,
+      0.0084,
+      0.0093,
+      0.0087,
+      0.0083,
+      0.0067,
+      0.0082,
+      0.0076,
+      0.007,
+      0.0079,
+      0.0072,
+      0.0057,
+      0.0066,
+      0.009,
+      0.0067,
+      0.0064,
+      0.0056,
+      0.0068,
+      0.0041,
+      0.0044,
+      0.0056,
+      0.0049,
+      0.0041,
+      0.0059,
       0.0046,
       0.0043,
-      0.0029,
-      0.0027,
-      0.0029,
-      0.003,
+      0.0045,
+      0.0051,
+      0.0049,
       0.0037,
-      0.0026,
+      0.0031,
+      0.003,
+      0.0025,
+      0.0034,
+      0.0032,
+      0.0031,
+      0.0036,
+      0.0028,
       0.0041,
       0.0025,
       0.0037,
-      0.0028,
-      0.0039,
+      0.0022,
+      0.0032,
+      0.0036,
+      0.0022,
       0.0023,
-      0.0029,
-      0.0038,
-      0.0024,
-      0.0024,
-      0.0016,
-      0.0021,
-      0.0022,
-      0.0013,
-      0.0027,
-      0.0013,
-      0.0021,
-      0.0016,
-      0.0015,
-      0.0025,
-      0.0015,
-      0.0019,
-      0.0022,
       0.002,
+      0.0019,
+      0.002,
+      0.0016,
+      0.0023,
+      0.0017,
+      0.0021,
+      0.0015,
+      0.0015,
+      0.0023,
+      0.002,
+      0.0018,
+      0.0019,
+      0.0021,
+      0.0012,
+      0.001,
+      0.0012,
+      0.0013,
       0.0014,
       0.0011,
-      0.0011,
+      0.0014,
       0.0009,
-      0.0016,
-      0.0013,
-      0.0015,
+      0.0011,
+      0.0011,
       0.0008,
-      0.001,
+      0.0014,
+      0.0006,
+      0.0012,
       0.0013,
-      0.0006,
-      0.0015,
-      0.0005,
-      0.001,
-      0.0016,
-      0.0006,
+      0.0008,
       0.0012,
       0.0004,
       0.0012,
-      0.0008,
-      0.0007,
-      0.0014,
-      0.0004,
-      0.0005,
+      0.0006,
       0.0009,
-      0.0008,
-      0.0006,
-      0.0005,
-      0.0007,
-      0.0013,
       0.0011,
-      0.0003,
-      0.0008,
-      0.0004,
+      0.0006,
       0.0005,
-      0.0005,
+      0.0007,
       0.001,
+      0.0007,
       0.0004,
+      0.0007,
+      0.0011,
+      0.0012,
+      0.0002,
+      0.0009,
       0.0003,
       0.0005,
       0.0007,
-      0.0007,
-      0.0004,
-      0.0005,
+      0.0009,
+      0.0003,
       0.0003,
       0.0007,
+      0.0006,
+      0.0008,
+      0.0003,
+      0.0004,
+      0.0004,
+      0.0007,
+      0.0004,
+      0.0004,
+      0.0004,
+      0.0005,
       0.0003,
       0.0006,
       0.0004,
-      0.0005,
-      0.0002,
-      0.0007,
+      0.0001,
       0.0003,
       0.0002,
-      0.0002,
-      0.0002,
-      0.0005,
-      0.0003,
       0.0004,
-      0.0002,
-      0.0002,
-      0.0002,
-      0.0002,
-      0.0002,
-      0.0002,
-      0.0002,
-      0.0001,
-      0.0006,
-      0.0001,
-      0.0003,
-      0.0001,
+      0.0004,
       0.0003,
       0.0002,
       0.0003,
+      0.0001,
+      0.0002,
       0.0002,
       0.0001,
       0.0001,
+      0.0002,
+      0.0002,
+      0.0005,
+      0.0001,
+      0.0003,
+      0.0002,
+      0.0002,
+      0.0002,
+      0.0003,
+      0.0002,
       0.0001,
       0.0003,
       0.0001,
-      0.0001,
       0.0002,
+      0.0001,
+      0.0001,
+      0.0001,
       0.0001,
       0.0001,
       0.0001,
@@ -542,11 +546,11 @@
         "name": "Rep. CA-41",
         "party": "R"
       },
-      "prob_dem": 0.507,
+      "prob_dem": 0.506,
       "mean_vote_share": 50.1,
       "std_vote_share": 4.9,
       "ci_90_low": 42.2,
-      "ci_90_high": 58.2,
+      "ci_90_high": 58.1,
       "category": "toss_up",
       "pvi": -2.0,
       "region": "Pacific",
@@ -560,7 +564,7 @@
         "name": "Rep. WI-1",
         "party": "R"
       },
-      "prob_dem": 0.507,
+      "prob_dem": 0.506,
       "mean_vote_share": 50.1,
       "std_vote_share": 4.9,
       "ci_90_low": 42.1,
@@ -589,24 +593,6 @@
       "open_seat": false
     },
     {
-      "id": "MI-10",
-      "state": "MI",
-      "district_number": 10,
-      "incumbent": {
-        "name": "John James",
-        "party": "R"
-      },
-      "prob_dem": 0.472,
-      "mean_vote_share": 49.7,
-      "std_vote_share": 4.8,
-      "ci_90_low": 41.7,
-      "ci_90_high": 57.8,
-      "category": "toss_up",
-      "pvi": -3.0,
-      "region": "Rust_Belt",
-      "open_seat": false
-    },
-    {
       "id": "OH-10",
       "state": "OH",
       "district_number": 10,
@@ -625,6 +611,24 @@
       "open_seat": false
     },
     {
+      "id": "MI-10",
+      "state": "MI",
+      "district_number": 10,
+      "incumbent": {
+        "name": "John James",
+        "party": "R"
+      },
+      "prob_dem": 0.471,
+      "mean_vote_share": 49.7,
+      "std_vote_share": 4.8,
+      "ci_90_low": 41.7,
+      "ci_90_high": 57.8,
+      "category": "toss_up",
+      "pvi": -3.0,
+      "region": "Rust_Belt",
+      "open_seat": false
+    },
+    {
       "id": "PA-10",
       "state": "PA",
       "district_number": 10,
@@ -632,7 +636,7 @@
         "name": "Scott Perry",
         "party": "R"
       },
-      "prob_dem": 0.471,
+      "prob_dem": 0.47,
       "mean_vote_share": 49.7,
       "std_vote_share": 4.8,
       "ci_90_low": 41.9,
@@ -668,7 +672,7 @@
         "name": "Derrick Van Orden",
         "party": "R"
       },
-      "prob_dem": 0.463,
+      "prob_dem": 0.462,
       "mean_vote_share": 49.7,
       "std_vote_share": 4.8,
       "ci_90_low": 41.9,
@@ -686,7 +690,7 @@
         "name": "Rep. MI-4",
         "party": "R"
       },
-      "prob_dem": 0.46,
+      "prob_dem": 0.459,
       "mean_vote_share": 49.6,
       "std_vote_share": 4.8,
       "ci_90_low": 41.8,
@@ -704,7 +708,7 @@
         "name": "Rep. TX-32",
         "party": "D"
       },
-      "prob_dem": 0.46,
+      "prob_dem": 0.459,
       "mean_vote_share": 49.7,
       "std_vote_share": 4.3,
       "ci_90_low": 42.8,
@@ -712,6 +716,24 @@
       "category": "toss_up",
       "pvi": -12.0,
       "region": "Texas_Region",
+      "open_seat": false
+    },
+    {
+      "id": "PA-07",
+      "state": "PA",
+      "district_number": 7,
+      "incumbent": {
+        "name": "Susan Wild",
+        "party": "R"
+      },
+      "prob_dem": 0.541,
+      "mean_vote_share": 50.6,
+      "std_vote_share": 4.9,
+      "ci_90_low": 42.8,
+      "ci_90_high": 58.8,
+      "category": "toss_up",
+      "pvi": -1.0,
+      "region": "Rust_Belt",
       "open_seat": false
     },
     {
@@ -730,24 +752,6 @@
       "category": "toss_up",
       "pvi": -12.0,
       "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
-      "id": "PA-07",
-      "state": "PA",
-      "district_number": 7,
-      "incumbent": {
-        "name": "Susan Wild",
-        "party": "R"
-      },
-      "prob_dem": 0.542,
-      "mean_vote_share": 50.6,
-      "std_vote_share": 4.9,
-      "ci_90_low": 42.8,
-      "ci_90_high": 58.8,
-      "category": "toss_up",
-      "pvi": -1.0,
-      "region": "Rust_Belt",
       "open_seat": false
     },
     {
@@ -776,7 +780,7 @@
         "name": "Rep. CA-40",
         "party": "R"
       },
-      "prob_dem": 0.551,
+      "prob_dem": 0.55,
       "mean_vote_share": 50.7,
       "std_vote_share": 4.9,
       "ci_90_low": 42.6,
@@ -884,7 +888,7 @@
         "name": "Tom Barrett",
         "party": "R"
       },
-      "prob_dem": 0.583,
+      "prob_dem": 0.582,
       "mean_vote_share": 51.1,
       "std_vote_share": 4.9,
       "ci_90_low": 43.3,
@@ -913,24 +917,6 @@
       "open_seat": false
     },
     {
-      "id": "IA-01",
-      "state": "IA",
-      "district_number": 1,
-      "incumbent": {
-        "name": "Mariannette Miller-Meeks",
-        "party": "R"
-      },
-      "prob_dem": 0.416,
-      "mean_vote_share": 49.1,
-      "std_vote_share": 4.8,
-      "ci_90_low": 41.4,
-      "ci_90_high": 57.1,
-      "category": "lean_r",
-      "pvi": -4.0,
-      "region": "Rust_Belt",
-      "open_seat": false
-    },
-    {
       "id": "AZ-06",
       "state": "AZ",
       "district_number": 6,
@@ -949,6 +935,24 @@
       "open_seat": false
     },
     {
+      "id": "IA-01",
+      "state": "IA",
+      "district_number": 1,
+      "incumbent": {
+        "name": "Mariannette Miller-Meeks",
+        "party": "R"
+      },
+      "prob_dem": 0.415,
+      "mean_vote_share": 49.1,
+      "std_vote_share": 4.8,
+      "ci_90_low": 41.4,
+      "ci_90_high": 57.1,
+      "category": "lean_r",
+      "pvi": -4.0,
+      "region": "Rust_Belt",
+      "open_seat": false
+    },
+    {
       "id": "CO-08",
       "state": "CO",
       "district_number": 8,
@@ -956,7 +960,7 @@
         "name": "Yadira Caraveo",
         "party": "R"
       },
-      "prob_dem": 0.591,
+      "prob_dem": 0.59,
       "mean_vote_share": 51.1,
       "std_vote_share": 5.0,
       "ci_90_low": 43.1,
@@ -1011,7 +1015,7 @@
         "party": "R"
       },
       "prob_dem": 0.391,
-      "mean_vote_share": 48.8,
+      "mean_vote_share": 48.7,
       "std_vote_share": 4.8,
       "ci_90_low": 41.1,
       "ci_90_high": 56.8,
@@ -1064,29 +1068,11 @@
         "name": "Rep. FL-13",
         "party": "R"
       },
-      "prob_dem": 0.389,
+      "prob_dem": 0.388,
       "mean_vote_share": 48.7,
       "std_vote_share": 4.7,
       "ci_90_low": 41.1,
       "ci_90_high": 56.6,
-      "category": "lean_r",
-      "pvi": -5.0,
-      "region": "Southeast",
-      "open_seat": false
-    },
-    {
-      "id": "FL-07",
-      "state": "FL",
-      "district_number": 7,
-      "incumbent": {
-        "name": "Rep. FL-7",
-        "party": "R"
-      },
-      "prob_dem": 0.386,
-      "mean_vote_share": 48.7,
-      "std_vote_share": 4.7,
-      "ci_90_low": 41.1,
-      "ci_90_high": 56.5,
       "category": "lean_r",
       "pvi": -5.0,
       "region": "Southeast",
@@ -1108,6 +1094,24 @@
       "category": "lean_r",
       "pvi": -5.0,
       "region": "Southwest",
+      "open_seat": false
+    },
+    {
+      "id": "FL-07",
+      "state": "FL",
+      "district_number": 7,
+      "incumbent": {
+        "name": "Rep. FL-7",
+        "party": "R"
+      },
+      "prob_dem": 0.385,
+      "mean_vote_share": 48.7,
+      "std_vote_share": 4.7,
+      "ci_90_low": 41.1,
+      "ci_90_high": 56.5,
+      "category": "lean_r",
+      "pvi": -5.0,
+      "region": "Southeast",
       "open_seat": false
     },
     {
@@ -1136,7 +1140,7 @@
         "name": "Rep. MT-1",
         "party": "R"
       },
-      "prob_dem": 0.383,
+      "prob_dem": 0.382,
       "mean_vote_share": 48.7,
       "std_vote_share": 4.6,
       "ci_90_low": 41.1,
@@ -1172,7 +1176,7 @@
         "name": "Brian Fitzpatrick",
         "party": "R"
       },
-      "prob_dem": 0.627,
+      "prob_dem": 0.626,
       "mean_vote_share": 51.6,
       "std_vote_share": 4.9,
       "ci_90_low": 43.7,
@@ -1191,7 +1195,7 @@
         "party": "R"
       },
       "prob_dem": 0.354,
-      "mean_vote_share": 48.3,
+      "mean_vote_share": 48.2,
       "std_vote_share": 4.7,
       "ci_90_low": 40.6,
       "ci_90_high": 56.1,
@@ -1244,7 +1248,7 @@
         "name": "Rep. AK-1",
         "party": "R"
       },
-      "prob_dem": 0.34,
+      "prob_dem": 0.339,
       "mean_vote_share": 48.1,
       "std_vote_share": 4.7,
       "ci_90_low": 40.5,
@@ -1262,7 +1266,7 @@
         "name": "Rep. TX-35",
         "party": "D"
       },
-      "prob_dem": 0.67,
+      "prob_dem": 0.669,
       "mean_vote_share": 52.1,
       "std_vote_share": 4.6,
       "ci_90_low": 44.8,
@@ -1270,42 +1274,6 @@
       "category": "lean_d",
       "pvi": -7.0,
       "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
-      "id": "AZ-02",
-      "state": "AZ",
-      "district_number": 2,
-      "incumbent": {
-        "name": "Rep. AZ-2",
-        "party": "R"
-      },
-      "prob_dem": 0.313,
-      "mean_vote_share": 47.8,
-      "std_vote_share": 4.6,
-      "ci_90_low": 40.4,
-      "ci_90_high": 55.4,
-      "category": "lean_r",
-      "pvi": -7.0,
-      "region": "Southwest",
-      "open_seat": false
-    },
-    {
-      "id": "KY-06",
-      "state": "KY",
-      "district_number": 6,
-      "incumbent": {
-        "name": "Rep. KY-6",
-        "party": "R"
-      },
-      "prob_dem": 0.313,
-      "mean_vote_share": 47.8,
-      "std_vote_share": 4.7,
-      "ci_90_low": 40.3,
-      "ci_90_high": 55.6,
-      "category": "lean_r",
-      "pvi": -7.0,
-      "region": "Deep_South",
       "open_seat": false
     },
     {
@@ -1324,6 +1292,42 @@
       "category": "lean_r",
       "pvi": -7.0,
       "region": "Texas_Region",
+      "open_seat": false
+    },
+    {
+      "id": "AZ-02",
+      "state": "AZ",
+      "district_number": 2,
+      "incumbent": {
+        "name": "Rep. AZ-2",
+        "party": "R"
+      },
+      "prob_dem": 0.312,
+      "mean_vote_share": 47.8,
+      "std_vote_share": 4.6,
+      "ci_90_low": 40.3,
+      "ci_90_high": 55.4,
+      "category": "lean_r",
+      "pvi": -7.0,
+      "region": "Southwest",
+      "open_seat": false
+    },
+    {
+      "id": "KY-06",
+      "state": "KY",
+      "district_number": 6,
+      "incumbent": {
+        "name": "Rep. KY-6",
+        "party": "R"
+      },
+      "prob_dem": 0.312,
+      "mean_vote_share": 47.8,
+      "std_vote_share": 4.7,
+      "ci_90_low": 40.3,
+      "ci_90_high": 55.6,
+      "category": "lean_r",
+      "pvi": -7.0,
+      "region": "Deep_South",
       "open_seat": false
     },
     {
@@ -1373,7 +1377,7 @@
       "prob_dem": 0.305,
       "mean_vote_share": 47.7,
       "std_vote_share": 4.6,
-      "ci_90_low": 40.4,
+      "ci_90_low": 40.3,
       "ci_90_high": 55.5,
       "category": "lean_r",
       "pvi": -7.0,
@@ -1406,32 +1410,14 @@
         "name": "Don Bacon",
         "party": "R"
       },
-      "prob_dem": 0.705,
-      "mean_vote_share": 52.6,
+      "prob_dem": 0.704,
+      "mean_vote_share": 52.5,
       "std_vote_share": 4.8,
       "ci_90_low": 44.8,
       "ci_90_high": 60.4,
       "category": "likely_d",
       "pvi": 3.0,
       "region": "Plains",
-      "open_seat": false
-    },
-    {
-      "id": "CA-23",
-      "state": "CA",
-      "district_number": 23,
-      "incumbent": {
-        "name": "Rep. CA-23",
-        "party": "R"
-      },
-      "prob_dem": 0.276,
-      "mean_vote_share": 47.3,
-      "std_vote_share": 4.6,
-      "ci_90_low": 39.8,
-      "ci_90_high": 55.0,
-      "category": "likely_r",
-      "pvi": -8.0,
-      "region": "Pacific",
       "open_seat": false
     },
     {
@@ -1453,6 +1439,24 @@
       "open_seat": false
     },
     {
+      "id": "CA-23",
+      "state": "CA",
+      "district_number": 23,
+      "incumbent": {
+        "name": "Rep. CA-23",
+        "party": "R"
+      },
+      "prob_dem": 0.275,
+      "mean_vote_share": 47.3,
+      "std_vote_share": 4.6,
+      "ci_90_low": 39.8,
+      "ci_90_high": 55.0,
+      "category": "likely_r",
+      "pvi": -8.0,
+      "region": "Pacific",
+      "open_seat": false
+    },
+    {
       "id": "CA-05",
       "state": "CA",
       "district_number": 5,
@@ -1460,7 +1464,7 @@
         "name": "Rep. CA-5",
         "party": "R"
       },
-      "prob_dem": 0.273,
+      "prob_dem": 0.272,
       "mean_vote_share": 47.3,
       "std_vote_share": 4.6,
       "ci_90_low": 40.0,
@@ -1478,7 +1482,7 @@
         "name": "Rep. IN-5",
         "party": "R"
       },
-      "prob_dem": 0.272,
+      "prob_dem": 0.271,
       "mean_vote_share": 47.3,
       "std_vote_share": 4.5,
       "ci_90_low": 40.0,
@@ -1507,24 +1511,6 @@
       "open_seat": false
     },
     {
-      "id": "TN-05",
-      "state": "TN",
-      "district_number": 5,
-      "incumbent": {
-        "name": "Rep. TN-5",
-        "party": "R"
-      },
-      "prob_dem": 0.27,
-      "mean_vote_share": 47.3,
-      "std_vote_share": 4.6,
-      "ci_90_low": 39.9,
-      "ci_90_high": 54.7,
-      "category": "likely_r",
-      "pvi": -8.0,
-      "region": "Deep_South",
-      "open_seat": false
-    },
-    {
       "id": "WI-06",
       "state": "WI",
       "district_number": 6,
@@ -1543,6 +1529,24 @@
       "open_seat": false
     },
     {
+      "id": "TN-05",
+      "state": "TN",
+      "district_number": 5,
+      "incumbent": {
+        "name": "Rep. TN-5",
+        "party": "R"
+      },
+      "prob_dem": 0.269,
+      "mean_vote_share": 47.2,
+      "std_vote_share": 4.6,
+      "ci_90_low": 39.9,
+      "ci_90_high": 54.7,
+      "category": "likely_r",
+      "pvi": -8.0,
+      "region": "Deep_South",
+      "open_seat": false
+    },
+    {
       "id": "AZ-08",
       "state": "AZ",
       "district_number": 8,
@@ -1550,7 +1554,7 @@
         "name": "Rep. AZ-8",
         "party": "R"
       },
-      "prob_dem": 0.268,
+      "prob_dem": 0.267,
       "mean_vote_share": 47.2,
       "std_vote_share": 4.6,
       "ci_90_low": 39.7,
@@ -1568,11 +1572,11 @@
         "name": "Rep. WI-8",
         "party": "R"
       },
-      "prob_dem": 0.268,
+      "prob_dem": 0.267,
       "mean_vote_share": 47.3,
       "std_vote_share": 4.6,
       "ci_90_low": 39.9,
-      "ci_90_high": 55.0,
+      "ci_90_high": 54.9,
       "category": "likely_r",
       "pvi": -8.0,
       "region": "Rust_Belt",
@@ -1586,7 +1590,7 @@
         "name": "Rep. CO-4",
         "party": "R"
       },
-      "prob_dem": 0.242,
+      "prob_dem": 0.241,
       "mean_vote_share": 46.9,
       "std_vote_share": 4.5,
       "ci_90_low": 39.5,
@@ -1605,7 +1609,7 @@
         "party": "R"
       },
       "prob_dem": 0.236,
-      "mean_vote_share": 46.9,
+      "mean_vote_share": 46.8,
       "std_vote_share": 4.5,
       "ci_90_low": 39.5,
       "ci_90_high": 54.3,
@@ -1622,7 +1626,7 @@
         "name": "Rep. OK-5",
         "party": "R"
       },
-      "prob_dem": 0.236,
+      "prob_dem": 0.235,
       "mean_vote_share": 46.8,
       "std_vote_share": 4.5,
       "ci_90_low": 39.6,
@@ -1669,6 +1673,42 @@
       "open_seat": false
     },
     {
+      "id": "NC-01",
+      "state": "NC",
+      "district_number": 1,
+      "incumbent": {
+        "name": "Don Davis",
+        "party": "D"
+      },
+      "prob_dem": 0.796,
+      "mean_vote_share": 54.0,
+      "std_vote_share": 4.9,
+      "ci_90_low": 46.2,
+      "ci_90_high": 62.1,
+      "category": "likely_d",
+      "pvi": -3.0,
+      "region": "Southeast",
+      "open_seat": false
+    },
+    {
+      "id": "MN-06",
+      "state": "MN",
+      "district_number": 6,
+      "incumbent": {
+        "name": "Rep. MN-6",
+        "party": "R"
+      },
+      "prob_dem": 0.203,
+      "mean_vote_share": 46.3,
+      "std_vote_share": 4.4,
+      "ci_90_low": 39.2,
+      "ci_90_high": 53.6,
+      "category": "likely_r",
+      "pvi": -10.0,
+      "region": "Rust_Belt",
+      "open_seat": false
+    },
+    {
       "id": "AZ-05",
       "state": "AZ",
       "district_number": 5,
@@ -1676,7 +1716,7 @@
         "name": "Rep. AZ-5",
         "party": "R"
       },
-      "prob_dem": 0.203,
+      "prob_dem": 0.202,
       "mean_vote_share": 46.4,
       "std_vote_share": 4.5,
       "ci_90_low": 39.1,
@@ -1694,7 +1734,7 @@
         "name": "Rep. FL-5",
         "party": "R"
       },
-      "prob_dem": 0.203,
+      "prob_dem": 0.202,
       "mean_vote_share": 46.3,
       "std_vote_share": 4.5,
       "ci_90_low": 39.0,
@@ -1702,60 +1742,6 @@
       "category": "likely_r",
       "pvi": -10.0,
       "region": "Southeast",
-      "open_seat": false
-    },
-    {
-      "id": "MN-06",
-      "state": "MN",
-      "district_number": 6,
-      "incumbent": {
-        "name": "Rep. MN-6",
-        "party": "R"
-      },
-      "prob_dem": 0.203,
-      "mean_vote_share": 46.3,
-      "std_vote_share": 4.4,
-      "ci_90_low": 39.2,
-      "ci_90_high": 53.7,
-      "category": "likely_r",
-      "pvi": -10.0,
-      "region": "Rust_Belt",
-      "open_seat": false
-    },
-    {
-      "id": "NC-01",
-      "state": "NC",
-      "district_number": 1,
-      "incumbent": {
-        "name": "Don Davis",
-        "party": "D"
-      },
-      "prob_dem": 0.797,
-      "mean_vote_share": 54.0,
-      "std_vote_share": 4.9,
-      "ci_90_low": 46.2,
-      "ci_90_high": 62.1,
-      "category": "likely_d",
-      "pvi": -3.0,
-      "region": "Southeast",
-      "open_seat": false
-    },
-    {
-      "id": "NY-11",
-      "state": "NY",
-      "district_number": 11,
-      "incumbent": {
-        "name": "Rep. NY-11",
-        "party": "R"
-      },
-      "prob_dem": 0.202,
-      "mean_vote_share": 46.3,
-      "std_vote_share": 4.5,
-      "ci_90_low": 39.1,
-      "ci_90_high": 53.7,
-      "category": "likely_r",
-      "pvi": -10.0,
-      "region": "Mid_Atlantic_Northeast",
       "open_seat": false
     },
     {
@@ -1777,39 +1763,39 @@
       "open_seat": false
     },
     {
-      "id": "KS-02",
-      "state": "KS",
-      "district_number": 2,
+      "id": "OH-09",
+      "state": "OH",
+      "district_number": 9,
       "incumbent": {
-        "name": "Rep. KS-2",
-        "party": "R"
+        "name": "Marcy Kaptur",
+        "party": "D"
       },
-      "prob_dem": 0.201,
-      "mean_vote_share": 46.4,
-      "std_vote_share": 4.4,
-      "ci_90_low": 39.3,
-      "ci_90_high": 53.7,
-      "category": "likely_r",
-      "pvi": -10.0,
-      "region": "Plains",
+      "prob_dem": 0.798,
+      "mean_vote_share": 54.0,
+      "std_vote_share": 4.8,
+      "ci_90_low": 46.1,
+      "ci_90_high": 62.0,
+      "category": "likely_d",
+      "pvi": -3.0,
+      "region": "Rust_Belt",
       "open_seat": false
     },
     {
-      "id": "NC-03",
-      "state": "NC",
-      "district_number": 3,
+      "id": "NY-11",
+      "state": "NY",
+      "district_number": 11,
       "incumbent": {
-        "name": "Rep. NC-3",
+        "name": "Rep. NY-11",
         "party": "R"
       },
       "prob_dem": 0.201,
-      "mean_vote_share": 46.4,
-      "std_vote_share": 4.4,
-      "ci_90_low": 39.3,
+      "mean_vote_share": 46.3,
+      "std_vote_share": 4.5,
+      "ci_90_low": 39.1,
       "ci_90_high": 53.7,
       "category": "likely_r",
       "pvi": -10.0,
-      "region": "Southeast",
+      "region": "Mid_Atlantic_Northeast",
       "open_seat": false
     },
     {
@@ -1831,6 +1817,42 @@
       "open_seat": false
     },
     {
+      "id": "KS-02",
+      "state": "KS",
+      "district_number": 2,
+      "incumbent": {
+        "name": "Rep. KS-2",
+        "party": "R"
+      },
+      "prob_dem": 0.2,
+      "mean_vote_share": 46.4,
+      "std_vote_share": 4.4,
+      "ci_90_low": 39.3,
+      "ci_90_high": 53.7,
+      "category": "likely_r",
+      "pvi": -10.0,
+      "region": "Plains",
+      "open_seat": false
+    },
+    {
+      "id": "NC-03",
+      "state": "NC",
+      "district_number": 3,
+      "incumbent": {
+        "name": "Rep. NC-3",
+        "party": "R"
+      },
+      "prob_dem": 0.2,
+      "mean_vote_share": 46.4,
+      "std_vote_share": 4.4,
+      "ci_90_low": 39.3,
+      "ci_90_high": 53.7,
+      "category": "likely_r",
+      "pvi": -10.0,
+      "region": "Southeast",
+      "open_seat": false
+    },
+    {
       "id": "TX-38",
       "state": "TX",
       "district_number": 38,
@@ -1838,86 +1860,14 @@
         "name": "Rep. TX-38",
         "party": "R"
       },
-      "prob_dem": 0.201,
+      "prob_dem": 0.2,
       "mean_vote_share": 46.3,
       "std_vote_share": 4.4,
-      "ci_90_low": 39.3,
+      "ci_90_low": 39.2,
       "ci_90_high": 53.8,
       "category": "likely_r",
       "pvi": -10.0,
       "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
-      "id": "OH-09",
-      "state": "OH",
-      "district_number": 9,
-      "incumbent": {
-        "name": "Marcy Kaptur",
-        "party": "D"
-      },
-      "prob_dem": 0.799,
-      "mean_vote_share": 54.1,
-      "std_vote_share": 4.8,
-      "ci_90_low": 46.1,
-      "ci_90_high": 62.0,
-      "category": "likely_d",
-      "pvi": -3.0,
-      "region": "Rust_Belt",
-      "open_seat": false
-    },
-    {
-      "id": "FL-28",
-      "state": "FL",
-      "district_number": 28,
-      "incumbent": {
-        "name": "Rep. FL-28",
-        "party": "R"
-      },
-      "prob_dem": 0.2,
-      "mean_vote_share": 46.3,
-      "std_vote_share": 4.4,
-      "ci_90_low": 39.1,
-      "ci_90_high": 53.8,
-      "category": "likely_r",
-      "pvi": -10.0,
-      "region": "Southeast",
-      "open_seat": false
-    },
-    {
-      "id": "TN-07",
-      "state": "TN",
-      "district_number": 7,
-      "incumbent": {
-        "name": "Rep. TN-7",
-        "party": "R"
-      },
-      "prob_dem": 0.2,
-      "mean_vote_share": 46.3,
-      "std_vote_share": 4.4,
-      "ci_90_low": 39.2,
-      "ci_90_high": 53.7,
-      "category": "likely_r",
-      "pvi": -10.0,
-      "region": "Deep_South",
-      "open_seat": false
-    },
-    {
-      "id": "UT-03",
-      "state": "UT",
-      "district_number": 3,
-      "incumbent": {
-        "name": "Rep. UT-3",
-        "party": "R"
-      },
-      "prob_dem": 0.2,
-      "mean_vote_share": 46.3,
-      "std_vote_share": 4.4,
-      "ci_90_low": 39.2,
-      "ci_90_high": 53.9,
-      "category": "likely_r",
-      "pvi": -10.0,
-      "region": "Mountain",
       "open_seat": false
     },
     {
@@ -1936,6 +1886,60 @@
       "category": "likely_r",
       "pvi": -10.0,
       "region": "Southeast",
+      "open_seat": false
+    },
+    {
+      "id": "FL-28",
+      "state": "FL",
+      "district_number": 28,
+      "incumbent": {
+        "name": "Rep. FL-28",
+        "party": "R"
+      },
+      "prob_dem": 0.199,
+      "mean_vote_share": 46.3,
+      "std_vote_share": 4.4,
+      "ci_90_low": 39.1,
+      "ci_90_high": 53.8,
+      "category": "likely_r",
+      "pvi": -10.0,
+      "region": "Southeast",
+      "open_seat": false
+    },
+    {
+      "id": "TN-07",
+      "state": "TN",
+      "district_number": 7,
+      "incumbent": {
+        "name": "Rep. TN-7",
+        "party": "R"
+      },
+      "prob_dem": 0.199,
+      "mean_vote_share": 46.3,
+      "std_vote_share": 4.4,
+      "ci_90_low": 39.2,
+      "ci_90_high": 53.7,
+      "category": "likely_r",
+      "pvi": -10.0,
+      "region": "Deep_South",
+      "open_seat": false
+    },
+    {
+      "id": "UT-03",
+      "state": "UT",
+      "district_number": 3,
+      "incumbent": {
+        "name": "Rep. UT-3",
+        "party": "R"
+      },
+      "prob_dem": 0.199,
+      "mean_vote_share": 46.3,
+      "std_vote_share": 4.4,
+      "ci_90_low": 39.2,
+      "ci_90_high": 53.9,
+      "category": "likely_r",
+      "pvi": -10.0,
+      "region": "Mountain",
       "open_seat": false
     },
     {
@@ -2029,6 +2033,24 @@
       "open_seat": false
     },
     {
+      "id": "WA-03",
+      "state": "WA",
+      "district_number": 3,
+      "incumbent": {
+        "name": "Marie Gluesenkamp Perez",
+        "party": "D"
+      },
+      "prob_dem": 0.828,
+      "mean_vote_share": 54.5,
+      "std_vote_share": 4.8,
+      "ci_90_low": 46.7,
+      "ci_90_high": 62.6,
+      "category": "likely_d",
+      "pvi": -2.0,
+      "region": "Pacific",
+      "open_seat": false
+    },
+    {
       "id": "TX-31",
       "state": "TX",
       "district_number": 31,
@@ -2036,7 +2058,7 @@
         "name": "Rep. TX-31",
         "party": "R"
       },
-      "prob_dem": 0.173,
+      "prob_dem": 0.172,
       "mean_vote_share": 45.9,
       "std_vote_share": 4.4,
       "ci_90_low": 38.9,
@@ -2047,24 +2069,6 @@
       "open_seat": false
     },
     {
-      "id": "WA-03",
-      "state": "WA",
-      "district_number": 3,
-      "incumbent": {
-        "name": "Marie Gluesenkamp Perez",
-        "party": "D"
-      },
-      "prob_dem": 0.828,
-      "mean_vote_share": 54.6,
-      "std_vote_share": 4.8,
-      "ci_90_low": 46.8,
-      "ci_90_high": 62.6,
-      "category": "likely_d",
-      "pvi": -2.0,
-      "region": "Pacific",
-      "open_seat": false
-    },
-    {
       "id": "OK-01",
       "state": "OK",
       "district_number": 1,
@@ -2072,29 +2076,11 @@
         "name": "Rep. OK-1",
         "party": "R"
       },
-      "prob_dem": 0.172,
+      "prob_dem": 0.171,
       "mean_vote_share": 45.9,
       "std_vote_share": 4.3,
-      "ci_90_low": 39.0,
+      "ci_90_low": 38.9,
       "ci_90_high": 53.2,
-      "category": "likely_r",
-      "pvi": -11.0,
-      "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
-      "id": "TX-26",
-      "state": "TX",
-      "district_number": 26,
-      "incumbent": {
-        "name": "Rep. TX-26",
-        "party": "R"
-      },
-      "prob_dem": 0.172,
-      "mean_vote_share": 45.9,
-      "std_vote_share": 4.4,
-      "ci_90_low": 38.8,
-      "ci_90_high": 53.1,
       "category": "likely_r",
       "pvi": -11.0,
       "region": "Texas_Region",
@@ -2119,6 +2105,24 @@
       "open_seat": false
     },
     {
+      "id": "TX-26",
+      "state": "TX",
+      "district_number": 26,
+      "incumbent": {
+        "name": "Rep. TX-26",
+        "party": "R"
+      },
+      "prob_dem": 0.171,
+      "mean_vote_share": 45.9,
+      "std_vote_share": 4.4,
+      "ci_90_low": 38.8,
+      "ci_90_high": 53.1,
+      "category": "likely_r",
+      "pvi": -11.0,
+      "region": "Texas_Region",
+      "open_seat": false
+    },
+    {
       "id": "SC-04",
       "state": "SC",
       "district_number": 4,
@@ -2126,7 +2130,7 @@
         "name": "Rep. SC-4",
         "party": "R"
       },
-      "prob_dem": 0.171,
+      "prob_dem": 0.17,
       "mean_vote_share": 45.9,
       "std_vote_share": 4.4,
       "ci_90_low": 38.8,
@@ -2166,28 +2170,10 @@
       "mean_vote_share": 45.9,
       "std_vote_share": 4.3,
       "ci_90_low": 38.7,
-      "ci_90_high": 53.2,
+      "ci_90_high": 53.1,
       "category": "likely_r",
       "pvi": -11.0,
       "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
-      "id": "WI-07",
-      "state": "WI",
-      "district_number": 7,
-      "incumbent": {
-        "name": "Rep. WI-7",
-        "party": "R"
-      },
-      "prob_dem": 0.17,
-      "mean_vote_share": 45.8,
-      "std_vote_share": 4.4,
-      "ci_90_low": 38.8,
-      "ci_90_high": 53.0,
-      "category": "likely_r",
-      "pvi": -11.0,
-      "region": "Rust_Belt",
       "open_seat": false
     },
     {
@@ -2209,21 +2195,21 @@
       "open_seat": false
     },
     {
-      "id": "GA-10",
-      "state": "GA",
-      "district_number": 10,
+      "id": "WI-07",
+      "state": "WI",
+      "district_number": 7,
       "incumbent": {
-        "name": "Rep. GA-10",
+        "name": "Rep. WI-7",
         "party": "R"
       },
       "prob_dem": 0.169,
-      "mean_vote_share": 45.9,
+      "mean_vote_share": 45.8,
       "std_vote_share": 4.4,
       "ci_90_low": 38.8,
-      "ci_90_high": 53.2,
+      "ci_90_high": 53.0,
       "category": "likely_r",
       "pvi": -11.0,
-      "region": "Southeast",
+      "region": "Rust_Belt",
       "open_seat": false
     },
     {
@@ -2239,6 +2225,24 @@
       "std_vote_share": 4.4,
       "ci_90_low": 38.8,
       "ci_90_high": 53.1,
+      "category": "likely_r",
+      "pvi": -11.0,
+      "region": "Southeast",
+      "open_seat": false
+    },
+    {
+      "id": "GA-10",
+      "state": "GA",
+      "district_number": 10,
+      "incumbent": {
+        "name": "Rep. GA-10",
+        "party": "R"
+      },
+      "prob_dem": 0.168,
+      "mean_vote_share": 45.9,
+      "std_vote_share": 4.4,
+      "ci_90_low": 38.8,
+      "ci_90_high": 53.2,
       "category": "likely_r",
       "pvi": -11.0,
       "region": "Southeast",
@@ -2290,7 +2294,7 @@
       },
       "prob_dem": 0.166,
       "mean_vote_share": 45.8,
-      "std_vote_share": 4.4,
+      "std_vote_share": 4.3,
       "ci_90_low": 38.8,
       "ci_90_high": 53.1,
       "category": "likely_r",
@@ -2306,7 +2310,7 @@
         "name": "Rep. WI-5",
         "party": "R"
       },
-      "prob_dem": 0.165,
+      "prob_dem": 0.164,
       "mean_vote_share": 45.8,
       "std_vote_share": 4.3,
       "ci_90_low": 38.9,
@@ -2324,11 +2328,11 @@
         "name": "Rep. FL-17",
         "party": "R"
       },
-      "prob_dem": 0.164,
+      "prob_dem": 0.163,
       "mean_vote_share": 45.8,
       "std_vote_share": 4.4,
       "ci_90_low": 38.8,
-      "ci_90_high": 53.2,
+      "ci_90_high": 53.1,
       "category": "likely_r",
       "pvi": -11.0,
       "region": "Southeast",
@@ -2371,24 +2375,6 @@
       "open_seat": false
     },
     {
-      "id": "AL-03",
-      "state": "AL",
-      "district_number": 3,
-      "incumbent": {
-        "name": "Rep. AL-3",
-        "party": "R"
-      },
-      "prob_dem": 0.144,
-      "mean_vote_share": 45.4,
-      "std_vote_share": 4.2,
-      "ci_90_low": 38.6,
-      "ci_90_high": 52.5,
-      "category": "safe_r",
-      "pvi": -12.0,
-      "region": "Deep_South",
-      "open_seat": false
-    },
-    {
       "id": "GA-14",
       "state": "GA",
       "district_number": 14,
@@ -2425,39 +2411,21 @@
       "open_seat": false
     },
     {
-      "id": "TX-25",
-      "state": "TX",
-      "district_number": 25,
+      "id": "AL-03",
+      "state": "AL",
+      "district_number": 3,
       "incumbent": {
-        "name": "Rep. TX-25",
-        "party": "R"
-      },
-      "prob_dem": 0.144,
-      "mean_vote_share": 45.4,
-      "std_vote_share": 4.4,
-      "ci_90_low": 38.4,
-      "ci_90_high": 52.7,
-      "category": "safe_r",
-      "pvi": -12.0,
-      "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
-      "id": "LA-01",
-      "state": "LA",
-      "district_number": 1,
-      "incumbent": {
-        "name": "Rep. LA-1",
+        "name": "Rep. AL-3",
         "party": "R"
       },
       "prob_dem": 0.143,
       "mean_vote_share": 45.4,
-      "std_vote_share": 4.3,
-      "ci_90_low": 38.4,
-      "ci_90_high": 52.7,
+      "std_vote_share": 4.2,
+      "ci_90_low": 38.6,
+      "ci_90_high": 52.5,
       "category": "safe_r",
       "pvi": -12.0,
-      "region": "Texas_Region",
+      "region": "Deep_South",
       "open_seat": false
     },
     {
@@ -2489,7 +2457,7 @@
       "prob_dem": 0.143,
       "mean_vote_share": 45.4,
       "std_vote_share": 4.3,
-      "ci_90_low": 38.5,
+      "ci_90_low": 38.4,
       "ci_90_high": 52.5,
       "category": "safe_r",
       "pvi": -12.0,
@@ -2507,7 +2475,7 @@
       "prob_dem": 0.143,
       "mean_vote_share": 45.3,
       "std_vote_share": 4.3,
-      "ci_90_low": 38.4,
+      "ci_90_low": 38.3,
       "ci_90_high": 52.5,
       "category": "safe_r",
       "pvi": -12.0,
@@ -2515,18 +2483,18 @@
       "open_seat": false
     },
     {
-      "id": "TX-23",
+      "id": "TX-25",
       "state": "TX",
-      "district_number": 23,
+      "district_number": 25,
       "incumbent": {
-        "name": "Tony Gonzales",
+        "name": "Rep. TX-25",
         "party": "R"
       },
       "prob_dem": 0.143,
       "mean_vote_share": 45.4,
-      "std_vote_share": 4.3,
-      "ci_90_low": 38.5,
-      "ci_90_high": 52.6,
+      "std_vote_share": 4.4,
+      "ci_90_low": 38.4,
+      "ci_90_high": 52.7,
       "category": "safe_r",
       "pvi": -12.0,
       "region": "Texas_Region",
@@ -2587,21 +2555,21 @@
       "open_seat": false
     },
     {
-      "id": "FL-15",
-      "state": "FL",
-      "district_number": 15,
+      "id": "LA-01",
+      "state": "LA",
+      "district_number": 1,
       "incumbent": {
-        "name": "Rep. FL-15",
+        "name": "Rep. LA-1",
         "party": "R"
       },
       "prob_dem": 0.142,
       "mean_vote_share": 45.4,
       "std_vote_share": 4.3,
-      "ci_90_low": 38.5,
-      "ci_90_high": 52.5,
+      "ci_90_low": 38.3,
+      "ci_90_high": 52.7,
       "category": "safe_r",
       "pvi": -12.0,
-      "region": "Southeast",
+      "region": "Texas_Region",
       "open_seat": false
     },
     {
@@ -2623,24 +2591,6 @@
       "open_seat": false
     },
     {
-      "id": "NC-05",
-      "state": "NC",
-      "district_number": 5,
-      "incumbent": {
-        "name": "Rep. NC-5",
-        "party": "R"
-      },
-      "prob_dem": 0.142,
-      "mean_vote_share": 45.4,
-      "std_vote_share": 4.3,
-      "ci_90_low": 38.5,
-      "ci_90_high": 52.7,
-      "category": "safe_r",
-      "pvi": -12.0,
-      "region": "Southeast",
-      "open_seat": false
-    },
-    {
       "id": "SC-07",
       "state": "SC",
       "district_number": 7,
@@ -2649,7 +2599,7 @@
         "party": "R"
       },
       "prob_dem": 0.142,
-      "mean_vote_share": 45.4,
+      "mean_vote_share": 45.3,
       "std_vote_share": 4.3,
       "ci_90_low": 38.3,
       "ci_90_high": 52.5,
@@ -2659,29 +2609,11 @@
       "open_seat": false
     },
     {
-      "id": "TX-02",
+      "id": "TX-23",
       "state": "TX",
-      "district_number": 2,
+      "district_number": 23,
       "incumbent": {
-        "name": "Rep. TX-2",
-        "party": "R"
-      },
-      "prob_dem": 0.142,
-      "mean_vote_share": 45.4,
-      "std_vote_share": 4.3,
-      "ci_90_low": 38.3,
-      "ci_90_high": 52.7,
-      "category": "safe_r",
-      "pvi": -12.0,
-      "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
-      "id": "TX-10",
-      "state": "TX",
-      "district_number": 10,
-      "incumbent": {
-        "name": "Rep. TX-10",
+        "name": "Tony Gonzales",
         "party": "R"
       },
       "prob_dem": 0.142,
@@ -2692,24 +2624,6 @@
       "category": "safe_r",
       "pvi": -12.0,
       "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
-      "id": "AL-01",
-      "state": "AL",
-      "district_number": 1,
-      "incumbent": {
-        "name": "Rep. AL-1",
-        "party": "R"
-      },
-      "prob_dem": 0.141,
-      "mean_vote_share": 45.4,
-      "std_vote_share": 4.3,
-      "ci_90_low": 38.5,
-      "ci_90_high": 52.6,
-      "category": "safe_r",
-      "pvi": -12.0,
-      "region": "Deep_South",
       "open_seat": false
     },
     {
@@ -2728,6 +2642,24 @@
       "category": "safe_r",
       "pvi": -12.0,
       "region": "Pacific",
+      "open_seat": false
+    },
+    {
+      "id": "FL-15",
+      "state": "FL",
+      "district_number": 15,
+      "incumbent": {
+        "name": "Rep. FL-15",
+        "party": "R"
+      },
+      "prob_dem": 0.141,
+      "mean_vote_share": 45.4,
+      "std_vote_share": 4.3,
+      "ci_90_low": 38.5,
+      "ci_90_high": 52.5,
+      "category": "safe_r",
+      "pvi": -12.0,
+      "region": "Southeast",
       "open_seat": false
     },
     {
@@ -2767,6 +2699,24 @@
       "open_seat": false
     },
     {
+      "id": "NC-05",
+      "state": "NC",
+      "district_number": 5,
+      "incumbent": {
+        "name": "Rep. NC-5",
+        "party": "R"
+      },
+      "prob_dem": 0.141,
+      "mean_vote_share": 45.4,
+      "std_vote_share": 4.3,
+      "ci_90_low": 38.5,
+      "ci_90_high": 52.6,
+      "category": "safe_r",
+      "pvi": -12.0,
+      "region": "Southeast",
+      "open_seat": false
+    },
+    {
       "id": "NC-06",
       "state": "NC",
       "district_number": 6,
@@ -2785,11 +2735,29 @@
       "open_seat": false
     },
     {
-      "id": "VA-05",
-      "state": "VA",
-      "district_number": 5,
+      "id": "TX-02",
+      "state": "TX",
+      "district_number": 2,
       "incumbent": {
-        "name": "Rep. VA-5",
+        "name": "Rep. TX-2",
+        "party": "R"
+      },
+      "prob_dem": 0.141,
+      "mean_vote_share": 45.4,
+      "std_vote_share": 4.3,
+      "ci_90_low": 38.3,
+      "ci_90_high": 52.7,
+      "category": "safe_r",
+      "pvi": -12.0,
+      "region": "Texas_Region",
+      "open_seat": false
+    },
+    {
+      "id": "TX-10",
+      "state": "TX",
+      "district_number": 10,
+      "incumbent": {
+        "name": "Rep. TX-10",
         "party": "R"
       },
       "prob_dem": 0.141,
@@ -2799,7 +2767,25 @@
       "ci_90_high": 52.6,
       "category": "safe_r",
       "pvi": -12.0,
-      "region": "Southeast",
+      "region": "Texas_Region",
+      "open_seat": false
+    },
+    {
+      "id": "AL-01",
+      "state": "AL",
+      "district_number": 1,
+      "incumbent": {
+        "name": "Rep. AL-1",
+        "party": "R"
+      },
+      "prob_dem": 0.14,
+      "mean_vote_share": 45.4,
+      "std_vote_share": 4.3,
+      "ci_90_low": 38.5,
+      "ci_90_high": 52.5,
+      "category": "safe_r",
+      "pvi": -12.0,
+      "region": "Deep_South",
       "open_seat": false
     },
     {
@@ -2857,6 +2843,24 @@
       "open_seat": false
     },
     {
+      "id": "VA-05",
+      "state": "VA",
+      "district_number": 5,
+      "incumbent": {
+        "name": "Rep. VA-5",
+        "party": "R"
+      },
+      "prob_dem": 0.14,
+      "mean_vote_share": 45.4,
+      "std_vote_share": 4.3,
+      "ci_90_low": 38.5,
+      "ci_90_high": 52.6,
+      "category": "safe_r",
+      "pvi": -12.0,
+      "region": "Southeast",
+      "open_seat": false
+    },
+    {
       "id": "VA-06",
       "state": "VA",
       "district_number": 6,
@@ -2868,7 +2872,7 @@
       "mean_vote_share": 45.4,
       "std_vote_share": 4.3,
       "ci_90_low": 38.5,
-      "ci_90_high": 52.6,
+      "ci_90_high": 52.5,
       "category": "safe_r",
       "pvi": -12.0,
       "region": "Southeast",
@@ -2893,24 +2897,6 @@
       "open_seat": false
     },
     {
-      "id": "LA-03",
-      "state": "LA",
-      "district_number": 3,
-      "incumbent": {
-        "name": "Rep. LA-3",
-        "party": "R"
-      },
-      "prob_dem": 0.139,
-      "mean_vote_share": 45.4,
-      "std_vote_share": 4.3,
-      "ci_90_low": 38.4,
-      "ci_90_high": 52.5,
-      "category": "safe_r",
-      "pvi": -12.0,
-      "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
       "id": "NC-09",
       "state": "NC",
       "district_number": 9,
@@ -2929,24 +2915,6 @@
       "open_seat": false
     },
     {
-      "id": "AL-04",
-      "state": "AL",
-      "district_number": 4,
-      "incumbent": {
-        "name": "Rep. AL-4",
-        "party": "R"
-      },
-      "prob_dem": 0.138,
-      "mean_vote_share": 45.4,
-      "std_vote_share": 4.3,
-      "ci_90_low": 38.5,
-      "ci_90_high": 52.6,
-      "category": "safe_r",
-      "pvi": -12.0,
-      "region": "Deep_South",
-      "open_seat": false
-    },
-    {
       "id": "FL-11",
       "state": "FL",
       "district_number": 11,
@@ -2957,7 +2925,7 @@
       "prob_dem": 0.138,
       "mean_vote_share": 45.3,
       "std_vote_share": 4.3,
-      "ci_90_low": 38.5,
+      "ci_90_low": 38.4,
       "ci_90_high": 52.4,
       "category": "safe_r",
       "pvi": -12.0,
@@ -2980,6 +2948,24 @@
       "category": "safe_r",
       "pvi": -12.0,
       "region": "Southeast",
+      "open_seat": false
+    },
+    {
+      "id": "LA-03",
+      "state": "LA",
+      "district_number": 3,
+      "incumbent": {
+        "name": "Rep. LA-3",
+        "party": "R"
+      },
+      "prob_dem": 0.138,
+      "mean_vote_share": 45.4,
+      "std_vote_share": 4.3,
+      "ci_90_low": 38.4,
+      "ci_90_high": 52.5,
+      "category": "safe_r",
+      "pvi": -12.0,
+      "region": "Texas_Region",
       "open_seat": false
     },
     {
@@ -3019,21 +3005,21 @@
       "open_seat": false
     },
     {
-      "id": "TX-13",
-      "state": "TX",
-      "district_number": 13,
+      "id": "AL-04",
+      "state": "AL",
+      "district_number": 4,
       "incumbent": {
-        "name": "Rep. TX-13",
+        "name": "Rep. AL-4",
         "party": "R"
       },
-      "prob_dem": 0.138,
+      "prob_dem": 0.137,
       "mean_vote_share": 45.3,
       "std_vote_share": 4.3,
-      "ci_90_low": 38.4,
-      "ci_90_high": 52.4,
+      "ci_90_low": 38.5,
+      "ci_90_high": 52.6,
       "category": "safe_r",
       "pvi": -12.0,
-      "region": "Texas_Region",
+      "region": "Deep_South",
       "open_seat": false
     },
     {
@@ -3045,28 +3031,10 @@
         "party": "R"
       },
       "prob_dem": 0.137,
-      "mean_vote_share": 45.4,
+      "mean_vote_share": 45.3,
       "std_vote_share": 4.3,
       "ci_90_low": 38.4,
       "ci_90_high": 52.6,
-      "category": "safe_r",
-      "pvi": -12.0,
-      "region": "Southeast",
-      "open_seat": false
-    },
-    {
-      "id": "FL-27",
-      "state": "FL",
-      "district_number": 27,
-      "incumbent": {
-        "name": "Rep. FL-27",
-        "party": "R"
-      },
-      "prob_dem": 0.137,
-      "mean_vote_share": 45.4,
-      "std_vote_share": 4.3,
-      "ci_90_low": 38.6,
-      "ci_90_high": 52.5,
       "category": "safe_r",
       "pvi": -12.0,
       "region": "Southeast",
@@ -3109,6 +3077,24 @@
       "open_seat": false
     },
     {
+      "id": "TX-13",
+      "state": "TX",
+      "district_number": 13,
+      "incumbent": {
+        "name": "Rep. TX-13",
+        "party": "R"
+      },
+      "prob_dem": 0.137,
+      "mean_vote_share": 45.3,
+      "std_vote_share": 4.3,
+      "ci_90_low": 38.4,
+      "ci_90_high": 52.4,
+      "category": "safe_r",
+      "pvi": -12.0,
+      "region": "Texas_Region",
+      "open_seat": false
+    },
+    {
       "id": "TX-24",
       "state": "TX",
       "district_number": 24,
@@ -3117,7 +3103,7 @@
         "party": "R"
       },
       "prob_dem": 0.137,
-      "mean_vote_share": 45.4,
+      "mean_vote_share": 45.3,
       "std_vote_share": 4.3,
       "ci_90_low": 38.3,
       "ci_90_high": 52.5,
@@ -3127,21 +3113,21 @@
       "open_seat": false
     },
     {
-      "id": "KS-04",
-      "state": "KS",
-      "district_number": 4,
+      "id": "FL-27",
+      "state": "FL",
+      "district_number": 27,
       "incumbent": {
-        "name": "Rep. KS-4",
+        "name": "Rep. FL-27",
         "party": "R"
       },
       "prob_dem": 0.136,
-      "mean_vote_share": 45.3,
+      "mean_vote_share": 45.4,
       "std_vote_share": 4.3,
-      "ci_90_low": 38.4,
-      "ci_90_high": 52.6,
+      "ci_90_low": 38.6,
+      "ci_90_high": 52.5,
       "category": "safe_r",
       "pvi": -12.0,
-      "region": "Plains",
+      "region": "Southeast",
       "open_seat": false
     },
     {
@@ -3160,6 +3146,24 @@
       "category": "safe_r",
       "pvi": -12.0,
       "region": "Texas_Region",
+      "open_seat": false
+    },
+    {
+      "id": "KS-04",
+      "state": "KS",
+      "district_number": 4,
+      "incumbent": {
+        "name": "Rep. KS-4",
+        "party": "R"
+      },
+      "prob_dem": 0.135,
+      "mean_vote_share": 45.3,
+      "std_vote_share": 4.3,
+      "ci_90_low": 38.4,
+      "ci_90_high": 52.6,
+      "category": "safe_r",
+      "pvi": -12.0,
+      "region": "Plains",
       "open_seat": false
     },
     {
@@ -3199,24 +3203,6 @@
       "open_seat": false
     },
     {
-      "id": "GA-11",
-      "state": "GA",
-      "district_number": 11,
-      "incumbent": {
-        "name": "Rep. GA-11",
-        "party": "R"
-      },
-      "prob_dem": 0.133,
-      "mean_vote_share": 45.4,
-      "std_vote_share": 4.3,
-      "ci_90_low": 38.5,
-      "ci_90_high": 52.5,
-      "category": "safe_r",
-      "pvi": -12.0,
-      "region": "Southeast",
-      "open_seat": false
-    },
-    {
       "id": "TX-34",
       "state": "TX",
       "district_number": 34,
@@ -3224,7 +3210,7 @@
         "name": "Vicente Gonzalez",
         "party": "D"
       },
-      "prob_dem": 0.867,
+      "prob_dem": 0.866,
       "mean_vote_share": 55.4,
       "std_vote_share": 4.9,
       "ci_90_low": 47.5,
@@ -3242,7 +3228,7 @@
         "name": "Gabriel Vasquez",
         "party": "D"
       },
-      "prob_dem": 0.868,
+      "prob_dem": 0.867,
       "mean_vote_share": 55.4,
       "std_vote_share": 4.9,
       "ci_90_low": 47.4,
@@ -3250,6 +3236,24 @@
       "category": "safe_d",
       "pvi": 0.0,
       "region": "Southwest",
+      "open_seat": false
+    },
+    {
+      "id": "GA-11",
+      "state": "GA",
+      "district_number": 11,
+      "incumbent": {
+        "name": "Rep. GA-11",
+        "party": "R"
+      },
+      "prob_dem": 0.132,
+      "mean_vote_share": 45.4,
+      "std_vote_share": 4.3,
+      "ci_90_low": 38.5,
+      "ci_90_high": 52.5,
+      "category": "safe_r",
+      "pvi": -12.0,
+      "region": "Southeast",
       "open_seat": false
     },
     {
@@ -3300,7 +3304,7 @@
       "mean_vote_share": 55.9,
       "std_vote_share": 4.9,
       "ci_90_low": 48.0,
-      "ci_90_high": 64.0,
+      "ci_90_high": 63.9,
       "category": "safe_d",
       "pvi": 1.0,
       "region": "Pacific",
@@ -3361,21 +3365,21 @@
       "open_seat": false
     },
     {
-      "id": "IN-02",
-      "state": "IN",
-      "district_number": 2,
+      "id": "NV-03",
+      "state": "NV",
+      "district_number": 3,
       "incumbent": {
-        "name": "Rep. IN-2",
-        "party": "R"
+        "name": "Rep. NV-3",
+        "party": "D"
       },
-      "prob_dem": 0.112,
-      "mean_vote_share": 44.9,
-      "std_vote_share": 4.2,
-      "ci_90_low": 38.1,
-      "ci_90_high": 51.8,
-      "category": "safe_r",
-      "pvi": -13.0,
-      "region": "Rust_Belt",
+      "prob_dem": 0.887,
+      "mean_vote_share": 56.0,
+      "std_vote_share": 4.9,
+      "ci_90_low": 48.0,
+      "ci_90_high": 64.1,
+      "category": "safe_d",
+      "pvi": 1.0,
+      "region": "Southwest",
       "open_seat": false
     },
     {
@@ -3397,24 +3401,6 @@
       "open_seat": false
     },
     {
-      "id": "NV-03",
-      "state": "NV",
-      "district_number": 3,
-      "incumbent": {
-        "name": "Rep. NV-3",
-        "party": "D"
-      },
-      "prob_dem": 0.888,
-      "mean_vote_share": 56.0,
-      "std_vote_share": 4.9,
-      "ci_90_low": 48.0,
-      "ci_90_high": 64.1,
-      "category": "safe_d",
-      "pvi": 1.0,
-      "region": "Southwest",
-      "open_seat": false
-    },
-    {
       "id": "TX-05",
       "state": "TX",
       "district_number": 5,
@@ -3430,6 +3416,24 @@
       "category": "safe_r",
       "pvi": -13.0,
       "region": "Texas_Region",
+      "open_seat": false
+    },
+    {
+      "id": "IN-02",
+      "state": "IN",
+      "district_number": 2,
+      "incumbent": {
+        "name": "Rep. IN-2",
+        "party": "R"
+      },
+      "prob_dem": 0.111,
+      "mean_vote_share": 44.9,
+      "std_vote_share": 4.2,
+      "ci_90_low": 38.1,
+      "ci_90_high": 51.8,
+      "category": "safe_r",
+      "pvi": -13.0,
+      "region": "Rust_Belt",
       "open_seat": false
     },
     {
@@ -3478,9 +3482,9 @@
       },
       "prob_dem": 0.098,
       "mean_vote_share": 44.5,
-      "std_vote_share": 4.2,
+      "std_vote_share": 4.1,
       "ci_90_low": 37.8,
-      "ci_90_high": 51.4,
+      "ci_90_high": 51.3,
       "category": "safe_r",
       "pvi": -14.0,
       "region": "Mountain",
@@ -3498,7 +3502,7 @@
       "mean_vote_share": 44.5,
       "std_vote_share": 4.2,
       "ci_90_low": 37.8,
-      "ci_90_high": 51.6,
+      "ci_90_high": 51.5,
       "category": "safe_r",
       "pvi": -14.0,
       "region": "Texas_Region",
@@ -3516,7 +3520,7 @@
       "mean_vote_share": 56.3,
       "std_vote_share": 4.9,
       "ci_90_low": 48.4,
-      "ci_90_high": 64.4,
+      "ci_90_high": 64.3,
       "category": "safe_d",
       "pvi": 2.0,
       "region": "Southwest",
@@ -3559,6 +3563,24 @@
       "open_seat": false
     },
     {
+      "id": "NV-04",
+      "state": "NV",
+      "district_number": 4,
+      "incumbent": {
+        "name": "Rep. NV-4",
+        "party": "D"
+      },
+      "prob_dem": 0.906,
+      "mean_vote_share": 56.4,
+      "std_vote_share": 4.8,
+      "ci_90_low": 48.4,
+      "ci_90_high": 64.4,
+      "category": "safe_d",
+      "pvi": 2.0,
+      "region": "Southwest",
+      "open_seat": false
+    },
+    {
       "id": "NJ-05",
       "state": "NJ",
       "district_number": 5,
@@ -3595,24 +3617,6 @@
       "open_seat": false
     },
     {
-      "id": "NV-04",
-      "state": "NV",
-      "district_number": 4,
-      "incumbent": {
-        "name": "Rep. NV-4",
-        "party": "D"
-      },
-      "prob_dem": 0.907,
-      "mean_vote_share": 56.4,
-      "std_vote_share": 4.8,
-      "ci_90_low": 48.4,
-      "ci_90_high": 64.4,
-      "category": "safe_d",
-      "pvi": 2.0,
-      "region": "Southwest",
-      "open_seat": false
-    },
-    {
       "id": "TX-27",
       "state": "TX",
       "district_number": 27,
@@ -3621,13 +3625,31 @@
         "party": "R"
       },
       "prob_dem": 0.093,
-      "mean_vote_share": 44.5,
+      "mean_vote_share": 44.4,
       "std_vote_share": 4.2,
       "ci_90_low": 37.7,
       "ci_90_high": 51.4,
       "category": "safe_r",
       "pvi": -14.0,
       "region": "Texas_Region",
+      "open_seat": false
+    },
+    {
+      "id": "VA-07",
+      "state": "VA",
+      "district_number": 7,
+      "incumbent": {
+        "name": "Abigail Spanberger",
+        "party": "D"
+      },
+      "prob_dem": 0.907,
+      "mean_vote_share": 56.4,
+      "std_vote_share": 4.9,
+      "ci_90_low": 48.5,
+      "ci_90_high": 64.4,
+      "category": "safe_d",
+      "pvi": 2.0,
+      "region": "Southeast",
       "open_seat": false
     },
     {
@@ -3649,24 +3671,6 @@
       "open_seat": false
     },
     {
-      "id": "VA-07",
-      "state": "VA",
-      "district_number": 7,
-      "incumbent": {
-        "name": "Abigail Spanberger",
-        "party": "D"
-      },
-      "prob_dem": 0.908,
-      "mean_vote_share": 56.4,
-      "std_vote_share": 4.9,
-      "ci_90_low": 48.5,
-      "ci_90_high": 64.5,
-      "category": "safe_d",
-      "pvi": 2.0,
-      "region": "Southeast",
-      "open_seat": false
-    },
-    {
       "id": "FL-18",
       "state": "FL",
       "district_number": 18,
@@ -3678,7 +3682,7 @@
       "mean_vote_share": 44.4,
       "std_vote_share": 4.2,
       "ci_90_low": 37.7,
-      "ci_90_high": 51.4,
+      "ci_90_high": 51.3,
       "category": "safe_r",
       "pvi": -14.0,
       "region": "Southeast",
@@ -3721,24 +3725,6 @@
       "open_seat": false
     },
     {
-      "id": "TX-17",
-      "state": "TX",
-      "district_number": 17,
-      "incumbent": {
-        "name": "Rep. TX-17",
-        "party": "R"
-      },
-      "prob_dem": 0.091,
-      "mean_vote_share": 44.4,
-      "std_vote_share": 4.2,
-      "ci_90_low": 37.6,
-      "ci_90_high": 51.4,
-      "category": "safe_r",
-      "pvi": -14.0,
-      "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
       "id": "FL-19",
       "state": "FL",
       "district_number": 19,
@@ -3772,6 +3758,24 @@
       "category": "safe_r",
       "pvi": -14.0,
       "region": "Mid_Atlantic_Northeast",
+      "open_seat": false
+    },
+    {
+      "id": "TX-17",
+      "state": "TX",
+      "district_number": 17,
+      "incumbent": {
+        "name": "Rep. TX-17",
+        "party": "R"
+      },
+      "prob_dem": 0.09,
+      "mean_vote_share": 44.4,
+      "std_vote_share": 4.2,
+      "ci_90_low": 37.6,
+      "ci_90_high": 51.4,
+      "category": "safe_r",
+      "pvi": -14.0,
+      "region": "Texas_Region",
       "open_seat": false
     },
     {
@@ -3818,7 +3822,7 @@
         "name": "Anthony D'Esposito",
         "party": "D"
       },
-      "prob_dem": 0.914,
+      "prob_dem": 0.913,
       "mean_vote_share": 56.4,
       "std_vote_share": 4.8,
       "ci_90_low": 48.6,
@@ -3854,7 +3858,7 @@
         "name": "Rep. MD-6",
         "party": "D"
       },
-      "prob_dem": 0.923,
+      "prob_dem": 0.922,
       "mean_vote_share": 56.8,
       "std_vote_share": 4.8,
       "ci_90_low": 48.8,
@@ -3862,6 +3866,24 @@
       "category": "safe_d",
       "pvi": 3.0,
       "region": "Mid_Atlantic_Northeast",
+      "open_seat": false
+    },
+    {
+      "id": "CA-27",
+      "state": "CA",
+      "district_number": 27,
+      "incumbent": {
+        "name": "Mike Garcia",
+        "party": "D"
+      },
+      "prob_dem": 0.924,
+      "mean_vote_share": 56.9,
+      "std_vote_share": 4.8,
+      "ci_90_low": 49.0,
+      "ci_90_high": 64.7,
+      "category": "safe_d",
+      "pvi": 3.0,
+      "region": "Pacific",
       "open_seat": false
     },
     {
@@ -3901,6 +3923,24 @@
       "open_seat": false
     },
     {
+      "id": "IL-14",
+      "state": "IL",
+      "district_number": 14,
+      "incumbent": {
+        "name": "Rep. IL-14",
+        "party": "D"
+      },
+      "prob_dem": 0.924,
+      "mean_vote_share": 56.8,
+      "std_vote_share": 4.8,
+      "ci_90_low": 49.1,
+      "ci_90_high": 64.7,
+      "category": "safe_d",
+      "pvi": 3.0,
+      "region": "Rust_Belt",
+      "open_seat": false
+    },
+    {
       "id": "OH-01",
       "state": "OH",
       "district_number": 1,
@@ -3919,6 +3959,24 @@
       "open_seat": false
     },
     {
+      "id": "PA-17",
+      "state": "PA",
+      "district_number": 17,
+      "incumbent": {
+        "name": "Chris Deluzio",
+        "party": "D"
+      },
+      "prob_dem": 0.924,
+      "mean_vote_share": 56.8,
+      "std_vote_share": 4.8,
+      "ci_90_low": 49.1,
+      "ci_90_high": 64.8,
+      "category": "safe_d",
+      "pvi": 3.0,
+      "region": "Rust_Belt",
+      "open_seat": false
+    },
+    {
       "id": "TX-28",
       "state": "TX",
       "district_number": 28,
@@ -3927,49 +3985,13 @@
         "party": "D"
       },
       "prob_dem": 0.924,
-      "mean_vote_share": 56.9,
+      "mean_vote_share": 56.8,
       "std_vote_share": 4.9,
-      "ci_90_low": 49.0,
+      "ci_90_low": 48.9,
       "ci_90_high": 64.8,
       "category": "safe_d",
       "pvi": 3.0,
       "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
-      "id": "CA-27",
-      "state": "CA",
-      "district_number": 27,
-      "incumbent": {
-        "name": "Mike Garcia",
-        "party": "D"
-      },
-      "prob_dem": 0.925,
-      "mean_vote_share": 56.9,
-      "std_vote_share": 4.8,
-      "ci_90_low": 49.0,
-      "ci_90_high": 64.8,
-      "category": "safe_d",
-      "pvi": 3.0,
-      "region": "Pacific",
-      "open_seat": false
-    },
-    {
-      "id": "IL-14",
-      "state": "IL",
-      "district_number": 14,
-      "incumbent": {
-        "name": "Rep. IL-14",
-        "party": "D"
-      },
-      "prob_dem": 0.925,
-      "mean_vote_share": 56.8,
-      "std_vote_share": 4.8,
-      "ci_90_low": 49.1,
-      "ci_90_high": 64.7,
-      "category": "safe_d",
-      "pvi": 3.0,
-      "region": "Rust_Belt",
       "open_seat": false
     },
     {
@@ -3983,26 +4005,8 @@
       "prob_dem": 0.925,
       "mean_vote_share": 56.9,
       "std_vote_share": 4.8,
-      "ci_90_low": 49.2,
-      "ci_90_high": 65.0,
-      "category": "safe_d",
-      "pvi": 3.0,
-      "region": "Rust_Belt",
-      "open_seat": false
-    },
-    {
-      "id": "PA-17",
-      "state": "PA",
-      "district_number": 17,
-      "incumbent": {
-        "name": "Chris Deluzio",
-        "party": "D"
-      },
-      "prob_dem": 0.925,
-      "mean_vote_share": 56.8,
-      "std_vote_share": 4.8,
       "ci_90_low": 49.1,
-      "ci_90_high": 64.8,
+      "ci_90_high": 65.0,
       "category": "safe_d",
       "pvi": 3.0,
       "region": "Rust_Belt",
@@ -4081,24 +4085,6 @@
       "open_seat": false
     },
     {
-      "id": "CA-20",
-      "state": "CA",
-      "district_number": 20,
-      "incumbent": {
-        "name": "Rep. CA-20",
-        "party": "R"
-      },
-      "prob_dem": 0.072,
-      "mean_vote_share": 43.9,
-      "std_vote_share": 4.1,
-      "ci_90_low": 37.3,
-      "ci_90_high": 50.8,
-      "category": "safe_r",
-      "pvi": -15.0,
-      "region": "Pacific",
-      "open_seat": false
-    },
-    {
       "id": "IA-04",
       "state": "IA",
       "district_number": 4,
@@ -4135,21 +4121,21 @@
       "open_seat": false
     },
     {
-      "id": "IN-04",
-      "state": "IN",
-      "district_number": 4,
+      "id": "CA-20",
+      "state": "CA",
+      "district_number": 20,
       "incumbent": {
-        "name": "Rep. IN-4",
+        "name": "Rep. CA-20",
         "party": "R"
       },
       "prob_dem": 0.071,
-      "mean_vote_share": 44.0,
+      "mean_vote_share": 43.9,
       "std_vote_share": 4.1,
-      "ci_90_low": 37.6,
+      "ci_90_low": 37.3,
       "ci_90_high": 50.8,
       "category": "safe_r",
       "pvi": -15.0,
-      "region": "Rust_Belt",
+      "region": "Pacific",
       "open_seat": false
     },
     {
@@ -4163,7 +4149,7 @@
       "prob_dem": 0.929,
       "mean_vote_share": 56.9,
       "std_vote_share": 4.8,
-      "ci_90_low": 49.2,
+      "ci_90_low": 49.1,
       "ci_90_high": 64.8,
       "category": "safe_d",
       "pvi": 3.0,
@@ -4186,6 +4172,24 @@
       "category": "safe_d",
       "pvi": 3.0,
       "region": "Mid_Atlantic_Northeast",
+      "open_seat": false
+    },
+    {
+      "id": "IN-04",
+      "state": "IN",
+      "district_number": 4,
+      "incumbent": {
+        "name": "Rep. IN-4",
+        "party": "R"
+      },
+      "prob_dem": 0.07,
+      "mean_vote_share": 43.9,
+      "std_vote_share": 4.1,
+      "ci_90_low": 37.6,
+      "ci_90_high": 50.8,
+      "category": "safe_r",
+      "pvi": -15.0,
+      "region": "Rust_Belt",
       "open_seat": false
     },
     {
@@ -4222,24 +4226,6 @@
       "category": "safe_r",
       "pvi": -15.0,
       "region": "Southwest",
-      "open_seat": false
-    },
-    {
-      "id": "SD-01",
-      "state": "SD",
-      "district_number": 1,
-      "incumbent": {
-        "name": "Rep. SD-1",
-        "party": "R"
-      },
-      "prob_dem": 0.069,
-      "mean_vote_share": 43.9,
-      "std_vote_share": 4.1,
-      "ci_90_low": 37.3,
-      "ci_90_high": 50.7,
-      "category": "safe_r",
-      "pvi": -15.0,
-      "region": "Plains",
       "open_seat": false
     },
     {
@@ -4297,6 +4283,24 @@
       "open_seat": false
     },
     {
+      "id": "SD-01",
+      "state": "SD",
+      "district_number": 1,
+      "incumbent": {
+        "name": "Rep. SD-1",
+        "party": "R"
+      },
+      "prob_dem": 0.068,
+      "mean_vote_share": 43.9,
+      "std_vote_share": 4.1,
+      "ci_90_low": 37.3,
+      "ci_90_high": 50.7,
+      "category": "safe_r",
+      "pvi": -15.0,
+      "region": "Plains",
+      "open_seat": false
+    },
+    {
       "id": "NM-03",
       "state": "NM",
       "district_number": 3,
@@ -4351,6 +4355,24 @@
       "open_seat": false
     },
     {
+      "id": "RI-02",
+      "state": "RI",
+      "district_number": 2,
+      "incumbent": {
+        "name": "Rep. RI-2",
+        "party": "D"
+      },
+      "prob_dem": 0.938,
+      "mean_vote_share": 57.4,
+      "std_vote_share": 4.8,
+      "ci_90_low": 49.5,
+      "ci_90_high": 65.4,
+      "category": "safe_d",
+      "pvi": 4.0,
+      "region": "Mid_Atlantic_Northeast",
+      "open_seat": false
+    },
+    {
       "id": "CA-21",
       "state": "CA",
       "district_number": 21,
@@ -4366,24 +4388,6 @@
       "category": "safe_d",
       "pvi": 4.0,
       "region": "Pacific",
-      "open_seat": false
-    },
-    {
-      "id": "RI-02",
-      "state": "RI",
-      "district_number": 2,
-      "incumbent": {
-        "name": "Rep. RI-2",
-        "party": "D"
-      },
-      "prob_dem": 0.939,
-      "mean_vote_share": 57.4,
-      "std_vote_share": 4.8,
-      "ci_90_low": 49.5,
-      "ci_90_high": 65.4,
-      "category": "safe_d",
-      "pvi": 4.0,
-      "region": "Mid_Atlantic_Northeast",
       "open_seat": false
     },
     {
@@ -4423,24 +4427,6 @@
       "open_seat": false
     },
     {
-      "id": "IN-03",
-      "state": "IN",
-      "district_number": 3,
-      "incumbent": {
-        "name": "Rep. IN-3",
-        "party": "R"
-      },
-      "prob_dem": 0.058,
-      "mean_vote_share": 43.5,
-      "std_vote_share": 4.0,
-      "ci_90_low": 37.0,
-      "ci_90_high": 50.2,
-      "category": "safe_r",
-      "pvi": -16.0,
-      "region": "Rust_Belt",
-      "open_seat": false
-    },
-    {
       "id": "AZ-04",
       "state": "AZ",
       "district_number": 4,
@@ -4456,6 +4442,24 @@
       "category": "safe_d",
       "pvi": 4.0,
       "region": "Southwest",
+      "open_seat": false
+    },
+    {
+      "id": "IN-03",
+      "state": "IN",
+      "district_number": 3,
+      "incumbent": {
+        "name": "Rep. IN-3",
+        "party": "R"
+      },
+      "prob_dem": 0.057,
+      "mean_vote_share": 43.5,
+      "std_vote_share": 4.0,
+      "ci_90_low": 37.0,
+      "ci_90_high": 50.2,
+      "category": "safe_r",
+      "pvi": -16.0,
+      "region": "Rust_Belt",
       "open_seat": false
     },
     {
@@ -4488,10 +4492,28 @@
       "mean_vote_share": 43.4,
       "std_vote_share": 4.0,
       "ci_90_low": 37.0,
-      "ci_90_high": 50.3,
+      "ci_90_high": 50.2,
       "category": "safe_r",
       "pvi": -16.0,
       "region": "Texas_Region",
+      "open_seat": false
+    },
+    {
+      "id": "UT-01",
+      "state": "UT",
+      "district_number": 1,
+      "incumbent": {
+        "name": "Rep. UT-1",
+        "party": "R"
+      },
+      "prob_dem": 0.945,
+      "mean_vote_share": 56.8,
+      "std_vote_share": 4.4,
+      "ci_90_low": 49.8,
+      "ci_90_high": 64.2,
+      "category": "safe_d",
+      "pvi": 12.0,
+      "region": "Mountain",
       "open_seat": false
     },
     {
@@ -4513,24 +4535,6 @@
       "open_seat": false
     },
     {
-      "id": "UT-01",
-      "state": "UT",
-      "district_number": 1,
-      "incumbent": {
-        "name": "Rep. UT-1",
-        "party": "R"
-      },
-      "prob_dem": 0.946,
-      "mean_vote_share": 56.8,
-      "std_vote_share": 4.4,
-      "ci_90_low": 49.8,
-      "ci_90_high": 64.2,
-      "category": "safe_d",
-      "pvi": 12.0,
-      "region": "Mountain",
-      "open_seat": false
-    },
-    {
       "id": "OH-12",
       "state": "OH",
       "district_number": 12,
@@ -4542,7 +4546,7 @@
       "mean_vote_share": 43.4,
       "std_vote_share": 4.0,
       "ci_90_low": 36.9,
-      "ci_90_high": 50.2,
+      "ci_90_high": 50.1,
       "category": "safe_r",
       "pvi": -16.0,
       "region": "Rust_Belt",
@@ -4577,26 +4581,8 @@
       "prob_dem": 0.051,
       "mean_vote_share": 43.5,
       "std_vote_share": 4.0,
-      "ci_90_low": 37.1,
-      "ci_90_high": 50.1,
-      "category": "safe_r",
-      "pvi": -16.0,
-      "region": "Rust_Belt",
-      "open_seat": false
-    },
-    {
-      "id": "MI-09",
-      "state": "MI",
-      "district_number": 9,
-      "incumbent": {
-        "name": "Rep. MI-9",
-        "party": "R"
-      },
-      "prob_dem": 0.051,
-      "mean_vote_share": 43.5,
-      "std_vote_share": 4.0,
       "ci_90_low": 37.0,
-      "ci_90_high": 50.0,
+      "ci_90_high": 50.1,
       "category": "safe_r",
       "pvi": -16.0,
       "region": "Rust_Belt",
@@ -4618,6 +4604,24 @@
       "category": "safe_r",
       "pvi": -16.0,
       "region": "Plains",
+      "open_seat": false
+    },
+    {
+      "id": "MI-09",
+      "state": "MI",
+      "district_number": 9,
+      "incumbent": {
+        "name": "Rep. MI-9",
+        "party": "R"
+      },
+      "prob_dem": 0.05,
+      "mean_vote_share": 43.5,
+      "std_vote_share": 4.0,
+      "ci_90_low": 37.0,
+      "ci_90_high": 50.0,
+      "category": "safe_r",
+      "pvi": -16.0,
+      "region": "Rust_Belt",
       "open_seat": false
     },
     {
@@ -4765,24 +4769,6 @@
       "open_seat": false
     },
     {
-      "id": "TX-14",
-      "state": "TX",
-      "district_number": 14,
-      "incumbent": {
-        "name": "Rep. TX-14",
-        "party": "R"
-      },
-      "prob_dem": 0.041,
-      "mean_vote_share": 43.0,
-      "std_vote_share": 3.9,
-      "ci_90_low": 36.7,
-      "ci_90_high": 49.6,
-      "category": "safe_r",
-      "pvi": -17.0,
-      "region": "Texas_Region",
-      "open_seat": false
-    },
-    {
       "id": "OK-04",
       "state": "OK",
       "district_number": 4,
@@ -4809,13 +4795,31 @@
         "party": "R"
       },
       "prob_dem": 0.04,
-      "mean_vote_share": 43.0,
+      "mean_vote_share": 42.9,
       "std_vote_share": 3.9,
       "ci_90_low": 36.7,
       "ci_90_high": 49.6,
       "category": "safe_r",
       "pvi": -17.0,
       "region": "Deep_South",
+      "open_seat": false
+    },
+    {
+      "id": "TX-14",
+      "state": "TX",
+      "district_number": 14,
+      "incumbent": {
+        "name": "Rep. TX-14",
+        "party": "R"
+      },
+      "prob_dem": 0.04,
+      "mean_vote_share": 43.0,
+      "std_vote_share": 3.9,
+      "ci_90_low": 36.7,
+      "ci_90_high": 49.6,
+      "category": "safe_r",
+      "pvi": -17.0,
+      "region": "Texas_Region",
       "open_seat": false
     },
     {
@@ -4830,7 +4834,7 @@
       "mean_vote_share": 58.3,
       "std_vote_share": 4.7,
       "ci_90_low": 50.7,
-      "ci_90_high": 66.2,
+      "ci_90_high": 66.1,
       "category": "safe_d",
       "pvi": 6.0,
       "region": "Pacific",
@@ -4927,24 +4931,6 @@
       "open_seat": false
     },
     {
-      "id": "TN-03",
-      "state": "TN",
-      "district_number": 3,
-      "incumbent": {
-        "name": "Rep. TN-3",
-        "party": "R"
-      },
-      "prob_dem": 0.031,
-      "mean_vote_share": 42.5,
-      "std_vote_share": 3.9,
-      "ci_90_low": 36.3,
-      "ci_90_high": 49.0,
-      "category": "safe_r",
-      "pvi": -18.0,
-      "region": "Deep_South",
-      "open_seat": false
-    },
-    {
       "id": "IN-08",
       "state": "IN",
       "district_number": 8,
@@ -4955,7 +4941,7 @@
       "prob_dem": 0.03,
       "mean_vote_share": 42.5,
       "std_vote_share": 3.8,
-      "ci_90_low": 36.5,
+      "ci_90_low": 36.4,
       "ci_90_high": 48.9,
       "category": "safe_r",
       "pvi": -18.0,
@@ -4981,11 +4967,11 @@
       "open_seat": false
     },
     {
-      "id": "OH-04",
-      "state": "OH",
-      "district_number": 4,
+      "id": "TN-03",
+      "state": "TN",
+      "district_number": 3,
       "incumbent": {
-        "name": "Rep. OH-4",
+        "name": "Rep. TN-3",
         "party": "R"
       },
       "prob_dem": 0.03,
@@ -4995,7 +4981,7 @@
       "ci_90_high": 49.0,
       "category": "safe_r",
       "pvi": -18.0,
-      "region": "Rust_Belt",
+      "region": "Deep_South",
       "open_seat": false
     },
     {
@@ -5017,21 +5003,21 @@
       "open_seat": false
     },
     {
-      "id": "KY-04",
-      "state": "KY",
+      "id": "OH-04",
+      "state": "OH",
       "district_number": 4,
       "incumbent": {
-        "name": "Rep. KY-4",
+        "name": "Rep. OH-4",
         "party": "R"
       },
-      "prob_dem": 0.028,
+      "prob_dem": 0.029,
       "mean_vote_share": 42.5,
       "std_vote_share": 3.9,
       "ci_90_low": 36.3,
-      "ci_90_high": 49.0,
+      "ci_90_high": 48.9,
       "category": "safe_r",
       "pvi": -18.0,
-      "region": "Deep_South",
+      "region": "Rust_Belt",
       "open_seat": false
     },
     {
@@ -5071,6 +5057,24 @@
       "open_seat": false
     },
     {
+      "id": "KY-04",
+      "state": "KY",
+      "district_number": 4,
+      "incumbent": {
+        "name": "Rep. KY-4",
+        "party": "R"
+      },
+      "prob_dem": 0.027,
+      "mean_vote_share": 42.5,
+      "std_vote_share": 3.9,
+      "ci_90_low": 36.3,
+      "ci_90_high": 49.0,
+      "category": "safe_r",
+      "pvi": -18.0,
+      "region": "Deep_South",
+      "open_seat": false
+    },
+    {
       "id": "NM-01",
       "state": "NM",
       "district_number": 1,
@@ -5079,7 +5083,7 @@
         "party": "D"
       },
       "prob_dem": 0.973,
-      "mean_vote_share": 58.9,
+      "mean_vote_share": 58.8,
       "std_vote_share": 4.6,
       "ci_90_low": 51.3,
       "ci_90_high": 66.5,
@@ -5097,7 +5101,7 @@
         "party": "D"
       },
       "prob_dem": 0.977,
-      "mean_vote_share": 58.9,
+      "mean_vote_share": 58.8,
       "std_vote_share": 4.5,
       "ci_90_low": 51.4,
       "ci_90_high": 66.4,
@@ -5115,7 +5119,7 @@
         "party": "R"
       },
       "prob_dem": 0.023,
-      "mean_vote_share": 42.1,
+      "mean_vote_share": 42.0,
       "std_vote_share": 3.8,
       "ci_90_low": 36.0,
       "ci_90_high": 48.5,
@@ -5143,24 +5147,6 @@
       "open_seat": false
     },
     {
-      "id": "MO-06",
-      "state": "MO",
-      "district_number": 6,
-      "incumbent": {
-        "name": "Rep. MO-6",
-        "party": "R"
-      },
-      "prob_dem": 0.021,
-      "mean_vote_share": 42.1,
-      "std_vote_share": 3.8,
-      "ci_90_low": 35.9,
-      "ci_90_high": 48.3,
-      "category": "safe_r",
-      "pvi": -19.0,
-      "region": "Deep_South",
-      "open_seat": false
-    },
-    {
       "id": "CA-26",
       "state": "CA",
       "district_number": 26,
@@ -5176,6 +5162,42 @@
       "category": "safe_d",
       "pvi": 8.0,
       "region": "Pacific",
+      "open_seat": false
+    },
+    {
+      "id": "CA-35",
+      "state": "CA",
+      "district_number": 35,
+      "incumbent": {
+        "name": "Rep. CA-35",
+        "party": "D"
+      },
+      "prob_dem": 0.98,
+      "mean_vote_share": 59.2,
+      "std_vote_share": 4.5,
+      "ci_90_low": 51.8,
+      "ci_90_high": 66.8,
+      "category": "safe_d",
+      "pvi": 8.0,
+      "region": "Pacific",
+      "open_seat": false
+    },
+    {
+      "id": "MO-06",
+      "state": "MO",
+      "district_number": 6,
+      "incumbent": {
+        "name": "Rep. MO-6",
+        "party": "R"
+      },
+      "prob_dem": 0.02,
+      "mean_vote_share": 42.1,
+      "std_vote_share": 3.8,
+      "ci_90_low": 35.9,
+      "ci_90_high": 48.3,
+      "category": "safe_r",
+      "pvi": -19.0,
+      "region": "Deep_South",
       "open_seat": false
     },
     {
@@ -5197,24 +5219,6 @@
       "open_seat": false
     },
     {
-      "id": "CA-35",
-      "state": "CA",
-      "district_number": 35,
-      "incumbent": {
-        "name": "Rep. CA-35",
-        "party": "D"
-      },
-      "prob_dem": 0.981,
-      "mean_vote_share": 59.2,
-      "std_vote_share": 4.5,
-      "ci_90_low": 51.8,
-      "ci_90_high": 66.8,
-      "category": "safe_d",
-      "pvi": 8.0,
-      "region": "Pacific",
-      "open_seat": false
-    },
-    {
       "id": "CT-03",
       "state": "CT",
       "district_number": 3,
@@ -5233,6 +5237,24 @@
       "open_seat": false
     },
     {
+      "id": "DE-01",
+      "state": "DE",
+      "district_number": 1,
+      "incumbent": {
+        "name": "Rep. DE-1",
+        "party": "D"
+      },
+      "prob_dem": 0.981,
+      "mean_vote_share": 59.3,
+      "std_vote_share": 4.5,
+      "ci_90_low": 51.8,
+      "ci_90_high": 66.8,
+      "category": "safe_d",
+      "pvi": 8.0,
+      "region": "Mid_Atlantic_Northeast",
+      "open_seat": false
+    },
+    {
       "id": "MA-01",
       "state": "MA",
       "district_number": 1,
@@ -5241,7 +5263,7 @@
         "party": "D"
       },
       "prob_dem": 0.981,
-      "mean_vote_share": 59.3,
+      "mean_vote_share": 59.2,
       "std_vote_share": 4.6,
       "ci_90_low": 51.9,
       "ci_90_high": 67.1,
@@ -5266,24 +5288,6 @@
       "category": "safe_d",
       "pvi": 8.0,
       "region": "Pacific",
-      "open_seat": false
-    },
-    {
-      "id": "DE-01",
-      "state": "DE",
-      "district_number": 1,
-      "incumbent": {
-        "name": "Rep. DE-1",
-        "party": "D"
-      },
-      "prob_dem": 0.982,
-      "mean_vote_share": 59.3,
-      "std_vote_share": 4.5,
-      "ci_90_low": 51.8,
-      "ci_90_high": 66.8,
-      "category": "safe_d",
-      "pvi": 8.0,
-      "region": "Mid_Atlantic_Northeast",
       "open_seat": false
     },
     {
@@ -5359,24 +5363,6 @@
       "open_seat": false
     },
     {
-      "id": "IL-15",
-      "state": "IL",
-      "district_number": 15,
-      "incumbent": {
-        "name": "Rep. IL-15",
-        "party": "R"
-      },
-      "prob_dem": 0.015,
-      "mean_vote_share": 41.6,
-      "std_vote_share": 3.7,
-      "ci_90_low": 35.7,
-      "ci_90_high": 47.8,
-      "category": "safe_r",
-      "pvi": -20.0,
-      "region": "Rust_Belt",
-      "open_seat": false
-    },
-    {
       "id": "MI-11",
       "state": "MI",
       "district_number": 11,
@@ -5384,13 +5370,31 @@
         "name": "Rep. MI-11",
         "party": "D"
       },
-      "prob_dem": 0.986,
+      "prob_dem": 0.985,
       "mean_vote_share": 59.7,
       "std_vote_share": 4.5,
       "ci_90_low": 52.3,
       "ci_90_high": 67.1,
       "category": "safe_d",
       "pvi": 9.0,
+      "region": "Rust_Belt",
+      "open_seat": false
+    },
+    {
+      "id": "IL-15",
+      "state": "IL",
+      "district_number": 15,
+      "incumbent": {
+        "name": "Rep. IL-15",
+        "party": "R"
+      },
+      "prob_dem": 0.014,
+      "mean_vote_share": 41.6,
+      "std_vote_share": 3.7,
+      "ci_90_low": 35.7,
+      "ci_90_high": 47.8,
+      "category": "safe_r",
+      "pvi": -20.0,
       "region": "Rust_Belt",
       "open_seat": false
     },
@@ -5442,7 +5446,7 @@
       "mean_vote_share": 41.0,
       "std_vote_share": 3.7,
       "ci_90_low": 35.2,
-      "ci_90_high": 47.3,
+      "ci_90_high": 47.2,
       "category": "safe_r",
       "pvi": -21.0,
       "region": "Deep_South",
@@ -5513,7 +5517,7 @@
       "prob_dem": 0.011,
       "mean_vote_share": 41.1,
       "std_vote_share": 3.7,
-      "ci_90_low": 35.4,
+      "ci_90_low": 35.3,
       "ci_90_high": 47.3,
       "category": "safe_r",
       "pvi": -21.0,
@@ -5583,7 +5587,7 @@
         "party": "D"
       },
       "prob_dem": 0.991,
-      "mean_vote_share": 60.2,
+      "mean_vote_share": 60.1,
       "std_vote_share": 4.5,
       "ci_90_low": 53.0,
       "ci_90_high": 67.6,
@@ -5619,7 +5623,7 @@
         "party": "D"
       },
       "prob_dem": 0.992,
-      "mean_vote_share": 60.2,
+      "mean_vote_share": 60.1,
       "std_vote_share": 4.4,
       "ci_90_low": 53.0,
       "ci_90_high": 67.5,
@@ -5637,7 +5641,7 @@
         "party": "R"
       },
       "prob_dem": 0.008,
-      "mean_vote_share": 40.6,
+      "mean_vote_share": 40.5,
       "std_vote_share": 3.6,
       "ci_90_low": 34.8,
       "ci_90_high": 46.7,
@@ -5680,24 +5684,6 @@
       "category": "safe_d",
       "pvi": 10.0,
       "region": "Mid_Atlantic_Northeast",
-      "open_seat": false
-    },
-    {
-      "id": "WV-01",
-      "state": "WV",
-      "district_number": 1,
-      "incumbent": {
-        "name": "Rep. WV-1",
-        "party": "R"
-      },
-      "prob_dem": 0.008,
-      "mean_vote_share": 40.6,
-      "std_vote_share": 3.6,
-      "ci_90_low": 35.0,
-      "ci_90_high": 46.8,
-      "category": "safe_r",
-      "pvi": -22.0,
-      "region": "Deep_South",
       "open_seat": false
     },
     {
@@ -5752,6 +5738,24 @@
       "category": "safe_d",
       "pvi": 10.0,
       "region": "Mid_Atlantic_Northeast",
+      "open_seat": false
+    },
+    {
+      "id": "WV-01",
+      "state": "WV",
+      "district_number": 1,
+      "incumbent": {
+        "name": "Rep. WV-1",
+        "party": "R"
+      },
+      "prob_dem": 0.007,
+      "mean_vote_share": 40.6,
+      "std_vote_share": 3.6,
+      "ci_90_low": 35.0,
+      "ci_90_high": 46.8,
+      "category": "safe_r",
+      "pvi": -22.0,
+      "region": "Deep_South",
       "open_seat": false
     },
     {
@@ -5835,7 +5839,7 @@
         "party": "D"
       },
       "prob_dem": 0.994,
-      "mean_vote_share": 60.8,
+      "mean_vote_share": 60.7,
       "std_vote_share": 4.4,
       "ci_90_low": 53.6,
       "ci_90_high": 68.0,
@@ -5891,7 +5895,7 @@
       "prob_dem": 0.995,
       "mean_vote_share": 60.6,
       "std_vote_share": 4.4,
-      "ci_90_low": 53.6,
+      "ci_90_low": 53.5,
       "ci_90_high": 68.0,
       "category": "safe_d",
       "pvi": 11.0,
@@ -5927,7 +5931,7 @@
       "prob_dem": 0.005,
       "mean_vote_share": 40.1,
       "std_vote_share": 3.5,
-      "ci_90_low": 34.6,
+      "ci_90_low": 34.5,
       "ci_90_high": 46.2,
       "category": "safe_r",
       "pvi": -23.0,
@@ -6159,10 +6163,10 @@
         "party": "D"
       },
       "prob_dem": 0.996,
-      "mean_vote_share": 61.3,
+      "mean_vote_share": 61.2,
       "std_vote_share": 4.3,
       "ci_90_low": 54.4,
-      "ci_90_high": 68.5,
+      "ci_90_high": 68.4,
       "category": "safe_d",
       "pvi": 12.0,
       "region": "Texas_Region",
@@ -6267,7 +6271,7 @@
         "party": "D"
       },
       "prob_dem": 0.996,
-      "mean_vote_share": 61.2,
+      "mean_vote_share": 61.1,
       "std_vote_share": 4.3,
       "ci_90_low": 54.3,
       "ci_90_high": 68.3,
@@ -6396,7 +6400,7 @@
       "mean_vote_share": 61.1,
       "std_vote_share": 4.3,
       "ci_90_low": 54.1,
-      "ci_90_high": 68.4,
+      "ci_90_high": 68.3,
       "category": "safe_d",
       "pvi": 12.0,
       "region": "Texas_Region",
@@ -6540,7 +6544,7 @@
       "mean_vote_share": 61.2,
       "std_vote_share": 4.3,
       "ci_90_low": 54.3,
-      "ci_90_high": 68.4,
+      "ci_90_high": 68.3,
       "category": "safe_d",
       "pvi": 12.0,
       "region": "Southeast",
@@ -6576,7 +6580,7 @@
       "mean_vote_share": 61.1,
       "std_vote_share": 4.3,
       "ci_90_low": 54.2,
-      "ci_90_high": 68.4,
+      "ci_90_high": 68.3,
       "category": "safe_d",
       "pvi": 12.0,
       "region": "Southeast",
@@ -6771,7 +6775,7 @@
         "party": "D"
       },
       "prob_dem": 0.997,
-      "mean_vote_share": 61.2,
+      "mean_vote_share": 61.1,
       "std_vote_share": 4.3,
       "ci_90_low": 54.3,
       "ci_90_high": 68.2,
@@ -6900,7 +6904,7 @@
       "mean_vote_share": 61.6,
       "std_vote_share": 4.2,
       "ci_90_low": 54.9,
-      "ci_90_high": 68.6,
+      "ci_90_high": 68.5,
       "category": "safe_d",
       "pvi": 13.0,
       "region": "Pacific",
@@ -6989,7 +6993,7 @@
       "prob_dem": 0.998,
       "mean_vote_share": 61.6,
       "std_vote_share": 4.2,
-      "ci_90_low": 54.8,
+      "ci_90_low": 54.7,
       "ci_90_high": 68.5,
       "category": "safe_d",
       "pvi": 13.0,
@@ -7007,7 +7011,7 @@
       "prob_dem": 0.998,
       "mean_vote_share": 61.7,
       "std_vote_share": 4.2,
-      "ci_90_low": 54.9,
+      "ci_90_low": 54.8,
       "ci_90_high": 68.7,
       "category": "safe_d",
       "pvi": 13.0,
@@ -7026,7 +7030,7 @@
       "mean_vote_share": 61.1,
       "std_vote_share": 4.3,
       "ci_90_low": 54.3,
-      "ci_90_high": 68.3,
+      "ci_90_high": 68.2,
       "category": "safe_d",
       "pvi": 12.0,
       "region": "Southeast",
@@ -7095,7 +7099,7 @@
         "party": "D"
       },
       "prob_dem": 0.999,
-      "mean_vote_share": 62.6,
+      "mean_vote_share": 62.5,
       "std_vote_share": 4.1,
       "ci_90_low": 55.9,
       "ci_90_high": 69.3,
@@ -7384,9 +7388,9 @@
       },
       "prob_dem": 1.0,
       "mean_vote_share": 67.8,
-      "std_vote_share": 3.5,
+      "std_vote_share": 3.4,
       "ci_90_low": 62.3,
-      "ci_90_high": 73.7,
+      "ci_90_high": 73.6,
       "category": "safe_d",
       "pvi": 26.0,
       "region": "Pacific",
@@ -7457,7 +7461,7 @@
       "prob_dem": 1.0,
       "mean_vote_share": 65.0,
       "std_vote_share": 3.7,
-      "ci_90_low": 59.1,
+      "ci_90_low": 59.0,
       "ci_90_high": 71.3,
       "category": "safe_d",
       "pvi": 20.0,
@@ -7619,7 +7623,7 @@
       "prob_dem": 1.0,
       "mean_vote_share": 63.1,
       "std_vote_share": 4.0,
-      "ci_90_low": 56.8,
+      "ci_90_low": 56.7,
       "ci_90_high": 69.7,
       "category": "safe_d",
       "pvi": 16.0,
@@ -7710,7 +7714,7 @@
       "mean_vote_share": 63.5,
       "std_vote_share": 3.9,
       "ci_90_low": 57.3,
-      "ci_90_high": 70.1,
+      "ci_90_high": 70.0,
       "category": "safe_d",
       "pvi": 17.0,
       "region": "Rust_Belt",
@@ -7725,7 +7729,7 @@
         "party": "D"
       },
       "prob_dem": 1.0,
-      "mean_vote_share": 63.6,
+      "mean_vote_share": 63.5,
       "std_vote_share": 3.9,
       "ci_90_low": 57.4,
       "ci_90_high": 70.1,
@@ -7853,8 +7857,8 @@
       "prob_dem": 1.0,
       "mean_vote_share": 74.1,
       "std_vote_share": 3.2,
-      "ci_90_low": 69.1,
-      "ci_90_high": 79.7,
+      "ci_90_low": 69.0,
+      "ci_90_high": 79.6,
       "category": "safe_d",
       "pvi": 39.0,
       "region": "Mid_Atlantic_Northeast",
@@ -8034,7 +8038,7 @@
       "mean_vote_share": 69.3,
       "std_vote_share": 3.3,
       "ci_90_low": 64.1,
-      "ci_90_high": 75.0,
+      "ci_90_high": 74.9,
       "category": "safe_d",
       "pvi": 29.0,
       "region": "Deep_South",
@@ -8085,7 +8089,7 @@
         "party": "D"
       },
       "prob_dem": 1.0,
-      "mean_vote_share": 65.5,
+      "mean_vote_share": 65.4,
       "std_vote_share": 3.7,
       "ci_90_low": 59.6,
       "ci_90_high": 71.6,
@@ -8103,7 +8107,7 @@
         "party": "D"
       },
       "prob_dem": 1.0,
-      "mean_vote_share": 68.9,
+      "mean_vote_share": 68.8,
       "std_vote_share": 3.4,
       "ci_90_low": 63.5,
       "ci_90_high": 74.6,
@@ -8283,7 +8287,7 @@
         "party": "D"
       },
       "prob_dem": 1.0,
-      "mean_vote_share": 74.1,
+      "mean_vote_share": 74.0,
       "std_vote_share": 3.2,
       "ci_90_low": 69.0,
       "ci_90_high": 79.7,
@@ -8322,7 +8326,7 @@
       "mean_vote_share": 65.5,
       "std_vote_share": 3.7,
       "ci_90_low": 59.6,
-      "ci_90_high": 71.8,
+      "ci_90_high": 71.7,
       "category": "safe_d",
       "pvi": 21.0,
       "region": "Rust_Belt",
@@ -8406,8 +8410,8 @@
       {
         "date": "2026-02-26",
         "pollster": "HarrisX/Harris",
-        "sample_size": 500,
-        "population": "lv",
+        "sample_size": 1999,
+        "population": "rv",
         "dem_pct": 50.0,
         "rep_pct": 50.0,
         "margin": 0.0
@@ -8415,11 +8419,38 @@
       {
         "date": "2026-02-26",
         "pollster": "HarrisX/Harris",
-        "sample_size": 1999,
-        "population": "rv",
+        "sample_size": 500,
+        "population": "lv",
         "dem_pct": 50.0,
         "rep_pct": 50.0,
         "margin": 0.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "Ipsos",
+        "sample_size": 3686,
+        "population": "rv",
+        "dem_pct": 40.0,
+        "rep_pct": 38.0,
+        "margin": 2.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "YouGov",
+        "sample_size": 1402,
+        "population": "rv",
+        "dem_pct": 45.0,
+        "rep_pct": 41.0,
+        "margin": 4.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "Ipsos",
+        "sample_size": 4638,
+        "population": "a",
+        "dem_pct": 35.0,
+        "rep_pct": 32.0,
+        "margin": 3.0
       },
       {
         "date": "2026-02-23",
@@ -8441,6 +8472,15 @@
       },
       {
         "date": "2026-02-23",
+        "pollster": "Ipsos",
+        "sample_size": 3686,
+        "population": "rv",
+        "dem_pct": 40.0,
+        "rep_pct": 38.0,
+        "margin": 2.0
+      },
+      {
+        "date": "2026-02-23",
         "pollster": "YouGov",
         "sample_size": 1551,
         "population": "a",
@@ -8450,39 +8490,12 @@
       },
       {
         "date": "2026-02-23",
-        "pollster": "Ipsos",
-        "sample_size": 3686,
+        "pollster": "Grayhouse",
+        "sample_size": 1394,
         "population": "rv",
-        "dem_pct": 40.0,
-        "rep_pct": 38.0,
-        "margin": 2.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "Ipsos",
-        "sample_size": 3686,
-        "population": "rv",
-        "dem_pct": 40.0,
-        "rep_pct": 38.0,
-        "margin": 2.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "Ipsos",
-        "sample_size": 4638,
-        "population": "a",
-        "dem_pct": 35.0,
-        "rep_pct": 32.0,
+        "dem_pct": 43.0,
+        "rep_pct": 40.0,
         "margin": 3.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "YouGov",
-        "sample_size": 1402,
-        "population": "rv",
-        "dem_pct": 45.0,
-        "rep_pct": 41.0,
-        "margin": 4.0
       },
       {
         "date": "2026-02-22",
@@ -8496,20 +8509,20 @@
       {
         "date": "2026-02-22",
         "pollster": "Morning Consult",
-        "sample_size": 26087,
-        "population": "rv",
-        "dem_pct": 45.0,
-        "rep_pct": 42.0,
-        "margin": 3.0
-      },
-      {
-        "date": "2026-02-22",
-        "pollster": "Morning Consult",
         "sample_size": 2202,
         "population": "rv",
         "dem_pct": 46.0,
         "rep_pct": 42.0,
         "margin": 4.0
+      },
+      {
+        "date": "2026-02-22",
+        "pollster": "Morning Consult",
+        "sample_size": 26087,
+        "population": "rv",
+        "dem_pct": 45.0,
+        "rep_pct": 42.0,
+        "margin": 3.0
       },
       {
         "date": "2026-02-20",
@@ -8540,21 +8553,21 @@
       },
       {
         "date": "2026-02-18",
-        "pollster": "Bowling Green State University/YouGov",
-        "sample_size": 1200,
-        "population": "rv",
-        "dem_pct": 49.0,
-        "rep_pct": 41.0,
-        "margin": 8.0
-      },
-      {
-        "date": "2026-02-18",
         "pollster": "Big Data Poll",
         "sample_size": 2012,
         "population": "rv",
         "dem_pct": 48.2,
         "rep_pct": 40.0,
         "margin": 8.2
+      },
+      {
+        "date": "2026-02-18",
+        "pollster": "Bowling Green State University/YouGov",
+        "sample_size": 1200,
+        "population": "rv",
+        "dem_pct": 49.0,
+        "rep_pct": 41.0,
+        "margin": 8.0
       },
       {
         "date": "2026-02-18",
@@ -8576,21 +8589,21 @@
       },
       {
         "date": "2026-02-16",
+        "pollster": "Ipsos",
+        "sample_size": 846,
+        "population": "rv",
+        "dem_pct": 41.0,
+        "rep_pct": 37.0,
+        "margin": 4.0
+      },
+      {
+        "date": "2026-02-16",
         "pollster": "YouGov",
         "sample_size": 1682,
         "population": "a",
         "dem_pct": 39.0,
         "rep_pct": 33.0,
         "margin": 6.0
-      },
-      {
-        "date": "2026-02-16",
-        "pollster": "Ipsos",
-        "sample_size": 1117,
-        "population": "a",
-        "dem_pct": 36.0,
-        "rep_pct": 32.0,
-        "margin": 4.0
       },
       {
         "date": "2026-02-16",
@@ -8604,10 +8617,10 @@
       {
         "date": "2026-02-16",
         "pollster": "Ipsos",
-        "sample_size": 846,
-        "population": "rv",
-        "dem_pct": 41.0,
-        "rep_pct": 37.0,
+        "sample_size": 1117,
+        "population": "a",
+        "dem_pct": 36.0,
+        "rep_pct": 32.0,
         "margin": 4.0
       },
       {
@@ -8630,15 +8643,6 @@
       },
       {
         "date": "2026-02-12",
-        "pollster": "RMG Research",
-        "sample_size": 2000,
-        "population": "rv",
-        "dem_pct": 45.0,
-        "rep_pct": 47.0,
-        "margin": -2.0
-      },
-      {
-        "date": "2026-02-12",
         "pollster": "YouGov",
         "sample_size": 1149,
         "population": "rv",
@@ -8647,13 +8651,31 @@
         "margin": 3.0
       },
       {
+        "date": "2026-02-12",
+        "pollster": "RMG Research",
+        "sample_size": 2000,
+        "population": "rv",
+        "dem_pct": 45.0,
+        "rep_pct": 47.0,
+        "margin": -2.0
+      },
+      {
         "date": "2026-02-10",
         "pollster": "Focaldata",
-        "sample_size": 1148,
-        "population": "a",
-        "dem_pct": 42.0,
-        "rep_pct": 38.0,
+        "sample_size": 500,
+        "population": "rv",
+        "dem_pct": 46.0,
+        "rep_pct": 42.0,
         "margin": 4.0
+      },
+      {
+        "date": "2026-02-10",
+        "pollster": "Focaldata",
+        "sample_size": 500,
+        "population": "lv",
+        "dem_pct": 51.0,
+        "rep_pct": 44.0,
+        "margin": 7.0
       },
       {
         "date": "2026-02-10",
@@ -8676,28 +8698,10 @@
       {
         "date": "2026-02-10",
         "pollster": "Focaldata",
-        "sample_size": 500,
-        "population": "lv",
-        "dem_pct": 51.0,
-        "rep_pct": 44.0,
-        "margin": 7.0
-      },
-      {
-        "date": "2026-02-10",
-        "pollster": "Focaldata",
-        "sample_size": 500,
-        "population": "rv",
-        "dem_pct": 46.0,
-        "rep_pct": 42.0,
-        "margin": 4.0
-      },
-      {
-        "date": "2026-02-09",
-        "pollster": "Morning Consult",
-        "sample_size": 2200,
-        "population": "rv",
-        "dem_pct": 45.0,
-        "rep_pct": 41.0,
+        "sample_size": 1148,
+        "population": "a",
+        "dem_pct": 42.0,
+        "rep_pct": 38.0,
         "margin": 4.0
       },
       {
@@ -8717,6 +8721,15 @@
         "dem_pct": 44.0,
         "rep_pct": 38.0,
         "margin": 6.0
+      },
+      {
+        "date": "2026-02-09",
+        "pollster": "Morning Consult",
+        "sample_size": 2200,
+        "population": "rv",
+        "dem_pct": 45.0,
+        "rep_pct": 41.0,
+        "margin": 4.0
       },
       {
         "date": "2026-02-08",
@@ -8766,20 +8779,20 @@
       {
         "date": "2026-02-01",
         "pollster": "Morning Consult",
-        "sample_size": 12505,
-        "population": "rv",
-        "dem_pct": 44.0,
-        "rep_pct": 42.0,
-        "margin": 2.0
-      },
-      {
-        "date": "2026-02-01",
-        "pollster": "Morning Consult",
         "sample_size": 2201,
         "population": "rv",
         "dem_pct": 47.0,
         "rep_pct": 42.0,
         "margin": 5.0
+      },
+      {
+        "date": "2026-02-01",
+        "pollster": "Morning Consult",
+        "sample_size": 12505,
+        "population": "rv",
+        "dem_pct": 44.0,
+        "rep_pct": 42.0,
+        "margin": 2.0
       },
       {
         "date": "2026-01-30",
@@ -8789,26 +8802,17 @@
         "dem_pct": 48.0,
         "rep_pct": 41.0,
         "margin": 7.0
-      },
-      {
-        "date": "2026-01-29",
-        "pollster": "HarrisX/Harris Poll",
-        "sample_size": 2000,
-        "population": "lv",
-        "dem_pct": 52.0,
-        "rep_pct": 48.0,
-        "margin": 4.0
       }
     ],
     "approval": [
       {
-        "date": "2026-03-03",
-        "pollster": "Quantus Insights",
-        "sample_size": 1624,
-        "population": "lv",
-        "approve": 45.0,
-        "disapprove": 54.0,
-        "net_approval": -9.0
+        "date": "2026-03-04",
+        "pollster": "Angus Reid Global",
+        "sample_size": 1215,
+        "population": "a",
+        "approve": 35.0,
+        "disapprove": 58.0,
+        "net_approval": -23.0
       },
       {
         "date": "2026-03-03",
@@ -8821,6 +8825,15 @@
       },
       {
         "date": "2026-03-03",
+        "pollster": "Quantus Insights",
+        "sample_size": 1624,
+        "population": "lv",
+        "approve": 45.0,
+        "disapprove": 54.0,
+        "net_approval": -9.0
+      },
+      {
+        "date": "2026-03-03",
         "pollster": "OnMessage",
         "sample_size": 1800,
         "population": "lv",
@@ -8829,13 +8842,22 @@
         "net_approval": -9.0
       },
       {
-        "date": "2026-03-02",
-        "pollster": "YouGov",
-        "sample_size": 1515,
-        "population": "a",
-        "approve": 38.0,
-        "disapprove": 59.0,
-        "net_approval": -21.0
+        "date": "2026-03-03",
+        "pollster": "J.L. Partners",
+        "sample_size": 1022,
+        "population": "rv",
+        "approve": 39.0,
+        "disapprove": 50.0,
+        "net_approval": -11.0
+      },
+      {
+        "date": "2026-03-03",
+        "pollster": "J.L. Partners",
+        "sample_size": 1097,
+        "population": "rv",
+        "approve": 44.0,
+        "disapprove": 47.0,
+        "net_approval": -3.0
       },
       {
         "date": "2026-03-02",
@@ -8848,6 +8870,15 @@
       },
       {
         "date": "2026-03-02",
+        "pollster": "YouGov",
+        "sample_size": 1515,
+        "population": "a",
+        "approve": 38.0,
+        "disapprove": 59.0,
+        "net_approval": -21.0
+      },
+      {
+        "date": "2026-03-02",
         "pollster": "Beacon Research/Shaw & Co. Research",
         "sample_size": 1004,
         "population": "rv",
@@ -8857,21 +8888,21 @@
       },
       {
         "date": "2026-03-01",
-        "pollster": "Ipsos",
-        "sample_size": 1282,
-        "population": "a",
-        "approve": 38.0,
-        "disapprove": 60.0,
-        "net_approval": -22.0
-      },
-      {
-        "date": "2026-03-01",
         "pollster": "RMG Research",
         "sample_size": 1000,
         "population": "rv",
         "approve": 45.0,
         "disapprove": 54.0,
         "net_approval": -9.0
+      },
+      {
+        "date": "2026-03-01",
+        "pollster": "Ipsos",
+        "sample_size": 1282,
+        "population": "a",
+        "approve": 38.0,
+        "disapprove": 60.0,
+        "net_approval": -22.0
       },
       {
         "date": "2026-02-28",
@@ -8920,24 +8951,6 @@
       },
       {
         "date": "2026-02-26",
-        "pollster": "RMG Research",
-        "sample_size": 3000,
-        "population": "rv",
-        "approve": 45.0,
-        "disapprove": 54.0,
-        "net_approval": -9.0
-      },
-      {
-        "date": "2026-02-26",
-        "pollster": "HarrisX/Harris",
-        "sample_size": 1999,
-        "population": "rv",
-        "approve": 46.0,
-        "disapprove": 49.0,
-        "net_approval": -3.0
-      },
-      {
-        "date": "2026-02-26",
         "pollster": "John Zogby Strategies",
         "sample_size": 1015,
         "population": "lv",
@@ -8955,6 +8968,24 @@
         "net_approval": 3.0
       },
       {
+        "date": "2026-02-26",
+        "pollster": "RMG Research",
+        "sample_size": 3000,
+        "population": "rv",
+        "approve": 45.0,
+        "disapprove": 54.0,
+        "net_approval": -9.0
+      },
+      {
+        "date": "2026-02-26",
+        "pollster": "HarrisX/Harris",
+        "sample_size": 1999,
+        "population": "rv",
+        "approve": 46.0,
+        "disapprove": 49.0,
+        "net_approval": -3.0
+      },
+      {
         "date": "2026-02-25",
         "pollster": "Trafalgar Group",
         "sample_size": 1084,
@@ -8962,15 +8993,6 @@
         "approve": 51.0,
         "disapprove": 48.0,
         "net_approval": 3.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "YouGov",
-        "sample_size": 2381,
-        "population": "a",
-        "approve": 40.0,
-        "disapprove": 60.0,
-        "net_approval": -20.0
       },
       {
         "date": "2026-02-23",
@@ -8983,12 +9005,12 @@
       },
       {
         "date": "2026-02-23",
-        "pollster": "Global Strategy Group",
-        "sample_size": 1000,
-        "population": "rv",
-        "approve": 41.0,
-        "disapprove": 58.0,
-        "net_approval": -17.0
+        "pollster": "YouGov",
+        "sample_size": 1551,
+        "population": "a",
+        "approve": 39.0,
+        "disapprove": 57.0,
+        "net_approval": -18.0
       },
       {
         "date": "2026-02-23",
@@ -9002,20 +9024,11 @@
       {
         "date": "2026-02-23",
         "pollster": "YouGov",
-        "sample_size": 1551,
-        "population": "a",
-        "approve": 39.0,
-        "disapprove": 57.0,
-        "net_approval": -18.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "Ipsos",
-        "sample_size": 4638,
+        "sample_size": 2381,
         "population": "a",
         "approve": 40.0,
-        "disapprove": 58.0,
-        "net_approval": -18.0
+        "disapprove": 60.0,
+        "net_approval": -20.0
       },
       {
         "date": "2026-02-23",
@@ -9034,6 +9047,24 @@
         "approve": 42.0,
         "disapprove": 57.0,
         "net_approval": -15.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "Global Strategy Group",
+        "sample_size": 1000,
+        "population": "rv",
+        "approve": 41.0,
+        "disapprove": 58.0,
+        "net_approval": -17.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "Ipsos",
+        "sample_size": 4638,
+        "population": "a",
+        "approve": 40.0,
+        "disapprove": 58.0,
+        "net_approval": -18.0
       },
       {
         "date": "2026-02-23",
@@ -9064,12 +9095,30 @@
       },
       {
         "date": "2026-02-20",
+        "pollster": "Verasight",
+        "sample_size": 1401,
+        "population": "rv",
+        "approve": 38.0,
+        "disapprove": 60.0,
+        "net_approval": -22.0
+      },
+      {
+        "date": "2026-02-20",
         "pollster": "American Research Group",
-        "sample_size": 1100,
-        "population": "a",
+        "sample_size": 1000,
+        "population": "rv",
         "approve": 36.0,
         "disapprove": 62.0,
         "net_approval": -26.0
+      },
+      {
+        "date": "2026-02-20",
+        "pollster": "Verasight",
+        "sample_size": 1566,
+        "population": "a",
+        "approve": 37.0,
+        "disapprove": 59.0,
+        "net_approval": -22.0
       },
       {
         "date": "2026-02-20",
@@ -9091,27 +9140,9 @@
       },
       {
         "date": "2026-02-20",
-        "pollster": "Verasight",
-        "sample_size": 1566,
-        "population": "a",
-        "approve": 37.0,
-        "disapprove": 59.0,
-        "net_approval": -22.0
-      },
-      {
-        "date": "2026-02-20",
-        "pollster": "Verasight",
-        "sample_size": 1401,
-        "population": "rv",
-        "approve": 38.0,
-        "disapprove": 60.0,
-        "net_approval": -22.0
-      },
-      {
-        "date": "2026-02-20",
         "pollster": "American Research Group",
-        "sample_size": 1000,
-        "population": "rv",
+        "sample_size": 1100,
+        "population": "a",
         "approve": 36.0,
         "disapprove": 62.0,
         "net_approval": -26.0
@@ -9124,33 +9155,6 @@
         "approve": 44.0,
         "disapprove": 47.0,
         "net_approval": -3.0
-      },
-      {
-        "date": "2026-02-18",
-        "pollster": "Big Data Poll",
-        "sample_size": 2012,
-        "population": "rv",
-        "approve": 42.4,
-        "disapprove": 54.6,
-        "net_approval": -12.2
-      },
-      {
-        "date": "2026-02-18",
-        "pollster": "Big Data Poll",
-        "sample_size": 1805,
-        "population": "lv",
-        "approve": 43.6,
-        "disapprove": 54.6,
-        "net_approval": -11.0
-      },
-      {
-        "date": "2026-02-18",
-        "pollster": "InsiderAdvantage",
-        "sample_size": 800,
-        "population": "lv",
-        "approve": 49.6,
-        "disapprove": 46.0,
-        "net_approval": 3.6
       },
       {
         "date": "2026-02-18",
@@ -9169,6 +9173,33 @@
         "approve": 41.0,
         "disapprove": 58.0,
         "net_approval": -17.0
+      },
+      {
+        "date": "2026-02-18",
+        "pollster": "InsiderAdvantage",
+        "sample_size": 800,
+        "population": "lv",
+        "approve": 49.6,
+        "disapprove": 46.0,
+        "net_approval": 3.6
+      },
+      {
+        "date": "2026-02-18",
+        "pollster": "Big Data Poll",
+        "sample_size": 1805,
+        "population": "lv",
+        "approve": 43.6,
+        "disapprove": 54.6,
+        "net_approval": -11.0
+      },
+      {
+        "date": "2026-02-18",
+        "pollster": "Big Data Poll",
+        "sample_size": 2012,
+        "population": "rv",
+        "approve": 42.4,
+        "disapprove": 54.6,
+        "net_approval": -12.2
       },
       {
         "date": "2026-02-17",
@@ -9190,24 +9221,6 @@
       },
       {
         "date": "2026-02-16",
-        "pollster": "YouGov",
-        "sample_size": 1682,
-        "population": "a",
-        "approve": 39.0,
-        "disapprove": 56.0,
-        "net_approval": -17.0
-      },
-      {
-        "date": "2026-02-16",
-        "pollster": "Ipsos",
-        "sample_size": 1117,
-        "population": "a",
-        "approve": 38.0,
-        "disapprove": 60.0,
-        "net_approval": -22.0
-      },
-      {
-        "date": "2026-02-16",
         "pollster": "Morning Consult",
         "sample_size": 2200,
         "population": "rv",
@@ -9225,31 +9238,22 @@
         "net_approval": -12.0
       },
       {
-        "date": "2026-02-13",
-        "pollster": "Morning Consult",
-        "sample_size": 2002,
-        "population": "rv",
-        "approve": 42.0,
-        "disapprove": 55.0,
-        "net_approval": -13.0
-      },
-      {
-        "date": "2026-02-13",
-        "pollster": "Quantus Insights",
-        "sample_size": 1515,
-        "population": "lv",
-        "approve": 43.0,
-        "disapprove": 56.0,
-        "net_approval": -13.0
-      },
-      {
-        "date": "2026-02-12",
-        "pollster": "YouGov",
-        "sample_size": 1704,
+        "date": "2026-02-16",
+        "pollster": "Ipsos",
+        "sample_size": 1117,
         "population": "a",
         "approve": 38.0,
-        "disapprove": 58.0,
-        "net_approval": -20.0
+        "disapprove": 60.0,
+        "net_approval": -22.0
+      },
+      {
+        "date": "2026-02-16",
+        "pollster": "YouGov",
+        "sample_size": 1682,
+        "population": "a",
+        "approve": 39.0,
+        "disapprove": 56.0,
+        "net_approval": -17.0
       }
     ]
   }
