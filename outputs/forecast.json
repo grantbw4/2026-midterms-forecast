@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-03-07T14:22:05.137972Z",
+    "updated_at": "2026-03-08T14:23:09.982634Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 240,
+    "days_until_election": 239,
     "n_simulations": 10000,
     "districts_total": 435
   },
@@ -8875,20 +8875,20 @@
       },
       {
         "date": "2026-03-02",
-        "pollster": "YouGov",
-        "sample_size": 1366,
-        "population": "rv",
-        "approve": 42.0,
-        "disapprove": 56.0,
-        "net_approval": -14.0
-      },
-      {
-        "date": "2026-03-02",
         "pollster": "Beacon Research/Shaw & Co. Research",
         "sample_size": 1004,
         "population": "rv",
         "approve": 43.0,
         "disapprove": 57.0,
+        "net_approval": -14.0
+      },
+      {
+        "date": "2026-03-02",
+        "pollster": "YouGov",
+        "sample_size": 1366,
+        "population": "rv",
+        "approve": 42.0,
+        "disapprove": 56.0,
         "net_approval": -14.0
       },
       {
@@ -8938,21 +8938,21 @@
       },
       {
         "date": "2026-02-27",
-        "pollster": "YouGov",
-        "sample_size": 2264,
-        "population": "a",
-        "approve": 41.0,
-        "disapprove": 59.0,
-        "net_approval": -18.0
-      },
-      {
-        "date": "2026-02-27",
         "pollster": "TIPP Insights",
         "sample_size": 1456,
         "population": "a",
         "approve": 40.0,
         "disapprove": 51.0,
         "net_approval": -11.0
+      },
+      {
+        "date": "2026-02-27",
+        "pollster": "YouGov",
+        "sample_size": 2264,
+        "population": "a",
+        "approve": 41.0,
+        "disapprove": 59.0,
+        "net_approval": -18.0
       },
       {
         "date": "2026-02-26",
@@ -9001,6 +9001,15 @@
       },
       {
         "date": "2026-02-23",
+        "pollster": "YouGov",
+        "sample_size": 2381,
+        "population": "a",
+        "approve": 40.0,
+        "disapprove": 60.0,
+        "net_approval": -20.0
+      },
+      {
+        "date": "2026-02-23",
         "pollster": "Ipsos",
         "sample_size": 4638,
         "population": "a",
@@ -9038,11 +9047,11 @@
       {
         "date": "2026-02-23",
         "pollster": "YouGov",
-        "sample_size": 1551,
-        "population": "a",
-        "approve": 39.0,
+        "sample_size": 1401,
+        "population": "rv",
+        "approve": 42.0,
         "disapprove": 57.0,
-        "net_approval": -18.0
+        "net_approval": -15.0
       },
       {
         "date": "2026-02-23",
@@ -9065,29 +9074,11 @@
       {
         "date": "2026-02-23",
         "pollster": "YouGov",
-        "sample_size": 1401,
-        "population": "rv",
-        "approve": 42.0,
-        "disapprove": 57.0,
-        "net_approval": -15.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "YouGov",
-        "sample_size": 2381,
+        "sample_size": 1551,
         "population": "a",
-        "approve": 40.0,
-        "disapprove": 60.0,
-        "net_approval": -20.0
-      },
-      {
-        "date": "2026-02-22",
-        "pollster": "Emerson College",
-        "sample_size": 1000,
-        "population": "lv",
-        "approve": 42.7,
-        "disapprove": 54.7,
-        "net_approval": -12.0
+        "approve": 39.0,
+        "disapprove": 57.0,
+        "net_approval": -18.0
       },
       {
         "date": "2026-02-22",
@@ -9097,6 +9088,15 @@
         "approve": 45.0,
         "disapprove": 53.0,
         "net_approval": -8.0
+      },
+      {
+        "date": "2026-02-22",
+        "pollster": "Emerson College",
+        "sample_size": 1000,
+        "population": "lv",
+        "approve": 42.7,
+        "disapprove": 54.7,
+        "net_approval": -12.0
       },
       {
         "date": "2026-02-20",
@@ -9181,12 +9181,12 @@
       },
       {
         "date": "2026-02-18",
-        "pollster": "Big Data Poll",
-        "sample_size": 1805,
-        "population": "lv",
-        "approve": 43.6,
-        "disapprove": 54.6,
-        "net_approval": -11.0
+        "pollster": "Bowling Green State University/YouGov",
+        "sample_size": 1200,
+        "population": "rv",
+        "approve": 41.0,
+        "disapprove": 58.0,
+        "net_approval": -17.0
       },
       {
         "date": "2026-02-18",
@@ -9199,12 +9199,12 @@
       },
       {
         "date": "2026-02-18",
-        "pollster": "Bowling Green State University/YouGov",
-        "sample_size": 1200,
-        "population": "rv",
-        "approve": 41.0,
-        "disapprove": 58.0,
-        "net_approval": -17.0
+        "pollster": "Big Data Poll",
+        "sample_size": 1805,
+        "population": "lv",
+        "approve": 43.6,
+        "disapprove": 54.6,
+        "net_approval": -11.0
       },
       {
         "date": "2026-02-17",
