@@ -381,7 +381,7 @@ TX-19,TX,19,Texas_Region,-12.0,Rep. TX-19,R,21.8,False,40.1,60.8,False,wikipedia
 TX-20,TX,20,Texas_Region,12.0,Rep. TX-20,D,-1.0,False,49.3,49.6,False,wikipedia
 TX-21,TX,21,Texas_Region,-11.0,Rep. TX-21,R,19.7,False,40.6,59.4,False,wikipedia
 TX-22,TX,22,Texas_Region,-12.0,Rep. TX-22,R,7.9,False,44.0,54.3,False,wikipedia
-TX-23,TX,23,Texas_Region,-12.0,Tony Gonzales,R,8.0,False,46.3,52.0,False,wikipedia
+TX-23,TX,23,Texas_Region,-7.0,Tony Gonzales,R,8.0,False,46.3,52.0,True,cook
 TX-24,TX,24,Texas_Region,-12.0,Rep. TX-24,R,20.4,False,39.4,58.6,False,wikipedia
 TX-25,TX,25,Texas_Region,-12.0,Rep. TX-25,R,11.6,False,45.4,57.3,False,wikipedia
 TX-26,TX,26,Texas_Region,-11.0,Rep. TX-26,R,7.9,False,47.0,54.6,False,wikipedia
