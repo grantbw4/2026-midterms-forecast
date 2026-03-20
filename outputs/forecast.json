@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-03-19T14:44:10.903043Z",
+    "updated_at": "2026-03-20T14:41:21.160800Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 228,
+    "days_until_election": 227,
     "n_simulations": 10000,
     "districts_total": 435
   },
@@ -8936,24 +8936,6 @@
       },
       {
         "date": "2026-03-04",
-        "pollster": "Angus Reid Global",
-        "sample_size": 1215,
-        "population": "a",
-        "approve": 35.0,
-        "disapprove": 58.0,
-        "net_approval": -23.0
-      },
-      {
-        "date": "2026-03-04",
-        "pollster": "Marist University",
-        "sample_size": 1392,
-        "population": "rv",
-        "approve": 40.0,
-        "disapprove": 57.0,
-        "net_approval": -17.0
-      },
-      {
-        "date": "2026-03-04",
         "pollster": "Marist University",
         "sample_size": 1591,
         "population": "a",
@@ -8969,6 +8951,42 @@
         "approve": 46.0,
         "disapprove": 52.0,
         "net_approval": -6.0
+      },
+      {
+        "date": "2026-03-04",
+        "pollster": "Marist University",
+        "sample_size": 1392,
+        "population": "rv",
+        "approve": 40.0,
+        "disapprove": 57.0,
+        "net_approval": -17.0
+      },
+      {
+        "date": "2026-03-04",
+        "pollster": "Angus Reid Global",
+        "sample_size": 1215,
+        "population": "a",
+        "approve": 35.0,
+        "disapprove": 58.0,
+        "net_approval": -23.0
+      },
+      {
+        "date": "2026-03-03",
+        "pollster": "OnMessage",
+        "sample_size": 1800,
+        "population": "lv",
+        "approve": 45.0,
+        "disapprove": 54.0,
+        "net_approval": -9.0
+      },
+      {
+        "date": "2026-03-03",
+        "pollster": "Quantus Insights",
+        "sample_size": 1624,
+        "population": "lv",
+        "approve": 45.0,
+        "disapprove": 54.0,
+        "net_approval": -9.0
       },
       {
         "date": "2026-03-03",
@@ -8998,24 +9016,6 @@
         "net_approval": 1.5
       },
       {
-        "date": "2026-03-03",
-        "pollster": "Quantus Insights",
-        "sample_size": 1624,
-        "population": "lv",
-        "approve": 45.0,
-        "disapprove": 54.0,
-        "net_approval": -9.0
-      },
-      {
-        "date": "2026-03-03",
-        "pollster": "OnMessage",
-        "sample_size": 1800,
-        "population": "lv",
-        "approve": 45.0,
-        "disapprove": 54.0,
-        "net_approval": -9.0
-      },
-      {
         "date": "2026-03-02",
         "pollster": "Beacon Research/Shaw & Co. Research",
         "sample_size": 1004,
@@ -9027,20 +9027,20 @@
       {
         "date": "2026-03-02",
         "pollster": "YouGov",
-        "sample_size": 1515,
-        "population": "a",
-        "approve": 38.0,
-        "disapprove": 59.0,
-        "net_approval": -21.0
-      },
-      {
-        "date": "2026-03-02",
-        "pollster": "YouGov",
         "sample_size": 1366,
         "population": "rv",
         "approve": 42.0,
         "disapprove": 56.0,
         "net_approval": -14.0
+      },
+      {
+        "date": "2026-03-02",
+        "pollster": "YouGov",
+        "sample_size": 1515,
+        "population": "a",
+        "approve": 38.0,
+        "disapprove": 59.0,
+        "net_approval": -21.0
       },
       {
         "date": "2026-03-01",
@@ -9162,15 +9162,6 @@
       {
         "date": "2026-02-23",
         "pollster": "YouGov",
-        "sample_size": 2381,
-        "population": "a",
-        "approve": 40.0,
-        "disapprove": 60.0,
-        "net_approval": -20.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "YouGov",
         "sample_size": 1551,
         "population": "a",
         "approve": 39.0,
@@ -9185,6 +9176,15 @@
         "approve": 41.0,
         "disapprove": 58.0,
         "net_approval": -17.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "YouGov",
+        "sample_size": 2381,
+        "population": "a",
+        "approve": 40.0,
+        "disapprove": 60.0,
+        "net_approval": -20.0
       },
       {
         "date": "2026-02-23",
