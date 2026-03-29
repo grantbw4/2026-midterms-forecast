@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-03-28T14:30:13.685459Z",
+    "updated_at": "2026-03-29T14:31:49.194743Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 219,
+    "days_until_election": 218,
     "n_simulations": 10000,
     "districts_total": 435
   },
@@ -22,8 +22,8 @@
     "national_uncertainty": 3.0,
     "model_type": "hierarchical_bayesian",
     "generic_ballot_margin": 4.5,
-    "approval_rating": -14.06,
-    "net_approval": -14.06,
+    "approval_rating": -14.07,
+    "net_approval": -14.07,
     "economic_adjustment": 0.6355593945004584
   },
   "categories": {
@@ -946,15 +946,6 @@
       {
         "date": "2026-03-20",
         "pollster": "American Research Group",
-        "sample_size": 1100,
-        "population": "a",
-        "approve": 34.0,
-        "disapprove": 63.0,
-        "net_approval": -29.0
-      },
-      {
-        "date": "2026-03-20",
-        "pollster": "American Research Group",
         "sample_size": 1008,
         "population": "rv",
         "approve": 34.0,
@@ -980,6 +971,15 @@
         "net_approval": -20.0
       },
       {
+        "date": "2026-03-20",
+        "pollster": "American Research Group",
+        "sample_size": 1100,
+        "population": "a",
+        "approve": 34.0,
+        "disapprove": 63.0,
+        "net_approval": -29.0
+      },
+      {
         "date": "2026-03-19",
         "pollster": "Ipsos",
         "sample_size": 1545,
@@ -987,6 +987,15 @@
         "approve": 40.0,
         "disapprove": 58.0,
         "net_approval": -18.0
+      },
+      {
+        "date": "2026-03-18",
+        "pollster": "John Zogby Strategies",
+        "sample_size": 1000,
+        "population": "lv",
+        "approve": 44.0,
+        "disapprove": 54.0,
+        "net_approval": -10.0
       },
       {
         "date": "2026-03-18",
@@ -1005,15 +1014,6 @@
         "approve": 44.0,
         "disapprove": 55.0,
         "net_approval": -11.0
-      },
-      {
-        "date": "2026-03-18",
-        "pollster": "John Zogby Strategies",
-        "sample_size": 1000,
-        "population": "lv",
-        "approve": 44.0,
-        "disapprove": 54.0,
-        "net_approval": -10.0
       },
       {
         "date": "2026-03-17",
@@ -1053,15 +1053,6 @@
       },
       {
         "date": "2026-03-16",
-        "pollster": "YouGov",
-        "sample_size": 1429,
-        "population": "rv",
-        "approve": 41.0,
-        "disapprove": 56.0,
-        "net_approval": -15.0
-      },
-      {
-        "date": "2026-03-16",
         "pollster": "Morning Consult",
         "sample_size": 2201,
         "population": "rv",
@@ -1079,6 +1070,15 @@
         "net_approval": -16.0
       },
       {
+        "date": "2026-03-16",
+        "pollster": "YouGov",
+        "sample_size": 1429,
+        "population": "rv",
+        "approve": 41.0,
+        "disapprove": 56.0,
+        "net_approval": -15.0
+      },
+      {
         "date": "2026-03-12",
         "pollster": "RMG Research",
         "sample_size": 3000,
@@ -1090,15 +1090,6 @@
       {
         "date": "2026-03-10",
         "pollster": "Focaldata",
-        "sample_size": 1534,
-        "population": "rv",
-        "approve": 39.0,
-        "disapprove": 51.0,
-        "net_approval": -12.0
-      },
-      {
-        "date": "2026-03-10",
-        "pollster": "Focaldata",
         "sample_size": 1782,
         "population": "a",
         "approve": 37.0,
@@ -1106,13 +1097,13 @@
         "net_approval": -14.0
       },
       {
-        "date": "2026-03-09",
-        "pollster": "YouGov",
-        "sample_size": 1405,
+        "date": "2026-03-10",
+        "pollster": "Focaldata",
+        "sample_size": 1534,
         "population": "rv",
-        "approve": 43.0,
-        "disapprove": 54.0,
-        "net_approval": -11.0
+        "approve": 39.0,
+        "disapprove": 51.0,
+        "net_approval": -12.0
       },
       {
         "date": "2026-03-09",
@@ -1124,13 +1115,13 @@
         "net_approval": -15.0
       },
       {
-        "date": "2026-03-08",
-        "pollster": "Quinnipiac University",
-        "sample_size": 1002,
+        "date": "2026-03-09",
+        "pollster": "YouGov",
+        "sample_size": 1405,
         "population": "rv",
-        "approve": 37.0,
-        "disapprove": 57.0,
-        "net_approval": -20.0
+        "approve": 43.0,
+        "disapprove": 54.0,
+        "net_approval": -11.0
       },
       {
         "date": "2026-03-08",
@@ -1151,12 +1142,12 @@
         "net_approval": -9.0
       },
       {
-        "date": "2026-03-05",
-        "pollster": "Angus Reid Global",
-        "sample_size": 1529,
-        "population": "a",
-        "approve": 36.0,
-        "disapprove": 56.0,
+        "date": "2026-03-08",
+        "pollster": "Quinnipiac University",
+        "sample_size": 1002,
+        "population": "rv",
+        "approve": 37.0,
+        "disapprove": 57.0,
         "net_approval": -20.0
       },
       {
@@ -1178,22 +1169,13 @@
         "net_approval": -15.0
       },
       {
-        "date": "2026-03-04",
-        "pollster": "RMG Research",
-        "sample_size": 2000,
-        "population": "rv",
-        "approve": 46.0,
-        "disapprove": 52.0,
-        "net_approval": -6.0
-      },
-      {
-        "date": "2026-03-04",
+        "date": "2026-03-05",
         "pollster": "Angus Reid Global",
-        "sample_size": 1215,
+        "sample_size": 1529,
         "population": "a",
-        "approve": 35.0,
-        "disapprove": 58.0,
-        "net_approval": -23.0
+        "approve": 36.0,
+        "disapprove": 56.0,
+        "net_approval": -20.0
       },
       {
         "date": "2026-03-04",
@@ -1214,13 +1196,40 @@
         "net_approval": -19.0
       },
       {
-        "date": "2026-03-03",
-        "pollster": "J.L. Partners",
-        "sample_size": 1022,
+        "date": "2026-03-04",
+        "pollster": "RMG Research",
+        "sample_size": 2000,
         "population": "rv",
-        "approve": 39.0,
-        "disapprove": 50.0,
-        "net_approval": -11.0
+        "approve": 46.0,
+        "disapprove": 52.0,
+        "net_approval": -6.0
+      },
+      {
+        "date": "2026-03-04",
+        "pollster": "Angus Reid Global",
+        "sample_size": 1215,
+        "population": "a",
+        "approve": 35.0,
+        "disapprove": 58.0,
+        "net_approval": -23.0
+      },
+      {
+        "date": "2026-03-03",
+        "pollster": "Quantus Insights",
+        "sample_size": 1624,
+        "population": "lv",
+        "approve": 45.0,
+        "disapprove": 54.0,
+        "net_approval": -9.0
+      },
+      {
+        "date": "2026-03-03",
+        "pollster": "Hart Research Associates/Public Opinion Strategies",
+        "sample_size": 1000,
+        "population": "rv",
+        "approve": 44.0,
+        "disapprove": 54.0,
+        "net_approval": -10.0
       },
       {
         "date": "2026-03-03",
@@ -1242,21 +1251,21 @@
       },
       {
         "date": "2026-03-03",
-        "pollster": "Quantus Insights",
-        "sample_size": 1624,
-        "population": "lv",
-        "approve": 45.0,
-        "disapprove": 54.0,
-        "net_approval": -9.0
+        "pollster": "J.L. Partners",
+        "sample_size": 1022,
+        "population": "rv",
+        "approve": 39.0,
+        "disapprove": 50.0,
+        "net_approval": -11.0
       },
       {
-        "date": "2026-03-03",
-        "pollster": "Hart Research Associates/Public Opinion Strategies",
-        "sample_size": 1000,
-        "population": "rv",
-        "approve": 44.0,
-        "disapprove": 54.0,
-        "net_approval": -10.0
+        "date": "2026-03-02",
+        "pollster": "YouGov",
+        "sample_size": 1515,
+        "population": "a",
+        "approve": 38.0,
+        "disapprove": 59.0,
+        "net_approval": -21.0
       },
       {
         "date": "2026-03-02",
@@ -1277,13 +1286,13 @@
         "net_approval": -14.0
       },
       {
-        "date": "2026-03-02",
-        "pollster": "YouGov",
-        "sample_size": 1515,
+        "date": "2026-03-01",
+        "pollster": "Ipsos",
+        "sample_size": 1282,
         "population": "a",
         "approve": 38.0,
-        "disapprove": 59.0,
-        "net_approval": -21.0
+        "disapprove": 60.0,
+        "net_approval": -22.0
       },
       {
         "date": "2026-03-01",
@@ -1295,13 +1304,13 @@
         "net_approval": -9.0
       },
       {
-        "date": "2026-03-01",
-        "pollster": "Ipsos",
-        "sample_size": 1282,
-        "population": "a",
-        "approve": 38.0,
-        "disapprove": 60.0,
-        "net_approval": -22.0
+        "date": "2026-02-28",
+        "pollster": "The Public Sentiment Institute",
+        "sample_size": 249,
+        "population": "lv",
+        "approve": 41.0,
+        "disapprove": 59.0,
+        "net_approval": -18.0
       },
       {
         "date": "2026-02-28",
@@ -1320,15 +1329,6 @@
         "approve": 42.0,
         "disapprove": 54.0,
         "net_approval": -12.0
-      },
-      {
-        "date": "2026-02-28",
-        "pollster": "The Public Sentiment Institute",
-        "sample_size": 249,
-        "population": "lv",
-        "approve": 41.0,
-        "disapprove": 59.0,
-        "net_approval": -18.0
       },
       {
         "date": "2026-02-27",
