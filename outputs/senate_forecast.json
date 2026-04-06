@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-04-05T14:33:47.901454Z",
+    "updated_at": "2026-04-06T14:43:40.992596Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 211,
+    "days_until_election": 210,
     "n_simulations": 10000,
     "districts_total": 435
   },
@@ -550,38 +550,29 @@
       {
         "date": "2026-03-19",
         "pollster": "Ipsos",
+        "sample_size": 1545,
+        "population": "a",
+        "dem_pct": 35.0,
+        "rep_pct": 32.0,
+        "margin": 3.0
+      },
+      {
+        "date": "2026-03-19",
+        "pollster": "Ipsos",
+        "sample_size": 1545,
+        "population": "a",
+        "dem_pct": 35.0,
+        "rep_pct": 32.0,
+        "margin": 3.0
+      },
+      {
+        "date": "2026-03-19",
+        "pollster": "Ipsos",
         "sample_size": 1206,
         "population": "rv",
         "dem_pct": 40.0,
         "rep_pct": 37.0,
         "margin": 3.0
-      },
-      {
-        "date": "2026-03-19",
-        "pollster": "Ipsos",
-        "sample_size": 1545,
-        "population": "a",
-        "dem_pct": 35.0,
-        "rep_pct": 32.0,
-        "margin": 3.0
-      },
-      {
-        "date": "2026-03-19",
-        "pollster": "Ipsos",
-        "sample_size": 1545,
-        "population": "a",
-        "dem_pct": 35.0,
-        "rep_pct": 32.0,
-        "margin": 3.0
-      },
-      {
-        "date": "2026-03-18",
-        "pollster": "John Zogby Strategies",
-        "sample_size": 1000,
-        "population": "lv",
-        "dem_pct": 46.0,
-        "rep_pct": 46.0,
-        "margin": 0.0
       },
       {
         "date": "2026-03-18",
@@ -593,13 +584,13 @@
         "margin": 5.0
       },
       {
-        "date": "2026-03-17",
-        "pollster": "Emerson College",
+        "date": "2026-03-18",
+        "pollster": "John Zogby Strategies",
         "sample_size": 1000,
         "population": "lv",
-        "dem_pct": 49.2,
-        "rep_pct": 41.5,
-        "margin": 7.7
+        "dem_pct": 46.0,
+        "rep_pct": 46.0,
+        "margin": 0.0
       },
       {
         "date": "2026-03-17",
@@ -609,6 +600,15 @@
         "dem_pct": 54.0,
         "rep_pct": 46.0,
         "margin": 8.0
+      },
+      {
+        "date": "2026-03-17",
+        "pollster": "Emerson College",
+        "sample_size": 1000,
+        "population": "lv",
+        "dem_pct": 49.2,
+        "rep_pct": 41.5,
+        "margin": 7.7
       },
       {
         "date": "2026-03-16",
@@ -676,15 +676,6 @@
       {
         "date": "2026-03-09",
         "pollster": "YouGov",
-        "sample_size": 1405,
-        "population": "rv",
-        "dem_pct": 45.0,
-        "rep_pct": 42.0,
-        "margin": 3.0
-      },
-      {
-        "date": "2026-03-09",
-        "pollster": "YouGov",
         "sample_size": 1563,
         "population": "a",
         "dem_pct": 40.0,
@@ -699,6 +690,15 @@
         "dem_pct": 47.0,
         "rep_pct": 43.0,
         "margin": 4.0
+      },
+      {
+        "date": "2026-03-09",
+        "pollster": "YouGov",
+        "sample_size": 1405,
+        "population": "rv",
+        "dem_pct": 45.0,
+        "rep_pct": 42.0,
+        "margin": 3.0
       },
       {
         "date": "2026-03-08",
@@ -738,21 +738,21 @@
       },
       {
         "date": "2026-03-04",
-        "pollster": "Marist University",
-        "sample_size": 1392,
-        "population": "rv",
-        "dem_pct": 53.0,
-        "rep_pct": 44.0,
-        "margin": 9.0
-      },
-      {
-        "date": "2026-03-04",
         "pollster": "Cygnal",
         "sample_size": 1500,
         "population": "lv",
         "dem_pct": 49.0,
         "rep_pct": 45.0,
         "margin": 4.0
+      },
+      {
+        "date": "2026-03-04",
+        "pollster": "Marist University",
+        "sample_size": 1392,
+        "population": "rv",
+        "dem_pct": 53.0,
+        "rep_pct": 44.0,
+        "margin": 9.0
       },
       {
         "date": "2026-03-03",
@@ -810,6 +810,15 @@
       },
       {
         "date": "2026-02-27",
+        "pollster": "YouGov",
+        "sample_size": 1523,
+        "population": "rv",
+        "dem_pct": 45.0,
+        "rep_pct": 40.0,
+        "margin": 5.0
+      },
+      {
+        "date": "2026-02-27",
         "pollster": "TIPP Insights",
         "sample_size": 1264,
         "population": "rv",
@@ -818,13 +827,13 @@
         "margin": 2.0
       },
       {
-        "date": "2026-02-27",
-        "pollster": "YouGov",
-        "sample_size": 1523,
+        "date": "2026-02-26",
+        "pollster": "HarrisX/Harris",
+        "sample_size": 1999,
         "population": "rv",
-        "dem_pct": 45.0,
-        "rep_pct": 40.0,
-        "margin": 5.0
+        "dem_pct": 50.0,
+        "rep_pct": 50.0,
+        "margin": 0.0
       },
       {
         "date": "2026-02-26",
@@ -838,20 +847,20 @@
       {
         "date": "2026-02-26",
         "pollster": "HarrisX/Harris",
-        "sample_size": 1999,
-        "population": "rv",
-        "dem_pct": 50.0,
-        "rep_pct": 50.0,
-        "margin": 0.0
-      },
-      {
-        "date": "2026-02-26",
-        "pollster": "HarrisX/Harris",
         "sample_size": 500,
         "population": "lv",
         "dem_pct": 50.0,
         "rep_pct": 50.0,
         "margin": 0.0
+      },
+      {
+        "date": "2026-02-23",
+        "pollster": "Ipsos",
+        "sample_size": 3686,
+        "population": "rv",
+        "dem_pct": 40.0,
+        "rep_pct": 38.0,
+        "margin": 2.0
       },
       {
         "date": "2026-02-23",
@@ -865,11 +874,11 @@
       {
         "date": "2026-02-23",
         "pollster": "Ipsos",
-        "sample_size": 3686,
-        "population": "rv",
-        "dem_pct": 40.0,
-        "rep_pct": 38.0,
-        "margin": 2.0
+        "sample_size": 4638,
+        "population": "a",
+        "dem_pct": 35.0,
+        "rep_pct": 32.0,
+        "margin": 3.0
       },
       {
         "date": "2026-02-23",
@@ -882,12 +891,12 @@
       },
       {
         "date": "2026-02-23",
-        "pollster": "Ipsos",
-        "sample_size": 4638,
+        "pollster": "YouGov",
+        "sample_size": 1551,
         "population": "a",
-        "dem_pct": 35.0,
-        "rep_pct": 32.0,
-        "margin": 3.0
+        "dem_pct": 39.0,
+        "rep_pct": 34.0,
+        "margin": 5.0
       },
       {
         "date": "2026-02-23",
@@ -897,15 +906,6 @@
         "dem_pct": 50.0,
         "rep_pct": 46.0,
         "margin": 4.0
-      },
-      {
-        "date": "2026-02-23",
-        "pollster": "YouGov",
-        "sample_size": 1551,
-        "population": "a",
-        "dem_pct": 39.0,
-        "rep_pct": 34.0,
-        "margin": 5.0
       }
     ],
     "approval": [
