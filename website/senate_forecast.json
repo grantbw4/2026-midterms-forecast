@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-04-11T14:35:00.809464Z",
+    "updated_at": "2026-04-12T14:38:09.853194Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 205,
+    "days_until_election": 204,
     "n_simulations": 10000,
     "districts_total": 435
   },
@@ -22,8 +22,8 @@
     "national_uncertainty": 3.0,
     "model_type": "hierarchical_bayesian",
     "generic_ballot_margin": 4.51,
-    "approval_rating": -14.74,
-    "net_approval": -14.74,
+    "approval_rating": -14.75,
+    "net_approval": -14.75,
     "economic_adjustment": 0.2311125070910758
   },
   "categories": {
