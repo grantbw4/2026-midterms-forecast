@@ -3,8 +3,8 @@
   "uncertainty": 1.16,
   "method": "weighted_average",
   "generic_ballot_mean": 5.02,
-  "generic_ballot_std": 1.42,
+  "generic_ballot_std": 1.43,
   "approval_mean": -17.19,
   "approval_contribution": 5.16,
-  "updated_at": "2026-05-18T16:46:19.746400"
+  "updated_at": "2026-05-19T16:49:06.771142"
 }
