@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-07-11T14:50:27.570860Z",
+    "updated_at": "2026-07-12T14:53:34.839354Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 114,
+    "days_until_election": 113,
     "n_simulations": 10000,
     "districts_total": 435
   },
@@ -484,12 +484,12 @@
       },
       {
         "date": "2026-06-22",
-        "pollster": "Morning Consult",
-        "sample_size": 500,
+        "pollster": "Ipsos",
+        "sample_size": 978,
         "population": "rv",
-        "dem_pct": 46.0,
-        "rep_pct": 42.0,
-        "margin": 4.0
+        "dem_pct": 41.0,
+        "rep_pct": 36.0,
+        "margin": 5.0
       },
       {
         "date": "2026-06-22",
@@ -511,6 +511,15 @@
       },
       {
         "date": "2026-06-22",
+        "pollster": "Morning Consult",
+        "sample_size": 500,
+        "population": "rv",
+        "dem_pct": 46.0,
+        "rep_pct": 42.0,
+        "margin": 4.0
+      },
+      {
+        "date": "2026-06-22",
         "pollster": "Echelon Insights",
         "sample_size": 1003,
         "population": "lv",
@@ -528,15 +537,6 @@
         "margin": 7.0
       },
       {
-        "date": "2026-06-22",
-        "pollster": "Ipsos",
-        "sample_size": 978,
-        "population": "rv",
-        "dem_pct": 41.0,
-        "rep_pct": 36.0,
-        "margin": 5.0
-      },
-      {
         "date": "2026-06-17",
         "pollster": "Quantus Insights",
         "sample_size": 1000,
@@ -548,15 +548,6 @@
       {
         "date": "2026-06-16",
         "pollster": "The Bullfinch Group",
-        "sample_size": 1200,
-        "population": "a",
-        "dem_pct": 43.0,
-        "rep_pct": 34.0,
-        "margin": 9.0
-      },
-      {
-        "date": "2026-06-16",
-        "pollster": "The Bullfinch Group",
         "sample_size": 1000,
         "population": "rv",
         "dem_pct": 44.0,
@@ -564,13 +555,13 @@
         "margin": 8.0
       },
       {
-        "date": "2026-06-15",
-        "pollster": "Marquette University Law School",
-        "sample_size": 827,
-        "population": "lv",
-        "dem_pct": 53.0,
-        "rep_pct": 45.0,
-        "margin": 8.0
+        "date": "2026-06-16",
+        "pollster": "The Bullfinch Group",
+        "sample_size": 1200,
+        "population": "a",
+        "dem_pct": 43.0,
+        "rep_pct": 34.0,
+        "margin": 9.0
       },
       {
         "date": "2026-06-15",
@@ -583,12 +574,12 @@
       },
       {
         "date": "2026-06-15",
-        "pollster": "Ipsos",
-        "sample_size": 1195,
+        "pollster": "YouGov",
+        "sample_size": 1402,
         "population": "rv",
-        "dem_pct": 41.0,
-        "rep_pct": 38.0,
-        "margin": 3.0
+        "dem_pct": 46.0,
+        "rep_pct": 44.0,
+        "margin": 2.0
       },
       {
         "date": "2026-06-15",
@@ -601,12 +592,21 @@
       },
       {
         "date": "2026-06-15",
-        "pollster": "YouGov",
-        "sample_size": 1402,
+        "pollster": "Ipsos",
+        "sample_size": 1195,
         "population": "rv",
-        "dem_pct": 46.0,
-        "rep_pct": 44.0,
-        "margin": 2.0
+        "dem_pct": 41.0,
+        "rep_pct": 38.0,
+        "margin": 3.0
+      },
+      {
+        "date": "2026-06-15",
+        "pollster": "Marquette University Law School",
+        "sample_size": 827,
+        "population": "lv",
+        "dem_pct": 53.0,
+        "rep_pct": 45.0,
+        "margin": 8.0
       },
       {
         "date": "2026-06-14",
@@ -646,12 +646,30 @@
       },
       {
         "date": "2026-06-08",
+        "pollster": "Ipsos",
+        "sample_size": 4531,
+        "population": "a",
+        "dem_pct": 35.0,
+        "rep_pct": 31.0,
+        "margin": 4.0
+      },
+      {
+        "date": "2026-06-08",
         "pollster": "Emerson College",
         "sample_size": 1200,
         "population": "lv",
         "dem_pct": 50.3,
         "rep_pct": 39.5,
         "margin": 10.8
+      },
+      {
+        "date": "2026-06-08",
+        "pollster": "YouGov",
+        "sample_size": 1437,
+        "population": "rv",
+        "dem_pct": 45.0,
+        "rep_pct": 41.0,
+        "margin": 4.0
       },
       {
         "date": "2026-06-08",
@@ -664,15 +682,6 @@
       },
       {
         "date": "2026-06-08",
-        "pollster": "Ipsos",
-        "sample_size": 4531,
-        "population": "a",
-        "dem_pct": 35.0,
-        "rep_pct": 31.0,
-        "margin": 4.0
-      },
-      {
-        "date": "2026-06-08",
         "pollster": "YouGov",
         "sample_size": 1567,
         "population": "a",
@@ -681,12 +690,12 @@
         "margin": 4.0
       },
       {
-        "date": "2026-06-08",
-        "pollster": "YouGov",
-        "sample_size": 1437,
+        "date": "2026-06-07",
+        "pollster": "Morning Consult",
+        "sample_size": 24849,
         "population": "rv",
-        "dem_pct": 45.0,
-        "rep_pct": 41.0,
+        "dem_pct": 46.0,
+        "rep_pct": 42.0,
         "margin": 4.0
       },
       {
@@ -701,20 +710,20 @@
       {
         "date": "2026-06-07",
         "pollster": "HarrisX",
+        "sample_size": 1392,
+        "population": "rv",
+        "dem_pct": 44.0,
+        "rep_pct": 43.0,
+        "margin": 1.0
+      },
+      {
+        "date": "2026-06-07",
+        "pollster": "HarrisX",
         "sample_size": 2010,
         "population": "a",
         "dem_pct": 43.0,
         "rep_pct": 42.0,
         "margin": 1.0
-      },
-      {
-        "date": "2026-06-07",
-        "pollster": "Morning Consult",
-        "sample_size": 24849,
-        "population": "rv",
-        "dem_pct": 46.0,
-        "rep_pct": 42.0,
-        "margin": 4.0
       },
       {
         "date": "2026-06-07",
@@ -724,15 +733,6 @@
         "dem_pct": 49.0,
         "rep_pct": 44.0,
         "margin": 5.0
-      },
-      {
-        "date": "2026-06-07",
-        "pollster": "HarrisX",
-        "sample_size": 1392,
-        "population": "rv",
-        "dem_pct": 44.0,
-        "rep_pct": 43.0,
-        "margin": 1.0
       },
       {
         "date": "2026-06-06",
@@ -791,20 +791,20 @@
       {
         "date": "2026-06-02",
         "pollster": "The Bullfinch Group",
-        "sample_size": 1200,
-        "population": "a",
-        "dem_pct": 41.0,
-        "rep_pct": 34.0,
-        "margin": 7.0
-      },
-      {
-        "date": "2026-06-02",
-        "pollster": "The Bullfinch Group",
         "sample_size": 1000,
         "population": "rv",
         "dem_pct": 42.0,
         "rep_pct": 36.0,
         "margin": 6.0
+      },
+      {
+        "date": "2026-06-02",
+        "pollster": "Quantus Insights",
+        "sample_size": 1050,
+        "population": "lv",
+        "dem_pct": 47.0,
+        "rep_pct": 42.0,
+        "margin": 5.0
       },
       {
         "date": "2026-06-02",
@@ -817,21 +817,12 @@
       },
       {
         "date": "2026-06-02",
-        "pollster": "Quantus Insights",
-        "sample_size": 1050,
-        "population": "lv",
-        "dem_pct": 47.0,
-        "rep_pct": 42.0,
-        "margin": 5.0
-      },
-      {
-        "date": "2026-06-01",
-        "pollster": "Focaldata",
-        "sample_size": 1537,
-        "population": "rv",
-        "dem_pct": 48.0,
-        "rep_pct": 43.0,
-        "margin": 5.0
+        "pollster": "The Bullfinch Group",
+        "sample_size": 1200,
+        "population": "a",
+        "dem_pct": 41.0,
+        "rep_pct": 34.0,
+        "margin": 7.0
       },
       {
         "date": "2026-06-01",
@@ -861,13 +852,13 @@
         "margin": 3.0
       },
       {
-        "date": "2026-05-31",
-        "pollster": "Morning Consult",
-        "sample_size": 500,
+        "date": "2026-06-01",
+        "pollster": "Focaldata",
+        "sample_size": 1537,
         "population": "rv",
-        "dem_pct": 45.0,
-        "rep_pct": 42.0,
-        "margin": 3.0
+        "dem_pct": 48.0,
+        "rep_pct": 43.0,
+        "margin": 5.0
       },
       {
         "date": "2026-05-31",
@@ -877,6 +868,15 @@
         "dem_pct": 51.0,
         "rep_pct": 49.0,
         "margin": 2.0
+      },
+      {
+        "date": "2026-05-31",
+        "pollster": "Morning Consult",
+        "sample_size": 500,
+        "population": "rv",
+        "dem_pct": 45.0,
+        "rep_pct": 42.0,
+        "margin": 3.0
       },
       {
         "date": "2026-05-28",
@@ -1224,6 +1224,15 @@
       },
       {
         "date": "2026-06-08",
+        "pollster": "Ipsos",
+        "sample_size": 3578,
+        "population": "rv",
+        "approve": 38.0,
+        "disapprove": 61.0,
+        "net_approval": -23.0
+      },
+      {
+        "date": "2026-06-08",
         "pollster": "Global Strategy Group",
         "sample_size": 1000,
         "population": "rv",
@@ -1239,15 +1248,6 @@
         "approve": 35.0,
         "disapprove": 60.0,
         "net_approval": -25.0
-      },
-      {
-        "date": "2026-06-08",
-        "pollster": "Ipsos",
-        "sample_size": 3578,
-        "population": "rv",
-        "approve": 38.0,
-        "disapprove": 61.0,
-        "net_approval": -23.0
       },
       {
         "date": "2026-06-07",
@@ -1279,20 +1279,20 @@
       {
         "date": "2026-06-07",
         "pollster": "Hart Research Associates/Public Opinion Strategies",
-        "sample_size": 2400,
-        "population": "rv",
-        "approve": 42.0,
-        "disapprove": 57.0,
-        "net_approval": -15.0
-      },
-      {
-        "date": "2026-06-07",
-        "pollster": "Hart Research Associates/Public Opinion Strategies",
         "sample_size": 3000,
         "population": "a",
         "approve": 39.0,
         "disapprove": 58.0,
         "net_approval": -19.0
+      },
+      {
+        "date": "2026-06-07",
+        "pollster": "Hart Research Associates/Public Opinion Strategies",
+        "sample_size": 2400,
+        "population": "rv",
+        "approve": 42.0,
+        "disapprove": 57.0,
+        "net_approval": -15.0
       },
       {
         "date": "2026-06-06",
