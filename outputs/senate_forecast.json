@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-07-29T15:47:59.209844Z",
+    "updated_at": "2026-07-30T15:50:25.403998Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 96,
+    "days_until_election": 95,
     "n_simulations": 10000,
     "districts_total": 435
   },
@@ -1018,20 +1018,20 @@
       {
         "date": "2026-06-20",
         "pollster": "American Research Group",
-        "sample_size": 1100,
-        "population": "a",
-        "approve": 30.0,
-        "disapprove": 66.0,
-        "net_approval": -36.0
-      },
-      {
-        "date": "2026-06-20",
-        "pollster": "American Research Group",
         "sample_size": 1006,
         "population": "rv",
         "approve": 30.0,
         "disapprove": 67.0,
         "net_approval": -37.0
+      },
+      {
+        "date": "2026-06-20",
+        "pollster": "American Research Group",
+        "sample_size": 1100,
+        "population": "a",
+        "approve": 30.0,
+        "disapprove": 66.0,
+        "net_approval": -36.0
       },
       {
         "date": "2026-06-19",
@@ -1053,15 +1053,6 @@
       },
       {
         "date": "2026-06-17",
-        "pollster": "Quantus Insights",
-        "sample_size": 1000,
-        "population": "lv",
-        "approve": 43.0,
-        "disapprove": 56.0,
-        "net_approval": -13.0
-      },
-      {
-        "date": "2026-06-17",
         "pollster": "AP-NORC",
         "sample_size": 3040,
         "population": "a",
@@ -1070,13 +1061,13 @@
         "net_approval": -25.0
       },
       {
-        "date": "2026-06-16",
-        "pollster": "The Bullfinch Group",
+        "date": "2026-06-17",
+        "pollster": "Quantus Insights",
         "sample_size": 1000,
-        "population": "rv",
-        "approve": 42.0,
+        "population": "lv",
+        "approve": 43.0,
         "disapprove": 56.0,
-        "net_approval": -14.0
+        "net_approval": -13.0
       },
       {
         "date": "2026-06-16",
@@ -1088,49 +1079,13 @@
         "net_approval": -16.0
       },
       {
-        "date": "2026-06-15",
-        "pollster": "YouGov",
-        "sample_size": 1403,
+        "date": "2026-06-16",
+        "pollster": "The Bullfinch Group",
+        "sample_size": 1000,
         "population": "rv",
-        "approve": 41.0,
+        "approve": 42.0,
         "disapprove": 56.0,
-        "net_approval": -15.0
-      },
-      {
-        "date": "2026-06-15",
-        "pollster": "YouGov",
-        "sample_size": 1549,
-        "population": "a",
-        "approve": 39.0,
-        "disapprove": 56.0,
-        "net_approval": -17.0
-      },
-      {
-        "date": "2026-06-15",
-        "pollster": "Marquette University Law School",
-        "sample_size": 1514,
-        "population": "a",
-        "approve": 38.0,
-        "disapprove": 62.0,
-        "net_approval": -24.0
-      },
-      {
-        "date": "2026-06-15",
-        "pollster": "Morning Consult",
-        "sample_size": 2200,
-        "population": "rv",
-        "approve": 43.1,
-        "disapprove": 53.4,
-        "net_approval": -10.3
-      },
-      {
-        "date": "2026-06-15",
-        "pollster": "Ipsos",
-        "sample_size": 1195,
-        "population": "rv",
-        "approve": 40.0,
-        "disapprove": 60.0,
-        "net_approval": -20.0
+        "net_approval": -14.0
       },
       {
         "date": "2026-06-15",
@@ -1149,6 +1104,51 @@
         "approve": 39.0,
         "disapprove": 60.0,
         "net_approval": -21.0
+      },
+      {
+        "date": "2026-06-15",
+        "pollster": "YouGov",
+        "sample_size": 1403,
+        "population": "rv",
+        "approve": 41.0,
+        "disapprove": 56.0,
+        "net_approval": -15.0
+      },
+      {
+        "date": "2026-06-15",
+        "pollster": "Marquette University Law School",
+        "sample_size": 1514,
+        "population": "a",
+        "approve": 38.0,
+        "disapprove": 62.0,
+        "net_approval": -24.0
+      },
+      {
+        "date": "2026-06-15",
+        "pollster": "Ipsos",
+        "sample_size": 1195,
+        "population": "rv",
+        "approve": 40.0,
+        "disapprove": 60.0,
+        "net_approval": -20.0
+      },
+      {
+        "date": "2026-06-15",
+        "pollster": "Morning Consult",
+        "sample_size": 2200,
+        "population": "rv",
+        "approve": 43.1,
+        "disapprove": 53.4,
+        "net_approval": -10.3
+      },
+      {
+        "date": "2026-06-15",
+        "pollster": "YouGov",
+        "sample_size": 1549,
+        "population": "a",
+        "approve": 39.0,
+        "disapprove": 56.0,
+        "net_approval": -17.0
       },
       {
         "date": "2026-06-14",
@@ -1188,12 +1188,30 @@
       },
       {
         "date": "2026-06-08",
-        "pollster": "Global Strategy Group",
-        "sample_size": 1000,
+        "pollster": "YouGov",
+        "sample_size": 1568,
+        "population": "a",
+        "approve": 35.0,
+        "disapprove": 60.0,
+        "net_approval": -25.0
+      },
+      {
+        "date": "2026-06-08",
+        "pollster": "YouGov",
+        "sample_size": 1438,
         "population": "rv",
-        "approve": 40.0,
-        "disapprove": 58.0,
-        "net_approval": -18.0
+        "approve": 39.0,
+        "disapprove": 59.0,
+        "net_approval": -20.0
+      },
+      {
+        "date": "2026-06-08",
+        "pollster": "Morning Consult",
+        "sample_size": 2200,
+        "population": "rv",
+        "approve": 44.0,
+        "disapprove": 54.0,
+        "net_approval": -10.0
       },
       {
         "date": "2026-06-08",
@@ -1215,66 +1233,21 @@
       },
       {
         "date": "2026-06-08",
+        "pollster": "Global Strategy Group",
+        "sample_size": 1000,
+        "population": "rv",
+        "approve": 40.0,
+        "disapprove": 58.0,
+        "net_approval": -18.0
+      },
+      {
+        "date": "2026-06-08",
         "pollster": "Ipsos",
         "sample_size": 3578,
         "population": "rv",
         "approve": 38.0,
         "disapprove": 61.0,
         "net_approval": -23.0
-      },
-      {
-        "date": "2026-06-08",
-        "pollster": "Morning Consult",
-        "sample_size": 2200,
-        "population": "rv",
-        "approve": 44.0,
-        "disapprove": 54.0,
-        "net_approval": -10.0
-      },
-      {
-        "date": "2026-06-08",
-        "pollster": "YouGov",
-        "sample_size": 1438,
-        "population": "rv",
-        "approve": 39.0,
-        "disapprove": 59.0,
-        "net_approval": -20.0
-      },
-      {
-        "date": "2026-06-08",
-        "pollster": "YouGov",
-        "sample_size": 1568,
-        "population": "a",
-        "approve": 35.0,
-        "disapprove": 60.0,
-        "net_approval": -25.0
-      },
-      {
-        "date": "2026-06-07",
-        "pollster": "Hart Research Associates/Public Opinion Strategies",
-        "sample_size": 2400,
-        "population": "rv",
-        "approve": 42.0,
-        "disapprove": 57.0,
-        "net_approval": -15.0
-      },
-      {
-        "date": "2026-06-07",
-        "pollster": "Hart Research Associates/Public Opinion Strategies",
-        "sample_size": 3000,
-        "population": "a",
-        "approve": 39.0,
-        "disapprove": 58.0,
-        "net_approval": -19.0
-      },
-      {
-        "date": "2026-06-07",
-        "pollster": "HarrisX",
-        "sample_size": 2010,
-        "population": "a",
-        "approve": 41.0,
-        "disapprove": 55.0,
-        "net_approval": -14.0
       },
       {
         "date": "2026-06-07",
@@ -1293,6 +1266,33 @@
         "approve": 44.0,
         "disapprove": 54.0,
         "net_approval": -10.0
+      },
+      {
+        "date": "2026-06-07",
+        "pollster": "Hart Research Associates/Public Opinion Strategies",
+        "sample_size": 2400,
+        "population": "rv",
+        "approve": 42.0,
+        "disapprove": 57.0,
+        "net_approval": -15.0
+      },
+      {
+        "date": "2026-06-07",
+        "pollster": "HarrisX",
+        "sample_size": 2010,
+        "population": "a",
+        "approve": 41.0,
+        "disapprove": 55.0,
+        "net_approval": -14.0
+      },
+      {
+        "date": "2026-06-07",
+        "pollster": "Hart Research Associates/Public Opinion Strategies",
+        "sample_size": 3000,
+        "population": "a",
+        "approve": 39.0,
+        "disapprove": 58.0,
+        "net_approval": -19.0
       },
       {
         "date": "2026-06-06",
