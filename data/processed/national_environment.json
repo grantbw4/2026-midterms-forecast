@@ -4,7 +4,7 @@
   "method": "weighted_average",
   "generic_ballot_mean": 5.07,
   "generic_ballot_std": 1.42,
-  "approval_mean": -18.01,
+  "approval_mean": -18.0,
   "approval_contribution": 5.4,
-  "updated_at": "2026-08-04T16:10:09.443090"
+  "updated_at": "2026-08-05T16:00:23.926167"
 }

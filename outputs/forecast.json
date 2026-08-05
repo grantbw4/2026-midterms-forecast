@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "updated_at": "2026-08-04T16:10:10.006689Z",
+    "updated_at": "2026-08-05T16:00:24.497832Z",
     "model_version": "2.0.0",
     "model_type": "hierarchical_bayesian",
     "election_date": "2026-11-03",
-    "days_until_election": 90,
+    "days_until_election": 89,
     "n_simulations": 10000,
     "districts_total": 435
   },
@@ -9154,20 +9154,20 @@
       {
         "date": "2026-06-07",
         "pollster": "Hart Research Associates/Public Opinion Strategies",
-        "sample_size": 2400,
-        "population": "rv",
-        "approve": 42.0,
-        "disapprove": 57.0,
-        "net_approval": -15.0
-      },
-      {
-        "date": "2026-06-07",
-        "pollster": "Hart Research Associates/Public Opinion Strategies",
         "sample_size": 3000,
         "population": "a",
         "approve": 39.0,
         "disapprove": 58.0,
         "net_approval": -19.0
+      },
+      {
+        "date": "2026-06-07",
+        "pollster": "Hart Research Associates/Public Opinion Strategies",
+        "sample_size": 2400,
+        "population": "rv",
+        "approve": 42.0,
+        "disapprove": 57.0,
+        "net_approval": -15.0
       },
       {
         "date": "2026-06-07",
@@ -9243,20 +9243,20 @@
       },
       {
         "date": "2026-06-02",
-        "pollster": "Quantus Insights",
-        "sample_size": 1050,
-        "population": "lv",
-        "approve": 42.0,
-        "disapprove": 56.0,
-        "net_approval": -14.0
-      },
-      {
-        "date": "2026-06-02",
         "pollster": "The Bullfinch Group",
         "sample_size": 1200,
         "population": "a",
         "approve": 41.0,
         "disapprove": 55.0,
+        "net_approval": -14.0
+      },
+      {
+        "date": "2026-06-02",
+        "pollster": "Quantus Insights",
+        "sample_size": 1050,
+        "population": "lv",
+        "approve": 42.0,
+        "disapprove": 56.0,
         "net_approval": -14.0
       }
     ]
