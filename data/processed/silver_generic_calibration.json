@@ -1,10 +1,10 @@
 {
-  "observation_std": 1.2691,
+  "observation_std": 1.2696,
   "method": "bulletin_adjusted_poll_dispersion_plus_correlated_design_floor",
-  "poll_rows": 207,
-  "effective_polls": 81.489,
-  "weighted_average_margin": 6.4872,
-  "weighted_poll_dispersion": 1.9823,
+  "poll_rows": 199,
+  "effective_polls": 79.18,
+  "weighted_average_margin": 6.4977,
+  "weighted_poll_dispersion": 1.9768,
   "correlated_design_floor": 1.25,
   "provider": "Silver Bulletin",
   "house_effects": "provider_adjusted_not_reestimated"

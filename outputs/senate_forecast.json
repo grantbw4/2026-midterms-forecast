@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "updated_at": "2026-08-12T07:56:47.275507+00:00",
+    "updated_at": "2026-08-12T14:53:23.542725+00:00",
     "model_version": "4.0.0",
     "schema_version": "3.0.0",
     "model_type": "house_hierarchical_bayesian_bulletin_polls",
     "model_status": "healthy",
-    "run_id": "v4-20260812T075647Z-53f6be8bed82",
+    "run_id": "v4-20260812T145323Z-01dda45200a8",
     "election_date": "2026-11-03",
     "days_until_election": 83,
     "n_simulations": 10000,
@@ -38,17 +38,17 @@
       "n_polls": 1,
       "n_pollsters": 1,
       "published_average_days": 1,
-      "residual_rmse": 4.709,
+      "residual_rmse": 4.719,
       "pseudo_replication_guard": "latest average only enters likelihood",
       "process_std_per_day": 0.09,
       "election_error_floor": 1.5,
       "generic_average_calibration": {
-        "observation_std": 1.2691,
+        "observation_std": 1.2696,
         "method": "bulletin_adjusted_poll_dispersion_plus_correlated_design_floor",
-        "poll_rows": 207,
-        "effective_polls": 81.489,
-        "weighted_average_margin": 6.4872,
-        "weighted_poll_dispersion": 1.9823,
+        "poll_rows": 199,
+        "effective_polls": 79.18,
+        "weighted_average_margin": 6.4977,
+        "weighted_poll_dispersion": 1.9768,
         "correlated_design_floor": 1.25,
         "provider": "Silver Bulletin",
         "house_effects": "provider_adjusted_not_reestimated"
@@ -2258,9 +2258,9 @@
       "date": "2026-08-10",
       "provider": "Silver Bulletin",
       "input": "influence-weighted adjusted poll universe",
-      "margin": 6.49,
-      "observation_std": 1.269,
-      "poll_rows": 207,
+      "margin": 6.5,
+      "observation_std": 1.27,
+      "poll_rows": 199,
       "house_effects": "provider-adjusted; not re-estimated"
     },
     "generic_ballot_series_role": "Silver forecast-page likely-voter average shown for context; not an additional likelihood"
@@ -4261,13 +4261,13 @@
     }
   ],
   "change_decomposition": {
-    "probability_change": 0.0,
-    "median_seat_change": 0,
+    "probability_change": 0.0011,
+    "median_seat_change": -1,
     "national_update": {
       "fundamentals_prior": 1.78,
-      "poll_updated_current": 5.93,
+      "poll_updated_current": 5.94,
       "election_day_mean": 5.91,
-      "polling_contribution": 4.15,
+      "polling_contribution": 4.16,
       "future_uncertainty_std": 2.13
     }
   }
