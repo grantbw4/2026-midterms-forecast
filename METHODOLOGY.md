@@ -1,4 +1,4 @@
-# Forecast v3 methodology
+# Forecast v4 methodology
 
 All margins use a single sign convention: positive values favor Democrats and negative values favor Republicans.
 
@@ -14,30 +14,32 @@ Coefficient uncertainty and input uncertainty are propagated into the prior vari
 
 ## 2. National polling likelihood
 
-Silver Bulletin's likely-voter-adjusted generic-ballot average is the sole national polling likelihood:
+The national likelihood is constructed only from Silver Bulletin's public generic-ballot poll universe. Bulletin's adjusted margins and current influence weights are collapsed into one observation:
 
 ```text
-silver_average_latest ~ Student-t(theta_current, sigma_aggregate, nu)
+bulletin_adjusted_aggregate ~ Student-t(theta_current, sigma_aggregate, nu)
 theta_election ~ Normal(theta_current, days_to_election * sigma_process^2 + sigma_election^2)
 ```
 
-Silver already adjusts and weights the underlying polls. Re-estimating house effects from the same inputs would double-count those adjustments, so the model treats the published average as one external measurement with a regularized observation error. The entire daily average history is shown on the site, but only its latest value enters the posterior. This pseudo-replication guard matters because adjacent daily averages reuse nearly all the same polls. A Student-t robustification inflates the measurement variance when the average sharply conflicts with fundamentals. Future uncertainty grows toward Election Day through the latent random-walk variance and an election-error floor.
+Silver already adjusts pollster house effects and supplies influence weights. The model neither re-estimates those effects nor updates once per poll. Aggregate observation variance combines Bulletin poll dispersion/effective sample size with a correlated design-error floor. A Student-t robustification inflates variance when polling sharply conflicts with fundamentals. The daily movement prior cannot be reduced by the first differences of a smoothed published average.
 
 The production update is conjugate/analytic, not MCMC. It therefore reports schema checks, the one-likelihood invariant, finite posterior checks, and posterior draw count, while `r_hat` is explicitly null. It would be statistically misleading to invent an R-hat for an analytic update.
 
-## 3. House and Senate fundamentals
+## 3. House fundamentals
 
 The race prior is:
 
 ```text
-race_margin[r] = beta_lean * partisan_lean[r]
+race_margin[r] = intercept + beta_lean * partisan_lean[r]
                + beta_inc * incumbency[r]
                + beta_nat * theta_election
                + region_effect[region[r]]
                + cycle/race_error[r]
 ```
 
-House coefficients are posterior summaries from historical House fits. Senate uses a separate, wider regularized prior until a sufficiently complete Senate training panel passes rolling-origin validation. Residuals are Student-t. Current House incumbents come from the Clerk of the House; FEC filings establish candidate identity and open-seat status. Inputs carry source and effective-date fields and are validated for 435 unique districts and plausible lean values.
+Every term is measured in Democratic two-party margin points. House coefficients use robust regularized Bayesian regression over 2018, 2022, and map-comparable 2024 districts. National-coefficient, intercept, and regional posterior floors prevent district rows from masquerading as independent election cycles. Cycle, region, and local Student-t errors are propagated separately.
+
+Current House lean comes from the Cook Political Report's 435-row current-map PVI table, which incorporates mid-cycle redistricting. Cook race ratings are not converted into PVI. The model fails closed for missing provenance, missing districts, implausible values, or invalid source URLs. A sourced open-seat flag cannot be overwritten merely because a retiring member remains in the Clerk roster.
 
 ## 4. Candidate-race polling averages
 
@@ -59,4 +61,4 @@ Every race reports its prior and posterior margins, 90% credible interval, proba
 
 Behavioral tests verify the one-average likelihood invariant, no-poll identity, candidate matching, third-party rejection, outlier robustness, sign conventions, deterministic seeds, and wider tails under correlated shocks. The lower-level poll updater retains synthetic tests for posterior contraction and correlated error because it supplies the historical calibration evidence.
 
-Rolling-origin backtests cover 2018–2024 at 120, 90, 60, 30, 14, and 7 days. Metrics are margin RMSE, Brier score, log loss, calibration, and 50%/80%/95% interval coverage, compared with v2, polls-only, and fundamentals-only. The underlying Senate race-update design passes the final-60-day matched-sample gate: Brier improves from 0.0910 to 0.0584 and log loss from 0.2933 to 0.1909 over 275 forecasts. At every holdout, model parameters and the common-error floor use earlier cycles only. Because a public historical archive of Silver's maintained race averages is unavailable, this evidence validates the update/error structure—not the external average provider itself or the full House chamber model.
+House whole-cycle holdouts train on earlier cycles and score 2022 and 2024 district margins, probabilities, intervals, seat totals, and control. The gate requires competitive Brier/log loss, absolute signed error no greater than 1.5 points, and 90% seat-interval coverage. The candidate passes, improving Brier from 0.0335 to 0.0290 and signed error from −2.51 to −0.73 points versus legacy v3. Because a comparable historical Bulletin maintained-average archive is unavailable, polling-layer validation remains explicitly separate.

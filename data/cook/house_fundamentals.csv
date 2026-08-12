@@ -1,0 +1,436 @@
+district_id,cook_pvi,cook_pvi_string,incumbent,incumbent_party,is_open,cook_rating,source_url
+AK-01,-6.0,R+6,Nick Begich,R,False,Likely R,https://www.cookpolitical.com/races
+AL-01,-17.0,R+17,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+AL-02,-7.0,R+7,Shomari Figures,D,False,Likely R,https://www.cookpolitical.com/races
+AL-03,-23.0,R+23,Mike Rogers,R,False,Solid R,https://www.cookpolitical.com/races
+AL-04,-33.0,R+33,Robert Aderholt,R,False,Solid R,https://www.cookpolitical.com/races
+AL-05,-15.0,R+15,Dale Strong,R,False,Solid R,https://www.cookpolitical.com/races
+AL-06,-17.0,R+17,Gary Palmer,R,False,Solid R,https://www.cookpolitical.com/races
+AL-07,10.0,D+10,Terri Sewell,D,False,Solid D,https://www.cookpolitical.com/races
+AR-01,-23.0,R+23,Rick Crawford,R,False,Solid R,https://www.cookpolitical.com/races
+AR-02,-8.0,R+8,French Hill,R,False,Solid R,https://www.cookpolitical.com/races
+AR-03,-13.0,R+13,Steve Womack,R,False,Solid R,https://www.cookpolitical.com/races
+AR-04,-20.0,R+20,Bruce Westerman,R,False,Solid R,https://www.cookpolitical.com/races
+AZ-01,-1.0,R+1,OPEN,,True,Toss Up,https://www.cookpolitical.com/races
+AZ-02,-7.0,R+7,Eli Crane,R,False,Likely R,https://www.cookpolitical.com/races
+AZ-03,22.0,D+22,Yassamin Ansari,D,False,Solid D,https://www.cookpolitical.com/races
+AZ-04,4.0,D+4,Greg Stanton,D,False,Solid D,https://www.cookpolitical.com/races
+AZ-05,-10.0,R+10,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+AZ-06,-0.0,EVEN,Juan Ciscomani,R,False,Toss Up,https://www.cookpolitical.com/races
+AZ-07,13.0,D+13,Adelita Grijalva,D,False,Solid D,https://www.cookpolitical.com/races
+AZ-08,-8.0,R+8,Abe Hamadeh,R,False,Solid R,https://www.cookpolitical.com/races
+AZ-09,-15.0,R+15,Paul Gosar,R,False,Solid R,https://www.cookpolitical.com/races
+CA-01,7.0,D+7,James Gallagher,R,False,Solid D,https://www.cookpolitical.com/races
+CA-02,13.0,D+13,Jared Huffman,D,False,Solid D,https://www.cookpolitical.com/races
+CA-03,6.0,D+6,Ami Bera,D,False,Solid D,https://www.cookpolitical.com/races
+CA-04,8.0,D+8,Mike Thompson,D,False,Solid D,https://www.cookpolitical.com/races
+CA-05,-10.0,R+10,Tom McClintock,R,False,Solid R,https://www.cookpolitical.com/races
+CA-06,5.0,D+5,Kevin Kiley,I,False,Solid D,https://www.cookpolitical.com/races
+CA-07,7.0,D+7,Doris Matsui,D,False,Solid D,https://www.cookpolitical.com/races
+CA-08,19.0,D+19,John Garamendi,D,False,Solid D,https://www.cookpolitical.com/races
+CA-09,8.0,D+8,Josh Harder,D,False,Solid D,https://www.cookpolitical.com/races
+CA-10,18.0,D+18,Mark DeSaulnier,D,False,Solid D,https://www.cookpolitical.com/races
+CA-11,36.0,D+36,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+CA-12,39.0,D+39,Lateefah Simon,D,False,Solid D,https://www.cookpolitical.com/races
+CA-13,2.0,D+2,Adam Gray,D,False,Lean D,https://www.cookpolitical.com/races
+CA-14,19.0,D+19,VACANT,,True,Solid D,https://www.cookpolitical.com/races
+CA-15,26.0,D+26,Kevin Mullin,D,False,Solid D,https://www.cookpolitical.com/races
+CA-16,25.0,D+25,Sam Liccardo,D,False,Solid D,https://www.cookpolitical.com/races
+CA-17,21.0,D+21,Ro Khanna,D,False,Solid D,https://www.cookpolitical.com/races
+CA-18,16.0,D+16,Zoe Lofgren,D,False,Solid D,https://www.cookpolitical.com/races
+CA-19,18.0,D+18,Jimmy Panetta,D,False,Solid D,https://www.cookpolitical.com/races
+CA-20,-16.0,R+16,Vince Fong,R,False,Solid R,https://www.cookpolitical.com/races
+CA-21,5.0,D+5,Jim Costa,D,False,Likely D,https://www.cookpolitical.com/races
+CA-22,1.0,D+1,David Valadao,R,False,Toss Up,https://www.cookpolitical.com/races
+CA-23,-9.0,R+9,Jay Obernolte,R,False,Solid R,https://www.cookpolitical.com/races
+CA-24,13.0,D+13,Salud Carbajal,D,False,Solid D,https://www.cookpolitical.com/races
+CA-25,4.0,D+4,Raul Ruiz,D,False,Solid D,https://www.cookpolitical.com/races
+CA-26,9.0,D+9,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+CA-27,6.0,D+6,George T. Whitesides,D,False,Solid D,https://www.cookpolitical.com/races
+CA-28,14.0,D+14,Judy Chu,D,False,Solid D,https://www.cookpolitical.com/races
+CA-29,19.0,D+19,Luz Rivas,D,False,Solid D,https://www.cookpolitical.com/races
+CA-30,21.0,D+21,Laura Friedman,D,False,Solid D,https://www.cookpolitical.com/races
+CA-31,8.0,D+8,Gil Cisneros,D,False,Solid D,https://www.cookpolitical.com/races
+CA-32,14.0,D+14,Brad Sherman,D,False,Solid D,https://www.cookpolitical.com/races
+CA-33,7.0,D+7,Pete Aguilar,D,False,Solid D,https://www.cookpolitical.com/races
+CA-34,28.0,D+28,Jimmy Gomez,D,False,Solid D,https://www.cookpolitical.com/races
+CA-35,6.0,D+6,Norma Torres,D,False,Solid D,https://www.cookpolitical.com/races
+CA-36,21.0,D+21,Ted Lieu,D,False,Solid D,https://www.cookpolitical.com/races
+CA-37,33.0,D+33,Sydney Kamlager-Dove,D,False,Solid D,https://www.cookpolitical.com/races
+CA-38,8.0,D+8,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+CA-39,7.0,D+7,Mark Takano,D,False,Solid D,https://www.cookpolitical.com/races
+CA-40,-6.0,R+6,MERGED SEAT,,False,Solid R,https://www.cookpolitical.com/races
+CA-41,9.0,D+9,Linda Sánchez,D,False,Solid D,https://www.cookpolitical.com/races
+CA-42,8.0,D+8,Robert Garcia,D,False,Solid D,https://www.cookpolitical.com/races
+CA-43,27.0,D+27,Maxine Waters,D,False,Solid D,https://www.cookpolitical.com/races
+CA-44,20.0,D+20,Nanette Barragan,D,False,Solid D,https://www.cookpolitical.com/races
+CA-45,3.0,D+3,Derek Tran,D,False,Likely D,https://www.cookpolitical.com/races
+CA-46,10.0,D+10,Lou Correa,D,False,Solid D,https://www.cookpolitical.com/races
+CA-47,6.0,D+6,Dave Min,D,False,Solid D,https://www.cookpolitical.com/races
+CA-48,2.0,D+2,OPEN,,True,Lean D,https://www.cookpolitical.com/races
+CA-49,7.0,D+7,Mike Levin,D,False,Solid D,https://www.cookpolitical.com/races
+CA-50,10.0,D+10,Scott Peters,D,False,Solid D,https://www.cookpolitical.com/races
+CA-51,10.0,D+10,Sara Jacobs,D,False,Solid D,https://www.cookpolitical.com/races
+CA-52,11.0,D+11,Juan Vargas,D,False,Solid D,https://www.cookpolitical.com/races
+CO-01,29.0,D+29,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+CO-02,20.0,D+20,Joe Neguse,D,False,Solid D,https://www.cookpolitical.com/races
+CO-03,-5.0,R+5,Jeff Hurd,R,False,Solid R,https://www.cookpolitical.com/races
+CO-04,-9.0,R+9,Lauren Boebert,R,False,Solid R,https://www.cookpolitical.com/races
+CO-05,-5.0,R+5,Jeff Crank,R,False,Likely R,https://www.cookpolitical.com/races
+CO-06,11.0,D+11,Jason Crow,D,False,Solid D,https://www.cookpolitical.com/races
+CO-07,8.0,D+8,Brittany Pettersen,D,False,Solid D,https://www.cookpolitical.com/races
+CO-08,-0.0,EVEN,Gabe Evans,R,False,Toss Up,https://www.cookpolitical.com/races
+CT-01,12.0,D+12,John B. Larson,D,False,Solid D,https://www.cookpolitical.com/races
+CT-02,4.0,D+4,Joe Courtney,D,False,Solid D,https://www.cookpolitical.com/races
+CT-03,8.0,D+8,Rosa DeLauro,D,False,Solid D,https://www.cookpolitical.com/races
+CT-04,13.0,D+13,Jim Himes,D,False,Solid D,https://www.cookpolitical.com/races
+CT-05,3.0,D+3,Jahana Hayes,D,False,Solid D,https://www.cookpolitical.com/races
+DE-01,8.0,D+8,Sarah McBride,D,False,Solid D,https://www.cookpolitical.com/races
+FL-01,-18.0,R+18,Jimmy Patronis,R,False,Solid R,https://www.cookpolitical.com/races
+FL-02,-8.0,R+8,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+FL-03,-10.0,R+10,Kat Cammack,R,False,Solid R,https://www.cookpolitical.com/races
+FL-04,-5.0,R+5,Aaron Bean,R,False,Solid R,https://www.cookpolitical.com/races
+FL-05,-10.0,R+10,John Rutherford,R,False,Solid R,https://www.cookpolitical.com/races
+FL-06,-14.0,R+14,Randy Fine,R,False,Solid R,https://www.cookpolitical.com/races
+FL-07,-5.0,R+5,Cory Mills,R,False,Likely R,https://www.cookpolitical.com/races
+FL-08,-8.0,R+8,Mike Haridopolos,R,False,Solid R,https://www.cookpolitical.com/races
+FL-09,-8.0,R+8,Darren Soto,D,False,Likely R,https://www.cookpolitical.com/races
+FL-10,13.0,D+13,Maxwell Frost,D,False,Solid D,https://www.cookpolitical.com/races
+FL-11,-7.0,R+7,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+FL-12,-7.0,R+7,Gus Bilirakis,R,False,Solid R,https://www.cookpolitical.com/races
+FL-13,-6.0,R+6,Anna Paulina Luna,R,False,Likely R,https://www.cookpolitical.com/races
+FL-14,-4.0,R+4,Kathy Castor,D,False,Lean R,https://www.cookpolitical.com/races
+FL-15,-9.0,R+9,Laurel Lee,R,False,Solid R,https://www.cookpolitical.com/races
+FL-16,-6.0,R+6,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+FL-17,-10.0,R+10,Greg Steube,R,False,Solid R,https://www.cookpolitical.com/races
+FL-18,-8.0,R+8,Scott Franklin,R,False,Solid R,https://www.cookpolitical.com/races
+FL-19,-14.0,R+14,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+FL-20,20.0,D+20,Debbie Wasserman Schultz,D,False,Solid D,https://www.cookpolitical.com/races
+FL-21,-7.0,R+7,Brian Mast,R,False,Solid R,https://www.cookpolitical.com/races
+FL-22,-4.0,R+4,OPEN,,True,Lean R,https://www.cookpolitical.com/races
+FL-23,9.0,D+9,Lois Frankel,D,False,Solid D,https://www.cookpolitical.com/races
+FL-24,22.0,D+22,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+FL-25,-3.0,R+3,Jared Moskowitz,D,False,Toss Up,https://www.cookpolitical.com/races
+FL-26,-7.0,R+7,Mario Díaz-Balart,R,False,Solid R,https://www.cookpolitical.com/races
+FL-27,-6.0,R+6,Maria Elvira Salazar,R,False,Likely R,https://www.cookpolitical.com/races
+FL-28,-10.0,R+10,Carlos A. Giménez,R,False,Solid R,https://www.cookpolitical.com/races
+GA-01,-8.0,R+8,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+GA-02,4.0,D+4,Sanford Bishop,D,False,Solid D,https://www.cookpolitical.com/races
+GA-03,-15.0,R+15,Brian Jack,R,False,Solid R,https://www.cookpolitical.com/races
+GA-04,27.0,D+27,Hank Johnson,D,False,Solid D,https://www.cookpolitical.com/races
+GA-05,36.0,D+36,Nikema Williams,D,False,Solid D,https://www.cookpolitical.com/races
+GA-06,25.0,D+25,Lucy McBath,D,False,Solid D,https://www.cookpolitical.com/races
+GA-07,-11.0,R+11,Rich McCormick,R,False,Solid R,https://www.cookpolitical.com/races
+GA-08,-15.0,R+15,Austin Scott,R,False,Solid R,https://www.cookpolitical.com/races
+GA-09,-17.0,R+17,Andrew Clyde,R,False,Solid R,https://www.cookpolitical.com/races
+GA-10,-11.0,R+11,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+GA-11,-12.0,R+12,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+GA-12,-7.0,R+7,Rick Allen,R,False,Solid R,https://www.cookpolitical.com/races
+GA-13,21.0,D+21,VACANT,,True,Solid D,https://www.cookpolitical.com/races
+GA-14,-19.0,R+19,Clay Fuller,R,False,Solid R,https://www.cookpolitical.com/races
+HI-01,13.0,D+13,Ed Case,D,False,Solid D,https://www.cookpolitical.com/races
+HI-02,12.0,D+12,Jill Tokuda,D,False,Solid D,https://www.cookpolitical.com/races
+IA-01,-4.0,R+4,Mariannette Miller-Meeks,R,False,Toss Up,https://www.cookpolitical.com/races
+IA-02,-4.0,R+4,OPEN,,True,Lean R,https://www.cookpolitical.com/races
+IA-03,-2.0,R+2,Zach Nunn,R,False,Toss Up,https://www.cookpolitical.com/races
+IA-04,-15.0,R+15,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+ID-01,-22.0,R+22,Russ Fulcher,R,False,Solid R,https://www.cookpolitical.com/races
+ID-02,-13.0,R+13,Mike Simpson,R,False,Solid R,https://www.cookpolitical.com/races
+IL-01,18.0,D+18,Jonathan Jackson,D,False,Solid D,https://www.cookpolitical.com/races
+IL-02,18.0,D+18,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+IL-03,17.0,D+17,Delia Ramirez,D,False,Solid D,https://www.cookpolitical.com/races
+IL-04,17.0,D+17,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+IL-05,19.0,D+19,Mike Quigley,D,False,Solid D,https://www.cookpolitical.com/races
+IL-06,3.0,D+3,Sean Casten,D,False,Solid D,https://www.cookpolitical.com/races
+IL-07,34.0,D+34,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+IL-08,5.0,D+5,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+IL-09,19.0,D+19,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+IL-10,12.0,D+12,Brad Schneider,D,False,Solid D,https://www.cookpolitical.com/races
+IL-11,6.0,D+6,Bill Foster,D,False,Solid D,https://www.cookpolitical.com/races
+IL-12,-22.0,R+22,Mike Bost,R,False,Solid R,https://www.cookpolitical.com/races
+IL-13,5.0,D+5,Nikki Budzinski,D,False,Solid D,https://www.cookpolitical.com/races
+IL-14,3.0,D+3,Lauren Underwood,D,False,Solid D,https://www.cookpolitical.com/races
+IL-15,-20.0,R+20,Mary Miller,R,False,Solid R,https://www.cookpolitical.com/races
+IL-16,-11.0,R+11,Darin LaHood,R,False,Solid R,https://www.cookpolitical.com/races
+IL-17,3.0,D+3,Eric Sorensen,D,False,Solid D,https://www.cookpolitical.com/races
+IN-01,1.0,D+1,Frank J. Mrvan,D,False,Likely D,https://www.cookpolitical.com/races
+IN-02,-13.0,R+13,Rudy Yakym,R,False,Solid R,https://www.cookpolitical.com/races
+IN-03,-16.0,R+16,Marlin Stutzman,R,False,Solid R,https://www.cookpolitical.com/races
+IN-04,-15.0,R+15,Jim Baird,R,False,Solid R,https://www.cookpolitical.com/races
+IN-05,-8.0,R+8,Victoria Spartz,R,False,Solid R,https://www.cookpolitical.com/races
+IN-06,-16.0,R+16,Jefferson Shreve,R,False,Solid R,https://www.cookpolitical.com/races
+IN-07,21.0,D+21,André Carson,D,False,Solid D,https://www.cookpolitical.com/races
+IN-08,-18.0,R+18,Mark Messmer,R,False,Solid R,https://www.cookpolitical.com/races
+IN-09,-15.0,R+15,Erin Houchin,R,False,Solid R,https://www.cookpolitical.com/races
+KS-01,-16.0,R+16,Tracey Mann,R,False,Solid R,https://www.cookpolitical.com/races
+KS-02,-10.0,R+10,Derek Schmidt,R,False,Solid R,https://www.cookpolitical.com/races
+KS-03,2.0,D+2,Sharice Davids,D,False,Solid D,https://www.cookpolitical.com/races
+KS-04,-12.0,R+12,Ron Estes,R,False,Solid R,https://www.cookpolitical.com/races
+KY-01,-23.0,R+23,James Comer,R,False,Solid R,https://www.cookpolitical.com/races
+KY-02,-20.0,R+20,Brett Guthrie,R,False,Solid R,https://www.cookpolitical.com/races
+KY-03,10.0,D+10,Morgan McGarvey,D,False,Solid D,https://www.cookpolitical.com/races
+KY-04,-18.0,R+18,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+KY-05,-32.0,R+32,Hal Rogers,R,False,Solid R,https://www.cookpolitical.com/races
+KY-06,-7.0,R+7,OPEN,,True,Likely R,https://www.cookpolitical.com/races
+LA-01,-20.0,R+20,Steve Scalise,R,False,Solid R,https://www.cookpolitical.com/races
+LA-02,25.0,D+25,Troy Carter,D,False,Solid D,https://www.cookpolitical.com/races
+LA-03,-18.0,R+18,Clay Higgins,R,False,Solid R,https://www.cookpolitical.com/races
+LA-04,-17.0,R+17,Mike Johnson,R,False,Solid R,https://www.cookpolitical.com/races
+LA-05,-17.0,R+17,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+LA-06,-16.0,R+16,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+MA-01,8.0,D+8,Richard Neal,D,False,Solid D,https://www.cookpolitical.com/races
+MA-02,13.0,D+13,Jim McGovern,D,False,Solid D,https://www.cookpolitical.com/races
+MA-03,11.0,D+11,Lori Trahan,D,False,Solid D,https://www.cookpolitical.com/races
+MA-04,11.0,D+11,Jake Auchincloss,D,False,Solid D,https://www.cookpolitical.com/races
+MA-05,24.0,D+24,Katherine Clark,D,False,Solid D,https://www.cookpolitical.com/races
+MA-06,11.0,D+11,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+MA-07,34.0,D+34,Ayanna Pressley,D,False,Solid D,https://www.cookpolitical.com/races
+MA-08,15.0,D+15,Stephen Lynch,D,False,Solid D,https://www.cookpolitical.com/races
+MA-09,6.0,D+6,Bill Keating,D,False,Solid D,https://www.cookpolitical.com/races
+MD-01,-8.0,R+8,Andy Harris,R,False,Solid R,https://www.cookpolitical.com/races
+MD-02,10.0,D+10,Johnny Olszewski,D,False,Solid D,https://www.cookpolitical.com/races
+MD-03,12.0,D+12,Sarah Elfreth,D,False,Solid D,https://www.cookpolitical.com/races
+MD-04,39.0,D+39,Glenn Ivey,D,False,Solid D,https://www.cookpolitical.com/races
+MD-05,17.0,D+17,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+MD-06,3.0,D+3,April McClain Delaney,D,False,Solid D,https://www.cookpolitical.com/races
+MD-07,31.0,D+31,Kweisi Mfume,D,False,Solid D,https://www.cookpolitical.com/races
+MD-08,30.0,D+30,Jamie Raskin,D,False,Solid D,https://www.cookpolitical.com/races
+ME-01,11.0,D+11,Chellie Pingree,D,False,Solid D,https://www.cookpolitical.com/races
+ME-02,-4.0,R+4,OPEN,,True,Likely R,https://www.cookpolitical.com/races
+MI-01,-11.0,R+11,Jack Bergman,R,False,Solid R,https://www.cookpolitical.com/races
+MI-02,-15.0,R+15,John Moolenaar,R,False,Solid R,https://www.cookpolitical.com/races
+MI-03,4.0,D+4,Hillary Scholten,D,False,Solid D,https://www.cookpolitical.com/races
+MI-04,-3.0,R+3,Bill Huizenga,R,False,Lean R,https://www.cookpolitical.com/races
+MI-05,-13.0,R+13,Tim Walberg,R,False,Solid R,https://www.cookpolitical.com/races
+MI-06,12.0,D+12,Debbie Dingell,D,False,Solid D,https://www.cookpolitical.com/races
+MI-07,-0.0,EVEN,Tom Barrett,R,False,Toss Up,https://www.cookpolitical.com/races
+MI-08,-1.0,R+1,Kristen McDonald Rivet,D,False,Lean D,https://www.cookpolitical.com/races
+MI-09,-16.0,R+16,Lisa McClain,R,False,Solid R,https://www.cookpolitical.com/races
+MI-10,-3.0,R+3,OPEN,,True,Lean R,https://www.cookpolitical.com/races
+MI-11,9.0,D+9,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+MI-12,21.0,D+21,Rashida Tlaib,D,False,Solid D,https://www.cookpolitical.com/races
+MI-13,22.0,D+22,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+MN-01,-6.0,R+6,Brad Finstad,R,False,Likely R,https://www.cookpolitical.com/races
+MN-02,3.0,D+3,OPEN,,True,Likely D,https://www.cookpolitical.com/races
+MN-03,11.0,D+11,Kelly Morrison,D,False,Solid D,https://www.cookpolitical.com/races
+MN-04,18.0,D+18,Betty McCollum,D,False,Solid D,https://www.cookpolitical.com/races
+MN-05,32.0,D+32,Ilhan Omar,D,False,Solid D,https://www.cookpolitical.com/races
+MN-06,-10.0,R+10,Tom Emmer,R,False,Solid R,https://www.cookpolitical.com/races
+MN-07,-18.0,R+18,Michelle Fischbach,R,False,Solid R,https://www.cookpolitical.com/races
+MN-08,-7.0,R+7,Pete Stauber,R,False,Solid R,https://www.cookpolitical.com/races
+MO-01,29.0,D+29,Wesley Bell,D,False,Solid D,https://www.cookpolitical.com/races
+MO-02,-6.0,R+6,Ann Wagner,R,False,Solid R,https://www.cookpolitical.com/races
+MO-03,-10.0,R+10,Bob Onder,R,False,Solid R,https://www.cookpolitical.com/races
+MO-04,-10.0,R+10,Mark Alford,R,False,Solid R,https://www.cookpolitical.com/races
+MO-05,-9.0,R+9,Emanuel Cleaver,D,False,Solid R,https://www.cookpolitical.com/races
+MO-06,-13.0,R+13,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+MO-07,-21.0,R+21,Eric Burlison,R,False,Solid R,https://www.cookpolitical.com/races
+MO-08,-27.0,R+27,Jason Smith,R,False,Solid R,https://www.cookpolitical.com/races
+MS-01,-18.0,R+18,Trent Kelly,R,False,Solid R,https://www.cookpolitical.com/races
+MS-02,11.0,D+11,Bennie Thompson,D,False,Solid D,https://www.cookpolitical.com/races
+MS-03,-14.0,R+14,Michael Guest,R,False,Solid R,https://www.cookpolitical.com/races
+MS-04,-21.0,R+21,Mike Ezell,R,False,Solid R,https://www.cookpolitical.com/races
+MT-01,-5.0,R+5,OPEN,,True,Likely R,https://www.cookpolitical.com/races
+MT-02,-15.0,R+15,Troy Downing,R,False,Solid R,https://www.cookpolitical.com/races
+NC-01,-5.0,R+5,Don Davis,D,False,Lean R,https://www.cookpolitical.com/races
+NC-02,17.0,D+17,Deborah Ross,D,False,Solid D,https://www.cookpolitical.com/races
+NC-03,-6.0,R+6,Greg Murphy,R,False,Solid R,https://www.cookpolitical.com/races
+NC-04,23.0,D+23,Valerie Foushee,D,False,Solid D,https://www.cookpolitical.com/races
+NC-05,-9.0,R+9,Virginia Foxx,R,False,Solid R,https://www.cookpolitical.com/races
+NC-06,-9.0,R+9,Addison McDowell,R,False,Solid R,https://www.cookpolitical.com/races
+NC-07,-7.0,R+7,David Rouzer,R,False,Solid R,https://www.cookpolitical.com/races
+NC-08,-10.0,R+10,Mark Harris,R,False,Solid R,https://www.cookpolitical.com/races
+NC-09,-8.0,R+8,Richard Hudson,R,False,Solid R,https://www.cookpolitical.com/races
+NC-10,-9.0,R+9,Pat Harrigan,R,False,Solid R,https://www.cookpolitical.com/races
+NC-11,-5.0,R+5,OPEN,,True,Lean R,https://www.cookpolitical.com/races
+NC-12,24.0,D+24,Alma Adams,D,False,Solid D,https://www.cookpolitical.com/races
+NC-13,-8.0,R+8,Brad Knott,R,False,Solid R,https://www.cookpolitical.com/races
+NC-14,-8.0,R+8,Tim Moore,R,False,Solid R,https://www.cookpolitical.com/races
+ND-01,-18.0,R+18,Julie Fedorchak,R,False,Solid R,https://www.cookpolitical.com/races
+NE-01,-6.0,R+6,Mike Flood,R,False,Solid R,https://www.cookpolitical.com/races
+NE-02,3.0,D+3,OPEN,,True,Lean D,https://www.cookpolitical.com/races
+NE-03,-27.0,R+27,Adrian Smith,R,False,Solid R,https://www.cookpolitical.com/races
+NH-01,2.0,D+2,OPEN,,True,Likely D,https://www.cookpolitical.com/races
+NH-02,2.0,D+2,Maggie Goodlander,D,False,Solid D,https://www.cookpolitical.com/races
+NJ-01,10.0,D+10,Donald Norcross,D,False,Solid D,https://www.cookpolitical.com/races
+NJ-02,-5.0,R+5,Jeff Van Drew,R,False,Solid R,https://www.cookpolitical.com/races
+NJ-03,5.0,D+5,Herb Conaway,D,False,Solid D,https://www.cookpolitical.com/races
+NJ-04,-14.0,R+14,Chris Smith,R,False,Solid R,https://www.cookpolitical.com/races
+NJ-05,2.0,D+2,Josh Gottheimer,D,False,Solid D,https://www.cookpolitical.com/races
+NJ-06,5.0,D+5,Frank Pallone,D,False,Solid D,https://www.cookpolitical.com/races
+NJ-07,-0.0,EVEN,Thomas Kean Jr.,R,False,Toss Up,https://www.cookpolitical.com/races
+NJ-08,15.0,D+15,Rob Menendez,D,False,Solid D,https://www.cookpolitical.com/races
+NJ-09,2.0,D+2,Nellie Pou,D,False,Likely D,https://www.cookpolitical.com/races
+NJ-10,27.0,D+27,LaMonica McIver,D,False,Solid D,https://www.cookpolitical.com/races
+NJ-11,5.0,D+5,Analilia Mejia,D,False,Solid D,https://www.cookpolitical.com/races
+NJ-12,13.0,D+13,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+NM-01,7.0,D+7,Melanie Stansbury,D,False,Solid D,https://www.cookpolitical.com/races
+NM-02,-0.0,EVEN,Gabe Vasquez,D,False,Lean D,https://www.cookpolitical.com/races
+NM-03,3.0,D+3,Teresa Leger Fernandez,D,False,Solid D,https://www.cookpolitical.com/races
+NV-01,2.0,D+2,Dina Titus,D,False,Likely D,https://www.cookpolitical.com/races
+NV-02,-7.0,R+7,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+NV-03,1.0,D+1,Susie Lee,D,False,Lean D,https://www.cookpolitical.com/races
+NV-04,2.0,D+2,Steven Horsford,D,False,Likely D,https://www.cookpolitical.com/races
+NY-01,-4.0,R+4,Nick LaLota,R,False,Solid R,https://www.cookpolitical.com/races
+NY-02,-6.0,R+6,Andrew Garbarino,R,False,Solid R,https://www.cookpolitical.com/races
+NY-03,-0.0,EVEN,Tom Suozzi,D,False,Lean D,https://www.cookpolitical.com/races
+NY-04,2.0,D+2,Laura Gillen,D,False,Lean D,https://www.cookpolitical.com/races
+NY-05,24.0,D+24,Gregory Meeks,D,False,Solid D,https://www.cookpolitical.com/races
+NY-06,6.0,D+6,Grace Meng,D,False,Solid D,https://www.cookpolitical.com/races
+NY-07,25.0,D+25,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+NY-08,24.0,D+24,Hakeem Jeffries,D,False,Solid D,https://www.cookpolitical.com/races
+NY-09,22.0,D+22,Yvette Clarke,D,False,Solid D,https://www.cookpolitical.com/races
+NY-10,32.0,D+32,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+NY-11,-10.0,R+10,Nicole Malliotakis,R,False,Solid R,https://www.cookpolitical.com/races
+NY-12,33.0,D+33,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+NY-13,32.0,D+32,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+NY-14,19.0,D+19,Alexandria Ocasio-Cortez,D,False,Solid D,https://www.cookpolitical.com/races
+NY-15,27.0,D+27,Ritchie Torres,D,False,Solid D,https://www.cookpolitical.com/races
+NY-16,18.0,D+18,George Latimer,D,False,Solid D,https://www.cookpolitical.com/races
+NY-17,1.0,D+1,Mike Lawler,R,False,Toss Up,https://www.cookpolitical.com/races
+NY-18,2.0,D+2,Pat Ryan,D,False,Solid D,https://www.cookpolitical.com/races
+NY-19,1.0,D+1,Josh Riley,D,False,Likely D,https://www.cookpolitical.com/races
+NY-20,8.0,D+8,Paul Tonko,D,False,Solid D,https://www.cookpolitical.com/races
+NY-21,-10.0,R+10,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+NY-22,4.0,D+4,John Mannion,D,False,Solid D,https://www.cookpolitical.com/races
+NY-23,-10.0,R+10,Nick Langworthy,R,False,Solid R,https://www.cookpolitical.com/races
+NY-24,-11.0,R+11,Claudia Tenney,R,False,Solid R,https://www.cookpolitical.com/races
+NY-25,10.0,D+10,Joseph Morelle,D,False,Solid D,https://www.cookpolitical.com/races
+NY-26,11.0,D+11,Tim Kennedy,D,False,Solid D,https://www.cookpolitical.com/races
+OH-01,-1.0,R+1,Greg Landsman,D,False,Lean D,https://www.cookpolitical.com/races
+OH-02,-21.0,R+21,David Taylor,R,False,Solid R,https://www.cookpolitical.com/races
+OH-03,21.0,D+21,Joyce Beatty,D,False,Solid D,https://www.cookpolitical.com/races
+OH-04,-21.0,R+21,Jim Jordan,R,False,Solid R,https://www.cookpolitical.com/races
+OH-05,-12.0,R+12,Bob Latta,R,False,Solid R,https://www.cookpolitical.com/races
+OH-06,-17.0,R+17,Michael Rulli,R,False,Solid R,https://www.cookpolitical.com/races
+OH-07,-5.0,R+5,Max Miller,R,False,Toss Up,https://www.cookpolitical.com/races
+OH-08,-8.0,R+8,Warren Davidson,R,False,Solid R,https://www.cookpolitical.com/races
+OH-09,-5.0,R+5,Marcy Kaptur,D,False,Toss Up,https://www.cookpolitical.com/races
+OH-10,-4.0,R+4,Mike Turner,R,False,Solid R,https://www.cookpolitical.com/races
+OH-11,28.0,D+28,Shontel Brown,D,False,Solid D,https://www.cookpolitical.com/races
+OH-12,-15.0,R+15,Troy Balderson,R,False,Solid R,https://www.cookpolitical.com/races
+OH-13,2.0,D+2,Emilia Sykes,D,False,Likely D,https://www.cookpolitical.com/races
+OH-14,-10.0,R+10,David Joyce,R,False,Solid R,https://www.cookpolitical.com/races
+OH-15,-5.0,R+5,Mike Carey,R,False,Solid R,https://www.cookpolitical.com/races
+OK-01,-11.0,R+11,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+OK-02,-28.0,R+28,Josh Brecheen,R,False,Solid R,https://www.cookpolitical.com/races
+OK-03,-23.0,R+23,Frank Lucas,R,False,Solid R,https://www.cookpolitical.com/races
+OK-04,-17.0,R+17,Tom Cole,R,False,Solid R,https://www.cookpolitical.com/races
+OK-05,-9.0,R+9,Stephanie Bice,R,False,Solid R,https://www.cookpolitical.com/races
+OR-01,20.0,D+20,Suzanne Bonamici,D,False,Solid D,https://www.cookpolitical.com/races
+OR-02,-14.0,R+14,Cliff Bentz,R,False,Solid R,https://www.cookpolitical.com/races
+OR-03,24.0,D+24,Maxine Dexter,D,False,Solid D,https://www.cookpolitical.com/races
+OR-04,6.0,D+6,Val Hoyle,D,False,Solid D,https://www.cookpolitical.com/races
+OR-05,4.0,D+4,Janelle Bynum,D,False,Solid D,https://www.cookpolitical.com/races
+OR-06,6.0,D+6,Andrea Salinas,D,False,Solid D,https://www.cookpolitical.com/races
+PA-01,1.0,D+1,Brian Fitzpatrick,R,False,Likely R,https://www.cookpolitical.com/races
+PA-02,19.0,D+19,Brendan Boyle,D,False,Solid D,https://www.cookpolitical.com/races
+PA-03,40.0,D+40,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+PA-04,8.0,D+8,Madeleine Dean,D,False,Solid D,https://www.cookpolitical.com/races
+PA-05,15.0,D+15,Mary Gay Scanlon,D,False,Solid D,https://www.cookpolitical.com/races
+PA-06,6.0,D+6,Chrissy Houlahan,D,False,Solid D,https://www.cookpolitical.com/races
+PA-07,-1.0,R+1,Ryan Mackenzie,R,False,Toss Up,https://www.cookpolitical.com/races
+PA-08,-4.0,R+4,Rob Bresnahan,R,False,Toss Up,https://www.cookpolitical.com/races
+PA-09,-19.0,R+19,Dan Meuser,R,False,Solid R,https://www.cookpolitical.com/races
+PA-10,-3.0,R+3,Scott Perry,R,False,Toss Up,https://www.cookpolitical.com/races
+PA-11,-11.0,R+11,Lloyd Smucker,R,False,Solid R,https://www.cookpolitical.com/races
+PA-12,10.0,D+10,Summer Lee,D,False,Solid D,https://www.cookpolitical.com/races
+PA-13,-23.0,R+23,John Joyce,R,False,Solid R,https://www.cookpolitical.com/races
+PA-14,-17.0,R+17,Guy Reschenthaler,R,False,Solid R,https://www.cookpolitical.com/races
+PA-15,-19.0,R+19,Glenn Thompson,R,False,Solid R,https://www.cookpolitical.com/races
+PA-16,-11.0,R+11,Mike Kelly,R,False,Solid R,https://www.cookpolitical.com/races
+PA-17,3.0,D+3,Chris Deluzio,D,False,Solid D,https://www.cookpolitical.com/races
+RI-01,12.0,D+12,Gabe Amo,D,False,Solid D,https://www.cookpolitical.com/races
+RI-02,4.0,D+4,Seth Magaziner,D,False,Solid D,https://www.cookpolitical.com/races
+SC-01,-6.0,R+6,OPEN,,True,Likely R,https://www.cookpolitical.com/races
+SC-02,-7.0,R+7,Joe Wilson,R,False,Solid R,https://www.cookpolitical.com/races
+SC-03,-21.0,R+21,Sheri Biggs,R,False,Solid R,https://www.cookpolitical.com/races
+SC-04,-11.0,R+11,William Timmons,R,False,Solid R,https://www.cookpolitical.com/races
+SC-05,-11.0,R+11,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+SC-06,13.0,D+13,Jim Clyburn,D,False,Solid D,https://www.cookpolitical.com/races
+SC-07,-12.0,R+12,Russell Fry,R,False,Solid R,https://www.cookpolitical.com/races
+SD-01,-15.0,R+15,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TN-01,-29.0,R+29,Diana Harshbarger,R,False,Solid R,https://www.cookpolitical.com/races
+TN-02,-17.0,R+17,Tim Burchett,R,False,Solid R,https://www.cookpolitical.com/races
+TN-03,-18.0,R+18,Chuck Fleischmann,R,False,Solid R,https://www.cookpolitical.com/races
+TN-04,-11.0,R+11,Scott DesJarlais,R,False,Solid R,https://www.cookpolitical.com/races
+TN-05,-10.0,R+10,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TN-06,-13.0,R+13,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TN-07,-11.0,R+11,Matt Van Epps,R,False,Solid R,https://www.cookpolitical.com/races
+TN-08,-10.0,R+10,David Kustoff,R,False,Solid R,https://www.cookpolitical.com/races
+TN-09,-9.0,R+9,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TX-01,-24.0,R+24,Nathaniel Moran,R,False,Solid R,https://www.cookpolitical.com/races
+TX-02,-11.0,R+11,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TX-03,-11.0,R+11,Keith Self,R,False,Solid R,https://www.cookpolitical.com/races
+TX-04,-12.0,R+12,Pat Fallon,R,False,Solid R,https://www.cookpolitical.com/races
+TX-05,-10.0,R+10,Lance Gooden,R,False,Solid R,https://www.cookpolitical.com/races
+TX-06,-11.0,R+11,Jake Ellzey,R,False,Solid R,https://www.cookpolitical.com/races
+TX-07,13.0,D+13,Lizzie Fletcher,D,False,Solid D,https://www.cookpolitical.com/races
+TX-08,-13.0,R+13,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TX-09,-9.0,R+9,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TX-10,-10.0,R+10,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TX-11,-17.0,R+17,August Pfluger,R,False,Solid R,https://www.cookpolitical.com/races
+TX-12,-11.0,R+11,Craig Goldman,R,False,Solid R,https://www.cookpolitical.com/races
+TX-13,-23.0,R+23,Ronny Jackson,R,False,Solid R,https://www.cookpolitical.com/races
+TX-14,-12.0,R+12,Randy Weber,R,False,Solid R,https://www.cookpolitical.com/races
+TX-15,-7.0,R+7,Monica De La Cruz,R,False,Lean R,https://www.cookpolitical.com/races
+TX-16,11.0,D+11,Veronica Escobar,D,False,Solid D,https://www.cookpolitical.com/races
+TX-17,-10.0,R+10,Pete Sessions,R,False,Solid R,https://www.cookpolitical.com/races
+TX-18,29.0,D+29,Christian Menefee,D,False,Solid D,https://www.cookpolitical.com/races
+TX-19,-25.0,R+25,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TX-20,16.0,D+16,Joaquin Castro,D,False,Solid D,https://www.cookpolitical.com/races
+TX-21,-10.0,R+10,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TX-22,-11.0,R+11,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TX-23,-7.0,R+7,VACANT,,True,Likely R,https://www.cookpolitical.com/races
+TX-24,-8.0,R+8,Beth Van Duyne,R,False,Solid R,https://www.cookpolitical.com/races
+TX-25,-11.0,R+11,Roger Williams,R,False,Solid R,https://www.cookpolitical.com/races
+TX-26,-11.0,R+11,Brandon Gill,R,False,Solid R,https://www.cookpolitical.com/races
+TX-27,-10.0,R+10,Michael Cloud,R,False,Solid R,https://www.cookpolitical.com/races
+TX-28,-3.0,R+3,Henry Cuellar,D,False,Lean D,https://www.cookpolitical.com/races
+TX-29,17.0,D+17,Sylvia Garcia,D,False,Solid D,https://www.cookpolitical.com/races
+TX-30,25.0,D+25,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+TX-31,-11.0,R+11,John Carter,R,False,Solid R,https://www.cookpolitical.com/races
+TX-32,-8.0,R+8,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+TX-33,18.0,D+18,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+TX-34,-3.0,R+3,Vicente Gonzalez,D,False,Toss Up,https://www.cookpolitical.com/races
+TX-35,-4.0,R+4,OPEN,,True,Likely R,https://www.cookpolitical.com/races
+TX-36,-12.0,R+12,Brian Babin,R,False,Solid R,https://www.cookpolitical.com/races
+TX-37,30.0,D+30,Greg Casar,D,False,Solid D,https://www.cookpolitical.com/races
+TX-38,-10.0,R+10,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+UT-01,12.0,D+12,OPEN,,True,Solid D,https://www.cookpolitical.com/races
+UT-02,-15.0,R+15,Blake Moore,R,False,Solid R,https://www.cookpolitical.com/races
+UT-03,-21.0,R+21,Celeste Maloy,R,False,Solid R,https://www.cookpolitical.com/races
+UT-04,-17.0,R+17,Mike Kennedy,R,False,Solid R,https://www.cookpolitical.com/races
+VA-01,-3.0,R+3,Rob Wittman,R,False,Lean R,https://www.cookpolitical.com/races
+VA-02,-0.0,EVEN,Jen Kiggans,R,False,Toss Up,https://www.cookpolitical.com/races
+VA-03,18.0,D+18,Bobby Scott,D,False,Solid D,https://www.cookpolitical.com/races
+VA-04,17.0,D+17,Jennifer McClellan,D,False,Solid D,https://www.cookpolitical.com/races
+VA-05,-6.0,R+6,John McGuire,R,False,Solid R,https://www.cookpolitical.com/races
+VA-06,-12.0,R+12,Ben Cline,R,False,Solid R,https://www.cookpolitical.com/races
+VA-07,2.0,D+2,Eugene Vindman,D,False,Likely D,https://www.cookpolitical.com/races
+VA-08,26.0,D+26,Don Beyer,D,False,Solid D,https://www.cookpolitical.com/races
+VA-09,-22.0,R+22,Morgan Griffith,R,False,Solid R,https://www.cookpolitical.com/races
+VA-10,6.0,D+6,Suhas Subramanyam,D,False,Solid D,https://www.cookpolitical.com/races
+VA-11,18.0,D+18,James Walkinshaw,D,False,Solid D,https://www.cookpolitical.com/races
+VT-01,17.0,D+17,Becca Balint,D,False,Solid D,https://www.cookpolitical.com/races
+WA-01,15.0,D+15,Suzan DelBene,D,False,Solid D,https://www.cookpolitical.com/races
+WA-02,12.0,D+12,Rick Larsen,D,False,Solid D,https://www.cookpolitical.com/races
+WA-03,-2.0,R+2,Marie Gluesenkamp Perez,D,False,Toss Up,https://www.cookpolitical.com/races
+WA-04,-10.0,R+10,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+WA-05,-5.0,R+5,Michael Baumgartner,R,False,Solid R,https://www.cookpolitical.com/races
+WA-06,10.0,D+10,Emily Randall,D,False,Solid D,https://www.cookpolitical.com/races
+WA-07,39.0,D+39,Pramila Jayapal,D,False,Solid D,https://www.cookpolitical.com/races
+WA-08,3.0,D+3,Kim Schrier,D,False,Solid D,https://www.cookpolitical.com/races
+WA-09,22.0,D+22,Adam Smith,D,False,Solid D,https://www.cookpolitical.com/races
+WA-10,9.0,D+9,Marilyn Strickland,D,False,Solid D,https://www.cookpolitical.com/races
+WI-01,-2.0,R+2,Bryan Steil,R,False,Likely R,https://www.cookpolitical.com/races
+WI-02,21.0,D+21,Mark Pocan,D,False,Solid D,https://www.cookpolitical.com/races
+WI-03,-3.0,R+3,Derrick Van Orden,R,False,Toss Up,https://www.cookpolitical.com/races
+WI-04,26.0,D+26,Gwen Moore,D,False,Solid D,https://www.cookpolitical.com/races
+WI-05,-11.0,R+11,Scott Fitzgerald,R,False,Solid R,https://www.cookpolitical.com/races
+WI-06,-8.0,R+8,Glenn Grothman,R,False,Solid R,https://www.cookpolitical.com/races
+WI-07,-11.0,R+11,OPEN,,True,Solid R,https://www.cookpolitical.com/races
+WI-08,-8.0,R+8,Tony Wied,R,False,Solid R,https://www.cookpolitical.com/races
+WV-01,-22.0,R+22,Carol Miller,R,False,Solid R,https://www.cookpolitical.com/races
+WV-02,-20.0,R+20,Riley Moore,R,False,Solid R,https://www.cookpolitical.com/races
+WY-01,-23.0,R+23,OPEN,,True,Solid R,https://www.cookpolitical.com/races

@@ -18,6 +18,7 @@ import numpy as np
 import pandas as pd
 
 from .dynamic_polling import DynamicPollingResult
+from .house_model import HouseCalibration, design_matrix
 from .race_polling import CandidateRegistry, update_race_draws
 
 
@@ -92,22 +93,11 @@ class ChamberParameters:
     source: str
 
 
-def _house_parameters(data_dir: Path) -> ChamberParameters:
-    path = Path(data_dir) / "processed" / "learned_params.json"
+def _house_parameters(data_dir: Path) -> HouseCalibration:
+    path = Path(data_dir) / "processed" / "house_calibration.json"
     if not path.exists():
-        raise FileNotFoundError("Missing fitted House posterior: learned_params.json")
-    values = json.loads(path.read_text())
-    return ChamberParameters(
-        beta_lean_mean=float(values["beta_pvi_mean"]),
-        beta_lean_std=float(values["beta_pvi_std"]),
-        beta_inc_mean=float(values["beta_inc_mean"]),
-        beta_inc_std=float(values["beta_inc_std"]),
-        beta_national_mean=float(values["beta_national_mean"]),
-        beta_national_std=float(values["beta_national_std"]),
-        sigma_regional=float(values["sigma_regional"]),
-        sigma_race=float(values["sigma_district"]),
-        source="house_historical_posterior_2018_2022",
-    )
+        raise FileNotFoundError("Missing fitted House margin posterior: house_calibration.json")
+    return HouseCalibration.load(path)
 
 
 def _senate_parameters(data_dir: Path) -> ChamberParameters:
@@ -122,7 +112,10 @@ def _senate_parameters(data_dir: Path) -> ChamberParameters:
 
 
 def validate_house_fundamentals(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, Any]]:
-    required = {"district_id", "state", "district_number", "pvi", "incumbent_party", "open_seat"}
+    required = {
+        "district_id", "state", "district_number", "pvi", "incumbent_party", "open_seat",
+        "pvi_source", "pvi_source_url", "pvi_effective_date", "lean_quality",
+    }
     missing = required - set(frame.columns)
     if missing:
         raise ValueError(f"House fundamentals missing columns: {sorted(missing)}")
@@ -132,6 +125,11 @@ def validate_house_fundamentals(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict
     work["pvi"] = pd.to_numeric(work["pvi"], errors="raise")
     if not work["pvi"].between(-50, 50).all():
         raise ValueError("House partisan lean outside [-50, 50]")
+    provenance_columns = ["pvi_source", "pvi_source_url", "pvi_effective_date", "lean_quality"]
+    if work[provenance_columns].isna().any().any():
+        raise ValueError("House fundamentals contain missing partisan-lean provenance")
+    if not work["pvi_source_url"].astype(str).str.startswith(("http://", "https://")).all():
+        raise ValueError("House fundamentals contain invalid partisan-lean source URLs")
     if "region" not in work:
         work["region"] = work["state"].map(STATE_TO_REGION)
     work["fundamentals_source"] = work.get("pvi_source", pd.Series(index=work.index, dtype=object)).fillna(
@@ -144,6 +142,8 @@ def validate_house_fundamentals(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict
         "rows": 435,
         "placeholder_incumbent_names": placeholders,
         "pvi_missing": int(work["pvi"].isna().sum()),
+        "lean_provenance_complete": True,
+        "rating_proxy_districts": int((work["lean_quality"] == "rating_proxy").sum()),
     }
 
 
@@ -185,7 +185,7 @@ def _category(probability: float) -> str:
 def _simulate_chamber(
     fundamentals: pd.DataFrame,
     id_column: str,
-    params: ChamberParameters,
+    params: Any,
     national: DynamicPollingResult,
     race_polls: pd.DataFrame,
     race_status: dict[str, Any],
@@ -203,22 +203,57 @@ def _simulate_chamber(
     region_index = fundamentals["region"].map({name: idx for idx, name in enumerate(REGIONS)}).to_numpy(int)
 
     national_samples = np.resize(national.election_samples, n_simulations)
-    beta_lean = rng.normal(params.beta_lean_mean, params.beta_lean_std, n_simulations)
-    beta_inc = rng.normal(params.beta_inc_mean, params.beta_inc_std, n_simulations)
-    beta_national = rng.normal(params.beta_national_mean, params.beta_national_std, n_simulations)
-    regional = rng.normal(0.0, params.sigma_regional, (n_simulations, len(REGIONS)))
-    df = 5.0
-    race_scale = params.sigma_race * np.sqrt((df - 2.0) / df)
-    local = rng.standard_t(df, (n_simulations, n_races)) * race_scale
-
-    prior_votes = (
-        50.0
-        + beta_lean[:, None] * lean[None, :]
-        + beta_inc[:, None] * incumbency[None, :]
-        + beta_national[:, None] * national_samples[:, None]
-        + regional[:, region_index]
-        + local
-    )
+    if chamber == "house":
+        if not isinstance(params, HouseCalibration):
+            raise TypeError("House simulation requires HouseCalibration")
+        parameter_draws = rng.multivariate_normal(
+            params.posterior_mean, params.posterior_covariance, n_simulations,
+            check_valid="raise",
+        )
+        design_frame = pd.DataFrame({
+            "pvi_numeric": lean,
+            "incumbency_code": incumbency,
+            # National margin varies by simulation and is added below.
+            "national_margin": np.zeros(n_races),
+            "region": fundamentals["region"].astype(str).to_numpy(),
+        })
+        base_margin = parameter_draws @ design_matrix(design_frame).T
+        national_coefficient = parameter_draws[:, params.coefficient_names.index("national")]
+        national_error = rng.normal(0.0, params.sigma_national, n_simulations)
+        regional_error = rng.normal(0.0, params.sigma_regional,
+                                    (n_simulations, len(REGIONS)))
+        df = params.student_df
+        race_scale = params.sigma_district * np.sqrt((df - 2.0) / df)
+        local = rng.standard_t(df, (n_simulations, n_races)) * race_scale
+        # Rating-category proxies are less informative than a district PVI.
+        proxy = fundamentals.get("lean_quality", pd.Series("partisan_lean", index=fundamentals.index))
+        proxy_scale = np.where(proxy.astype(str).to_numpy() == "rating_proxy", 2.5, 0.0)
+        proxy_error = rng.normal(0.0, proxy_scale[None, :], (n_simulations, n_races))
+        prior_margins = (
+            base_margin
+            + national_coefficient[:, None] * national_samples[:, None]
+            + national_error[:, None]
+            + regional_error[:, region_index]
+            + local
+            + proxy_error
+        )
+        prior_votes = 50.0 + prior_margins / 2.0
+    else:
+        beta_lean = rng.normal(params.beta_lean_mean, params.beta_lean_std, n_simulations)
+        beta_inc = rng.normal(params.beta_inc_mean, params.beta_inc_std, n_simulations)
+        beta_national = rng.normal(params.beta_national_mean, params.beta_national_std, n_simulations)
+        regional = rng.normal(0.0, params.sigma_regional, (n_simulations, len(REGIONS)))
+        df = 5.0
+        race_scale = params.sigma_race * np.sqrt((df - 2.0) / df)
+        local = rng.standard_t(df, (n_simulations, n_races)) * race_scale
+        prior_votes = (
+            50.0
+            + beta_lean[:, None] * lean[None, :]
+            + beta_inc[:, None] * incumbency[None, :]
+            + beta_national[:, None] * national_samples[:, None]
+            + regional[:, region_index]
+            + local
+        )
     posterior_votes = prior_votes.copy()
     output: list[dict[str, Any]] = []
 
@@ -250,6 +285,10 @@ def _simulate_chamber(
                 "party": str(row.get("incumbent_party", "")),
             },
             "pvi": float(row["pvi"]),
+            "pvi_source": str(row.get("pvi_source", row.get("fundamentals_source", "unknown"))),
+            "pvi_source_url": str(row.get("pvi_source_url", "")) or None,
+            "pvi_effective_date": str(row.get("pvi_effective_date", row.get("fundamentals_effective_date", "unknown"))),
+            "lean_quality": str(row.get("lean_quality", "partisan_lean")),
             "region": str(row["region"]),
             "open_seat": bool(row["open_seat"]),
             "fundamentals_source": str(row.get("fundamentals_source", "unknown")),
@@ -315,6 +354,7 @@ def _categories(races: list[dict[str, Any]], nested: bool) -> dict[str, Any]:
 def run_v3_forecast(
     data_dir: Path,
     national: DynamicPollingResult,
+    senate_national: Optional[DynamicPollingResult] = None,
     race_polls: Optional[pd.DataFrame] = None,
     race_poll_status: Optional[dict[str, Any]] = None,
     registry: Optional[CandidateRegistry] = None,
@@ -322,6 +362,7 @@ def run_v3_forecast(
     random_seed: int = 42,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     data_dir = Path(data_dir)
+    senate_environment = senate_national or national
     polls = race_polls if race_polls is not None else pd.DataFrame()
     statuses = (race_poll_status or {}).get("races", {})
 
@@ -353,7 +394,7 @@ def run_v3_forecast(
         n_simulations, random_seed, "house", correlated_error_floor,
     )
     senate_votes, senate_races = _simulate_chamber(
-        senate, "race_id", _senate_parameters(data_dir), national, polls, statuses,
+        senate, "race_id", _senate_parameters(data_dir), senate_environment, polls, statuses,
         n_simulations, random_seed + 1, "senate", correlated_error_floor,
     )
     house_seats = np.sum(house_votes > 50.0, axis=1)
@@ -370,10 +411,15 @@ def run_v3_forecast(
         "ci_50_low": int(np.percentile(house_seats, 25)),
         "ci_50_high": int(np.percentile(house_seats, 75)),
         "national_environment": round(national.election_mean, 2),
-        "generic_ballot_margin": round(national.current_mean, 2),
+        "generic_ballot_margin": round(float(
+            national.diagnostics.get("generic_average_calibration", {}).get(
+                "weighted_average_margin", national.current_mean
+            )
+        ), 2),
+        "poll_updated_current_margin": round(national.current_mean, 2),
         "approval_rating": round(national.prior.approval_mean, 2),
         "net_approval": round(national.prior.approval_mean, 2),
-        "model_type": "bayesian_external_average_v3",
+        "model_type": "house_margin_hierarchical_bayesian_v4",
     }
     senate_summary = {
         "prob_dem_control": round(float(np.mean(senate_seats >= 51)), 4),
@@ -385,11 +431,11 @@ def run_v3_forecast(
         "seats_up": len(senate),
         "dem_defending": int((senate["seat_held_by"] == "D").sum()),
         "rep_defending": int((senate["seat_held_by"] == "R").sum()),
-        "national_environment": round(national.election_mean, 2),
-        "national_uncertainty": round(national.election_std, 2),
-        "generic_ballot_margin": round(national.current_mean, 2),
-        "approval_rating": round(national.prior.approval_mean, 2),
-        "net_approval": round(national.prior.approval_mean, 2),
+        "national_environment": round(senate_environment.election_mean, 2),
+        "national_uncertainty": round(senate_environment.election_std, 2),
+        "generic_ballot_margin": round(senate_environment.current_mean, 2),
+        "approval_rating": round(senate_environment.prior.approval_mean, 2),
+        "net_approval": round(senate_environment.prior.approval_mean, 2),
         "model_type": "bayesian_external_average_v3",
     }
     house_output = {
@@ -407,6 +453,8 @@ def run_v3_forecast(
     diagnostics = {
         "fundamentals": fundamentals_diagnostics,
         "house_parameter_source": _house_parameters(data_dir).source,
+        "house_parameter_scale": "democratic_two_party_margin_points",
+        "house_parameter_years": list(_house_parameters(data_dir).years_used),
         "senate_parameter_source": _senate_parameters(data_dir).source,
         "race_polling": (race_poll_status or {}).get("summary", {}),
         "current_polling_layer_status": "external_unvalidated",

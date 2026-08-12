@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the v3 Bayesian House and Senate forecast.
+"""Generate the v4 Bayesian House and Senate forecast.
 
 All inputs are validated before either public forecast is replaced.  Network
 failure can use a recent cache, but stale or invalid data never becomes a fake
@@ -38,8 +38,10 @@ from models.race_polling import (  # noqa: E402
 )
 from models.silver_bulletin import (  # noqa: E402
     SilverBulletinClient,
+    calibrate_generic_average_uncertainty,
     load_silver_cache,
     prepare_silver_averages,
+    prepare_generic_poll_likelihood,
     save_silver_cache,
 )
 from scripts.fetch_votehub import VoteHubFetcher  # noqa: E402
@@ -107,16 +109,50 @@ def _fetch_registry(skip_fetch: bool) -> tuple[Any, list[str]]:
         return registry, ["candidate_registry_cache_after_fetch_failure"]
 
 
-def _fetch_silver_averages(skip_fetch: bool, registry: Any) -> tuple[Any, list[str]]:
+def _fetch_silver_averages(skip_fetch: bool, registry: Any) -> tuple[Any, pd.DataFrame, list[str], dict[str, Any]]:
     if skip_fetch:
-        return load_silver_cache(DATA_DIR), ["silver_average_cache_requested"]
+        data = load_silver_cache(DATA_DIR)
+        path = DATA_DIR / "processed" / "silver_generic_calibration.json"
+        calibration = json.loads(path.read_text()) if path.exists() else {
+            "observation_std": 1.5,
+            "method": "legacy_default_no_cached_bulletin_poll_calibration",
+        }
+        polls_path = DATA_DIR / "processed" / "silver_generic_polls.csv"
+        if not polls_path.exists():
+            raise FileNotFoundError("No cached Silver Bulletin generic poll universe")
+        generic_likelihood = prepare_generic_poll_likelihood(
+            pd.read_csv(polls_path), float(calibration["observation_std"])
+        )
+        return data, generic_likelihood, ["silver_average_cache_requested"], calibration
     try:
-        data = prepare_silver_averages(SilverBulletinClient().fetch(), registry)
+        client = SilverBulletinClient()
+        data = prepare_silver_averages(client.fetch(), registry)
+        generic_polls = client.fetch_generic_polls()
+        calibration = calibrate_generic_average_uncertainty(
+            data.generic_history, generic_polls
+        )
+        observation_std = float(calibration["observation_std"])
+        # National aggregate uncertainty is not transferable to a single
+        # candidate race.  Race likelihoods retain their separately calibrated
+        # observation model and correlated election-error floor.
         save_silver_cache(DATA_DIR, data)
-        return data, []
+        _atomic_csv(DATA_DIR / "processed" / "silver_generic_polls.csv", generic_polls)
+        _atomic_json(DATA_DIR / "processed" / "silver_generic_calibration.json", calibration)
+        generic_likelihood = prepare_generic_poll_likelihood(generic_polls, observation_std)
+        return data, generic_likelihood, [], calibration
     except Exception as exc:
         logger.warning("Silver Bulletin average refresh failed; checking cache: %s", exc)
-        return load_silver_cache(DATA_DIR), ["silver_average_cache_after_fetch_failure"]
+        data = load_silver_cache(DATA_DIR)
+        path = DATA_DIR / "processed" / "silver_generic_calibration.json"
+        calibration = json.loads(path.read_text()) if path.exists() else {
+            "observation_std": 1.5,
+            "method": "legacy_default_after_bulletin_poll_fetch_failure",
+        }
+        polls_path = DATA_DIR / "processed" / "silver_generic_polls.csv"
+        generic_likelihood = prepare_generic_poll_likelihood(
+            pd.read_csv(polls_path), float(calibration["observation_std"])
+        )
+        return data, generic_likelihood, ["silver_average_cache_after_fetch_failure"], calibration
 
 
 def _economic_index() -> tuple[float, list[str]]:
@@ -186,17 +222,17 @@ def _metadata(
     ).hexdigest()[:12]
     return {
         "updated_at": now.isoformat(),
-        "model_version": "3.0.0",
+        "model_version": "4.0.0",
         "schema_version": "3.0.0",
-        "model_type": "bayesian_external_average",
+        "model_type": "house_hierarchical_bayesian_bulletin_polls",
         "model_status": status,
-        "run_id": f"v3-{now.strftime('%Y%m%dT%H%M%SZ')}-{digest}",
+        "run_id": f"v4-{now.strftime('%Y%m%dT%H%M%SZ')}-{digest}",
         "election_date": ELECTION_DATE.isoformat(),
         "days_until_election": max((ELECTION_DATE - now.date()).days, 0),
         "n_simulations": n_simulations,
         "districts_total": 435,
         "data_through": national.data_through,
-        "inference_method": "external_average_bayesian_update + posterior_predictive_draws",
+        "inference_method": "bulletin_adjusted_poll_aggregate_bayesian_update + hierarchical_posterior_predictive_draws",
         "fallback_used": bool(fallbacks),
         "fallbacks": fallbacks,
         "warnings": warnings,
@@ -225,6 +261,16 @@ def _load_backtest_summary() -> dict[str, Any]:
         "not_directly_validated": "Silver Bulletin maintained averages",
         "reason": "No comparable public historical archive of race averages",
     }
+    house_path = OUTPUT_DIR / "house_backtest_metrics.json"
+    if house_path.exists():
+        house = json.loads(house_path.read_text())
+        payload["house_structural_validation"] = {
+            "scope": house.get("scope"),
+            "metrics": house.get("metrics", {}),
+            "seat_results": house.get("seat_results", []),
+            "gate": house.get("house_structural_gate", {}),
+            "limitation": house.get("limitation"),
+        }
     return payload
 
 
@@ -260,7 +306,7 @@ def update_timeline(summary: dict[str, Any], chamber: str) -> None:
         "national_env": summary["national_environment"],
         "approval": summary.get("approval_rating", 0),
         "generic_ballot": summary.get("generic_ballot_margin", 0),
-        "model_version": "3.0.0",
+        "model_version": "4.0.0",
         "methodology_break": True,
     }
     history = pd.read_csv(path) if path.exists() else pd.DataFrame()
@@ -270,7 +316,7 @@ def update_timeline(summary: dict[str, Any], chamber: str) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate the forecast v3 public artifacts")
+    parser = argparse.ArgumentParser(description="Generate the forecast v4 public artifacts")
     parser.add_argument("--simulations", type=int, default=10_000)
     parser.add_argument("--skip-fetch", action="store_true")
     parser.add_argument("--skip-race-fetch", action="store_true")
@@ -279,7 +325,9 @@ def main() -> int:
     args = parser.parse_args()
 
     registry, registry_fallbacks = _fetch_registry(args.skip_race_fetch)
-    silver, silver_fallbacks = _fetch_silver_averages(args.skip_fetch, registry)
+    silver, generic_likelihood, silver_fallbacks, generic_calibration = _fetch_silver_averages(
+        args.skip_fetch, registry
+    )
     approval, fallbacks = _fetch_approval(args.skip_fetch)
     fallbacks.extend(registry_fallbacks)
     fallbacks.extend(silver_fallbacks)
@@ -295,7 +343,18 @@ def main() -> int:
         approval_std=approval_std,
         economic_index=economic_index,
     )
-    national = DynamicNationalModel(random_seed=42).fit_external_average(
+    process_calibration = DynamicNationalModel.calibrate_process_std(generic)
+    national = DynamicNationalModel(
+        process_std_per_day=float(process_calibration["process_std_per_day"]), random_seed=42
+    ).fit_external_average(
+        generic_likelihood, prior, election_date=ELECTION_DATE, n_draws=args.simulations
+    )
+    national.diagnostics["generic_average_calibration"] = generic_calibration
+    national.diagnostics["process_calibration"] = process_calibration
+    # House v4 changes only the House national likelihood.  Preserve the
+    # existing Senate national layer until a separately scoped Senate
+    # recalibration passes its own promotion gate.
+    senate_national = DynamicNationalModel(random_seed=42).fit_external_average(
         generic, prior, election_date=ELECTION_DATE, n_draws=args.simulations
     )
     poll_age = (date.today() - date.fromisoformat(national.data_through)).days
@@ -311,6 +370,7 @@ def main() -> int:
     house, senate, diagnostics = run_v3_forecast(
         DATA_DIR,
         national,
+        senate_national=senate_national,
         race_polls=race_polls,
         race_poll_status=race_status,
         registry=registry,
@@ -320,20 +380,37 @@ def main() -> int:
     previous_path = OUTPUT_DIR / "forecast.json"
     previous = json.loads(previous_path.read_text()) if previous_path.exists() else {}
     polling_display = format_polling_data(generic, approval)
+    likelihood_row = generic_likelihood.iloc[-1]
+    polling_display["national_likelihood"] = {
+        "date": pd.to_datetime(likelihood_row["date"]).strftime("%Y-%m-%d"),
+        "provider": "Silver Bulletin",
+        "input": "influence-weighted adjusted poll universe",
+        "margin": round(float(likelihood_row["margin"]), 2),
+        "observation_std": round(float(likelihood_row["observation_std"]), 3),
+        "poll_rows": int(likelihood_row["poll_rows"]),
+        "house_effects": "provider-adjusted; not re-estimated",
+    }
+    polling_display["generic_ballot_series_role"] = (
+        "Silver forecast-page likely-voter average shown for context; not an additional likelihood"
+    )
     shared = {
         "metadata": metadata,
         "national_model": national.to_public_dict(),
         "polling": polling_display,
         "backtest": _load_backtest_summary(),
         "data_sources": {
-            "polling_likelihood": "Silver Bulletin maintained polling averages",
+            "national_polling_likelihood": "Silver Bulletin adjusted generic-ballot polls and influence weights",
+            "race_polling_likelihood": "Silver Bulletin maintained candidate-race averages",
+            "house_partisan_lean": "Cook Political Report current-map Cook PVI",
             "approval_prior_input": "VoteHub",
             "candidate_registry": "Federal Election Commission",
-            "polling_source_url": "https://www.natesilver.net/p/nate-silver-2026-midterm-election-polls-model",
+            "national_polling_source_url": "https://www.natesilver.net/p/generic-ballot-average-2026-nate-silver-bulletin-congress-polls",
+            "race_polling_source_url": "https://www.natesilver.net/p/nate-silver-2026-midterm-election-polls-model",
         },
     }
     house = {**shared, **house}
     senate = {**shared, **senate}
+    senate["national_model"] = senate_national.to_public_dict()
     house["change_decomposition"] = _change_decomposition(previous, house, national)
     senate["change_decomposition"] = house["change_decomposition"]
 
@@ -349,7 +426,7 @@ def main() -> int:
             shutil.copy2(source, WEBSITE_DIR / filename)
 
     logger.info(
-        "Published v3 forecast %s: House D majority %.1f%%, Senate D control %.1f%%",
+        "Published v4 forecast %s: House D majority %.1f%%, Senate D control %.1f%%",
         metadata["run_id"], house["summary"]["prob_dem_majority"] * 100,
         senate["summary"]["prob_dem_control"] * 100,
     )

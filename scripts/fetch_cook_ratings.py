@@ -76,6 +76,7 @@ class CookPoliticalScraper:
     HOUSE_RATINGS_URL = "https://www.cookpolitical.com/ratings/house-race-ratings"
     SENATE_RATINGS_URL = "https://www.cookpolitical.com/ratings/senate-race-ratings"
     REDISTRICTING_URL = "https://www.cookpolitical.com/redistricting/2025-26-mid-decade-map"
+    RACES_URL = "https://www.cookpolitical.com/races"
 
     # Keep legacy alias for backwards compatibility
     RATINGS_URL = HOUSE_RATINGS_URL
@@ -231,6 +232,60 @@ class CookPoliticalScraper:
                     logger.info(f"  {rating}: {count}")
 
         return df
+
+    @staticmethod
+    def _parse_pvi(value: str) -> Optional[float]:
+        text = str(value).strip().upper().replace("EVEN", "R+0")
+        match = re.fullmatch(r"([DR])\+(\d+(?:\.\d+)?)", text)
+        if not match:
+            return None
+        party, magnitude = match.groups()
+        return float(magnitude) if party == "D" else -float(magnitude)
+
+    def fetch_house_fundamentals(self) -> pd.DataFrame:
+        """Fetch all 435 current-map House PVI values from Cook's race table."""
+
+        records = []
+        for page in range(22):
+            response = self.scraper.get(
+                self.RACES_URL,
+                params={"order": "Rating", "sort": "asc", "page": page},
+                timeout=30,
+            )
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, "html.parser")
+            table = soup.find("table")
+            if table is None:
+                raise ValueError(f"Cook race table missing on page {page}")
+            rows = table.find_all("tr")
+            page_records = 0
+            for row in rows[1:]:
+                cells = [cell.get_text(" ", strip=True) for cell in row.find_all(["th", "td"])]
+                if len(cells) < 6 or cells[1] != "House":
+                    continue
+                district_id = self._parse_district_id(cells[2].replace(" 2026", ""))
+                pvi = self._parse_pvi(cells[4])
+                if district_id is None or pvi is None:
+                    continue
+                incumbent = cells[3]
+                party_match = re.search(r"\(([DRI])\)$", incumbent)
+                records.append({
+                    "district_id": district_id,
+                    "cook_pvi": pvi,
+                    "cook_pvi_string": cells[4],
+                    "incumbent": re.sub(r"\s+\([DRI]\)$", "", incumbent),
+                    "incumbent_party": party_match.group(1) if party_match else "",
+                    "is_open": incumbent.upper() in {"OPEN", "VACANT"},
+                    "cook_rating": cells[5],
+                    "source_url": self.RACES_URL,
+                })
+                page_records += 1
+            if page_records == 0:
+                break
+        frame = pd.DataFrame(records).drop_duplicates("district_id", keep="first")
+        if len(frame) != 435 or frame["district_id"].nunique() != 435:
+            raise ValueError(f"Cook race table returned {frame['district_id'].nunique()} unique House districts")
+        return frame.sort_values("district_id").reset_index(drop=True)
 
     def fetch_senate_ratings(self) -> pd.DataFrame:
         """

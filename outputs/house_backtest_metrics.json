@@ -1,0 +1,79 @@
+{
+  "status": "complete",
+  "scope": "House structural model conditional on realized national House margin",
+  "holdout_years": [
+    2022,
+    2024
+  ],
+  "excluded_2024_map_change_states": [
+    "AL",
+    "GA",
+    "LA",
+    "NC",
+    "NY"
+  ],
+  "metrics": {
+    "house_v4": {
+      "n": 740,
+      "rmse": 7.368,
+      "signed_error": -0.734,
+      "brier": 0.029,
+      "log_loss": 0.10021,
+      "coverage_90": 0.9541
+    },
+    "legacy_v3": {
+      "n": 740,
+      "rmse": 7.6841,
+      "signed_error": -2.5117,
+      "brier": 0.03348,
+      "log_loss": 0.11117,
+      "coverage_90": 0.9405
+    },
+    "uniform_swing": {
+      "n": 740,
+      "rmse": 7.9806,
+      "signed_error": -1.6967,
+      "brier": 0.04368,
+      "log_loss": 0.14488,
+      "coverage_90": 0.9392
+    }
+  },
+  "seat_results": [
+    {
+      "year": 2022,
+      "trained_on": [
+        2018
+      ],
+      "actual_dem_seats": 213,
+      "median_dem_seats": 201,
+      "mean_dem_seats": 200.37,
+      "ci_90": [
+        173,
+        225
+      ],
+      "prob_dem_majority": 0.1341,
+      "covered_90": true
+    },
+    {
+      "year": 2024,
+      "trained_on": [
+        2018,
+        2022
+      ],
+      "actual_dem_seats": 215,
+      "median_dem_seats": 209,
+      "mean_dem_seats": 208.77,
+      "ci_90": [
+        188,
+        227
+      ],
+      "prob_dem_majority": 0.2275,
+      "covered_90": true
+    }
+  ],
+  "house_structural_gate": {
+    "status": "production",
+    "rule": "Candidate must match the best baseline within 0.005 Brier/0.01 log loss, have <=1.5-point signed error, and cover both seat outcomes at 90%."
+  },
+  "limitation": "This validates the House margin-to-seat layer, not Silver Bulletin's maintained-average calibration."
+}

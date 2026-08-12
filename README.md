@@ -1,16 +1,17 @@
-# 2026 Midterms Forecast v3
+# 2026 Midterms Forecast v4
 
-A dynamic Bayesian forecast for the 2026 U.S. House and Senate elections. The project is designed as an auditable data-science portfolio piece: assumptions, likelihoods, uncertainty propagation, data provenance, diagnostics, and validation gates are visible in the code and public output.
+A dynamic Bayesian forecast for the 2026 U.S. House and Senate elections. House v4 keeps all structural quantities on the Democratic two-party-margin scale and explicitly preserves cycle-level uncertainty.
 
 **Live dashboard:** [grantbw4.github.io/2026-midterms-forecast](https://grantbw4.github.io/2026-midterms-forecast/)
 
-## What v3 demonstrates
+## What v4 demonstrates
 
-- A Bayesian update from Silver Bulletin's maintained generic-ballot average, with an explicit guard against treating correlated daily averages as independent evidence.
+- A single national Bayesian likelihood built from Silver Bulletin's adjusted generic-ballot poll universe and its published influence weights; Bulletin's pollster house effects are not estimated twice.
 - A fundamentals prior from approval and economic uncertainty, used once rather than added after polling.
 - One externally aggregated Silver Bulletin likelihood per covered race, robustly combined with the fundamentals posterior.
 - Official candidate validation from FEC records; ambiguous, third-party, and unmapped matchups remain fundamentals-only.
-- Shared national and regional posterior draws, preserving correlated chamber outcomes.
+- A House-specific robust hierarchical calibration on 2018, 2022, and comparable 2024 districts, with shared national and regional posterior draws.
+- Current-map Cook PVI values for all 435 districts, including mid-cycle redistricting, with row-level provenance and fail-closed validation.
 - Fundamentals-only behavior for unpolled or unresolved races—no invented poll estimate.
 - Atomic, fail-closed publication with immutable source snapshots and explicit degraded status.
 - Synthetic recovery, behavioral verification, output schemas, and a rolling-origin backtest promotion gate.
@@ -39,16 +40,16 @@ If inputs are invalid, catastrophically stale, or diagnostics fail, public JSON 
 
 ```text
 fundamentals prior:   election_margin ~ Normal(approval + economy, structural_error)
-national likelihood: silver_average_latest ~ Student-t(theta_current, sigma_aggregate)
-race prior:           margin[r] ~ Student-t(partisan_lean + incumbency + national + region, sigma_race)
+national likelihood: bulletin_adjusted_poll_aggregate ~ Student-t(theta_current, sigma_aggregate)
+House race prior:     margin[r] ~ Student-t(intercept + lean + incumbency + national + region, sigma_race)
 race likelihood:      silver_average_latest[r] ~ Student-t(margin[r], sigma_aggregate + common_error)
 ```
 
-The national update is analytic, so MCMC convergence statistics do not apply to that step. Only the latest Silver value enters the likelihood; its history is displayed but never multiplied as repeated evidence. Historical parameter fits are offline and may be published only with R-hat < 1.01, bulk ESS > 400, and zero divergences.
+The national update is analytic, so MCMC convergence statistics do not apply. Bulletin-adjusted polls are collapsed to one influence-weighted likelihood rather than treated as independent posterior updates. House parameter covariance and national-cycle variance retain explicit floors because hundreds of district rows represent only three election cycles.
 
 ## Outputs
 
-Every race exposes `prior_margin`, `posterior_margin`, a 90% credible interval, `prob_dem`, `polling_adjustment`, `polls_used`, `latest_poll_date`, source URLs, and `data_quality`. Forecast metadata includes v3 schema and model versions, `run_id`, `data_through`, freshness, inference method, diagnostics, and fallbacks.
+Every race exposes `prior_margin`, `posterior_margin`, a 90% credible interval, `prob_dem`, `polling_adjustment`, `polls_used`, `latest_poll_date`, source URLs, and `data_quality`. Forecast metadata includes stable schema and model versions, `run_id`, `data_through`, freshness, inference method, diagnostics, and fallbacks.
 
 See [METHODOLOGY.md](METHODOLOGY.md) for assumptions and [MODEL_CARD.md](MODEL_CARD.md) for validation and limitations.
 
@@ -56,7 +57,9 @@ See [METHODOLOGY.md](METHODOLOGY.md) for assumptions and [MODEL_CARD.md](MODEL_C
 
 | Purpose | Source |
 |---|---|
-| Generic ballot and race likelihoods | [Silver Bulletin 2026 forecast](https://www.natesilver.net/p/nate-silver-2026-midterm-election-polls-model), public maintained-average feed |
+| Generic-ballot polls | [Silver Bulletin generic ballot](https://www.natesilver.net/p/generic-ballot-average-2026-nate-silver-bulletin-congress-polls), adjusted public poll file |
+| Candidate-race likelihoods | [Silver Bulletin 2026 forecast](https://www.natesilver.net/p/nate-silver-2026-midterm-election-polls-model), public maintained-average feed |
+| Current House district lean | [Cook Political Report race table](https://www.cookpolitical.com/races), current-map Cook PVI |
 | Approval prior input | [VoteHub API](https://votehub.com/polls/api/) |
 | Candidate identity | [FEC candidate master](https://www.fec.gov/campaign-finance-data/candidate-master-file-description/) |
 | Current House roster | [Clerk of the House](https://clerk.house.gov/xml/lists/MemberData.xml) |
@@ -70,7 +73,7 @@ Run behavioral tests with `python -m pytest -q`. Rolling-origin evaluation expec
 python scripts/backtest_v3.py --input data/backtests/predictions.csv
 ```
 
-The underlying robust race-update design passes its Senate promotion gate on 275 matched final-60-day forecasts from 2018–2024: Brier score improves from 0.0910 to 0.0584 and log loss from 0.2933 to 0.1909. Each holdout fits fundamentals, pollster effects, and the correlated-error floor using earlier cycles only. Silver's 2026 maintained averages do not have a comparable public historical archive, so this result supports the update/error model but is not presented as an out-of-sample validation of Silver's averages themselves.
+The House structural layer passes whole-cycle holdouts for 2022 and 2024 conditional on the realized national House margin. Across 740 contested, map-comparable districts, v4 records a 0.0290 Brier score, 0.1002 log loss, −0.73-point signed error, and 95.4% coverage for nominal 90% intervals, improving on legacy v3. Both official seat outcomes fall inside the 90% posterior interval. This validates the House margin-to-seat layer, not Bulletin's 2026 polling calibration.
 
 ## License
 

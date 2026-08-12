@@ -16,6 +16,7 @@ from pathlib import Path
 import re
 from typing import Any, Optional
 
+import numpy as np
 import pandas as pd
 import requests
 
@@ -26,6 +27,11 @@ AVERAGES_CSV_URL = (
     "https://docs.google.com/spreadsheets/d/e/"
     "2PACX-1vSyuZYuGnnjFdpjryAiGq6SeRe0ZOoGHKYzPzbxF1X_Ee_cE7411tTGdUbpRerX8_"
     "Xe7uRfw_Rkd1Hj/pub?gid=0&single=true&output=csv"
+)
+GENERIC_POLLS_CSV_URL = (
+    "https://docs.google.com/spreadsheets/d/e/"
+    "2PACX-1vRsvXNCZ0ubJr8D_yNcU5q6C0_HBa35K7oDK03KpO7Ca43UwdXaIdvVLWoXEmHHph0EREz5430Hm5yZ/"
+    "pub?output=csv"
 )
 FORECAST_PAGE_URL = (
     "https://www.natesilver.net/p/nate-silver-2026-midterm-election-polls-model"
@@ -58,6 +64,118 @@ class SilverBulletinClient:
         if missing:
             raise ValueError(f"Silver Bulletin averages missing columns: {sorted(missing)}")
         return frame
+
+    def fetch_generic_polls(self) -> pd.DataFrame:
+        """Fetch Silver Bulletin's public, adjusted generic-ballot poll file."""
+
+        response = self.session.get(GENERIC_POLLS_CSV_URL, timeout=45)
+        response.raise_for_status()
+        frame = pd.read_csv(StringIO(response.text))
+        required = {
+            "subgroup", "pollster", "enddate", "samplesize", "population",
+            "influence", "adjusted_net", "partisan", "poll_id", "question_id",
+        }
+        missing = required - set(frame.columns)
+        if missing:
+            raise ValueError(f"Silver Bulletin generic polls missing columns: {sorted(missing)}")
+        return frame
+
+
+def calibrate_generic_average_uncertainty(
+    generic_history: pd.DataFrame,
+    generic_polls: pd.DataFrame,
+    correlated_design_floor: float = 1.25,
+) -> dict[str, Any]:
+    """Estimate maintained-average observation error from Bulletin's own polls.
+
+    Bulletin's published shaded band predicts a *new poll*, not uncertainty in
+    the latent electorate.  We therefore estimate the average's measurement
+    error from adjusted-poll dispersion, effective influence, and an explicit
+    correlated-design floor.  This uses Bulletin's universe and adjustments
+    without re-estimating its pollster house effects.
+    """
+
+    polls = generic_polls.copy()
+    if "subgroup" in polls:
+        polls = polls[polls["subgroup"].astype(str).str.lower().eq("all polls")]
+    polls["date"] = pd.to_datetime(polls["enddate"], errors="coerce").dt.normalize()
+    polls["adjusted_net"] = pd.to_numeric(polls["adjusted_net"], errors="coerce")
+    polls["influence"] = pd.to_numeric(polls["influence"], errors="coerce").fillna(0.0)
+    polls = polls.dropna(subset=["date", "adjusted_net"])
+    polls = polls.sort_values("influence", ascending=False).drop_duplicates(
+        ["poll_id", "question_id"], keep="first"
+    )
+    polls = polls[polls["influence"] > 0].copy()
+    if len(polls) < 5:
+        return {
+            "observation_std": correlated_design_floor,
+            "method": "regularized_prior_insufficient_matched_bulletin_polls",
+            "poll_rows": int(len(polls)),
+            "effective_polls": 0.0,
+        }
+    influence = np.maximum(polls["influence"].to_numpy(float), 0.0)
+    adjusted_margin = polls["adjusted_net"].to_numpy(float)
+    center = float(np.average(adjusted_margin, weights=influence))
+    poll_variance = float(np.average((adjusted_margin - center) ** 2, weights=influence))
+    effective_polls = float((influence.sum() ** 2) / np.sum(influence**2))
+    estimated_variance = poll_variance / max(effective_polls, 1.0)
+    # Poll sampling error averages down; correlated design/turnout error does
+    # not.  The latter is an explicit Bayesian prior floor, not an invented
+    # aggregate respondent count.
+    observation_variance = correlated_design_floor**2 + estimated_variance
+    return {
+        "observation_std": round(float(np.sqrt(observation_variance)), 4),
+        "method": "bulletin_adjusted_poll_dispersion_plus_correlated_design_floor",
+        "poll_rows": int(len(polls)),
+        "effective_polls": round(effective_polls, 3),
+        "weighted_average_margin": round(center, 4),
+        "weighted_poll_dispersion": round(float(np.sqrt(poll_variance)), 4),
+        "correlated_design_floor": correlated_design_floor,
+        "provider": "Silver Bulletin",
+        "house_effects": "provider_adjusted_not_reestimated",
+    }
+
+
+def prepare_generic_poll_likelihood(
+    generic_polls: pd.DataFrame,
+    observation_std: float,
+) -> pd.DataFrame:
+    """Collapse Bulletin-adjusted polls into one current national likelihood.
+
+    ``influence`` is Bulletin's own current model weight, so this neither
+    rebuilds nor stacks another pollster model on top of its adjustments.
+    Duplicate question rows are removed before the weighted mean is computed.
+    """
+
+    polls = generic_polls.copy()
+    polls = polls[polls["subgroup"].astype(str).str.lower().eq("all polls")]
+    polls["date"] = pd.to_datetime(polls["enddate"], errors="coerce").dt.normalize()
+    polls["adjusted_net"] = pd.to_numeric(polls["adjusted_net"], errors="coerce")
+    polls["influence"] = pd.to_numeric(polls["influence"], errors="coerce")
+    polls = polls.dropna(subset=["date", "adjusted_net", "influence"])
+    polls = polls[polls["influence"] > 0].sort_values("influence", ascending=False)
+    polls = polls.drop_duplicates(["poll_id", "question_id"], keep="first")
+    if polls.empty:
+        raise ValueError("No valid Silver Bulletin generic polls remain")
+    margin = float(np.average(polls["adjusted_net"], weights=polls["influence"]))
+    latest = polls["date"].max()
+    return pd.DataFrame([{
+        "date": latest,
+        "pollster": "Silver Bulletin adjusted poll universe",
+        "sample_size": None,
+        "population": "Bulletin all-polls model",
+        "dem_pct": np.nan,
+        "rep_pct": np.nan,
+        "margin": margin,
+        "observation_std": float(observation_std),
+        "partisan": None,
+        "internal": False,
+        "source_url": "https://www.natesilver.net/p/generic-ballot-average-2026-nate-silver-bulletin-congress-polls",
+        "provider": "Silver Bulletin",
+        "aggregation_level": "influence_weighted_adjusted_poll_universe",
+        "poll_rows": int(len(polls)),
+        "total_influence": float(polls["influence"].sum()),
+    }])
 
 
 def _forecast_race_id(source_id: str, group: str) -> Optional[str]:

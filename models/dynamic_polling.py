@@ -155,6 +155,47 @@ class DynamicNationalModel:
         self.rng = np.random.default_rng(random_seed)
 
     @staticmethod
+    def calibrate_process_std(
+        history: pd.DataFrame,
+        minimum_days: int = 30,
+        prior_std_per_day: float = 0.09,
+        shrinkage_days: float = 45.0,
+    ) -> dict[str, float | int | str]:
+        """Estimate daily latent movement from a maintained-average history.
+
+        Adjacent values are never multiplied as likelihood observations.  Their
+        first differences are used only to calibrate prospective process
+        variance, with shrinkage to the historical default because a single
+        election cycle cannot identify long-run campaign volatility precisely.
+        """
+
+        work = history[["date", "margin"]].copy()
+        work["date"] = pd.to_datetime(work["date"], errors="coerce").dt.normalize()
+        work["margin"] = pd.to_numeric(work["margin"], errors="coerce")
+        work = work.dropna().sort_values("date").drop_duplicates("date", keep="last")
+        change = work["margin"].diff().dropna().to_numpy(float)
+        if len(change) < minimum_days:
+            return {
+                "process_std_per_day": prior_std_per_day,
+                "observed_days": int(len(change)),
+                "method": "regularized_prior_insufficient_history",
+            }
+        mad = 1.4826 * float(np.median(np.abs(change - np.median(change))))
+        variance = (
+            len(change) * mad**2 + shrinkage_days * prior_std_per_day**2
+        ) / (len(change) + shrinkage_days)
+        return {
+            # A smoothed maintained average necessarily moves less than the
+            # latent electorate.  Its observed first differences can justify
+            # more process variance, never less than the historical prior.
+            "process_std_per_day": round(float(np.clip(max(np.sqrt(variance), prior_std_per_day),
+                                                         prior_std_per_day, 0.18)), 4),
+            "observed_days": int(len(change)),
+            "robust_daily_change_std": round(mad, 4),
+            "method": "bulletin_average_first_differences_with_prior_shrinkage",
+        }
+
+    @staticmethod
     def validate_polls(polls: pd.DataFrame) -> pd.DataFrame:
         missing = DynamicNationalModel.REQUIRED_COLUMNS - set(polls.columns)
         if missing:
@@ -421,6 +462,8 @@ class DynamicNationalModel:
                 "published_average_days": int(len(clean)),
                 "residual_rmse": round(abs(latest_residual), 3),
                 "pseudo_replication_guard": "latest average only enters likelihood",
+                "process_std_per_day": round(self.process_std_per_day, 4),
+                "election_error_floor": round(self.election_error_floor, 4),
             },
             data_through=data_date.isoformat(),
         )

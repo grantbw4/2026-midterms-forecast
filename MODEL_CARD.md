@@ -1,4 +1,4 @@
-# Model card: Forecast v3.0.0
+# Model card: Forecast v4.0.0
 
 ## Intended use
 
@@ -6,16 +6,16 @@ Estimate probabilistic 2026 U.S. House and Senate outcomes and demonstrate repro
 
 ## Current validation status
 
-Synthetic and behavioral tests are enforced in CI. The robust Senate race-update design passes a leakage-resistant rolling-origin evaluation for 2018, 2020, 2022, and 2024 at 120, 90, 60, 30, 14, and 7 days. Over 275 matched forecasts in the final 60 days, it records a 0.0584 Brier score and 0.1909 log loss versus 0.0910 and 0.2933 for v2. Silver Bulletin's maintained 2026 averages lack a comparable public historical archive, so they are transparently marked as an external likelihood whose provider-specific calibration is not independently backtested here.
+Synthetic and behavioral tests are enforced in CI. The House structural layer passes whole-cycle 2022 and 2024 holdouts conditional on the realized national House margin: Brier 0.0290, log loss 0.1002, signed error −0.73 points, and 95.4% coverage for nominal 90% district intervals. Both official House seat outcomes are inside their 90% posterior intervals. The separate robust Senate race-update gate remains in production. Silver Bulletin's 2026 poll feed lacks a comparable public historical archive, so its provider-specific calibration remains externally unvalidated.
 
 ## Promotion criteria
 
-Across the final 60 days of 2018–2024, the race-update design must not materially worsen Brier score or log loss relative to v2 and must improve at least one. It passes both metrics. The current Silver-average input remains `external_unvalidated` until a suitable historical average archive can be evaluated; the older backtest is retained as supporting evidence, not relabeled as a direct validation.
+House v4 must match the best structural baseline within 0.005 Brier and 0.01 log loss, keep absolute signed error at or below 1.5 margin points, and cover each held-out official seat outcome at 90%. It passes. Bulletin polling remains `external_unvalidated` until a suitable historical archive can be evaluated.
 
 ## Diagnostics contract
 
-- Historical MCMC fits: R-hat < 1.01, bulk ESS > 400, zero divergences.
-- Analytic average update: schema, latest-only likelihood invariant, residual, and finite-posterior checks; MCMC diagnostics marked not applicable.
+- House robust Bayesian regression: finite covariance, cluster-level uncertainty floors, structural holdout gate, and posterior-predictive seat checks.
+- Analytic national update: one-aggregate likelihood invariant, finite posterior checks, and MCMC diagnostics marked not applicable.
 - Any failed fit retains the prior successful public artifacts.
 
 ## Main limitations
@@ -23,7 +23,8 @@ Across the final 60 days of 2018–2024, the race-update design must not materia
 - The Senate chamber parameter layer is regularized; the backtest validates its candidate-race update rather than every structural component.
 - Silver Bulletin's aggregation is externally maintained and its full weighting model is not reproduced or audited here.
 - Early-cycle candidate averages are sparse; absent, ambiguous, or third-party races remain fundamentals-only.
-- District partisan lean is not MRP and may lag redistricting or demographic change.
+- Cook PVI is not MRP and can miss demographic change or late litigation affecting maps.
+- Only three recent House cycles inform cluster-level uncertainty, so the model deliberately retains broad priors and control tails.
 - The model excludes fundraising, endorsements, scandals, and subjective candidate quality.
 - Probability estimates are conditional on model structure and source data.
 

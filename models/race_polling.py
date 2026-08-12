@@ -251,16 +251,24 @@ class CandidateRegistry:
         updated = frame.copy()
         for idx, row in updated.iterrows():
             race_id = str(row[race_column])
+            # A sourced retirement/open-seat flag describes the upcoming
+            # election, while the Clerk roster describes who holds the office
+            # today.  Do not let a current officeholder erase a known
+            # retirement merely because they still appear on the Clerk list.
+            if bool(row.get("open_seat", False)):
+                updated.at[idx, "incumbent"] = "Open seat"
+                updated.at[idx, "incumbent_party"] = ""
+                continue
             incumbents = [candidate for candidate in self.by_race.get(race_id, []) if candidate.incumbent]
             if len(incumbents) == 1:
                 updated.at[idx, "incumbent"] = incumbents[0].name.title()
                 updated.at[idx, "incumbent_party"] = incumbents[0].party
                 updated.at[idx, "open_seat"] = False
-            elif not incumbents and self.by_race.get(race_id):
-                updated.at[idx, "incumbent"] = "Open seat"
-                updated.at[idx, "incumbent_party"] = ""
-                updated.at[idx, "open_seat"] = True
-        updated["fundamentals_source"] = "FEC candidate registry + 2024 partisan lean"
+            # Candidate-master incompleteness is not evidence of retirement;
+            # retain the sourced fundamentals when no unique incumbent exists.
+        updated["fundamentals_source"] = updated.get(
+            "pvi_source", pd.Series("2026 partisan lean", index=updated.index)
+        ).astype(str) + " + FEC/Clerk candidate registry"
         updated["fundamentals_effective_date"] = date.today().isoformat()
         return updated
 

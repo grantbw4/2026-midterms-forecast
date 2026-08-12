@@ -1,4 +1,4 @@
-"""Synthetic recovery and behavioral verification for forecast v3."""
+"""Synthetic recovery and behavioral verification for forecast v4."""
 
 from datetime import date, timedelta
 import json
@@ -13,13 +13,18 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from models.backtesting import evaluate_predictions
 from models.dynamic_polling import DynamicNationalModel, build_fundamentals_prior
+from models.house_model import fit_house_calibration
 from models.race_polling import (
     CandidateRegistry,
     SnapshotStore,
     poll_observation_variance,
     update_race_draws,
 )
-from models.silver_bulletin import prepare_silver_averages
+from models.silver_bulletin import (
+    calibrate_generic_average_uncertainty,
+    prepare_generic_poll_likelihood,
+    prepare_silver_averages,
+)
 
 
 def test_snapshot_store_deduplicates_identical_payloads(tmp_path):
@@ -78,6 +83,55 @@ def test_external_average_enters_national_likelihood_once():
     assert full.current_std == one.current_std
     assert full.diagnostics["n_polls"] == 1
     assert full.diagnostics["published_average_days"] == 11
+
+
+def test_bulletin_adjusted_poll_universe_is_one_weighted_likelihood():
+    polls = pd.DataFrame([
+        {"subgroup": "All polls", "pollster": "A", "enddate": "2026-08-10",
+         "adjusted_net": 4.0, "influence": 1.0, "poll_id": 1, "question_id": 1},
+        {"subgroup": "All polls", "pollster": "B", "enddate": "2026-08-11",
+         "adjusted_net": 8.0, "influence": 3.0, "poll_id": 2, "question_id": 2},
+    ])
+    likelihood = prepare_generic_poll_likelihood(polls, observation_std=1.3)
+    assert len(likelihood) == 1
+    assert likelihood.iloc[0]["margin"] == 7.0
+    assert likelihood.iloc[0]["aggregation_level"] == "influence_weighted_adjusted_poll_universe"
+
+
+def test_bulletin_dispersion_calibration_keeps_correlated_floor():
+    polls = pd.DataFrame([
+        {"subgroup": "All polls", "enddate": f"2026-08-{day:02d}",
+         "adjusted_net": float(day % 3), "influence": 1.0,
+         "poll_id": day, "question_id": day}
+        for day in range(1, 10)
+    ])
+    calibration = calibrate_generic_average_uncertainty(pd.DataFrame(), polls)
+    assert calibration["observation_std"] >= calibration["correlated_design_floor"]
+
+
+def test_smoothed_bulletin_history_cannot_reduce_process_prior():
+    history = pd.DataFrame({
+        "date": pd.date_range("2026-01-01", periods=60),
+        "margin": np.linspace(2.0, 2.1, 60),
+    })
+    calibration = DynamicNationalModel.calibrate_process_std(history)
+    assert calibration["process_std_per_day"] >= 0.09
+
+
+def test_house_cluster_level_posterior_uncertainty_has_floor():
+    rows = []
+    for year, national in ((2018, 8.0), (2022, -3.0)):
+        for index in range(200):
+            lean = (index % 21) - 10
+            rows.append({
+                "year": year, "district_id": f"X-{year}-{index}",
+                "margin": lean + national, "pvi_numeric": lean,
+                "incumbency_code": 0, "national_margin": national,
+                "region": "Southeast",
+            })
+    calibration = fit_house_calibration([pd.DataFrame(rows)])
+    national_index = calibration.coefficient_names.index("national")
+    assert calibration.posterior_covariance[national_index, national_index] >= 0.25**2
 
 
 def test_silver_uses_only_latest_d_vs_r_average_per_race():
@@ -160,6 +214,20 @@ def test_candidate_registry_accepts_official_clerk_party_codes():
     assert incumbent.incumbent is True
 
 
+def test_candidate_registry_does_not_erase_sourced_open_seat():
+    registry = CandidateRegistry([{
+        "name": "Retiring Member", "party": "R", "office": "H",
+        "state": "AK", "district": "00", "incumbent_challenge": "I",
+    }])
+    frame = pd.DataFrame([{
+        "district_id": "AK-01", "incumbent": "OPEN", "incumbent_party": "R",
+        "open_seat": True, "pvi_source": "Cook PVI",
+    }])
+    updated = registry.update_fundamentals(frame, "district_id")
+    assert updated.iloc[0]["open_seat"]
+    assert updated.iloc[0]["incumbent_party"] == ""
+
+
 def test_backtest_gate_and_interval_coverage_contract():
     rows = []
     for model, offset in (("v3", 0.1), ("v2", 0.2), ("fundamentals", 0.25), ("polls_only", 0.3)):
@@ -198,8 +266,8 @@ def test_public_v3_schema_and_website_artifacts_match():
         output = json.loads((PROJECT_ROOT / "outputs" / filename).read_text())
         website = json.loads((PROJECT_ROOT / "website" / filename).read_text())
         assert output == website
-        assert output["metadata"]["model_version"] == "3.0.0"
-        assert output["metadata"]["run_id"].startswith("v3-")
+        assert output["metadata"]["model_version"] == "4.0.0"
+        assert output["metadata"]["run_id"].startswith("v4-")
         assert output["backtest"]["race_polling_gate"]["status"] == "production"
         assert len(output[race_key]) == expected
         assert all(required <= set(race) for race in output[race_key])

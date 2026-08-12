@@ -1,5 +1,7 @@
 # Implementation Assumptions
 
+> **House v4 note (2026-08-12):** Sections below document legacy v2/v3 code that remains for compatibility. Production House forecasts now use `models/house_model.py`, `data/processed/house_calibration.json`, and Cook's current-map 435-district PVI table. All House coefficients are on the Democratic two-party-margin scale. Cluster-level posterior SD floors are 1.5 points for the intercept, 0.25 for the national coefficient, 0.5 for incumbency and regional coefficients, and 0.08 for district lean. The national cycle-shock scale uses a 3-point regularizing prior because only three recent cycles are available. Bulletin national aggregate error includes a 1.25-point correlated design floor; these are declared Bayesian priors and are tested in sensitivity/behavioral checks.
+
 **Version 2.0.0** | Updated: 2026-02-02
 
 This document lists all approximations, heuristics, fixed weights, and implementation choices that affect model behavior.
