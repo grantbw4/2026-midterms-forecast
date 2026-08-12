@@ -23,12 +23,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Debug - List data files
-        run: |
-          echo "Current commit: $(git rev-parse HEAD)"
-          echo "Files in data/processed/:"
-          ls -la data/processed/ || echo "Directory does not exist"
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -36,6 +30,12 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Verify schemas and model behavior
+        env:
+          MPLCONFIGDIR: /tmp/matplotlib
+          XDG_CACHE_HOME: /tmp/cache
+        run: python -m pytest -q
 
       - name: Run forecast
         run: python scripts/generate_forecast.py ${{ inputs.skip_timeline && '--skip-timeline' || '' }}
@@ -45,7 +45,7 @@ jobs:
           cp outputs/forecast.json website/
           cp outputs/senate_forecast.json website/
           cp outputs/timeline.csv website/
-          cp outputs/senate_timeline.csv website/ 2>/dev/null || true
+          if [ -f outputs/senate_timeline.csv ]; then cp outputs/senate_timeline.csv website/; fi
 
       - name: Commit and push
         run: |

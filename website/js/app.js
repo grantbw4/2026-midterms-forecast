@@ -12,6 +12,8 @@ let geoLayer = null;
 let currentChamber = 'house';
 let seatChart = null;
 let timelineChart = null;
+let nationalTrendChart = null;
+let calibrationChart = null;
 let houseTimeline = null;
 let senateTimeline = null;
 let currentTimelineChamber = 'house';
@@ -168,11 +170,15 @@ async function loadData() {
 
 // Initialize all page components
 function initializePage() {
+    const timelineDescription = document.querySelector('#timeline .section-desc');
+    if (timelineDescription) timelineDescription.textContent = 'Daily probability of Democratic chamber control. Model upgrades create visible discontinuities; v3 begins August 2026.';
     updateHouseStats();
     if (senateData) updateSenateStats();
     if (districtGeoJSON) initializeMap();
     createSeatChart();
     if (houseTimeline || senateTimeline) createTimelineChart();
+    updateModelCard();
+    createNationalTrendChart();
     populateStateFilter();
     renderTable();
     setupEventListeners();
@@ -201,6 +207,85 @@ function updateHouseStats() {
 
     // Categories bar
     updateCategoriesBar('house-categories-bar', categories, 435);
+}
+
+function formatMargin(value) {
+    const number = Number(value || 0);
+    return number >= 0 ? `D+${number.toFixed(1)}` : `R+${Math.abs(number).toFixed(1)}`;
+}
+
+function updateModelCard() {
+    const model = houseData.national_model || {};
+    const metadata = houseData.metadata || {};
+    const diagnostics = metadata.diagnostics || {};
+    document.getElementById('prior-margin').textContent = formatMargin(model.prior?.mean);
+    document.getElementById('current-margin').textContent = formatMargin(model.current_sentiment?.mean);
+    document.getElementById('election-margin').textContent = formatMargin(model.election_day?.mean);
+
+    const status = document.getElementById('model-status');
+    const warnings = metadata.warnings || [];
+    status.className = `status-banner ${metadata.model_status || 'degraded'}`;
+    status.innerHTML = `<strong>${(metadata.model_status || 'unknown').toUpperCase()}</strong> · Data through ${metadata.data_through || 'unknown'} · Run ${metadata.run_id || 'unknown'}${warnings.length ? `<span>${warnings.join(' · ')}</span>` : ''}`;
+
+    document.getElementById('diagnostic-summary').innerHTML = [
+        ['Inference', metadata.inference_method],
+        ['Polling likelihoods', `${diagnostics.n_polls ?? '—'} latest average`],
+        ['Input validation', diagnostics.current_polling_layer_status ?? '—'],
+        ['Effective draws', diagnostics.ess_bulk ?? '—'],
+        ['Divergences', diagnostics.divergences ?? '—'],
+        ['Fallback used', metadata.fallback_used ? 'Yes' : 'No'],
+    ].map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join('');
+
+    const backtest = houseData.backtest || {};
+    document.getElementById('backtest-summary').innerHTML = backtest.status === 'complete'
+        ? `<p class="validation-pass"><strong>SUPPORTING EVIDENCE.</strong> ${backtest.race_polling_gate?.matched_n || 0} matched final-60-day forecasts validate the robust update/error structure; Silver's averages are not directly backtested.</p>`
+        : `<p class="validation-pending"><strong>Not yet promoted.</strong> ${backtest.message || 'Historical validation is pending.'}</p>`;
+    const gate = backtest.race_polling_gate || {};
+    document.getElementById('backtest-metrics').innerHTML = backtest.status === 'complete' ? `
+        <div><span>Metric</span><strong>v3</strong><strong>v2</strong></div>
+        <div><span>Brier score</span><strong>${Number(gate.v3_brier).toFixed(3)}</strong><strong>${Number(gate.baseline_brier).toFixed(3)}</strong></div>
+        <div><span>Log loss</span><strong>${Number(gate.v3_log_loss).toFixed(3)}</strong><strong>${Number(gate.baseline_log_loss).toFixed(3)}</strong></div>` : '';
+    createCalibrationChart(backtest);
+
+    const change = houseData.change_decomposition || {};
+    const national = change.national_update || {};
+    document.getElementById('change-decomposition').innerHTML = `<strong>Latest change decomposition</strong><span>Control probability ${Number(change.probability_change || 0) >= 0 ? '+' : ''}${(Number(change.probability_change || 0) * 100).toFixed(1)} pp</span><span>Poll update ${formatMargin(national.polling_contribution || 0)}</span><span>Election-day SD ${Number(national.future_uncertainty_std || 0).toFixed(1)} points</span>`;
+}
+
+function createCalibrationChart(backtest) {
+    const canvas = document.getElementById('calibration-chart');
+    if (!canvas || backtest.status !== 'complete') return;
+    const models = Object.fromEntries((backtest.final_60_day_aggregate || []).map(item => [item.model, item]));
+    if (calibrationChart) calibrationChart.destroy();
+    calibrationChart = new Chart(canvas, {
+        type: 'line',
+        data: { datasets: [
+            { label: 'Perfect calibration', data: [{x:0,y:0},{x:1,y:1}], borderColor:'#555', borderDash:[5,5], pointRadius:0 },
+            { label: 'v3', data: (models.v3?.calibration || []).map(b => ({x:b.mean_forecast,y:b.observed_rate})), borderColor:'#60a5fa', backgroundColor:'#60a5fa', pointRadius:4 },
+            { label: 'v2', data: (models.v2?.calibration || []).map(b => ({x:b.mean_forecast,y:b.observed_rate})), borderColor:'#a3a3a3', backgroundColor:'#a3a3a3', pointRadius:3 },
+        ]},
+        options: { responsive:true, maintainAspectRatio:false, parsing:false, scales:{x:{type:'linear',min:0,max:1,title:{display:true,text:'Forecast probability',color:'#888'},ticks:{color:'#888'},grid:{color:'#222'}},y:{min:0,max:1,title:{display:true,text:'Observed rate',color:'#888'},ticks:{color:'#888'},grid:{color:'#222'}}},plugins:{legend:{labels:{color:'#aaa'}}} }
+    });
+}
+
+function createNationalTrendChart() {
+    const canvas = document.getElementById('national-trend-chart');
+    const trend = houseData.national_model?.trend || [];
+    if (!canvas || !trend.length) return;
+    if (nationalTrendChart) nationalTrendChart.destroy();
+    const raw = houseData.polling?.generic_ballot || [];
+    nationalTrendChart = new Chart(canvas, {
+        type: 'line',
+        data: { datasets: [
+            { label: '90% credible band', data: trend.map(d => ({x: d.date, y: d.ci_90_high})), borderWidth: 0, pointRadius: 0, backgroundColor: 'rgba(59,130,246,.10)', fill: '+1' },
+            { label: '', data: trend.map(d => ({x: d.date, y: d.ci_90_low})), borderWidth: 0, pointRadius: 0, fill: false },
+            { label: '50% credible band', data: trend.map(d => ({x: d.date, y: d.ci_50_high})), borderWidth: 0, pointRadius: 0, backgroundColor: 'rgba(59,130,246,.22)', fill: '+1' },
+            { label: '', data: trend.map(d => ({x: d.date, y: d.ci_50_low})), borderWidth: 0, pointRadius: 0, fill: false },
+            { label: 'Latent sentiment', data: trend.map(d => ({x: d.date, y: d.mean})), borderColor: '#60a5fa', borderWidth: 2, pointRadius: 0 },
+            { type: 'scatter', label: 'Silver published average', data: raw.map(d => ({x: d.date, y: d.margin})), backgroundColor: 'rgba(255,255,255,.42)', pointRadius: 2 },
+        ]},
+        options: { responsive: true, maintainAspectRatio: false, parsing: false, scales: { x: { type: 'category', ticks: { color: '#888', maxTicksLimit: 8 }, grid: { display: false } }, y: { ticks: { color: '#888', callback: value => formatMargin(value) }, grid: { color: '#2a2a2a' } } }, plugins: { legend: { labels: { color: '#aaa', filter: item => item.text } } } }
+    });
 }
 
 // Update Senate statistics
@@ -737,8 +822,10 @@ function renderTable(filter = {}) {
                     ${incParty ? `<span class="incumbent-party ${incParty}">${incParty}</span>` : ''}
                     ${incName}
                 </td>
-                <td class="pvi">${formatPVI(d.pvi)}</td>
+                <td class="pvi">${formatMargin(d.prior_margin)}</td>
+                <td class="pvi">${formatMargin(d.posterior_margin)}</td>
                 <td class="prob">${Math.round(d.prob_dem * 100)}%</td>
+                <td class="pvi">${d.polls_used ? 'Silver' : '—'}</td>
                 <td><span class="rating ${d.category}">${formatCategory(d.category)}</span></td>
             </tr>
         `;
@@ -858,9 +945,11 @@ function showDistrictModal(id) {
             </div>
             <div class="modal-stat">
                 <div class="modal-stat-value">${race.ci_90_low?.toFixed(0)}-${race.ci_90_high?.toFixed(0)}%</div>
-                <div class="modal-stat-label">90% Confidence Interval</div>
+                <div class="modal-stat-label">90% Credible Interval</div>
             </div>
             ` : ''}
+            <div class="modal-stat"><div class="modal-stat-value">${formatMargin(race.prior_margin)}</div><div class="modal-stat-label">Fundamentals Prior</div></div>
+                <div class="modal-stat"><div class="modal-stat-value">${formatMargin(race.posterior_margin)}</div><div class="modal-stat-label">Updated posterior (${race.polls_used ? 'Silver average' : 'fundamentals only'})</div></div>
         </div>
         <div style="text-align: center; margin-top: 16px;">
             <span class="rating ${race.category}" style="font-size: 1rem; padding: 8px 16px;">

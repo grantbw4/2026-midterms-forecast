@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""
+"""LEGACY v2 House simulator retained for baseline/sign tests only.
+
+Production v3 uses vectorized shared posterior draws in ``forecast_v3.py``.
+
 Bayesian Hierarchical Model for Election Forecasting.
 
 ACTIVE STRUCTURE (what is actually implemented):
@@ -575,10 +578,12 @@ class HierarchicalForecastModel:
         Returns:
             HierarchicalForecastResult
         """
-        if use_pymc and PYMC_AVAILABLE:
-            return self.fit_with_pymc()
-        else:
-            return self.simulate_elections()
+        if use_pymc:
+            logger.warning(
+                "Forecast-year PyMC sampling is deprecated: there is no observed "
+                "forecast-year likelihood. Using direct posterior-predictive draws."
+            )
+        return self.simulate_elections()
 
 
 def load_districts() -> pd.DataFrame:

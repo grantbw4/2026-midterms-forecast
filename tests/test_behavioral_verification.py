@@ -137,7 +137,6 @@ def test_pvi_increases_dem_vote_share():
     if not passed:
         raise AssertionError("TEST 1 FAILED: Increasing Dem PVI should increase Dem vote share")
 
-    return True
 
 
 def test_republican_pvi_decreases_dem_vote_share():
@@ -195,7 +194,6 @@ def test_republican_pvi_decreases_dem_vote_share():
     if not passed:
         raise AssertionError("TEST 2 FAILED: More Republican PVI should decrease Dem vote share")
 
-    return True
 
 
 def test_dem_incumbency_increases_vote_share():
@@ -254,7 +252,6 @@ def test_dem_incumbency_increases_vote_share():
     if not passed:
         raise AssertionError("TEST 3 FAILED: D incumbency should increase Dem vote share")
 
-    return True
 
 
 def test_rep_incumbency_decreases_vote_share():
@@ -314,7 +311,6 @@ def test_rep_incumbency_decreases_vote_share():
     if not passed:
         raise AssertionError("TEST 4 FAILED: R incumbency should decrease Dem vote share")
 
-    return True
 
 
 def test_national_environment_shifts_all_districts():
@@ -383,7 +379,6 @@ def test_national_environment_shifts_all_districts():
     if not all_passed:
         raise AssertionError("TEST 5 FAILED: National environment should shift all districts")
 
-    return True
 
 
 def test_regional_effects_only_affect_region():
@@ -453,7 +448,6 @@ def test_regional_effects_only_affect_region():
     if not passed:
         raise AssertionError("TEST 6 FAILED: Regional effects not correctly indexed")
 
-    return True
 
 
 def test_pvi_scaled_sigma():
@@ -498,7 +492,6 @@ def test_pvi_scaled_sigma():
     if not passed:
         raise AssertionError("TEST 7 FAILED: PVI-scaled sigma should decrease with |PVI|")
 
-    return True
 
 
 def test_senate_house_sign_consistency():
@@ -569,7 +562,6 @@ def test_senate_house_sign_consistency():
     if not passed:
         raise AssertionError("TEST 8 FAILED: Senate and House should have consistent sign conventions")
 
-    return True
 
 
 def run_all_tests():

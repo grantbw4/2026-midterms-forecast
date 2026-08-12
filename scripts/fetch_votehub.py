@@ -123,13 +123,21 @@ class VoteHubFetcher:
         try:
             response = self.session.get(
                 self.BASE_URL,
-                params={"poll": "generic_ballot_2026"},
+                params={"poll_type": "generic-ballot", "subject": "2026"},
                 timeout=30
             )
             response.raise_for_status()
             data = response.json()
         except requests.RequestException as e:
             logger.error(f"Failed to fetch generic ballot: {e}")
+            return pd.DataFrame()
+
+        # VoteHub's documented v1 response is {"polls": [...]}; accept the
+        # former bare-list response as well so cached fixtures remain valid.
+        if isinstance(data, dict):
+            data = data.get("polls", [])
+        if not isinstance(data, list):
+            logger.error("VoteHub returned an unexpected generic-ballot schema")
             return pd.DataFrame()
 
         # Filter for generic ballot polls
@@ -156,7 +164,7 @@ class VoteHubFetcher:
 
                 pollster = poll.get("pollster", "Unknown")
                 population = poll.get("population", "a")
-                sample_size = poll.get("sample_size") or 500  # Default if None
+                sample_size = int(float(poll.get("sample_size") or 500))
 
                 # Calculate weight
                 pollster_weight = self._get_pollster_weight(pollster)
@@ -212,13 +220,19 @@ class VoteHubFetcher:
         try:
             response = self.session.get(
                 self.BASE_URL,
-                params={"poll": "trump_approval"},
+                params={"poll_type": "approval", "subject": "donald-trump"},
                 timeout=30
             )
             response.raise_for_status()
             data = response.json()
         except requests.RequestException as e:
             logger.error(f"Failed to fetch Trump approval: {e}")
+            return pd.DataFrame()
+
+        if isinstance(data, dict):
+            data = data.get("polls", [])
+        if not isinstance(data, list):
+            logger.error("VoteHub returned an unexpected approval schema")
             return pd.DataFrame()
 
         # Filter for Trump approval polls
@@ -247,7 +261,7 @@ class VoteHubFetcher:
 
                 pollster = poll.get("pollster", "Unknown")
                 population = poll.get("population", "a")
-                sample_size = poll.get("sample_size") or 500  # Default if None
+                sample_size = int(float(poll.get("sample_size") or 500))
 
                 pollster_weight = self._get_pollster_weight(pollster)
                 pop_weight = self._get_population_weight(population)

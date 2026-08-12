@@ -25,3 +25,5 @@ env/
 outputs/*.png
 outputs/*.html
 # Note: timeline CSVs are tracked to preserve historical data
+.cache/
+.pytest_cache/

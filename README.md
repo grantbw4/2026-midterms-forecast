@@ -1,124 +1,77 @@
-# 2026 Midterms Forecast
+# 2026 Midterms Forecast v3
 
-A Bayesian hierarchical forecasting model for the 2026 U.S. House and Senate elections.
+A dynamic Bayesian forecast for the 2026 U.S. House and Senate elections. The project is designed as an auditable data-science portfolio piece: assumptions, likelihoods, uncertainty propagation, data provenance, diagnostics, and validation gates are visible in the code and public output.
 
-## Live Forecast
+**Live dashboard:** [grantbw4.github.io/2026-midterms-forecast](https://grantbw4.github.io/2026-midterms-forecast/)
 
-**[grantbw4.github.io/2026-midterms-forecast](https://grantbw4.github.io/2026-midterms-forecast/)**
+## What v3 demonstrates
 
-Updated daily at 9am ET via GitHub Actions.
+- A Bayesian update from Silver Bulletin's maintained generic-ballot average, with an explicit guard against treating correlated daily averages as independent evidence.
+- A fundamentals prior from approval and economic uncertainty, used once rather than added after polling.
+- One externally aggregated Silver Bulletin likelihood per covered race, robustly combined with the fundamentals posterior.
+- Official candidate validation from FEC records; ambiguous, third-party, and unmapped matchups remain fundamentals-only.
+- Shared national and regional posterior draws, preserving correlated chamber outcomes.
+- Fundamentals-only behavior for unpolled or unresolved races—no invented poll estimate.
+- Atomic, fail-closed publication with immutable source snapshots and explicit degraded status.
+- Synthetic recovery, behavioral verification, output schemas, and a rolling-origin backtest promotion gate.
 
-## Features
-
-- **House & Senate Forecasts**: Full probability distributions for all 435 House districts and 33 Senate races
-- **Bayesian Inference**: National environment estimated via PyMC with pollster house effects
-- **Monte Carlo Simulation**: 10,000 election scenarios with correlated regional effects
-- **Hierarchical Model**:
-  - National environment (generic ballot polls + presidential approval)
-  - Regional effects (10 FiveThirtyEight-style political regions)
-  - District/state-level predictions (PVI + incumbency)
-- **Interactive Website**: Live probability dashboard, interactive maps, race tables, and historical timeline
-
-## Model Overview
-
-The model combines polling data with district fundamentals to generate probabilistic forecasts:
-
-1. **National Environment**: Bayesian inference on generic ballot polls with pollster house effects, adjusted for presidential approval
-2. **District Vote Share**: `vote_share = 50 + β_pvi × PVI + β_inc × Inc + μ_region + β_nat × μ_national + ε`
-3. **Monte Carlo**: 10,000 simulations sampling from posterior distributions at each level
-
-Parameters were fitted on 2018 and 2022 midterm results (R² = 0.94, RMSE = 3.9 points).
-
-## Quick Start
+## Reproduce a forecast
 
 ```bash
-# 1. Setup virtual environment
 python3 -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# 2. Install dependencies
+source venv/bin/activate
 pip install -r requirements.txt
-
-# 3. Create .env with your API keys
-cp .env.example .env
-# Edit .env and add your keys
-
-# 4. Fetch data
-python scripts/fetch_data.py
-python scripts/fetch_votehub.py
-python scripts/fetch_cook_ratings.py
-
-# 5. Generate forecast
+python -m pytest -q
 python scripts/generate_forecast.py
-
-# 6. View website
-open website/index.html
 ```
 
-## Project Structure
+The live run uses only free public sources. `FEC_API_KEY` is optional because candidate identity uses the FEC bulk candidate master.
 
-```
-2026-midterms-forecast/
-├── data/
-│   ├── raw/                    # Fetched data
-│   │   ├── generic_ballot.csv
-│   │   ├── approval.csv
-│   │   └── cook_ratings.json
-│   └── processed/
-│       ├── districts.csv       # 435 House district fundamentals
-│       ├── senate_races.csv    # 33 Senate races
-│       └── learned_params.json # Fitted model parameters
-├── models/
-│   ├── national_environment.py # PyMC Bayesian inference
-│   ├── hierarchical_model.py   # House Monte Carlo simulation
-│   ├── senate_forecast.py      # Senate Monte Carlo simulation
-│   ├── parameter_fitting.py    # Historical parameter training
-│   └── forecast.py             # Main forecast orchestration
-├── scripts/
-│   ├── fetch_data.py           # FRED economic data
-│   ├── fetch_votehub.py        # Polling data from VoteHub API
-│   ├── fetch_cook_ratings.py   # Cook Political ratings scraper
-│   └── generate_forecast.py    # Run model, output JSON
-├── outputs/
-│   ├── forecast.json           # House predictions
-│   ├── senate_forecast.json    # Senate predictions
-│   └── timeline.json           # Historical tracking
-├── website/
-│   ├── index.html
-│   ├── css/style.css
-│   ├── js/app.js
-│   ├── forecast.json
-│   └── senate_forecast.json
-├── .github/workflows/
-│   ├── daily-forecast.yml      # Daily update automation
-│   └── deploy-pages.yml        # GitHub Pages deployment
-└── requirements.txt
+For an offline deterministic run using the latest valid cache:
+
+```bash
+python scripts/generate_forecast.py --skip-fetch --skip-race-fetch --skip-timeline
 ```
 
-## Data Sources
+If inputs are invalid, catastrophically stale, or diagnostics fail, public JSON is not replaced. A valid cache may be used, but that fact is exposed in `metadata.fallbacks` and `metadata.model_status`.
 
-| Data | Source |
-|------|--------|
-| Generic Ballot Polls | [VoteHub API](https://votehub.com) |
-| Presidential Approval | [VoteHub API](https://votehub.com) |
-| District PVI | Wikipedia (2024 presidential results) |
-| Race Ratings | [Cook Political Report](https://cookpolitical.com) |
-| Congressional Maps | U.S. Census TIGER/Line |
+## Model sketch
 
-## Fitted Parameters
+```text
+fundamentals prior:   election_margin ~ Normal(approval + economy, structural_error)
+national likelihood: silver_average_latest ~ Student-t(theta_current, sigma_aggregate)
+race prior:           margin[r] ~ Student-t(partisan_lean + incumbency + national + region, sigma_race)
+race likelihood:      silver_average_latest[r] ~ Student-t(margin[r], sigma_aggregate + common_error)
+```
 
-| Parameter | Value | Description |
-|-----------|-------|-------------|
-| β_pvi | 0.48 | PVI coefficient |
-| β_inc | 2.2 | Incumbency advantage |
-| β_nat | 0.66 | National environment coefficient |
-| σ_regional | 0.54 | Regional effect standard deviation |
-| σ_district | 3.7 | Base district uncertainty |
+The national update is analytic, so MCMC convergence statistics do not apply to that step. Only the latest Silver value enters the likelihood; its history is displayed but never multiplied as repeated evidence. Historical parameter fits are offline and may be published only with R-hat < 1.01, bulk ESS > 400, and zero divergences.
 
-## Methodology
+## Outputs
 
-See [METHODOLOGY.md](METHODOLOGY.md) for full technical details, or the methodology section on the [live website](https://grantbw4.github.io/2026-midterms-forecast/#methodology).
+Every race exposes `prior_margin`, `posterior_margin`, a 90% credible interval, `prob_dem`, `polling_adjustment`, `polls_used`, `latest_poll_date`, source URLs, and `data_quality`. Forecast metadata includes v3 schema and model versions, `run_id`, `data_through`, freshness, inference method, diagnostics, and fallbacks.
+
+See [METHODOLOGY.md](METHODOLOGY.md) for assumptions and [MODEL_CARD.md](MODEL_CARD.md) for validation and limitations.
+
+## Data sources
+
+| Purpose | Source |
+|---|---|
+| Generic ballot and race likelihoods | [Silver Bulletin 2026 forecast](https://www.natesilver.net/p/nate-silver-2026-midterm-election-polls-model), public maintained-average feed |
+| Approval prior input | [VoteHub API](https://votehub.com/polls/api/) |
+| Candidate identity | [FEC candidate master](https://www.fec.gov/campaign-finance-data/candidate-master-file-description/) |
+| Current House roster | [Clerk of the House](https://clerk.house.gov/xml/lists/MemberData.xml) |
+| District lean / historical results | Processed public election results with source and effective-date fields |
+
+## Validation
+
+Run behavioral tests with `python -m pytest -q`. Rolling-origin evaluation expects frozen historical prediction snapshots:
+
+```bash
+python scripts/backtest_v3.py --input data/backtests/predictions.csv
+```
+
+The underlying robust race-update design passes its Senate promotion gate on 275 matched final-60-day forecasts from 2018–2024: Brier score improves from 0.0910 to 0.0584 and log loss from 0.2933 to 0.1909. Each holdout fits fundamentals, pollster effects, and the correlated-error floor using earlier cycles only. Silver's 2026 maintained averages do not have a comparable public historical archive, so this result supports the update/error model but is not presented as an out-of-sample validation of Silver's averages themselves.
 
 ## License
 
-MIT
+Code is MIT. Upstream data remain subject to their providers' terms; the repository stores only attributed maintained-average snapshots needed for reproducibility, not Silver Bulletin's underlying poll database or proprietary forecast outputs.

@@ -1,0 +1,45 @@
+{
+  "scope": "Senate candidate-race polling layer",
+  "evaluated_years": [
+    2018,
+    2020,
+    2022,
+    2024
+  ],
+  "horizons": [
+    120,
+    90,
+    60,
+    30,
+    14,
+    7
+  ],
+  "poll_source": "https://raw.githubusercontent.com/Jack-Whitcomb/All-US-Senate-polls-2006-2024/5aea8c5c4572ddc71f4491fa84478e70d88a5898/2006_to_2024_senate_polls_with_actuals.csv",
+  "poll_source_commit": "5aea8c5c4572ddc71f4491fa84478e70d88a5898",
+  "poll_source_sha256": "7ac8f38437fd1b499bb7dbf362bb2b2927c6f83f54c73f2765d857d216388240",
+  "poll_source_license": "No repository license declared; raw archive is not redistributed",
+  "state_lean_source": "Decision Labs presidential election API (CC BY 4.0)",
+  "state_lean_sha256": {
+    "2004": "676ebd8d85d2b25df2105083abbb1e6cc21f5a3c7a1c77456aef5381229b3ade",
+    "2008": "91514a3133caa1762da785925e361925d04734618c9b911bf67a09df626e9141",
+    "2012": "20a630297d03c8047398160115bdf89a40fc008669eff488f82f7d22b454090d",
+    "2016": "bfd60521183c6aa3187db703d474bf45692142c3cc17f2411103b75539438101",
+    "2020": "dc8731ba673eb4309549da47c06fec3189fe4044013c3dab460c15daf0d4d5ab"
+  },
+  "incumbency_source": "FEC candidate master bulk archives (U.S. government data)",
+  "incumbency_sha256": {
+    "2006": "85d9dcb04b0fd1fec3de88c2216a9c40b5b6aeed00eeed910354845a7e4d9db5",
+    "2008": "ae93d4f986b28ca3fad420f0cd302d959c1f6dbed47b7db7bf5c0445a93fc63b",
+    "2010": "01b05f26fc40b4564e1a9c083a144a5bc1a8fe67489ee93d78e8ee00b691cbd0",
+    "2012": "53a07683cbc0bf9c47c825502ed8212626313c54c63a27bc40048dc3e38ddf21",
+    "2014": "a4f3e83e77035557e705e3e8cfe40d10f16655d38bc73c227fe02c328bcbe3cc",
+    "2016": "7dd5b2df23b83ca408d9abd11f02486209c3bf638b3cf601ac13b0e5d19f51da",
+    "2018": "fba6302a5c6649b8f3297a6aa8691cebf124a8788bdb12697107bc5ba55a0cd6",
+    "2020": "f0229bb4e6b8030b074972ffb27fa163b195729b31f1276005ecca31a0728a39",
+    "2022": "39c71be9621ce6758d6efaec828831adb11ac4831dc59884189d0e1bcab072b4",
+    "2024": "90fdcd7208844148a7e2da4acd4e3d625825cc2f22820d5c251a765d6cf936dd"
+  },
+  "method": "rolling-origin; fundamentals fit only on cycles earlier than holdout",
+  "rows": 1642,
+  "production_correlated_error_floor": 5.913
+}

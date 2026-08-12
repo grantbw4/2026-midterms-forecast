@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""
+"""LEGACY v2 compatibility module; not called by production v3.
+
+The published workflow enters through ``scripts/generate_forecast.py`` and
+``models/forecast_v3.py``. This module remains only for historical comparison
+and old sign-convention tests; none of its fallback behavior can publish v3.
+
 Bayesian Hierarchical Forecasting Model for 2026 House Elections.
 
 ACTIVE PIPELINE (default):
@@ -274,7 +279,10 @@ class HouseForecastModel:
         )
 
         # Run simulation
-        result = hierarchical_model.run(use_pymc=True)
+        # Historical posteriors are already fitted.  Sampling them directly is
+        # the correct posterior-predictive operation; MCMC with no new observed
+        # likelihood adds computation but no inference.
+        result = hierarchical_model.run(use_pymc=False)
         self._hierarchical_result = result
 
         # Convert results to legacy format for compatibility

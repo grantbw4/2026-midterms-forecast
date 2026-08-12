@@ -112,7 +112,6 @@ def test_pvi_direction():
         f"got {actual_diff:.1f}"
 
     print("✓ PASSED: PVI direction is correct")
-    return True
 
 
 def test_incumbency_direction():
@@ -172,7 +171,6 @@ def test_incumbency_direction():
         f"got {actual_inc_diff:.1f}"
 
     print("✓ PASSED: Incumbency direction is correct")
-    return True
 
 
 def test_national_environment_direction():
@@ -226,7 +224,6 @@ def test_national_environment_direction():
         f"vote share than R+10 environment ({vote_r_env:.1f}%)"
 
     print("✓ PASSED: National environment direction is correct")
-    return True
 
 
 def test_senate_pvi_direction():
@@ -273,7 +270,6 @@ def test_senate_pvi_direction():
     else:
         print("⚠ WARNING: Could not find suitable test races")
 
-    return True
 
 
 def run_all_tests():

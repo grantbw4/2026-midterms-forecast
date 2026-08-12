@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""
+"""LEGACY v2 national model; not called by the production v3 workflow.
+
+Kept to reproduce the baseline in historical comparisons. Production uses the
+fail-closed dynamic state-space model in ``models/dynamic_polling.py``.
+
 Bayesian National Environment Model using PyMC.
 
 This model infers the latent national political environment from polling data.

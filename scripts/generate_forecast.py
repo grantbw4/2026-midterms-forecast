@@ -1,479 +1,360 @@
 #!/usr/bin/env python3
-"""
-Generate forecast.json output from the 2026 Election Forecast Model.
+"""Generate the v3 Bayesian House and Senate forecast.
 
-Pipeline:
-1. Fetch latest polling data from VoteHub API
-2. Run Bayesian model to infer national environment from polls
-3. Run hierarchical House forecast with learned parameters
-4. Run Senate simulations with national environment
-5. Output forecast.json files for the website
-6. Update timeline.csv with historical tracking
-
-The national environment (inferred from polls) is the SINGLE driving variable.
-Model uses learned parameters from 2018/2022 historical fitting.
+All inputs are validated before either public forecast is replaced.  Network
+failure can use a recent cache, but stale or invalid data never becomes a fake
+zero-valued forecast.
 """
 
-# IMPORTANT: Set PyTensor flags BEFORE any imports that might trigger PyMC/PyTensor
-import os
-os.environ.setdefault("PYTENSOR_FLAGS", "device=cpu,floatX=float64,optimizer=fast_compile,cxx=")
+from __future__ import annotations
 
 import argparse
+from datetime import date, datetime, timezone
+import hashlib
 import json
 import logging
-import sys
-from datetime import datetime
+import os
 from pathlib import Path
+import shutil
+import sys
+from typing import Any
 
+import numpy as np
 import pandas as pd
 
-# Add project root to path
-PROJECT_ROOT = Path(__file__).parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from models.forecast import run_forecast, HouseForecastModel
-from models.senate_forecast import SenateForecastModel
-from models.national_environment import NationalEnvironmentModel
-from models.economic_fundamentals import EconomicFundamentals
-from scripts.fetch_votehub import VoteHubFetcher
-from scripts.fetch_cook_ratings import CookPoliticalScraper, adjust_pvi_with_cook_ratings
+from models.dynamic_polling import (  # noqa: E402
+    DynamicNationalModel,
+    build_fundamentals_prior,
+    summarize_approval,
+)
+from models.economic_fundamentals import EconomicFundamentals  # noqa: E402
+from models.forecast_v3 import run_v3_forecast  # noqa: E402
+from models.race_polling import (  # noqa: E402
+    load_cached_candidate_registry,
+    refresh_candidate_registry,
+)
+from models.silver_bulletin import (  # noqa: E402
+    SilverBulletinClient,
+    load_silver_cache,
+    prepare_silver_averages,
+    save_silver_cache,
+)
+from scripts.fetch_votehub import VoteHubFetcher  # noqa: E402
 
-# Setup paths
+
 DATA_DIR = PROJECT_ROOT / "data"
 OUTPUT_DIR = PROJECT_ROOT / "outputs"
+WEBSITE_DIR = PROJECT_ROOT / "website"
+ELECTION_DATE = date(2026, 11, 3)
 
-# Setup logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
 
-def format_polling_data(gb_polls: pd.DataFrame, approval_polls: pd.DataFrame, max_polls: int = 50) -> dict:
-    """Format polling data for website display.
+def _atomic_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(payload, indent=2, allow_nan=False))
+    temporary.replace(path)
 
-    Args:
-        gb_polls: Generic ballot polls DataFrame
-        approval_polls: Trump approval polls DataFrame
-        max_polls: Maximum number of polls to include (most recent)
 
-    Returns:
-        Dictionary with formatted polling data
-    """
-    polling_data = {
-        "generic_ballot": [],
-        "approval": [],
-    }
+def _atomic_csv(path: Path, frame: pd.DataFrame) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    frame.to_csv(temporary, index=False)
+    temporary.replace(path)
 
-    if gb_polls is not None and not gb_polls.empty:
-        # Sort by date descending and take most recent
-        gb_sorted = gb_polls.sort_values("date", ascending=False).head(max_polls)
-        for _, row in gb_sorted.iterrows():
-            polling_data["generic_ballot"].append({
-                "date": row["date"].strftime("%Y-%m-%d") if hasattr(row["date"], "strftime") else str(row["date"])[:10],
-                "pollster": row["pollster"],
+
+def _load_cached_approval() -> pd.DataFrame:
+    polling = DATA_DIR / "raw" / "polling"
+    approval_path = polling / "trump_approval.csv"
+    return pd.read_csv(approval_path) if approval_path.exists() else pd.DataFrame()
+
+
+def _fetch_approval(skip_fetch: bool) -> tuple[pd.DataFrame, list[str]]:
+    fallbacks: list[str] = []
+    if skip_fetch:
+        return _load_cached_approval(), ["approval_cache_requested"]
+
+    fetcher = VoteHubFetcher()
+    approval = fetcher.fetch_trump_approval(days_back=240)
+    if approval.empty:
+        approval = _load_cached_approval()
+        fallbacks.append("votehub_approval_cache")
+    fetcher.save_polls(pd.DataFrame(), approval)
+    return approval, fallbacks
+
+
+def _fetch_registry(skip_fetch: bool) -> tuple[Any, list[str]]:
+    if skip_fetch:
+        registry = load_cached_candidate_registry(DATA_DIR)
+        if registry is None:
+            raise FileNotFoundError("No cached official candidate registry")
+        return registry, ["candidate_registry_cache_requested"]
+    try:
+        registry = refresh_candidate_registry(
+            DATA_DIR, fec_api_key=os.getenv("FEC_API_KEY", "DEMO_KEY")
+        )
+        return registry, []
+    except Exception as exc:
+        logger.warning("Candidate refresh failed; checking last valid cache: %s", exc)
+        registry = load_cached_candidate_registry(DATA_DIR)
+        if registry is None:
+            raise
+        return registry, ["candidate_registry_cache_after_fetch_failure"]
+
+
+def _fetch_silver_averages(skip_fetch: bool, registry: Any) -> tuple[Any, list[str]]:
+    if skip_fetch:
+        return load_silver_cache(DATA_DIR), ["silver_average_cache_requested"]
+    try:
+        data = prepare_silver_averages(SilverBulletinClient().fetch(), registry)
+        save_silver_cache(DATA_DIR, data)
+        return data, []
+    except Exception as exc:
+        logger.warning("Silver Bulletin average refresh failed; checking cache: %s", exc)
+        return load_silver_cache(DATA_DIR), ["silver_average_cache_after_fetch_failure"]
+
+
+def _economic_index() -> tuple[float, list[str]]:
+    try:
+        model = EconomicFundamentals()
+        model.load_data()
+        result = model.calculate_index()
+        return float(result["normalized_index"]), []
+    except Exception as exc:
+        logger.warning("Economic prior input unavailable: %s", exc)
+        return 0.0, ["economic_prior_unavailable"]
+
+
+def format_polling_data(generic: pd.DataFrame, approval: pd.DataFrame, limit: int = 50) -> dict[str, Any]:
+    output: dict[str, Any] = {"generic_ballot": [], "approval": []}
+    for _, row in generic.sort_values("date", ascending=False).head(limit).iterrows():
+        sample_size = pd.to_numeric(row.get("sample_size"), errors="coerce")
+        output["generic_ballot"].append({
+            "date": pd.to_datetime(row["date"]).strftime("%Y-%m-%d"),
+            "pollster": str(row["pollster"]),
+            "sample_size": int(sample_size) if pd.notna(sample_size) else None,
+            "population": str(row.get("population", "a")),
+            "dem_pct": round(float(row.get("dem_pct", np.nan)), 1),
+            "rep_pct": round(float(row.get("rep_pct", np.nan)), 1),
+            "margin": round(float(row["margin"]), 1),
+        })
+    if approval is not None and not approval.empty:
+        for _, row in approval.sort_values("date", ascending=False).head(limit).iterrows():
+            output["approval"].append({
+                "date": pd.to_datetime(row["date"]).strftime("%Y-%m-%d"),
+                "pollster": str(row["pollster"]),
                 "sample_size": int(row["sample_size"]),
-                "population": row.get("population", "a"),
-                "dem_pct": round(float(row["dem_pct"]), 1),
-                "rep_pct": round(float(row["rep_pct"]), 1),
-                "margin": round(float(row["margin"]), 1),
-            })
-
-    if approval_polls is not None and not approval_polls.empty:
-        # Sort by date descending and take most recent
-        app_sorted = approval_polls.sort_values("date", ascending=False).head(max_polls)
-        for _, row in app_sorted.iterrows():
-            polling_data["approval"].append({
-                "date": row["date"].strftime("%Y-%m-%d") if hasattr(row["date"], "strftime") else str(row["date"])[:10],
-                "pollster": row["pollster"],
-                "sample_size": int(row["sample_size"]),
-                "population": row.get("population", "a"),
+                "population": str(row.get("population", "a")),
                 "approve": round(float(row["approve"]), 1),
                 "disapprove": round(float(row["disapprove"]), 1),
                 "net_approval": round(float(row["net_approval"]), 1),
             })
+    return output
 
-    return polling_data
 
-
-def generate_forecast_json(model: HouseForecastModel, env_result: dict = None, polling_data: dict = None) -> dict:
-    """Generate the complete forecast.json structure.
-
-    Args:
-        model: The HouseForecastModel with simulation results
-        env_result: Optional dict from NationalEnvironmentModel with approval data
-        polling_data: Optional dict with formatted polling data for website display
-    """
-
-    now = datetime.utcnow()
-    election_date = datetime(2026, 11, 3)
-    days_until = (election_date - now).days
-
-    summary = model.get_summary()
-    categories = model.get_category_counts()
-
-    # Override data from env_result if available
-    if env_result:
-        summary["approval_rating"] = env_result.get("approval_mean", 0)
-        summary["net_approval"] = env_result.get("approval_mean", 0)  # net_approval is the same as approval_mean
-        summary["economic_adjustment"] = env_result.get("economic_adjustment", 0)
-        summary["generic_ballot_margin"] = env_result.get("polling_national_env", summary["national_environment"])
-
-    # Determine model version based on type
-    model_type = summary.get("model_type", "legacy")
-    model_version = "2.0.0" if model_type == "hierarchical_bayesian" else "1.0.0"
-
-    forecast = {
-        "metadata": {
-            "updated_at": now.isoformat() + "Z",
-            "model_version": model_version,
-            "model_type": model_type,
-            "election_date": "2026-11-03",
-            "days_until_election": days_until,
-            "n_simulations": model.n_simulations,
-            "districts_total": 435,
-        },
-        "summary": {
-            "prob_dem_majority": round(summary["prob_dem_majority"], 3),
-            "prob_rep_majority": round(summary["prob_rep_majority"], 3),
-            "median_dem_seats": summary["median_dem_seats"],
-            "median_rep_seats": summary["median_rep_seats"],
-            "mean_dem_seats": round(summary["mean_dem_seats"], 1),
-            "ci_90_low": summary["ci_90_low"],
-            "ci_90_high": summary["ci_90_high"],
-            "ci_50_low": summary["ci_50_low"],
-            "ci_50_high": summary["ci_50_high"],
-            "national_environment": round(summary["national_environment"], 1),
-            "generic_ballot_margin": round(summary["generic_ballot_margin"], 1),
-            "approval_rating": round(summary["approval_rating"], 1),
-            "net_approval": round(summary["net_approval"], 1),
-            "economic_adjustment": round(summary.get("economic_adjustment", 0), 1),
-        },
-        "categories": {
-            "dem": {
-                "safe": categories["safe_d"],
-                "likely": categories["likely_d"],
-                "lean": categories["lean_d"],
-            },
-            "toss_up": categories["toss_up"],
-            "rep": {
-                "safe": categories["safe_r"],
-                "likely": categories["likely_r"],
-                "lean": categories["lean_r"],
+def _metadata(
+    national: Any,
+    diagnostics: dict[str, Any],
+    fallbacks: list[str],
+    n_simulations: int,
+    race_polls: pd.DataFrame,
+    allow_stale: bool,
+) -> dict[str, Any]:
+    now = datetime.now(timezone.utc)
+    data_date = date.fromisoformat(national.data_through)
+    age = (now.date() - data_date).days
+    stale = age > 21
+    warnings = []
+    if stale:
+        warnings.append(f"Generic-ballot feed is {age} days old")
+    if diagnostics["fundamentals"].get("status") != "passed":
+        warnings.append("Some incumbent names remain unresolved")
+    if not race_polls.empty:
+        race_date = pd.to_datetime(race_polls["date"]).max().date()
+        race_age = (now.date() - race_date).days
+    else:
+        race_date, race_age = None, None
+        warnings.append("No validated candidate-race polls available")
+    status = "degraded" if warnings or fallbacks else "healthy"
+    digest = hashlib.sha256(
+        f"{national.data_through}|{national.election_mean:.5f}|{n_simulations}".encode()
+    ).hexdigest()[:12]
+    return {
+        "updated_at": now.isoformat(),
+        "model_version": "3.0.0",
+        "schema_version": "3.0.0",
+        "model_type": "bayesian_external_average",
+        "model_status": status,
+        "run_id": f"v3-{now.strftime('%Y%m%dT%H%M%SZ')}-{digest}",
+        "election_date": ELECTION_DATE.isoformat(),
+        "days_until_election": max((ELECTION_DATE - now.date()).days, 0),
+        "n_simulations": n_simulations,
+        "districts_total": 435,
+        "data_through": national.data_through,
+        "inference_method": "external_average_bayesian_update + posterior_predictive_draws",
+        "fallback_used": bool(fallbacks),
+        "fallbacks": fallbacks,
+        "warnings": warnings,
+        "source_freshness": {
+            "generic_ballot": {"latest": national.data_through, "age_days": age, "stale": stale},
+            "race_polls": {
+                "latest": race_date.isoformat() if race_date else None,
+                "age_days": race_age,
+                "stale": race_age is None or race_age > 30,
             },
         },
-        "seat_distribution": model.get_seat_distribution(),
-        "districts": model.get_district_forecasts(),
+        "stale_override": bool(stale and allow_stale),
+        "diagnostics": {**national.diagnostics, **diagnostics},
     }
 
-    # Add polling data if provided
-    if polling_data:
-        forecast["polling"] = polling_data
 
-    return forecast
+def _load_backtest_summary() -> dict[str, Any]:
+    path = OUTPUT_DIR / "backtest_metrics.json"
+    payload = json.loads(path.read_text()) if path.exists() else {
+        "status": "not_run",
+        "message": "Run scripts/backtest_v3.py after preparing historical forecast snapshots.",
+    }
+    payload["current_likelihood_applicability"] = {
+        "status": "supporting_evidence_only",
+        "validated_component": "robust race update and correlated error floor",
+        "not_directly_validated": "Silver Bulletin maintained averages",
+        "reason": "No comparable public historical archive of race averages",
+    }
+    return payload
 
 
-def update_timeline(summary: dict, chamber: str = "house") -> None:
-    """Update the timeline CSV with current forecast."""
-    filename = "timeline.csv" if chamber == "house" else "senate_timeline.csv"
-    timeline_path = OUTPUT_DIR / filename
+def _change_decomposition(previous: dict[str, Any], current: dict[str, Any], national: Any) -> dict[str, Any]:
+    old_summary = previous.get("summary", {}) if previous else {}
+    return {
+        "probability_change": round(
+            current["summary"]["prob_dem_majority"] - float(old_summary.get("prob_dem_majority", current["summary"]["prob_dem_majority"])), 4
+        ),
+        "median_seat_change": int(
+            current["summary"]["median_dem_seats"] - int(old_summary.get("median_dem_seats", current["summary"]["median_dem_seats"]))
+        ),
+        "national_update": {
+            "fundamentals_prior": round(national.prior.mean, 2),
+            "poll_updated_current": round(national.current_mean, 2),
+            "election_day_mean": round(national.election_mean, 2),
+            "polling_contribution": round(national.current_mean - national.prior.mean, 2),
+            "future_uncertainty_std": round(national.election_std, 2),
+        },
+    }
 
-    today = datetime.now().strftime("%Y-%m-%d")
-    prob_key = "prob_dem_majority" if chamber == "house" else "prob_dem_control"
 
-    new_row = {
-        "date": today,
-        prob_key: summary.get(prob_key, summary.get("prob_dem_majority", 0)),
+def update_timeline(summary: dict[str, Any], chamber: str) -> None:
+    path = OUTPUT_DIR / ("timeline.csv" if chamber == "house" else "senate_timeline.csv")
+    probability = "prob_dem_majority" if chamber == "house" else "prob_dem_control"
+    row = {
+        "date": date.today().isoformat(),
+        probability: summary[probability],
         "median_dem_seats": summary["median_dem_seats"],
         "mean_dem_seats": summary["mean_dem_seats"],
         "ci_90_low": summary["ci_90_low"],
         "ci_90_high": summary["ci_90_high"],
         "national_env": summary["national_environment"],
         "approval": summary.get("approval_rating", 0),
-        "generic_ballot": summary.get("generic_ballot_margin", summary["national_environment"]),
+        "generic_ballot": summary.get("generic_ballot_margin", 0),
+        "model_version": "3.0.0",
+        "methodology_break": True,
     }
-
-    if timeline_path.exists():
-        timeline = pd.read_csv(timeline_path)
-        timeline = timeline[timeline["date"] != today]
-        timeline = pd.concat([timeline, pd.DataFrame([new_row])], ignore_index=True)
-    else:
-        timeline = pd.DataFrame([new_row])
-
-    timeline.to_csv(timeline_path, index=False)
-    logger.info(f"Updated {chamber} timeline: {timeline_path}")
+    history = pd.read_csv(path) if path.exists() else pd.DataFrame()
+    if not history.empty and "date" in history:
+        history = history[history["date"] != row["date"]]
+    _atomic_csv(path, pd.concat([history, pd.DataFrame([row])], ignore_index=True))
 
 
-def main():
-    """Main entry point."""
-    parser = argparse.ArgumentParser(description="Generate 2026 election forecast")
-    parser.add_argument(
-        "--legacy",
-        action="store_true",
-        help="Use legacy flat simulation instead of hierarchical model"
-    )
-    parser.add_argument(
-        "--simulations",
-        type=int,
-        default=10000,
-        help="Number of Monte Carlo simulations (default: 10000)"
-    )
-    parser.add_argument(
-        "--skip-fetch",
-        action="store_true",
-        help="Skip fetching new polling data (use cached)"
-    )
-    parser.add_argument(
-        "--skip-timeline",
-        action="store_true",
-        help="Skip updating timeline (for manual reruns)"
-    )
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Generate the forecast v3 public artifacts")
+    parser.add_argument("--simulations", type=int, default=10_000)
+    parser.add_argument("--skip-fetch", action="store_true")
+    parser.add_argument("--skip-race-fetch", action="store_true")
+    parser.add_argument("--skip-timeline", action="store_true")
+    parser.add_argument("--allow-stale", action="store_true", help="Development only: publish stale cached polls")
     args = parser.parse_args()
 
-    logger.info("=" * 60)
-    logger.info("2026 Election Forecast - Generating Predictions")
-    logger.info(f"Run time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    logger.info(f"Model: {'Legacy' if args.legacy else 'Hierarchical Bayesian'}")
-    logger.info("Poll-anchored: Yes (no midterm/economic stacking)")
-    logger.info("=" * 60)
+    registry, registry_fallbacks = _fetch_registry(args.skip_race_fetch)
+    silver, silver_fallbacks = _fetch_silver_averages(args.skip_fetch, registry)
+    approval, fallbacks = _fetch_approval(args.skip_fetch)
+    fallbacks.extend(registry_fallbacks)
+    fallbacks.extend(silver_fallbacks)
+    generic = silver.generic_history
+    race_polls = silver.race_likelihoods
+    race_status = silver.status
+    approval_mean, approval_std = summarize_approval(approval)
+    economic_index, economic_fallbacks = _economic_index()
+    fallbacks.extend(economic_fallbacks)
 
-    # Ensure output directory exists
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-    # Step 1: Fetch latest polling data from VoteHub
-    if not args.skip_fetch:
-        logger.info("\n--- Fetching VoteHub Polling Data ---")
-        fetcher = VoteHubFetcher()
-        gb_polls = fetcher.fetch_generic_ballot(days_back=180)
-        approval_polls = fetcher.fetch_trump_approval(days_back=180)
-        fetcher.save_polls(gb_polls, approval_polls)
-
-        # Fall back to cached data if API returned empty results
-        cached_gb_path = DATA_DIR / "raw" / "polling" / "generic_ballot.csv"
-        cached_app_path = DATA_DIR / "raw" / "polling" / "trump_approval.csv"
-        if gb_polls.empty and cached_gb_path.exists():
-            logger.warning("API returned no generic ballot polls, falling back to cached data")
-            gb_polls = pd.read_csv(cached_gb_path)
-        if approval_polls.empty and cached_app_path.exists():
-            logger.warning("API returned no approval polls, falling back to cached data")
-            approval_polls = pd.read_csv(cached_app_path)
-    else:
-        logger.info("\n--- Loading Cached Polling Data ---")
-        gb_polls = pd.read_csv(DATA_DIR / "raw" / "polling" / "generic_ballot.csv")
-        approval_polls = pd.read_csv(DATA_DIR / "raw" / "polling" / "trump_approval.csv")
-
-    # Step 1b: Fetch Cook Political ratings and adjust PVI for redistricted districts
-    logger.info("\n--- Fetching Cook Political Ratings ---")
-    cook_scraper = CookPoliticalScraper()
-    cook_ratings = cook_scraper.fetch_house_ratings()
-    senate_ratings = cook_scraper.fetch_senate_ratings()
-    redistricting_df = cook_scraper.fetch_redistricting_status()
-    cook_scraper.save_data(cook_ratings, redistricting_df, senate_ratings)
-
-    # Get list of redistricted states
-    redistricted_states = cook_scraper.get_redistricted_states(redistricting_df)
-    if redistricted_states:
-        logger.info(f"Redistricted states: {', '.join(redistricted_states)}")
-
-    # Load and adjust districts data with Cook ratings
-    districts_path = DATA_DIR / "processed" / "districts.csv"
-    if districts_path.exists() and not cook_ratings.empty:
-        districts_df = pd.read_csv(districts_path)
-        original_count = len(districts_df)
-
-        # Adjust PVI for redistricted districts
-        districts_df = adjust_pvi_with_cook_ratings(
-            districts_df,
-            cook_ratings,
-            redistricted_states
+    prior = build_fundamentals_prior(
+        approval_mean=approval_mean,
+        approval_std=approval_std,
+        economic_index=economic_index,
+    )
+    national = DynamicNationalModel(random_seed=42).fit_external_average(
+        generic, prior, election_date=ELECTION_DATE, n_draws=args.simulations
+    )
+    poll_age = (date.today() - date.fromisoformat(national.data_through)).days
+    # Refuse catastrophically stale data.  A 21-day freshness warning remains
+    # visible in metadata; 45 days is the hard publication cutoff this early in
+    # the cycle.
+    if poll_age > 45 and not args.allow_stale:
+        raise RuntimeError(
+            f"Latest generic-ballot poll is {poll_age} days old; existing public forecast was retained. "
+            "Use --allow-stale only for local development."
         )
 
-        # Save adjusted districts
-        districts_df.to_csv(districts_path, index=False)
-        logger.info(f"Updated districts.csv with Cook rating adjustments")
-
-    # ==========================================================================
-    # NATIONAL ENVIRONMENT COMPUTATION
-    # ==========================================================================
-    # The national environment is computed in THREE sequential steps:
-    #
-    # Step A: PyMC Bayesian inference on generic ballot polls only
-    #         → Produces mu_posterior (latent national environment from GB polls)
-    #
-    # Step B: Post-hoc approval adjustment (OUTSIDE PyMC model)
-    #         → polling_national_env = mu_posterior + (-0.3 × approval_weight × net_approval)
-    #         → This is a heuristic adjustment, not a fitted relationship
-    #
-    # Step C: Economic adjustment (using fitted coefficients)
-    #         → national_env = β_polls × polling_national_env + β_econ × econ_index
-    #         → β_polls ≈ 1.0, β_econ ≈ 0.34 (but with large uncertainty)
-    #
-    # IMPORTANT: Uncertainty only accounts for Step A (GB poll variance).
-    # Steps B and C add deterministic adjustments that do not propagate uncertainty.
-    # ==========================================================================
-
-    # Step 2A: Infer national environment from generic ballot polls
-    logger.info("\n--- Inferring National Environment (Step A: GB Polls) ---")
-    env_model = NationalEnvironmentModel(gb_polls=gb_polls, approval_polls=approval_polls)
-    env_result = env_model.fit(use_pymc=True)  # Full Bayesian inference on GB polls only
-    env_model.save_results(env_result)
-
-    # NOTE: env_result["national_environment"] already includes the post-hoc
-    # approval adjustment (Step B) applied inside NationalEnvironmentModel.fit_pymc()
-    polling_national_env = env_result["national_environment"]
-    approval_mean = env_result.get("approval_mean", 0)
-    logger.info(f"Polling-based National Environment: D{polling_national_env:+.1f} ± {env_result['uncertainty']:.1f}")
-    if approval_mean != 0:
-        logger.info(f"Trump Net Approval: {approval_mean:+.1f}%")
-        logger.info(f"  (Approval adjustment already applied in Step B)")
-
-    # Step 2C: Apply empirically-fitted coefficients for economic adjustment
-    logger.info("\n--- National Environment (Step C: Economic Adjustment) ---")
-    coeffs_path = DATA_DIR / "processed" / "national_env_coefficients.json"
-    if coeffs_path.exists():
-        with open(coeffs_path) as f:
-            coeffs = json.load(f)
-        beta_polls = coeffs.get("beta_polls", 1.0)
-        beta_econ = coeffs.get("beta_econ", 0.0)
-        logger.info(f"Loaded fitted coefficients: β_polls={beta_polls:.2f}, β_econ={beta_econ:.2f}")
-    else:
-        logger.warning("No fitted coefficients found, using defaults (β_polls=1, β_econ=0)")
-        beta_polls = 1.0
-        beta_econ = 0.0
-
-    # Calculate economic index for adjustment
-    econ = EconomicFundamentals()
-    econ.load_data()
-    econ_result = econ.calculate_index()
-
-    # Adjust economic index for president's party (R president: negate index)
-    raw_econ = econ_result["normalized_index"]
-    adjusted_econ = -raw_econ  # R president: bad economy helps Dems
-
-    # Apply fitted model: national_env = β_polls × polling + β_econ × econ
-    national_env = beta_polls * polling_national_env + beta_econ * adjusted_econ
-    econ_adjustment = beta_econ * adjusted_econ
-
-    logger.info(f"Economic Index: {raw_econ:.2f} ({econ_result['interpretation']})")
-    logger.info(f"Economic Adjustment: {econ_adjustment:+.1f} points (β_econ × adjusted_index)")
-    logger.info(f"Final National Environment: D{national_env:+.1f}")
-
-    # Store in env_result for downstream use
-    env_result["economic_adjustment"] = econ_adjustment
-    env_result["economic_index"] = raw_econ
-    env_result["polling_national_env"] = polling_national_env
-    env_result["beta_polls"] = beta_polls
-    env_result["beta_econ"] = beta_econ
-
-    # Step 3: Run the House forecast model
-    model_type = "legacy" if args.legacy else "hierarchical Bayesian"
-    logger.info(f"\n--- Running House Forecast Model ({model_type}) ---")
-
-    # Load districts
-    districts_df = pd.read_csv(DATA_DIR / "processed" / "districts.csv")
-
-    # Initialize model (poll-anchored - no midterm/economic adjustments)
-    model = HouseForecastModel(
-        districts_df=districts_df,
-        national_environment=national_env,
-        n_simulations=args.simulations,
-        use_hierarchical=not args.legacy,
-    )
-    model.simulate_elections()
-
-    # Format polling data for website
-    polling_data = format_polling_data(gb_polls, approval_polls)
-    logger.info(f"Formatted {len(polling_data['generic_ballot'])} GB polls and {len(polling_data['approval'])} approval polls for website")
-
-    # Generate forecast JSON
-    logger.info("\n--- Generating Output ---")
-    forecast = generate_forecast_json(model, env_result, polling_data)
-
-    # Save forecast.json
-    forecast_path = OUTPUT_DIR / "forecast.json"
-    with open(forecast_path, "w") as f:
-        json.dump(forecast, f, indent=2)
-    logger.info(f"Saved forecast: {forecast_path}")
-
-    # Update timeline
-    if not args.skip_timeline:
-        update_timeline(forecast["summary"], chamber="house")
-
-    # --- Senate Forecast ---
-    logger.info("\n--- Running Senate Forecast ---")
-    # Poll-anchored: use generic ballot directly, no stacking adjustments
-    # Uses same hierarchical Bayesian approach as House model with PyMC
-    senate_model = SenateForecastModel(
-        national_environment=national_env,
+    house, senate, diagnostics = run_v3_forecast(
+        DATA_DIR,
+        national,
+        race_polls=race_polls,
+        race_poll_status=race_status,
+        registry=registry,
         n_simulations=args.simulations,
     )
-    senate_model.run(use_pymc=not args.legacy)  # Use PyMC by default (same as House)
-
-    senate_summary = senate_model.get_summary()
-    # Add approval and economic data from env_result (same as House forecast)
-    if env_result:
-        senate_summary["generic_ballot_margin"] = env_result.get("polling_national_env", national_env)
-        senate_summary["approval_rating"] = env_result.get("approval_mean", 0)
-        senate_summary["net_approval"] = env_result.get("approval_mean", 0)
-        senate_summary["economic_adjustment"] = env_result.get("economic_adjustment", 0)
-
-    senate_forecast = {
-        "metadata": forecast["metadata"].copy(),
-        "summary": senate_summary,
-        "categories": senate_model.get_category_counts(),
-        "seat_distribution": senate_model.get_seat_distribution(),
-        "races": senate_model.get_race_forecasts(),
-        "polling": polling_data,
+    metadata = _metadata(national, diagnostics, fallbacks, args.simulations, race_polls, args.allow_stale)
+    previous_path = OUTPUT_DIR / "forecast.json"
+    previous = json.loads(previous_path.read_text()) if previous_path.exists() else {}
+    polling_display = format_polling_data(generic, approval)
+    shared = {
+        "metadata": metadata,
+        "national_model": national.to_public_dict(),
+        "polling": polling_display,
+        "backtest": _load_backtest_summary(),
+        "data_sources": {
+            "polling_likelihood": "Silver Bulletin maintained polling averages",
+            "approval_prior_input": "VoteHub",
+            "candidate_registry": "Federal Election Commission",
+            "polling_source_url": "https://www.natesilver.net/p/nate-silver-2026-midterm-election-polls-model",
+        },
     }
+    house = {**shared, **house}
+    senate = {**shared, **senate}
+    house["change_decomposition"] = _change_decomposition(previous, house, national)
+    senate["change_decomposition"] = house["change_decomposition"]
 
-    senate_path = OUTPUT_DIR / "senate_forecast.json"
-    with open(senate_path, "w") as f:
-        json.dump(senate_forecast, f, indent=2)
-    logger.info(f"Saved Senate forecast: {senate_path}")
-
-    # Update Senate timeline
+    _atomic_json(OUTPUT_DIR / "forecast.json", house)
+    _atomic_json(OUTPUT_DIR / "senate_forecast.json", senate)
     if not args.skip_timeline:
-        update_timeline(senate_summary, chamber="senate")
+        update_timeline(house["summary"], "house")
+        update_timeline(senate["summary"], "senate")
 
-    # Print summary
-    logger.info("\n" + "=" * 60)
-    logger.info("FORECAST SUMMARY")
-    logger.info("=" * 60)
+    for filename in ("forecast.json", "senate_forecast.json", "timeline.csv", "senate_timeline.csv"):
+        source = OUTPUT_DIR / filename
+        if source.exists():
+            shutil.copy2(source, WEBSITE_DIR / filename)
 
-    s = forecast["summary"]
-    c = forecast["categories"]
-
-    logger.info(f"\nDemocratic Majority Probability: {s['prob_dem_majority']:.1%}")
-    logger.info(f"Median Democratic Seats: {s['median_dem_seats']}")
-    logger.info(f"90% Confidence Interval: [{s['ci_90_low']}, {s['ci_90_high']}]")
-
-    logger.info(f"\nNational Environment: D{s['national_environment']:+.1f}")
-    logger.info(f"  Generic Ballot (polling): D{s['generic_ballot_margin']:+.1f}")
-    logger.info(f"  Economic Adjustment: {s['economic_adjustment']:+.1f}")
-    logger.info(f"Trump Net Approval: {s['net_approval']:+.1f}%")
-
-    logger.info("\nSeat Categories:")
-    logger.info(f"  Safe D: {c['dem']['safe']}  |  Safe R: {c['rep']['safe']}")
-    logger.info(f"  Likely D: {c['dem']['likely']}  |  Likely R: {c['rep']['likely']}")
-    logger.info(f"  Lean D: {c['dem']['lean']}  |  Lean R: {c['rep']['lean']}")
-    logger.info(f"  Toss-up: {c['toss_up']}")
-
-    # Show most competitive races
-    logger.info("\nTop 10 Most Competitive Races:")
-    for dist in forecast["districts"][:10]:
-        prob = dist["prob_dem"]
-        inc = dist["incumbent"]
-        logger.info(
-            f"  {dist['id']}: {prob:.0%} D "
-            f"({inc['name']}, {inc['party']}) - {dist['category'].replace('_', ' ').title()}"
-        )
-
-    logger.info(f"\nForecast saved to: {forecast_path}")
-
+    logger.info(
+        "Published v3 forecast %s: House D majority %.1f%%, Senate D control %.1f%%",
+        metadata["run_id"], house["summary"]["prob_dem_majority"] * 100,
+        senate["summary"]["prob_dem_control"] * 100,
+    )
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())

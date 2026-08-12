@@ -1,0 +1,697 @@
+{
+  "status": "complete",
+  "horizons": [
+    120,
+    90,
+    60,
+    30,
+    14,
+    7
+  ],
+  "metrics": [
+    {
+      "model": "fundamentals",
+      "horizon": 7,
+      "n": 74,
+      "rmse": 7.5431,
+      "brier": 0.08571,
+      "log_loss": 0.27757,
+      "coverage": {
+        "50": 0.6892,
+        "80": 0.9324,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "fundamentals",
+      "horizon": 14,
+      "n": 74,
+      "rmse": 7.5298,
+      "brier": 0.0854,
+      "log_loss": 0.27791,
+      "coverage": {
+        "50": 0.6892,
+        "80": 0.9459,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "fundamentals",
+      "horizon": 30,
+      "n": 74,
+      "rmse": 7.5519,
+      "brier": 0.08521,
+      "log_loss": 0.27662,
+      "coverage": {
+        "50": 0.6892,
+        "80": 0.9459,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "fundamentals",
+      "horizon": 60,
+      "n": 74,
+      "rmse": 7.5459,
+      "brier": 0.08508,
+      "log_loss": 0.2758,
+      "coverage": {
+        "50": 0.7027,
+        "80": 0.9324,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "fundamentals",
+      "horizon": 90,
+      "n": 74,
+      "rmse": 7.5354,
+      "brier": 0.08563,
+      "log_loss": 0.27816,
+      "coverage": {
+        "50": 0.7027,
+        "80": 0.9324,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "fundamentals",
+      "horizon": 120,
+      "n": 74,
+      "rmse": 7.5608,
+      "brier": 0.0854,
+      "log_loss": 0.27836,
+      "coverage": {
+        "50": 0.7027,
+        "80": 0.9324,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "polls_only",
+      "horizon": 7,
+      "n": 72,
+      "rmse": 6.1885,
+      "brier": 0.07432,
+      "log_loss": 0.25318,
+      "coverage": {
+        "50": 0.1806,
+        "80": 0.4861,
+        "95": 0.6111
+      }
+    },
+    {
+      "model": "polls_only",
+      "horizon": 14,
+      "n": 72,
+      "rmse": 7.2376,
+      "brier": 0.07775,
+      "log_loss": 0.26565,
+      "coverage": {
+        "50": 0.1944,
+        "80": 0.4583,
+        "95": 0.5833
+      }
+    },
+    {
+      "model": "polls_only",
+      "horizon": 30,
+      "n": 70,
+      "rmse": 7.4494,
+      "brier": 0.08257,
+      "log_loss": 0.27816,
+      "coverage": {
+        "50": 0.2286,
+        "80": 0.4286,
+        "95": 0.5571
+      }
+    },
+    {
+      "model": "polls_only",
+      "horizon": 60,
+      "n": 61,
+      "rmse": 8.1964,
+      "brier": 0.10497,
+      "log_loss": 0.34087,
+      "coverage": {
+        "50": 0.2623,
+        "80": 0.4426,
+        "95": 0.5082
+      }
+    },
+    {
+      "model": "polls_only",
+      "horizon": 90,
+      "n": 53,
+      "rmse": 7.6294,
+      "brier": 0.12149,
+      "log_loss": 0.38323,
+      "coverage": {
+        "50": 0.1887,
+        "80": 0.434,
+        "95": 0.5094
+      }
+    },
+    {
+      "model": "polls_only",
+      "horizon": 120,
+      "n": 49,
+      "rmse": 7.055,
+      "brier": 0.12201,
+      "log_loss": 0.38293,
+      "coverage": {
+        "50": 0.2449,
+        "80": 0.5102,
+        "95": 0.6122
+      }
+    },
+    {
+      "model": "v2",
+      "horizon": 7,
+      "n": 74,
+      "rmse": 7.5431,
+      "brier": 0.08571,
+      "log_loss": 0.27757,
+      "coverage": {
+        "50": 0.6892,
+        "80": 0.9324,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "v2",
+      "horizon": 14,
+      "n": 74,
+      "rmse": 7.5298,
+      "brier": 0.0854,
+      "log_loss": 0.27791,
+      "coverage": {
+        "50": 0.6892,
+        "80": 0.9459,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "v2",
+      "horizon": 30,
+      "n": 74,
+      "rmse": 7.5519,
+      "brier": 0.08521,
+      "log_loss": 0.27662,
+      "coverage": {
+        "50": 0.6892,
+        "80": 0.9459,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "v2",
+      "horizon": 60,
+      "n": 74,
+      "rmse": 7.5459,
+      "brier": 0.08508,
+      "log_loss": 0.2758,
+      "coverage": {
+        "50": 0.7027,
+        "80": 0.9324,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "v2",
+      "horizon": 90,
+      "n": 74,
+      "rmse": 7.5354,
+      "brier": 0.08563,
+      "log_loss": 0.27816,
+      "coverage": {
+        "50": 0.7027,
+        "80": 0.9324,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "v2",
+      "horizon": 120,
+      "n": 74,
+      "rmse": 7.5608,
+      "brier": 0.0854,
+      "log_loss": 0.27836,
+      "coverage": {
+        "50": 0.7027,
+        "80": 0.9324,
+        "95": 0.9865
+      }
+    },
+    {
+      "model": "v3",
+      "horizon": 7,
+      "n": 72,
+      "rmse": 5.3399,
+      "brier": 0.05623,
+      "log_loss": 0.18259,
+      "coverage": {
+        "50": 0.5833,
+        "80": 0.8472,
+        "95": 0.9306
+      }
+    },
+    {
+      "model": "v3",
+      "horizon": 14,
+      "n": 72,
+      "rmse": 5.8782,
+      "brier": 0.05608,
+      "log_loss": 0.18341,
+      "coverage": {
+        "50": 0.5833,
+        "80": 0.8472,
+        "95": 0.9306
+      }
+    },
+    {
+      "model": "v3",
+      "horizon": 30,
+      "n": 70,
+      "rmse": 5.9981,
+      "brier": 0.05809,
+      "log_loss": 0.18895,
+      "coverage": {
+        "50": 0.5857,
+        "80": 0.8429,
+        "95": 0.9286
+      }
+    },
+    {
+      "model": "v3",
+      "horizon": 60,
+      "n": 61,
+      "rmse": 6.0828,
+      "brier": 0.06413,
+      "log_loss": 0.21188,
+      "coverage": {
+        "50": 0.5738,
+        "80": 0.8525,
+        "95": 0.9344
+      }
+    },
+    {
+      "model": "v3",
+      "horizon": 90,
+      "n": 53,
+      "rmse": 5.3593,
+      "brier": 0.06733,
+      "log_loss": 0.22227,
+      "coverage": {
+        "50": 0.5472,
+        "80": 0.8302,
+        "95": 0.9623
+      }
+    },
+    {
+      "model": "v3",
+      "horizon": 120,
+      "n": 49,
+      "rmse": 5.0996,
+      "brier": 0.07148,
+      "log_loss": 0.23457,
+      "coverage": {
+        "50": 0.551,
+        "80": 0.8367,
+        "95": 0.9796
+      }
+    }
+  ],
+  "final_60_day_aggregate": [
+    {
+      "model": "fundamentals",
+      "n": 296,
+      "brier": 0.08535,
+      "log_loss": 0.27698,
+      "calibration": [
+        {
+          "bin_low": 0.0,
+          "bin_high": 0.1,
+          "mean_forecast": 0.0503,
+          "observed_rate": 0.0533,
+          "n": 75
+        },
+        {
+          "bin_low": 0.1,
+          "bin_high": 0.2,
+          "mean_forecast": 0.1158,
+          "observed_rate": 0.1212,
+          "n": 33
+        },
+        {
+          "bin_low": 0.2,
+          "bin_high": 0.3,
+          "mean_forecast": 0.2653,
+          "observed_rate": 0.2857,
+          "n": 14
+        },
+        {
+          "bin_low": 0.3,
+          "bin_high": 0.4,
+          "mean_forecast": 0.3581,
+          "observed_rate": 0.0,
+          "n": 6
+        },
+        {
+          "bin_low": 0.4,
+          "bin_high": 0.5,
+          "mean_forecast": 0.4728,
+          "observed_rate": 0.7273,
+          "n": 33
+        },
+        {
+          "bin_low": 0.5,
+          "bin_high": 0.6,
+          "mean_forecast": 0.5342,
+          "observed_rate": 0.6957,
+          "n": 23
+        },
+        {
+          "bin_low": 0.6,
+          "bin_high": 0.7,
+          "mean_forecast": 0.6722,
+          "observed_rate": 1.0,
+          "n": 4
+        },
+        {
+          "bin_low": 0.7,
+          "bin_high": 0.8,
+          "mean_forecast": 0.7872,
+          "observed_rate": 1.0,
+          "n": 4
+        },
+        {
+          "bin_low": 0.8,
+          "bin_high": 0.9,
+          "mean_forecast": 0.8493,
+          "observed_rate": 1.0,
+          "n": 24
+        },
+        {
+          "bin_low": 0.9,
+          "bin_high": 1.0,
+          "mean_forecast": 0.9686,
+          "observed_rate": 1.0,
+          "n": 80
+        }
+      ]
+    },
+    {
+      "model": "polls_only",
+      "n": 275,
+      "brier": 0.08412,
+      "log_loss": 0.28226,
+      "calibration": [
+        {
+          "bin_low": 0.0,
+          "bin_high": 0.1,
+          "mean_forecast": 0.0458,
+          "observed_rate": 0.0,
+          "n": 30
+        },
+        {
+          "bin_low": 0.1,
+          "bin_high": 0.2,
+          "mean_forecast": 0.139,
+          "observed_rate": 0.0,
+          "n": 26
+        },
+        {
+          "bin_low": 0.2,
+          "bin_high": 0.3,
+          "mean_forecast": 0.2489,
+          "observed_rate": 0.0,
+          "n": 18
+        },
+        {
+          "bin_low": 0.3,
+          "bin_high": 0.4,
+          "mean_forecast": 0.3522,
+          "observed_rate": 0.0,
+          "n": 12
+        },
+        {
+          "bin_low": 0.4,
+          "bin_high": 0.5,
+          "mean_forecast": 0.4395,
+          "observed_rate": 0.4211,
+          "n": 19
+        },
+        {
+          "bin_low": 0.5,
+          "bin_high": 0.6,
+          "mean_forecast": 0.5474,
+          "observed_rate": 0.3333,
+          "n": 18
+        },
+        {
+          "bin_low": 0.6,
+          "bin_high": 0.7,
+          "mean_forecast": 0.6757,
+          "observed_rate": 0.8,
+          "n": 15
+        },
+        {
+          "bin_low": 0.7,
+          "bin_high": 0.8,
+          "mean_forecast": 0.7538,
+          "observed_rate": 0.6923,
+          "n": 26
+        },
+        {
+          "bin_low": 0.8,
+          "bin_high": 0.9,
+          "mean_forecast": 0.862,
+          "observed_rate": 0.9444,
+          "n": 36
+        },
+        {
+          "bin_low": 0.9,
+          "bin_high": 1.0,
+          "mean_forecast": 0.9605,
+          "observed_rate": 1.0,
+          "n": 75
+        }
+      ]
+    },
+    {
+      "model": "v2",
+      "n": 296,
+      "brier": 0.08535,
+      "log_loss": 0.27698,
+      "calibration": [
+        {
+          "bin_low": 0.0,
+          "bin_high": 0.1,
+          "mean_forecast": 0.0503,
+          "observed_rate": 0.0533,
+          "n": 75
+        },
+        {
+          "bin_low": 0.1,
+          "bin_high": 0.2,
+          "mean_forecast": 0.1158,
+          "observed_rate": 0.1212,
+          "n": 33
+        },
+        {
+          "bin_low": 0.2,
+          "bin_high": 0.3,
+          "mean_forecast": 0.2653,
+          "observed_rate": 0.2857,
+          "n": 14
+        },
+        {
+          "bin_low": 0.3,
+          "bin_high": 0.4,
+          "mean_forecast": 0.3581,
+          "observed_rate": 0.0,
+          "n": 6
+        },
+        {
+          "bin_low": 0.4,
+          "bin_high": 0.5,
+          "mean_forecast": 0.4728,
+          "observed_rate": 0.7273,
+          "n": 33
+        },
+        {
+          "bin_low": 0.5,
+          "bin_high": 0.6,
+          "mean_forecast": 0.5342,
+          "observed_rate": 0.6957,
+          "n": 23
+        },
+        {
+          "bin_low": 0.6,
+          "bin_high": 0.7,
+          "mean_forecast": 0.6722,
+          "observed_rate": 1.0,
+          "n": 4
+        },
+        {
+          "bin_low": 0.7,
+          "bin_high": 0.8,
+          "mean_forecast": 0.7872,
+          "observed_rate": 1.0,
+          "n": 4
+        },
+        {
+          "bin_low": 0.8,
+          "bin_high": 0.9,
+          "mean_forecast": 0.8493,
+          "observed_rate": 1.0,
+          "n": 24
+        },
+        {
+          "bin_low": 0.9,
+          "bin_high": 1.0,
+          "mean_forecast": 0.9686,
+          "observed_rate": 1.0,
+          "n": 80
+        }
+      ]
+    },
+    {
+      "model": "v3",
+      "n": 275,
+      "brier": 0.05842,
+      "log_loss": 0.19092,
+      "calibration": [
+        {
+          "bin_low": 0.0,
+          "bin_high": 0.1,
+          "mean_forecast": 0.0305,
+          "observed_rate": 0.0,
+          "n": 74
+        },
+        {
+          "bin_low": 0.1,
+          "bin_high": 0.2,
+          "mean_forecast": 0.1534,
+          "observed_rate": 0.0,
+          "n": 10
+        },
+        {
+          "bin_low": 0.2,
+          "bin_high": 0.3,
+          "mean_forecast": 0.2526,
+          "observed_rate": 0.0,
+          "n": 13
+        },
+        {
+          "bin_low": 0.3,
+          "bin_high": 0.4,
+          "mean_forecast": 0.3498,
+          "observed_rate": 0.3333,
+          "n": 12
+        },
+        {
+          "bin_low": 0.4,
+          "bin_high": 0.5,
+          "mean_forecast": 0.4622,
+          "observed_rate": 0.7143,
+          "n": 14
+        },
+        {
+          "bin_low": 0.5,
+          "bin_high": 0.6,
+          "mean_forecast": 0.5359,
+          "observed_rate": 0.625,
+          "n": 8
+        },
+        {
+          "bin_low": 0.6,
+          "bin_high": 0.7,
+          "mean_forecast": 0.6604,
+          "observed_rate": 0.5,
+          "n": 8
+        },
+        {
+          "bin_low": 0.7,
+          "bin_high": 0.8,
+          "mean_forecast": 0.7445,
+          "observed_rate": 0.7143,
+          "n": 14
+        },
+        {
+          "bin_low": 0.8,
+          "bin_high": 0.9,
+          "mean_forecast": 0.8469,
+          "observed_rate": 0.8824,
+          "n": 17
+        },
+        {
+          "bin_low": 0.9,
+          "bin_high": 1.0,
+          "mean_forecast": 0.9806,
+          "observed_rate": 1.0,
+          "n": 105
+        }
+      ]
+    }
+  ],
+  "race_polling_gate": {
+    "status": "production",
+    "comparison": "v2",
+    "matched_n": 275,
+    "v3_brier": 0.05842,
+    "baseline_brier": 0.09101,
+    "v3_log_loss": 0.19092,
+    "baseline_log_loss": 0.29331,
+    "brier_delta": -0.03259,
+    "log_loss_delta": -0.10239,
+    "rule": "Neither score may worsen by >0.005 and at least one must improve."
+  },
+  "provenance": {
+    "scope": "Senate candidate-race polling layer",
+    "evaluated_years": [
+      2018,
+      2020,
+      2022,
+      2024
+    ],
+    "horizons": [
+      120,
+      90,
+      60,
+      30,
+      14,
+      7
+    ],
+    "poll_source": "https://raw.githubusercontent.com/Jack-Whitcomb/All-US-Senate-polls-2006-2024/5aea8c5c4572ddc71f4491fa84478e70d88a5898/2006_to_2024_senate_polls_with_actuals.csv",
+    "poll_source_commit": "5aea8c5c4572ddc71f4491fa84478e70d88a5898",
+    "poll_source_sha256": "7ac8f38437fd1b499bb7dbf362bb2b2927c6f83f54c73f2765d857d216388240",
+    "poll_source_license": "No repository license declared; raw archive is not redistributed",
+    "state_lean_source": "Decision Labs presidential election API (CC BY 4.0)",
+    "state_lean_sha256": {
+      "2004": "676ebd8d85d2b25df2105083abbb1e6cc21f5a3c7a1c77456aef5381229b3ade",
+      "2008": "91514a3133caa1762da785925e361925d04734618c9b911bf67a09df626e9141",
+      "2012": "20a630297d03c8047398160115bdf89a40fc008669eff488f82f7d22b454090d",
+      "2016": "bfd60521183c6aa3187db703d474bf45692142c3cc17f2411103b75539438101",
+      "2020": "dc8731ba673eb4309549da47c06fec3189fe4044013c3dab460c15daf0d4d5ab"
+    },
+    "incumbency_source": "FEC candidate master bulk archives (U.S. government data)",
+    "incumbency_sha256": {
+      "2006": "85d9dcb04b0fd1fec3de88c2216a9c40b5b6aeed00eeed910354845a7e4d9db5",
+      "2008": "ae93d4f986b28ca3fad420f0cd302d959c1f6dbed47b7db7bf5c0445a93fc63b",
+      "2010": "01b05f26fc40b4564e1a9c083a144a5bc1a8fe67489ee93d78e8ee00b691cbd0",
+      "2012": "53a07683cbc0bf9c47c825502ed8212626313c54c63a27bc40048dc3e38ddf21",
+      "2014": "a4f3e83e77035557e705e3e8cfe40d10f16655d38bc73c227fe02c328bcbe3cc",
+      "2016": "7dd5b2df23b83ca408d9abd11f02486209c3bf638b3cf601ac13b0e5d19f51da",
+      "2018": "fba6302a5c6649b8f3297a6aa8691cebf124a8788bdb12697107bc5ba55a0cd6",
+      "2020": "f0229bb4e6b8030b074972ffb27fa163b195729b31f1276005ecca31a0728a39",
+      "2022": "39c71be9621ce6758d6efaec828831adb11ac4831dc59884189d0e1bcab072b4",
+      "2024": "90fdcd7208844148a7e2da4acd4e3d625825cc2f22820d5c251a765d6cf936dd"
+    },
+    "method": "rolling-origin; fundamentals fit only on cycles earlier than holdout",
+    "rows": 1642,
+    "production_correlated_error_floor": 5.913
+  },
+  "scope": "Senate candidate-race polling layer"
+}

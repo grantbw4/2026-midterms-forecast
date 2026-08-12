@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""
+"""LEGACY v2 Senate simulator retained for baseline/sign tests only.
+
+Production v3 uses vectorized shared posterior draws in ``forecast_v3.py``.
+
 Senate Forecast Model for 2026 Elections.
 
 2026 Senate races: 35 seats (Class 2 + special elections)
@@ -689,10 +692,12 @@ class SenateForecastModel:
         Returns:
             Array of seat simulations
         """
-        if use_pymc and PYMC_AVAILABLE:
-            return self.fit_with_pymc()
-        else:
-            return self.simulate_elections()
+        if use_pymc:
+            logger.warning(
+                "Forecast-year PyMC sampling is deprecated: there is no observed "
+                "forecast-year likelihood. Using direct posterior-predictive draws."
+            )
+        return self.simulate_elections()
 
     def _categorize_prob(self, prob: float) -> str:
         """Categorize probability into rating."""

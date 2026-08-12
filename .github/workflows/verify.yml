@@ -1,0 +1,26 @@
+name: Verify Forecast
+
+on:
+  pull_request:
+  push:
+    branches: [master, main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q
+        env:
+          MPLCONFIGDIR: /tmp/matplotlib
+          XDG_CACHE_HOME: /tmp/cache
+      - name: Deterministic cached forecast smoke test
+        run: python scripts/generate_forecast.py --skip-fetch --skip-race-fetch --skip-timeline --simulations 2000 --allow-stale
