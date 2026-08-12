@@ -21,7 +21,7 @@ from models.backtesting import evaluate_predictions  # noqa: E402
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Evaluate v3 rolling-origin predictions")
+    parser = argparse.ArgumentParser(description="Evaluate rolling-origin forecast predictions")
     parser.add_argument(
         "--input", type=Path,
         default=PROJECT_ROOT / "data" / "backtests" / "predictions.csv",

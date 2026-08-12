@@ -1,6 +1,6 @@
-"""Synthetic recovery and behavioral verification for forecast v4."""
+"""Synthetic recovery and behavioral verification for the production forecast."""
 
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 import json
 from pathlib import Path
 import sys
@@ -12,6 +12,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from models.backtesting import evaluate_predictions
+from models.chamber_forecast import _house_parameters, _senate_parameters
 from models.dynamic_polling import DynamicNationalModel, build_fundamentals_prior
 from models.house_model import fit_house_calibration
 from models.race_polling import (
@@ -21,10 +22,13 @@ from models.race_polling import (
     update_race_draws,
 )
 from models.silver_bulletin import (
+    SilverBulletinClient,
     calibrate_generic_average_uncertainty,
     prepare_generic_poll_likelihood,
     prepare_silver_averages,
 )
+from scripts.fetch_inputs import _freshness, _validate_generic_poll_feed
+from scripts.generate_forecast import _publish_staged_bundle
 
 
 def test_snapshot_store_deduplicates_identical_payloads(tmp_path):
@@ -132,6 +136,81 @@ def test_house_cluster_level_posterior_uncertainty_has_floor():
     calibration = fit_house_calibration([pd.DataFrame(rows)])
     national_index = calibration.coefficient_names.index("national")
     assert calibration.posterior_covariance[national_index, national_index] >= 0.25**2
+
+
+def test_production_parameter_sign_conventions():
+    house = _house_parameters(PROJECT_ROOT / "data")
+    senate = _senate_parameters(PROJECT_ROOT / "data")
+    assert house.posterior_mean[house.coefficient_names.index("lean")] > 0
+    assert house.posterior_mean[house.coefficient_names.index("incumbency")] > 0
+    assert house.posterior_mean[house.coefficient_names.index("national")] > 0
+    assert senate.beta_lean_mean > 0
+    assert senate.beta_inc_mean > 0
+    assert senate.beta_national_mean > 0
+
+
+def test_freshness_thresholds_fail_closed():
+    today = datetime.now(timezone.utc).date()
+    assert _freshness(today - timedelta(days=2), 2, 7)["state"] == "healthy"
+    assert _freshness(today - timedelta(days=3), 2, 7)["state"] == "degraded"
+    assert _freshness(today - timedelta(days=8), 2, 7)["state"] == "blocked"
+
+
+def test_silver_generic_feed_rejects_changed_columns_and_malformed_dates():
+    base = pd.DataFrame([{
+        "subgroup": "All polls", "enddate": "2026-08-10", "modeldate": "2026-08-12",
+        "influence": 1.0, "adjusted_net": 7.0, "poll_id": 1, "question_id": 2,
+    }])
+    model_date, latest_poll = _validate_generic_poll_feed(base)
+    assert model_date.isoformat() == "2026-08-12"
+    assert latest_poll.isoformat() == "2026-08-10"
+    try:
+        _validate_generic_poll_feed(base.drop(columns="influence"))
+    except ValueError as error:
+        assert "missing columns" in str(error)
+    else:
+        raise AssertionError("changed Silver columns must fail validation")
+    try:
+        _validate_generic_poll_feed(base.assign(modeldate="not-a-date"))
+    except ValueError as error:
+        assert "malformed dates" in str(error)
+    else:
+        raise AssertionError("malformed Silver model dates must fail validation")
+
+
+def test_silver_client_schema_fixture_rejects_missing_modeldate():
+    class Response:
+        text = "subgroup,pollster,enddate,samplesize,population,influence,adjusted_net,partisan,poll_id,question_id\nAll polls,A,2026-08-10,1000,lv,1,5,,1,1\n"
+
+        @staticmethod
+        def raise_for_status():
+            return None
+
+    class Session:
+        @staticmethod
+        def get(*_args, **_kwargs):
+            return Response()
+
+    try:
+        SilverBulletinClient(Session()).fetch_generic_polls()
+    except ValueError as error:
+        assert "modeldate" in str(error)
+    else:
+        raise AssertionError("missing modeldate must fail schema validation")
+
+
+def test_silver_average_rejects_malformed_dates():
+    raw = pd.DataFrame([{
+        "id": "2026_US-GB", "group": "Generic ballot", "place": "National",
+        "date": "not-a-date", "cand_D": "Democrats", "party_D": "D", "avg_D": 50,
+        "cand_R": "Republicans", "party_R": "R", "avg_R": 43,
+    }])
+    try:
+        prepare_silver_averages(raw)
+    except ValueError as error:
+        assert "malformed dates" in str(error)
+    else:
+        raise AssertionError("malformed maintained-average dates must fail")
 
 
 def test_silver_uses_only_latest_d_vs_r_average_per_race():
@@ -254,7 +333,7 @@ def test_shared_national_shock_increases_seat_tail_variance():
     assert np.var(correlated_seats) > np.var(independent_seats) * 3
 
 
-def test_public_v3_schema_and_website_artifacts_match():
+def test_public_schema_and_website_artifacts_match():
     required = {
         "prior_margin", "posterior_margin", "credible_interval_90", "prob_dem",
         "polling_adjustment", "polls_used", "latest_poll_date", "data_quality",
@@ -267,10 +346,91 @@ def test_public_v3_schema_and_website_artifacts_match():
         website = json.loads((PROJECT_ROOT / "website" / filename).read_text())
         assert output == website
         assert output["metadata"]["model_version"] == "4.0.0"
+        assert output["metadata"]["schema_version"] == "4.0.0"
+        assert output["metadata"]["forecast_epoch"] == "2026-08-12"
         assert output["metadata"]["run_id"].startswith("v4-")
+        assert output["change_decomposition"] is None
         assert output["backtest"]["race_polling_gate"]["status"] == "production"
         assert len(output[race_key]) == expected
         assert all(required <= set(race) for race in output[race_key])
+        assert "generic_ballot_margin" not in output["summary"]
+        assert "published_generic_ballot_margin" in output["summary"]
+        assert "national_likelihood_margin" in output["summary"]
+        assert "national_likelihood_date" in output["summary"]
+        assert "poll_updated_current_margin" in output["summary"]
+
+    senate = json.loads((PROJECT_ROOT / "outputs" / "senate_forecast.json").read_text())
+    assert senate["metadata"]["model_type"] == "senate_bayesian_external_average"
+    assert senate["metadata"]["races_total"] == 35
+    assert senate["summary"]["dem_not_up"] == 34
+    assert senate["summary"]["rep_not_up"] == 31
+    assert senate["summary"]["national_likelihood_margin"] == senate["summary"]["published_generic_ballot_margin"]
+
+
+def test_public_methodology_explains_model_and_probability():
+    page = (PROJECT_ROOT / "website" / "index.html").read_text()
+    methodology = (PROJECT_ROOT / "METHODOLOGY.md").read_text()
+    for phrase in (
+        "One forecast, six auditable steps",
+        "Three national margins, three different jobs",
+        "How to read the probability",
+        "34 Democratic and 31 Republican not-up seats",
+    ):
+        assert phrase in page
+    for phrase in (
+        "The short version",
+        "Three national numbers that must not be confused",
+        "House national polling update",
+        "Senate national polling update",
+        "From race margins to chamber probabilities",
+        "Glossary",
+    ):
+        assert phrase in methodology
+
+
+def test_rebaselined_timelines_match_public_summaries():
+    for filename, output_name, probability in (
+        ("timeline.csv", "forecast.json", "prob_dem_majority"),
+        ("senate_timeline.csv", "senate_forecast.json", "prob_dem_control"),
+    ):
+        timeline = pd.read_csv(
+            PROJECT_ROOT / "outputs" / filename,
+            dtype={"forecast_epoch": str, "schema_version": str, "model_version": str},
+        )
+        output = json.loads((PROJECT_ROOT / "outputs" / output_name).read_text())
+        assert len(timeline) == 1
+        assert timeline.iloc[0]["date"] == "2026-08-12"
+        assert timeline.iloc[0]["forecast_epoch"] == "2026-08-12"
+        assert timeline.iloc[0]["schema_version"] == "4.0.0"
+        assert np.isclose(timeline.iloc[0][probability], output["summary"][probability])
+        assert timeline.iloc[0]["median_dem_seats"] == output["summary"]["median_dem_seats"]
+        assert np.isclose(
+            timeline.iloc[0]["published_generic_ballot"],
+            output["summary"]["published_generic_ballot_margin"],
+        )
+
+
+def test_invalid_staged_chamber_leaves_public_bundle_untouched(tmp_path):
+    stage = tmp_path / "stage"
+    public = tmp_path / "public"
+    stage.mkdir()
+    public.mkdir()
+    filenames = ["forecast.json", "senate_forecast.json", "timeline.csv"]
+    (public / "forecast.json").write_text('{"old":"house"}')
+    (public / "senate_forecast.json").write_text('{"old":"senate"}')
+    (public / "timeline.csv").write_text("date,value\n2026-08-12,1\n")
+    (stage / "forecast.json").write_text('{"new":"house"}')
+    (stage / "senate_forecast.json").write_text("not valid json")
+    (stage / "timeline.csv").write_text("date,value\n2026-08-12,2\n")
+    try:
+        _publish_staged_bundle(stage, public, filenames)
+    except json.JSONDecodeError:
+        pass
+    else:
+        raise AssertionError("invalid staged JSON must block the whole publication")
+    assert json.loads((public / "forecast.json").read_text()) == {"old": "house"}
+    assert json.loads((public / "senate_forecast.json").read_text()) == {"old": "senate"}
+    assert "2026-08-12,1" in (public / "timeline.csv").read_text()
 
 
 if __name__ == "__main__":

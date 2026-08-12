@@ -1,64 +1,206 @@
 # Forecast v4 methodology
 
-All margins use a single sign convention: positive values favor Democrats and negative values favor Republicans.
+This forecast answers one question: **if the election were run many times under the uncertainty we can measure today, how often would each party control the chamber?** It does not simply project the latest poll margin onto every race. It builds a broad starting expectation, updates it with polling, translates the national environment into race-level margins, and simulates correlated election outcomes 10,000 times.
 
-## 1. Election-day fundamentals prior
+All margins use Democratic two-party margin points throughout: `D+5` is `+5`, `R+5` is `-5`, and an even race is `0`.
 
-Approval and economic data inform a broad national prior:
+## The short version
+
+1. **Refresh and validate the inputs.** Silver Bulletin polling, VoteHub approval, FRED economics, FEC candidates, and the House Clerk roster are fetched separately from forecast generation. Stale or malformed required data cannot replace the public forecast.
+2. **Build a national fundamentals prior.** Presidential approval and the economy create a deliberately uncertain pre-poll expectation for the national Democratic margin.
+3. **Update that prior with national polling.** The House uses one weighted observation reconstructed from Silver's adjusted generic-ballot poll file. The Senate retains its existing method and uses Silver's latest published likely-voter maintained average once.
+4. **Build a prior for every race.** Partisan lean, incumbency, the simulated national environment, regional movement, and local error create a distribution of possible margins for all 435 House districts and 35 Senate races.
+5. **Use a race average when it is valid.** The latest Silver maintained average updates a race only when it is a verified Democratic-versus-Republican matchup. Otherwise the race remains fundamentals-only.
+6. **Count seats in 10,000 correlated simulations.** The probability of control is the share of simulations in which Democrats reach 218 House seats or 51 Senate seats.
+
+## Three national numbers that must not be confused
+
+The dashboard deliberately shows three related but different quantities:
+
+| Quantity | Meaning | Role in the House forecast |
+|---|---|---|
+| Silver published likely-voter average | Silver's displayed maintained average of current voter sentiment | Context only; it is not stacked on top of the House polling likelihood |
+| House national polling likelihood | One influence-weighted average of Silver's adjusted underlying poll universe | The single polling observation used to update the House fundamentals prior |
+| Election-day national environment | The poll-updated posterior after adding uncertainty for movement and election-day error | The national draw passed into every House district simulation |
+
+For the Senate, the latest published likely-voter average is the single national polling observation. The resulting poll-updated posterior is reported separately. This preserves the existing Senate method rather than silently applying the House redesign to it.
+
+## 1. Data acquisition and freshness
+
+The daily acquisition job runs before the forecast model. It validates schemas and dates, writes normalized caches, records checksums and row counts, and stores immutable compressed source snapshots. Forecast generation then runs without network access.
+
+The required inputs are:
+
+- **Silver Bulletin maintained averages:** the published generic-ballot history and candidate-race averages.
+- **Silver Bulletin adjusted generic polls:** adjusted margins and Silver's current `influence` weights, used only for the House national likelihood.
+- **VoteHub presidential approval polls:** used to estimate current net approval.
+- **FRED economics:** consumer sentiment, unemployment, real disposable income, GDP, and CPI.
+- **FEC and House Clerk records:** used to verify candidate identity and incumbency.
+- **Current House district fundamentals:** 435 current-map partisan-lean records with source and effective-date provenance.
+
+Each source is classified as `healthy`, `degraded`, or `blocked`. A degraded source may publish with a visible warning. A source beyond its blocking threshold prevents a new bundle from replacing the last valid forecast. The website recomputes ages from the source dates in the browser, so a retained forecast becomes visibly stale even if a failed update cannot publish new metadata.
+
+## 2. National fundamentals prior
+
+Before national polling is used, the model creates a broad election-day prior:
 
 ```text
-theta_election ~ Normal(beta_approval * approval + beta_economy * economy, sigma_structural)
+national_margin ~ Normal(
+    approval_coefficient × net_approval
+  + economy_coefficient × economic_index,
+    prior_uncertainty
+)
 ```
 
-Coefficient uncertainty and input uncertainty are propagated into the prior variance. The structural standard deviation is deliberately broad because the number of modern midterm cycles is small. These variables are not added to the posterior after polling; doing so would double-count the national environment.
+Because the incumbent president is Republican, the Democratic-margin coefficients are negative: `-0.08` for net approval and `-0.34` for the economic index. A negative Trump net approval therefore increases the expected Democratic margin; an economy favorable to the incumbent party decreases it.
 
-## 2. National polling likelihood
+Approval is the median net-approval value in the latest 90-day window available in the validated VoteHub cache. Its uncertainty uses a robust median-absolute-deviation estimate. The economic index combines year-over-year changes in three-month averages using these weights:
 
-The national likelihood is constructed only from Silver Bulletin's public generic-ballot poll universe. Bulletin's adjusted margins and current influence weights are collapsed into one observation:
+| Economic series | Weight | Direction before weighting |
+|---|---:|---|
+| Consumer sentiment | 35% | Higher is better for the incumbent party |
+| Unemployment | 25% | Lower is better |
+| Real disposable income | 20% | Higher growth is better |
+| GDP | 15% | Higher growth is better |
+| CPI | 5% | Lower inflation is better |
+
+The composite is standardized against the 2006, 2010, 2014, 2018, and 2022 midterm environments. This is a weak prior, not a claim that five cycles precisely identify economic effects. The prior includes a 3.5-point structural standard deviation plus uncertainty in the approval and economic coefficients and inputs. Fundamentals are used once here; they are not added again after polling.
+
+## 3. House national polling update
+
+The House national likelihood starts with Silver's adjusted generic-ballot poll file. Only the `All polls` subgroup is used. Duplicate poll-question rows are removed, zero-influence rows are excluded, and the remaining adjusted Democratic margins are averaged using Silver's published influence weights:
 
 ```text
-bulletin_adjusted_aggregate ~ Student-t(theta_current, sigma_aggregate, nu)
-theta_election ~ Normal(theta_current, days_to_election * sigma_process^2 + sigma_election^2)
+house_polling_input = sum(adjusted_margin[i] × influence[i]) / sum(influence[i])
 ```
 
-Silver already adjusts pollster house effects and supplies influence weights. The model neither re-estimates those effects nor updates once per poll. Aggregate observation variance combines Bulletin poll dispersion/effective sample size with a correlated design-error floor. A Student-t robustification inflates variance when polling sharply conflicts with fundamentals. The daily movement prior cannot be reduced by the first differences of a smoothed published average.
+Silver has already applied its pollster adjustments and weighting system. This model does not estimate another set of house effects and does not treat the rows as independent posterior updates. The weighted universe is collapsed into **one** observation.
 
-The production update is conjugate/analytic, not MCMC. It therefore reports schema checks, the one-likelihood invariant, finite posterior checks, and posterior draw count, while `r_hat` is explicitly null. It would be statistically misleading to invent an R-hat for an analytic update.
+The observation standard deviation combines:
 
-## 3. House fundamentals
+- the weighted dispersion of the adjusted poll rows;
+- their effective number of independent weighted observations; and
+- a 1.25-point correlated design-error floor that cannot average away.
 
-The race prior is:
+The one observation updates the Normal fundamentals prior analytically. A Student-t-style conflict adjustment increases the observation variance when polling and fundamentals disagree sharply. In simplified form:
 
 ```text
-race_margin[r] = intercept + beta_lean * partisan_lean[r]
-               + beta_inc * incumbency[r]
-               + beta_nat * theta_election
-               + region_effect[region[r]]
-               + cycle/race_error[r]
+gain = prior_variance / (prior_variance + adjusted_poll_variance)
+current_mean = prior_mean + gain × (polling_input - prior_mean)
 ```
 
-Every term is measured in Democratic two-party margin points. House coefficients use robust regularized Bayesian regression over 2018, 2022, and map-comparable 2024 districts. National-coefficient, intercept, and regional posterior floors prevent district rows from masquerading as independent election cycles. Cycle, region, and local Student-t errors are propagated separately.
+The model then adds daily process variance through Election Day and a 1.5-point election-error floor. The daily process standard deviation cannot fall below 0.09 points merely because a maintained average is smooth.
 
-Current House lean comes from the Cook Political Report's 435-row current-map PVI table, which incorporates mid-cycle redistricting. Cook race ratings are not converted into PVI. The model fails closed for missing provenance, missing districts, implausible values, or invalid source URLs. A sourced open-seat flag cannot be overwritten merely because a retiring member remains in the Clerk roster.
+This calculation is analytic rather than MCMC. `r_hat` is therefore not applicable, and the output reports it as null instead of inventing a convergence statistic.
 
-## 4. Candidate-race polling averages
+## 4. Senate national polling update
 
-For every House or Senate race covered by Silver Bulletin, exactly the latest maintained average is mapped to the forecast race and checked against FEC candidate identities. Missing D-vs-R pairs, third-party matchups, ambiguous surnames, and unmapped candidates are excluded. A race absent from the feed or failing validation remains at its fundamentals posterior with `unresolved_matchup` or `fundamentals_only` status.
+The Senate intentionally preserves its existing national method. Silver's latest published likely-voter maintained average is used once as the external observation. Older days are displayed as history but are not sequentially multiplied into the posterior because adjacent maintained averages reuse most of the same polls.
 
-The aggregate receives a regularized current-sentiment measurement error plus an irreducible election-day polling-error component estimated from prior Senate cycles. Only one average enters per race, so neither the daily history nor the underlying polls can create false precision. Robust updates preserve the rank order of existing race draws so national and regional correlation is not destroyed.
+The same broad fundamentals prior and robust analytic update are used. The Senate output distinguishes:
 
-## 5. Posterior-predictive chamber simulation
+- `national_likelihood_margin`: the latest published average that enters the update;
+- `poll_updated_current_margin`: the posterior current sentiment after combining the average with fundamentals; and
+- `national_environment`: the Election Day mean after future uncertainty is added.
 
-Each simulation shares the same national draw across every race and the same regional draw within a region. Race shocks remain local. This creates the correlated tails expected in wave elections; summing independent win probabilities would be too narrow. House control requires 218 seats. Senate control requires 51 Democratic seats in the current tie-breaking configuration.
+## 5. House race priors
 
-## 6. Publication contract
+The House model is calibrated on Democratic two-party district margins from 2018, 2022, and comparable 2024 districts:
 
-Output is schema version `3.0.0`. Public files are written atomically only after both chambers succeed. Network failure may use the latest valid cache and sets `fallback_used`; stale feeds set `degraded`. A catastrophically stale national feed prevents publication unless explicitly overridden for development. Raw provider snapshots are content-addressed and retain fetch time, URL, license, and SHA-256 checksum.
+```text
+district_margin[r] = intercept
+                   + lean_coefficient × district_lean[r]
+                   + incumbency_coefficient × incumbency[r]
+                   + national_coefficient × national_margin
+                   + region_effect[region[r]]
+                   + national_cycle_error
+                   + regional_cycle_error[region[r]]
+                   + local_race_error[r]
+```
 
-Every race reports its prior and posterior margins, 90% credible interval, probability, polling adjustment, polls used, latest poll date, source URLs, and data quality. The dashboard distinguishes current voter sentiment from the election-day forecast.
+`incumbency` is `+1` for a Democratic incumbent, `-1` for a Republican incumbent, and `0` for an open seat. Current district lean uses the stored current-map Cook PVI table. Positive lean favors Democrats.
 
-## 7. Validation
+The coefficients are fit with regularized Bayesian linear regression and Student-t reweighting, which reduces the influence of extreme residuals. Production draws retain the full coefficient covariance matrix. Explicit uncertainty floors prevent hundreds of districts from pretending to be hundreds of independent national elections: only three recent cycles inform national-cycle behavior.
 
-Behavioral tests verify the one-average likelihood invariant, no-poll identity, candidate matching, third-party rejection, outlier robustness, sign conventions, deterministic seeds, and wider tails under correlated shocks. The lower-level poll updater retains synthetic tests for posterior contraction and correlated error because it supplies the historical calibration evidence.
+Within each simulation, all districts share one national draw, districts in the same region share a regional shock, and each district receives a local Student-t shock. This dependence is essential: a wave election should move many seats together.
 
-House whole-cycle holdouts train on earlier cycles and score 2022 and 2024 district margins, probabilities, intervals, seat totals, and control. The gate requires competitive Brier/log loss, absolute signed error no greater than 1.5 points, and 90% seat-interval coverage. The candidate passes, improving Brier from 0.0335 to 0.0290 and signed error from −2.51 to −0.73 points versus legacy v3. Because a comparable historical Bulletin maintained-average archive is unavailable, polling-layer validation remains explicitly separate.
+## 6. Senate race priors
+
+The Senate simulates the 35 seats scheduled for election. Each race starts from state partisan lean, incumbency, the Senate national draw, a shared regional shock, and a local Student-t race shock.
+
+Unlike the House, the Senate structural coefficients are currently a deliberately wide regularized prior rather than a newly refit chamber model:
+
+- state-lean coefficient: `0.50 ± 0.08`;
+- incumbency effect: `2.5 ± 0.8` points;
+- national coefficient: `0.50 ± 0.10`;
+- regional standard deviation: `1.2` points; and
+- local race standard deviation: `5.5` points.
+
+This is a major limitation and is stated explicitly in the model card. The current Senate backtest supports the robust race-poll update and error floor; it does not validate every Senate structural coefficient.
+
+The chamber total begins with the 65 seats not up in 2026: 34 Democratic and 31 Republican. Each simulation adds the winners of the 35 races. Democratic control requires at least 51 seats under the model's current tie-breaking assumption.
+
+## 7. Candidate-race polling update
+
+Silver's feed may contain repeated dates, incomplete matchups, or third-party candidates. The scraper keeps only the latest maintained row for each race and accepts it only when:
+
+- both a Democratic and Republican candidate and average are present;
+- no third-party candidate makes it a multi-candidate average;
+- the race ID maps to a forecast race; and
+- the candidate identities can be resolved against the FEC/Clerk registry.
+
+Rejected matchups are counted and recorded. An uncovered or rejected race remains `fundamentals_only` or `unresolved_matchup`; the model does not invent a poll estimate.
+
+For an accepted race, the maintained average updates the entire vector of simulated prior margins. The update has a historically calibrated correlated polling-error floor—currently about 5.9 points—that cannot average away. Student-t weights limit the effect of outliers or sharp prior conflict. The transformation preserves the rank order of the existing draws, so simulations that are nationally or regionally favorable remain favorable after the race update.
+
+## 8. From race margins to chamber probabilities
+
+The model runs 10,000 posterior-predictive simulations. In each simulation:
+
+1. draw national conditions and model coefficients;
+2. draw shared regional and local race errors;
+3. apply any valid race-average update;
+4. mark a race Democratic when its simulated Democratic two-party share exceeds 50%; and
+5. count chamber seats.
+
+The displayed control probability is a frequency, not a vote-share forecast or a confidence level. For example, an 87% House probability means Democrats reached 218 seats in about 8,700 of 10,000 model simulations. It does **not** mean Democrats are expected to win 87% of seats, and it does not guarantee the result.
+
+The median seat count is the middle simulated outcome. A 90% credible interval contains the middle 90% of simulated seat totals conditional on the model and its inputs; it is not a claim that every possible source of uncertainty has been captured.
+
+Race ratings are probability bins:
+
+| Rating | Democratic win probability |
+|---|---:|
+| Safe D | 85% or higher |
+| Likely D | 70% to below 85% |
+| Lean D | 55% to below 70% |
+| Toss-up | 45% to below 55% |
+| Lean R | 30% to below 45% |
+| Likely R | 15% to below 30% |
+| Safe R | Below 15% |
+
+## 9. Validation and what it does not prove
+
+Tests enforce the sign convention, input schemas, latest-average-only rule, candidate matching, rejection of third-party matchups, no-poll identity, outlier robustness, deterministic seeds, correlated chamber tails, output contract, baseline history, and fail-closed publication.
+
+The House structural layer is evaluated with whole-cycle holdouts for 2022 and 2024, conditional on each election's realized national House margin. It records a 0.0290 Brier score, 0.1002 log loss, -0.73-point signed error, and 95.4% coverage for nominal 90% district intervals. Both official seat totals fall inside their 90% simulated intervals.
+
+Those results validate the House margin-to-seat structure, not Silver's proprietary 2026 weighting model. A comparable public historical archive of Silver candidate-race maintained averages does not exist, so provider-specific polling calibration remains externally unvalidated. The Senate evidence validates the robust update layer, not the full Senate structure.
+
+## 10. Publication and comparison rules
+
+Schema `4.0.0` begins a new comparable forecast epoch on August 12, 2026. Rows from earlier methods are excluded from public timelines and change calculations. Same-day runs replace that day's row instead of adding duplicates. Later forecasts compare only with the preceding forecast from the same epoch, schema, and model version.
+
+House JSON, Senate JSON, and both timelines are staged and validated as one bundle. Invalid JSON, a chamber failure, or a catastrophically stale required source leaves the prior public bundle untouched.
+
+## Glossary
+
+- **Prior:** the distribution before the current polling observation is applied.
+- **Likelihood:** the polling evidence used to update the prior.
+- **Posterior:** the updated distribution after combining prior and likelihood.
+- **Margin:** Democratic percentage minus Republican percentage among the two parties.
+- **PVI / partisan lean:** a race's underlying partisan tendency; positive is Democratic here.
+- **Posterior-predictive simulation:** one plausible election generated from all modeled uncertainties.
+- **Credible interval:** an interval containing a stated share of posterior simulations, conditional on the model.
+- **Correlated error:** uncertainty shared across polls or races that does not disappear by averaging more observations.
+- **Fundamentals-only:** no valid candidate-race polling average was used for that race.

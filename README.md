@@ -4,6 +4,8 @@ A dynamic Bayesian forecast for the 2026 U.S. House and Senate elections. House 
 
 **Live dashboard:** [grantbw4.github.io/2026-midterms-forecast](https://grantbw4.github.io/2026-midterms-forecast/)
 
+**Start with the methodology:** [METHODOLOGY.md](METHODOLOGY.md) explains the complete forecast in plain English and technical detail, including the three different national margins, House/Senate differences, formulas, simulation logic, probability interpretation, validation, and limitations.
+
 ## What v4 demonstrates
 
 - A single national Bayesian likelihood built from Silver Bulletin's adjusted generic-ballot poll universe and its published influence weights; Bulletin's pollster house effects are not estimated twice.
@@ -31,10 +33,10 @@ The live run uses only free public sources. `FEC_API_KEY` is optional because ca
 For an offline deterministic run using the latest valid cache:
 
 ```bash
-python scripts/generate_forecast.py --skip-fetch --skip-race-fetch --skip-timeline
+python scripts/generate_forecast.py --skip-timeline
 ```
 
-If inputs are invalid, catastrophically stale, or diagnostics fail, public JSON is not replaced. A valid cache may be used, but that fact is exposed in `metadata.fallbacks` and `metadata.model_status`.
+Daily acquisition runs separately with `python scripts/fetch_inputs.py`, requires `FRED_API_KEY`, and writes a validated input manifest. Forecast generation is network-free. If inputs are invalid, catastrophically stale, or diagnostics fail, the public bundle is not replaced. A valid cache may be used, but that fact is exposed in `metadata.fallbacks` and `metadata.model_status`.
 
 ## Model sketch
 
@@ -46,6 +48,8 @@ race likelihood:      silver_average_latest[r] ~ Student-t(margin[r], sigma_aggr
 ```
 
 The national update is analytic, so MCMC convergence statistics do not apply. Bulletin-adjusted polls are collapsed to one influence-weighted likelihood rather than treated as independent posterior updates. House parameter covariance and national-cycle variance retain explicit floors because hundreds of district rows represent only three election cycles.
+
+In practical terms, the forecast follows six steps: validate inputs, build a fundamentals prior, update national conditions once with polling, create a prior for every race, apply only valid latest candidate-race averages, and count seats across 10,000 correlated simulations. The displayed control probability is the share of those simulations in which a party reaches the chamber threshold—not a predicted vote share or a guarantee.
 
 ## Outputs
 
@@ -70,7 +74,7 @@ See [METHODOLOGY.md](METHODOLOGY.md) for assumptions and [MODEL_CARD.md](MODEL_C
 Run behavioral tests with `python -m pytest -q`. Rolling-origin evaluation expects frozen historical prediction snapshots:
 
 ```bash
-python scripts/backtest_v3.py --input data/backtests/predictions.csv
+python scripts/backtest_forecast.py --input data/backtests/predictions.csv
 ```
 
 The House structural layer passes whole-cycle holdouts for 2022 and 2024 conditional on the realized national House margin. Across 740 contested, map-comparable districts, v4 records a 0.0290 Brier score, 0.1002 log loss, −0.73-point signed error, and 95.4% coverage for nominal 90% intervals, improving on legacy v3. Both official seat outcomes fall inside the 90% posterior interval. This validates the House margin-to-seat layer, not Bulletin's 2026 polling calibration.

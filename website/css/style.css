@@ -93,11 +93,44 @@ a:hover {
 .status-banner { max-width: 900px; margin: -28px auto 28px; padding: 12px 16px; border: 1px solid var(--color-border); border-radius: var(--radius); color: var(--color-text-muted); font: .76rem var(--font-mono); }
 .status-banner strong { color: #34d399; }
 .status-banner.degraded strong { color: #fbbf24; }
-.status-banner span { display: block; margin-top: 4px; color: #fbbf24; }
+.status-banner.blocked strong { color: #f87171; }
+.status-summary { margin-bottom: 10px; }
+.freshness-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.freshness-item { padding: 8px 10px; border: 1px solid var(--color-border); border-radius: 6px; background: rgba(255,255,255,.02); }
+.freshness-item b, .freshness-item span, .freshness-item em { display: block; }
+.freshness-item b { color: var(--color-text); font-family: var(--font-sans); }
+.freshness-item span { margin: 3px 0; color: var(--color-text-muted); line-height: 1.35; }
+.freshness-item em { color: #34d399; font-style: normal; text-transform: uppercase; }
+.freshness-item.degraded em { color: #fbbf24; }
+.freshness-item.blocked em { color: #f87171; }
+
+.likelihood-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.likelihood-summary > div {
+    display: grid;
+    gap: 4px;
+    padding: 18px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+}
+
+.likelihood-summary span,
+.likelihood-summary small { color: var(--color-text-muted); }
+.likelihood-summary strong { font: 600 1.5rem var(--font-mono); }
+
+@media (max-width: 640px) {
+    .likelihood-summary { grid-template-columns: 1fr; }
+}
 
 .nav {
     display: flex;
-    gap: 32px;
+    gap: 24px;
 }
 
 .nav a {
@@ -340,6 +373,26 @@ a:hover {
 .bayes-flow b { color: var(--color-text-muted); }
 .trend-chart-container { height: 440px; }
 .chart-note { color: var(--color-text-muted); font-size: .8rem; margin-top: 12px; }
+.methodology-intro { max-width: 820px; line-height: 1.75; }
+.method-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 36px 0 56px; counter-reset: methodology; }
+.method-steps article { display: grid; grid-template-columns: 42px 1fr; gap: 16px; padding: 24px; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); }
+.method-steps article > span { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid rgba(96,165,250,.45); border-radius: 50%; color: #93c5fd; font: 600 .9rem var(--font-mono); background: rgba(59,130,246,.09); }
+.method-steps h3, .margin-explainer h3, .chamber-method-grid h3 { margin: 0 0 8px; font-size: 1.05rem; }
+.method-steps p, .margin-grid p, .chamber-method-grid p, .chamber-method-grid li { color: var(--color-text-muted); font-size: .9rem; line-height: 1.65; }
+.margin-explainer { padding: 32px; border: 1px solid rgba(96,165,250,.3); border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(59,130,246,.08), rgba(255,255,255,.015)); }
+.explainer-heading { margin-bottom: 24px; }
+.margin-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.margin-grid article { padding: 20px; border: 1px solid var(--color-border); border-radius: var(--radius); background: rgba(8,12,22,.58); }
+.margin-grid span { display: block; color: var(--color-text-muted); font: .72rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+.margin-grid strong { display: block; margin: 10px 0; font: 600 1.75rem var(--font-mono); }
+.chamber-method-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+.chamber-method-grid article { padding: 24px; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); }
+.chamber-method-grid ul { margin: 0; padding-left: 18px; }
+.chamber-method-grid li + li { margin-top: 6px; }
+.chamber-method-grid .probability-card { grid-column: 1 / -1; border-left: 3px solid #60a5fa; }
+.probability-card strong { color: #93c5fd; font-family: var(--font-mono); }
+.methodology-link { margin-top: 24px; text-align: center; }
+.methodology-link a { font-weight: 600; }
 .model-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
 .diagnostic-list > div { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--color-border); font-size: .82rem; }
 .diagnostic-list span { color: var(--color-text-muted); }
@@ -1208,8 +1261,12 @@ a:hover {
 }
 
 @media (max-width: 768px) {
+    .freshness-grid { grid-template-columns: 1fr; }
     .bayes-flow { grid-template-columns: 1fr; }
     .bayes-flow b { transform: rotate(90deg); text-align: center; }
+    .method-steps, .margin-grid, .chamber-method-grid { grid-template-columns: 1fr; }
+    .chamber-method-grid .probability-card { grid-column: auto; }
+    .margin-explainer { padding: 22px; }
     .model-card-grid { grid-template-columns: 1fr; }
     .environment-grid.two-col { grid-template-columns: 1fr 1fr; }
     .trend-chart-container { height: 340px; }

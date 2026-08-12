@@ -73,7 +73,7 @@ class SilverBulletinClient:
         frame = pd.read_csv(StringIO(response.text))
         required = {
             "subgroup", "pollster", "enddate", "samplesize", "population",
-            "influence", "adjusted_net", "partisan", "poll_id", "question_id",
+            "modeldate", "influence", "adjusted_net", "partisan", "poll_id", "question_id",
         }
         missing = required - set(frame.columns)
         if missing:
@@ -201,7 +201,10 @@ def prepare_silver_averages(
     """
 
     work = raw.copy()
-    work["date"] = pd.to_datetime(work["date"], errors="coerce").dt.normalize()
+    parsed_dates = pd.to_datetime(work["date"], errors="coerce").dt.normalize()
+    if parsed_dates.isna().any():
+        raise ValueError("Silver Bulletin averages contain malformed dates")
+    work["date"] = parsed_dates
     work["avg_D"] = pd.to_numeric(work["avg_D"], errors="coerce")
     work["avg_R"] = pd.to_numeric(work["avg_R"], errors="coerce")
     work = work.dropna(subset=["id", "group", "date"])

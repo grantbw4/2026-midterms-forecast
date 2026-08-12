@@ -2,9 +2,7 @@ name: Daily Forecast Update
 
 on:
   schedule:
-    # 9am ET = 14:00 UTC (EST) or 13:00 UTC (EDT)
-    # Using 14:00 for EST; adjust to 13:00 during daylight saving
-    - cron: '0 14 * * *'
+    - cron: '30 1 * * *'
   workflow_dispatch:
     inputs:
       skip_timeline:
@@ -14,6 +12,10 @@ on:
 
 permissions:
   contents: write
+
+concurrency:
+  group: daily-forecast
+  cancel-in-progress: false
 
 jobs:
   update-forecast:
@@ -31,21 +33,20 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Verify schemas and model behavior
+      - name: Refresh and validate inputs
         env:
-          MPLCONFIGDIR: /tmp/matplotlib
-          XDG_CACHE_HOME: /tmp/cache
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          FEC_API_KEY: ${{ secrets.FEC_API_KEY }}
+        run: python scripts/fetch_inputs.py
+
+      - name: Verify schemas and model behavior
         run: python -m pytest -q
 
-      - name: Run forecast
+      - name: Generate and validate forecast bundle
         run: python scripts/generate_forecast.py ${{ inputs.skip_timeline && '--skip-timeline' || '' }}
 
-      - name: Copy outputs to website
-        run: |
-          cp outputs/forecast.json website/
-          cp outputs/senate_forecast.json website/
-          cp outputs/timeline.csv website/
-          if [ -f outputs/senate_timeline.csv ]; then cp outputs/senate_timeline.csv website/; fi
+      - name: Verify published artifact contract
+        run: python -m pytest -q tests/test_forecast.py
 
       - name: Commit and push
         run: |

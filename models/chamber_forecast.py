@@ -1,4 +1,4 @@
-"""Posterior-predictive House and Senate simulation for forecast v3.
+"""Posterior-predictive House and Senate simulation for the production forecast.
 
 This module deliberately contains no PyMC calls.  Historical parameters are
 fit offline; daily production composes their posterior draws with the national
@@ -351,7 +351,7 @@ def _categories(races: list[dict[str, Any]], nested: bool) -> dict[str, Any]:
     }
 
 
-def run_v3_forecast(
+def run_chamber_forecast(
     data_dir: Path,
     national: DynamicPollingResult,
     senate_national: Optional[DynamicPollingResult] = None,
@@ -411,7 +411,7 @@ def run_v3_forecast(
         "ci_50_low": int(np.percentile(house_seats, 25)),
         "ci_50_high": int(np.percentile(house_seats, 75)),
         "national_environment": round(national.election_mean, 2),
-        "generic_ballot_margin": round(float(
+        "national_likelihood_margin": round(float(
             national.diagnostics.get("generic_average_calibration", {}).get(
                 "weighted_average_margin", national.current_mean
             )
@@ -433,10 +433,12 @@ def run_v3_forecast(
         "rep_defending": int((senate["seat_held_by"] == "R").sum()),
         "national_environment": round(senate_environment.election_mean, 2),
         "national_uncertainty": round(senate_environment.election_std, 2),
-        "generic_ballot_margin": round(senate_environment.current_mean, 2),
+        "national_likelihood_margin": round(senate_environment.current_mean, 2),
         "approval_rating": round(senate_environment.prior.approval_mean, 2),
         "net_approval": round(senate_environment.prior.approval_mean, 2),
-        "model_type": "bayesian_external_average_v3",
+        "model_type": "senate_bayesian_external_average",
+        "dem_not_up": 34,
+        "rep_not_up": 31,
     }
     house_output = {
         "summary": house_summary,

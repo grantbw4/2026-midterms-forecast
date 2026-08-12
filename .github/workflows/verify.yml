@@ -20,7 +20,6 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m pytest -q
         env:
-          MPLCONFIGDIR: /tmp/matplotlib
           XDG_CACHE_HOME: /tmp/cache
       - name: Deterministic cached forecast smoke test
-        run: python scripts/generate_forecast.py --skip-fetch --skip-race-fetch --skip-timeline --simulations 2000 --allow-stale
+        run: python scripts/generate_forecast.py --skip-timeline --skip-website-copy --allow-blocked-inputs --simulations 2000 --output-dir /tmp/forecast-smoke

@@ -1,4 +1,4 @@
-"""Leak-resistant rolling-origin evaluation utilities for forecast v3."""
+"""Leak-resistant rolling-origin evaluation utilities for frozen forecast comparisons."""
 
 from __future__ import annotations
 

@@ -171,7 +171,7 @@ async function loadData() {
 // Initialize all page components
 function initializePage() {
     const timelineDescription = document.querySelector('#timeline .section-desc');
-    if (timelineDescription) timelineDescription.textContent = 'Daily probability of Democratic chamber control. Model upgrades create visible discontinuities; v3 begins August 2026.';
+    if (timelineDescription) timelineDescription.textContent = 'Daily probability of Democratic chamber control since the current methodology began on August 12, 2026.';
     updateHouseStats();
     if (senateData) updateSenateStats();
     if (districtGeoJSON) initializeMap();
@@ -200,7 +200,7 @@ function updateHouseStats() {
     // Environment
     const envValue = summary.national_environment;
     document.getElementById('national-env').textContent = envValue >= 0 ? `D+${envValue.toFixed(1)}` : `R+${Math.abs(envValue).toFixed(1)}`;
-    const gbValue = summary.generic_ballot_margin;
+    const gbValue = summary.published_generic_ballot_margin;
     document.getElementById('generic-ballot').textContent = gbValue >= 0 ? `D+${gbValue.toFixed(1)}` : `R+${Math.abs(gbValue).toFixed(1)}`;
     document.getElementById('approval').textContent = `${summary.approval_rating.toFixed(0)}%`;
     document.getElementById('days-until').textContent = metadata.days_until_election;
@@ -223,13 +223,60 @@ function updateModelCard() {
     document.getElementById('election-margin').textContent = formatMargin(model.election_day?.mean);
 
     const status = document.getElementById('model-status');
-    const warnings = metadata.warnings || [];
-    status.className = `status-banner ${metadata.model_status || 'degraded'}`;
-    status.innerHTML = `<strong>${(metadata.model_status || 'unknown').toUpperCase()}</strong> · Data through ${metadata.data_through || 'unknown'} · Run ${metadata.run_id || 'unknown'}${warnings.length ? `<span>${warnings.join(' · ')}</span>` : ''}`;
+    const freshness = metadata.source_freshness || {};
+    const freshnessRows = Object.entries(freshness).map(([key, source]) => {
+        const observed = source.observation_date || source.provider_model_date;
+        const liveAge = observed ? Math.max(0, Math.floor((Date.now() - new Date(`${observed}T00:00:00Z`).getTime()) / 86400000)) : null;
+        const state = liveAge == null ? 'unknown' : (liveAge > Number(source.blocking_days) ? 'blocked' : (liveAge > Number(source.warning_days) ? 'degraded' : 'healthy'));
+        return { key, observed, liveAge, state };
+    });
+    const liveBlocked = freshnessRows.some(row => row.state === 'blocked');
+    const liveDegraded = freshnessRows.some(row => row.state === 'degraded');
+    const liveStatus = liveBlocked ? 'blocked' : (liveDegraded ? 'degraded' : (metadata.model_status || 'degraded'));
+    const rowByKey = Object.fromEntries(freshnessRows.map(row => [row.key, row]));
+    const groupState = rows => rows.some(row => row?.state === 'blocked') ? 'blocked'
+        : (rows.some(row => row?.state === 'degraded') ? 'degraded' : 'healthy');
+    const freshnessGroups = [
+        {
+            label: 'Silver',
+            rows: [rowByKey.silver_averages, rowByKey.silver_generic_polls],
+            detail: `average ${rowByKey.silver_averages?.observed || '—'} · poll model ${rowByKey.silver_generic_polls?.observed || '—'}`,
+        },
+        {
+            label: 'Approval',
+            rows: [rowByKey.votehub_approval],
+            detail: `VoteHub ${rowByKey.votehub_approval?.observed || '—'}`,
+        },
+        {
+            label: 'Economics',
+            rows: freshnessRows.filter(row => row.key.startsWith('fred_')),
+            detail: freshnessRows.filter(row => row.key.startsWith('fred_')).map(row => `${sourceLabel(row.key).replace('FRED ', '')} ${row.observed || '—'}`).join(' · '),
+        },
+        {
+            label: 'Candidates',
+            rows: [rowByKey.candidate_registry],
+            detail: `FEC/Clerk ${rowByKey.candidate_registry?.observed || '—'}`,
+        },
+    ];
+    status.className = `status-banner ${liveStatus}`;
+    status.innerHTML = `<div class="status-summary"><strong>${liveStatus.toUpperCase()}</strong> · Model data through ${metadata.data_through || 'unknown'} · Run ${metadata.run_id || 'unknown'}</div><div class="freshness-grid">${freshnessGroups.map(group => {
+        const state = groupState(group.rows);
+        return `<div class="freshness-item ${state}"><b>${group.label}</b><span>${group.detail}</span><em>${state}</em></div>`;
+    }).join('')}</div>`;
+
+    const published = houseData.polling?.published_average || {};
+    const likelihood = houseData.polling?.national_likelihood || {};
+    document.getElementById('likelihood-summary').innerHTML = `
+        <div><span>Silver published average</span><strong>${formatMargin(published.margin)}</strong><small>${published.date || '—'} · likely-voter adjusted</small></div>
+        <div><span>House model likelihood</span><strong>${formatMargin(likelihood.margin)}</strong><small>${likelihood.date || '—'} · ${likelihood.poll_rows || 0} weighted poll rows · σ ${Number(likelihood.observation_std || 0).toFixed(2)}</small></div>`;
+    document.getElementById('method-published-margin').textContent = formatMargin(published.margin);
+    document.getElementById('method-likelihood-margin').textContent = formatMargin(likelihood.margin);
+    document.getElementById('method-election-margin').textContent = formatMargin(model.election_day?.mean);
+    document.getElementById('method-probability-example').textContent = `${Math.round(houseData.summary.prob_dem_majority * 100)}% Democratic-majority probability`;
 
     document.getElementById('diagnostic-summary').innerHTML = [
         ['Inference', metadata.inference_method],
-        ['Polling likelihoods', `${diagnostics.n_polls ?? '—'} latest average`],
+        ['National polling evidence', `${diagnostics.n_polls ?? '—'} weighted aggregate`],
         ['Input validation', diagnostics.current_polling_layer_status ?? '—'],
         ['Effective draws', diagnostics.ess_bulk ?? '—'],
         ['Divergences', diagnostics.divergences ?? '—'],
@@ -242,14 +289,32 @@ function updateModelCard() {
         : `<p class="validation-pending"><strong>Not yet promoted.</strong> ${backtest.message || 'Historical validation is pending.'}</p>`;
     const gate = backtest.race_polling_gate || {};
     document.getElementById('backtest-metrics').innerHTML = backtest.status === 'complete' ? `
-        <div><span>Metric</span><strong>v3</strong><strong>v2</strong></div>
+        <div><span>Metric</span><strong>Current update</strong><strong>Legacy baseline</strong></div>
         <div><span>Brier score</span><strong>${Number(gate.v3_brier).toFixed(3)}</strong><strong>${Number(gate.baseline_brier).toFixed(3)}</strong></div>
         <div><span>Log loss</span><strong>${Number(gate.v3_log_loss).toFixed(3)}</strong><strong>${Number(gate.baseline_log_loss).toFixed(3)}</strong></div>` : '';
     createCalibrationChart(backtest);
 
-    const change = houseData.change_decomposition || {};
-    const national = change.national_update || {};
-    document.getElementById('change-decomposition').innerHTML = `<strong>Latest change decomposition</strong><span>Control probability ${Number(change.probability_change || 0) >= 0 ? '+' : ''}${(Number(change.probability_change || 0) * 100).toFixed(1)} pp</span><span>Poll update ${formatMargin(national.polling_contribution || 0)}</span><span>Election-day SD ${Number(national.future_uncertainty_std || 0).toFixed(1)} points</span>`;
+    const change = houseData.change_decomposition;
+    if (!change) {
+        document.getElementById('change-decomposition').innerHTML = '<strong>New methodology baseline</strong><span>No prior comparable forecast.</span>';
+    } else {
+        const national = change.national_update || {};
+        document.getElementById('change-decomposition').innerHTML = `<strong>Latest change decomposition</strong><span>Control probability ${Number(change.probability_change || 0) >= 0 ? '+' : ''}${(Number(change.probability_change || 0) * 100).toFixed(1)} pp</span><span>Poll update ${formatMargin(national.polling_contribution || 0)}</span><span>Election-day SD ${Number(national.future_uncertainty_std || 0).toFixed(1)} points</span>`;
+    }
+}
+
+function sourceLabel(key) {
+    return {
+        silver_averages: 'Silver published average',
+        silver_generic_polls: 'Silver poll file',
+        votehub_approval: 'VoteHub approval',
+        candidate_registry: 'FEC/Clerk candidates',
+        fred_real_disposable_income: 'FRED income',
+        fred_unemployment_rate: 'FRED unemployment',
+        fred_gdp: 'FRED GDP',
+        fred_cpi: 'FRED CPI',
+        fred_consumer_sentiment: 'FRED sentiment',
+    }[key] || key;
 }
 
 function createCalibrationChart(backtest) {
@@ -261,8 +326,8 @@ function createCalibrationChart(backtest) {
         type: 'line',
         data: { datasets: [
             { label: 'Perfect calibration', data: [{x:0,y:0},{x:1,y:1}], borderColor:'#555', borderDash:[5,5], pointRadius:0 },
-            { label: 'v3', data: (models.v3?.calibration || []).map(b => ({x:b.mean_forecast,y:b.observed_rate})), borderColor:'#60a5fa', backgroundColor:'#60a5fa', pointRadius:4 },
-            { label: 'v2', data: (models.v2?.calibration || []).map(b => ({x:b.mean_forecast,y:b.observed_rate})), borderColor:'#a3a3a3', backgroundColor:'#a3a3a3', pointRadius:3 },
+            { label: 'Current update', data: (models.v3?.calibration || []).map(b => ({x:b.mean_forecast,y:b.observed_rate})), borderColor:'#60a5fa', backgroundColor:'#60a5fa', pointRadius:4 },
+            { label: 'Legacy baseline', data: (models.v2?.calibration || []).map(b => ({x:b.mean_forecast,y:b.observed_rate})), borderColor:'#a3a3a3', backgroundColor:'#a3a3a3', pointRadius:3 },
         ]},
         options: { responsive:true, maintainAspectRatio:false, parsing:false, scales:{x:{type:'linear',min:0,max:1,title:{display:true,text:'Forecast probability',color:'#888'},ticks:{color:'#888'},grid:{color:'#222'}},y:{min:0,max:1,title:{display:true,text:'Observed rate',color:'#888'},ticks:{color:'#888'},grid:{color:'#222'}}},plugins:{legend:{labels:{color:'#aaa'}}} }
     });
@@ -282,7 +347,8 @@ function createNationalTrendChart() {
             { label: '50% credible band', data: trend.map(d => ({x: d.date, y: d.ci_50_high})), borderWidth: 0, pointRadius: 0, backgroundColor: 'rgba(59,130,246,.22)', fill: '+1' },
             { label: '', data: trend.map(d => ({x: d.date, y: d.ci_50_low})), borderWidth: 0, pointRadius: 0, fill: false },
             { label: 'Latent sentiment', data: trend.map(d => ({x: d.date, y: d.mean})), borderColor: '#60a5fa', borderWidth: 2, pointRadius: 0 },
-            { type: 'scatter', label: 'Silver published average', data: raw.map(d => ({x: d.date, y: d.margin})), backgroundColor: 'rgba(255,255,255,.42)', pointRadius: 2 },
+            { type: 'scatter', label: 'Silver published LV average', data: raw.map(d => ({x: d.date, y: d.margin})), backgroundColor: 'rgba(255,255,255,.42)', pointRadius: 2 },
+            { type: 'scatter', label: 'Today’s House likelihood', data: houseData.polling?.national_likelihood ? [{x: houseData.polling.national_likelihood.date, y: houseData.polling.national_likelihood.margin}] : [], backgroundColor: '#fbbf24', borderColor: '#fbbf24', pointRadius: 6, pointStyle: 'rectRot' },
         ]},
         options: { responsive: true, maintainAspectRatio: false, parsing: false, scales: { x: { type: 'category', ticks: { color: '#888', maxTicksLimit: 8 }, grid: { display: false } }, y: { ticks: { color: '#888', callback: value => formatMargin(value) }, grid: { color: '#2a2a2a' } } }, plugins: { legend: { labels: { color: '#aaa', filter: item => item.text } } } }
     });
@@ -310,13 +376,8 @@ function updateCategoriesBar(elementId, categories, total, isSenate = false) {
 
     if (isSenate && senateData) {
         // For Senate, show all 100 seats with guaranteed seats at the ends
-        const seatsUp = senateData.summary.seats_up || 33;
-        const seatsNotUp = 100 - seatsUp;
-
-        // Seats not up: 100 - seatsUp, split roughly
-        // Current Senate is roughly 47D-53R, so seats not up follow that pattern
-        const demNotUp = Math.round(seatsNotUp * 0.47);
-        const repNotUp = seatsNotUp - demNotUp;
+        const demNotUp = senateData.summary.dem_not_up;
+        const repNotUp = senateData.summary.rep_not_up;
 
         const segments = [
             { class: 'guaranteed-d', count: demNotUp, label: 'Not Up (D)' },
@@ -1013,7 +1074,7 @@ function formatDate(date) {
 
 function formatPVI(pvi) {
     if (pvi === 0) return 'EVEN';
-    return pvi > 0 ? `R+${pvi}` : `D+${Math.abs(pvi)}`;
+    return pvi > 0 ? `D+${pvi}` : `R+${Math.abs(pvi)}`;
 }
 
 function formatCategory(category) {
