@@ -415,20 +415,8 @@ a:hover {
 .probability-card strong { color: #93c5fd; font-family: var(--font-mono); }
 .methodology-link { margin-top: 24px; text-align: center; }
 .methodology-link a { font-weight: 600; }
-.model-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
-.diagnostic-list > div { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--color-border); font-size: .82rem; }
-.diagnostic-list span { color: var(--color-text-muted); }
-.diagnostic-list strong { font-family: var(--font-mono); text-align: right; }
-.validation-pending { border-left: 3px solid #fbbf24; padding-left: 12px; }
-.validation-pass { border-left: 3px solid #34d399; padding-left: 12px; }
 .decomposition { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; }
 .decomposition > * { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 999px; padding: 8px 14px; font: .78rem var(--font-mono); }
-.source-link { text-align: center; margin-top: 28px; }
-.backtest-metrics { margin-top: 16px; }
-.backtest-metrics > div { display: grid; grid-template-columns: 1fr 70px 70px; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--color-border); font: .8rem var(--font-mono); }
-.backtest-metrics span { color: var(--color-text-muted); }
-.backtest-metrics strong { text-align: right; }
-.calibration-wrap { height: 360px; }
 
 .env-item {
     background: var(--color-surface);
@@ -661,88 +649,6 @@ a:hover {
     padding: 16px;
     font-size: 0.85rem;
     color: var(--color-text-muted);
-}
-
-/* Methodology */
-.methodology-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-    max-width: 900px;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.method-section {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    overflow-x: hidden;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-
-.method-section h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: var(--color-accent);
-}
-
-.method-section p,
-.method-section li {
-    color: var(--color-text-muted);
-    line-height: 1.8;
-    margin-bottom: 12px;
-}
-
-.method-section p:last-child {
-    margin-bottom: 0;
-}
-
-.method-section ul,
-.method-section ol {
-    padding-left: 24px;
-    margin-top: 12px;
-    margin-bottom: 12px;
-}
-
-.method-section li {
-    margin-bottom: 8px;
-}
-
-.method-section pre {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    padding: 16px;
-    margin: 16px 0;
-    overflow-x: auto;
-    max-width: 100%;
-    -webkit-overflow-scrolling: touch;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
-.method-section code {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--color-text);
-}
-
-.method-section p code {
-    background: var(--color-bg);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.85em;
-    word-break: break-word;
-}
-
-.method-section strong {
-    color: var(--color-text);
 }
 
 /* Timeline Section */
@@ -1233,35 +1139,6 @@ a:hover {
         font-size: 1.25rem;
     }
 
-    /* Methodology */
-    .methodology-content {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    .method-section {
-        padding: 20px;
-    }
-
-    .method-section h3 {
-        font-size: 1rem;
-    }
-
-    .method-section p,
-    .method-section li {
-        font-size: 0.9rem;
-        line-height: 1.7;
-    }
-
-    .method-section pre {
-        padding: 12px;
-        font-size: 0.75rem;
-    }
-
-    .method-section code {
-        font-size: 0.75rem;
-    }
-
     .params-table {
         font-size: 0.85rem;
     }
@@ -1288,7 +1165,6 @@ a:hover {
     .method-steps, .margin-grid, .chamber-method-grid, .national-metric-grid { grid-template-columns: 1fr; }
     .chamber-method-grid .probability-card { grid-column: auto; }
     .margin-explainer { padding: 22px; }
-    .model-card-grid { grid-template-columns: 1fr; }
     .environment-grid.two-col { grid-template-columns: 1fr 1fr; }
     .trend-chart-container { height: 340px; }
     .economic-breakdown { padding: 20px; }
@@ -1296,12 +1172,6 @@ a:hover {
 
 /* Tablet screens */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .methodology-content {
-        grid-template-columns: 1fr;
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
     .stats-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 16px;
@@ -1337,33 +1207,6 @@ a:hover {
 
     .legend-item {
         flex: 0 0 auto;
-    }
-
-    /* Methodology extra small */
-    .method-section {
-        padding: 16px;
-    }
-
-    .method-section h3 {
-        font-size: 0.95rem;
-    }
-
-    .method-section p,
-    .method-section li {
-        font-size: 0.85rem;
-    }
-
-    .method-section pre {
-        padding: 10px;
-        margin: 12px -16px;
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
-    }
-
-    .method-section ul,
-    .method-section ol {
-        padding-left: 20px;
     }
 
     .params-table td {

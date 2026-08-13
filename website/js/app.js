@@ -13,7 +13,6 @@ let currentChamber = 'house';
 let seatChart = null;
 let timelineChart = null;
 let nationalTrendChart = null;
-let calibrationChart = null;
 let houseTimeline = null;
 let senateTimeline = null;
 let currentTimelineChamber = 'house';
@@ -259,7 +258,6 @@ function renderNationalEnvironment(data, chamber) {
 function updateModelCard() {
     const model = houseData.national_model || {};
     const metadata = houseData.metadata || {};
-    const diagnostics = metadata.diagnostics || {};
     document.getElementById('prior-margin').textContent = formatMargin(model.prior?.mean);
     document.getElementById('current-margin').textContent = formatMargin(model.current_sentiment?.mean);
     document.getElementById('election-margin').textContent = formatMargin(model.election_day?.mean);
@@ -274,26 +272,6 @@ function updateModelCard() {
     document.getElementById('method-election-margin').textContent = formatMargin(model.election_day?.mean);
     document.getElementById('method-probability-example').textContent = `${Math.round(houseData.summary.prob_dem_majority * 100)}% Democratic-majority probability`;
 
-    document.getElementById('diagnostic-summary').innerHTML = [
-        ['Inference', metadata.inference_method],
-        ['National polling evidence', `${diagnostics.n_polls ?? '—'} weighted aggregate`],
-        ['Input validation', diagnostics.current_polling_layer_status ?? '—'],
-        ['Effective draws', diagnostics.ess_bulk ?? '—'],
-        ['Divergences', diagnostics.divergences ?? '—'],
-        ['Fallback used', metadata.fallback_used ? 'Yes' : 'No'],
-    ].map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join('');
-
-    const backtest = houseData.backtest || {};
-    document.getElementById('backtest-summary').innerHTML = backtest.status === 'complete'
-        ? `<p class="validation-pass"><strong>SUPPORTING EVIDENCE.</strong> ${backtest.race_polling_gate?.matched_n || 0} matched final-60-day forecasts validate the robust update/error structure; Silver's averages are not directly backtested.</p>`
-        : `<p class="validation-pending"><strong>Not yet promoted.</strong> ${backtest.message || 'Historical validation is pending.'}</p>`;
-    const gate = backtest.race_polling_gate || {};
-    document.getElementById('backtest-metrics').innerHTML = backtest.status === 'complete' ? `
-        <div><span>Metric</span><strong>Current update</strong><strong>Legacy baseline</strong></div>
-        <div><span>Brier score</span><strong>${Number(gate.v3_brier).toFixed(3)}</strong><strong>${Number(gate.baseline_brier).toFixed(3)}</strong></div>
-        <div><span>Log loss</span><strong>${Number(gate.v3_log_loss).toFixed(3)}</strong><strong>${Number(gate.baseline_log_loss).toFixed(3)}</strong></div>` : '';
-    createCalibrationChart(backtest);
-
     const change = houseData.change_decomposition;
     if (!change) {
         document.getElementById('change-decomposition').innerHTML = '<strong>New methodology baseline</strong><span>No prior comparable forecast.</span>';
@@ -301,22 +279,6 @@ function updateModelCard() {
         const national = change.national_update || {};
         document.getElementById('change-decomposition').innerHTML = `<strong>Latest change decomposition</strong><span>Control probability ${Number(change.probability_change || 0) >= 0 ? '+' : ''}${(Number(change.probability_change || 0) * 100).toFixed(1)} pp</span><span>Poll update ${formatMargin(national.polling_contribution || 0)}</span><span>Election-day SD ${Number(national.future_uncertainty_std || 0).toFixed(1)} points</span>`;
     }
-}
-
-function createCalibrationChart(backtest) {
-    const canvas = document.getElementById('calibration-chart');
-    if (!canvas || backtest.status !== 'complete') return;
-    const models = Object.fromEntries((backtest.final_60_day_aggregate || []).map(item => [item.model, item]));
-    if (calibrationChart) calibrationChart.destroy();
-    calibrationChart = new Chart(canvas, {
-        type: 'line',
-        data: { datasets: [
-            { label: 'Perfect calibration', data: [{x:0,y:0},{x:1,y:1}], borderColor:'#555', borderDash:[5,5], pointRadius:0 },
-            { label: 'Current update', data: (models.v3?.calibration || []).map(b => ({x:b.mean_forecast,y:b.observed_rate})), borderColor:'#60a5fa', backgroundColor:'#60a5fa', pointRadius:4 },
-            { label: 'Legacy baseline', data: (models.v2?.calibration || []).map(b => ({x:b.mean_forecast,y:b.observed_rate})), borderColor:'#a3a3a3', backgroundColor:'#a3a3a3', pointRadius:3 },
-        ]},
-        options: { responsive:true, maintainAspectRatio:false, parsing:false, scales:{x:{type:'linear',min:0,max:1,title:{display:true,text:'Forecast probability',color:'#888'},ticks:{color:'#888'},grid:{color:'#222'}},y:{min:0,max:1,title:{display:true,text:'Observed rate',color:'#888'},ticks:{color:'#888'},grid:{color:'#222'}}},plugins:{legend:{labels:{color:'#aaa'}}} }
-    });
 }
 
 function createNationalTrendChart() {
