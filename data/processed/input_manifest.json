@@ -2,11 +2,9 @@
   "schema_version": "1.0.0",
   "forecast_epoch": "2026-08-12",
   "generated_at": "2026-08-12T15:42:53.642722+00:00",
-  "status": "degraded",
+  "status": "healthy",
   "blocked_sources": [],
-  "degraded_sources": [
-    "votehub_approval"
-  ],
+  "degraded_sources": [],
   "fallback_used": false,
   "sources": {
     "silver_averages": {
@@ -35,18 +33,6 @@
       "state": "healthy",
       "provider_model_date": "2026-08-12",
       "latest_poll_end_date": "2026-08-10"
-    },
-    "votehub_approval": {
-      "provider": "VoteHub",
-      "source_url": "https://api.votehub.com/polls",
-      "row_count": 622,
-      "sha256": "962f7b64e70a53bad520ee9735a8920c7e7c32f8219cd87a1830f0a493f8a780",
-      "fallback_used": false,
-      "observation_date": "2026-06-29",
-      "age_days": 44,
-      "warning_days": 14,
-      "blocking_days": 45,
-      "state": "degraded"
     },
     "candidate_registry": {
       "provider": "FEC and Clerk of the House",

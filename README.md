@@ -1,84 +1,79 @@
-# 2026 Midterms Forecast v4
+# Grant's Election Forecast
 
-A dynamic Bayesian forecast for the 2026 U.S. House and Senate elections. House v4 keeps all structural quantities on the Democratic two-party-margin scale and explicitly preserves cycle-level uncertainty.
+A transparent Bayesian forecast for the 2026 U.S. House and Senate elections.
 
 **Live dashboard:** [grantbw4.github.io/2026-midterms-forecast](https://grantbw4.github.io/2026-midterms-forecast/)
 
-**Start with the methodology:** [METHODOLOGY.md](METHODOLOGY.md) explains the complete forecast in plain English and technical detail, including the three different national margins, House/Senate differences, formulas, simulation logic, probability interpretation, validation, and limitations.
+**Start with the methodology:** [METHODOLOGY.md](METHODOLOGY.md) explains every national metric, the House/Senate differences, the race model, the simulation, and how to interpret the probabilities.
 
-## What v4 demonstrates
+## How the model works
 
-- A single national Bayesian likelihood built from Silver Bulletin's adjusted generic-ballot poll universe and its published influence weights; Bulletin's pollster house effects are not estimated twice.
-- A fundamentals prior from approval and economic uncertainty, used once rather than added after polling.
-- One externally aggregated Silver Bulletin likelihood per covered race, robustly combined with the fundamentals posterior.
-- Official candidate validation from FEC records; ambiguous, third-party, and unmapped matchups remain fundamentals-only.
-- A House-specific robust hierarchical calibration on 2018, 2022, and comparable 2024 districts, with shared national and regional posterior draws.
-- Current-map Cook PVI values for all 435 districts, including mid-cycle redistricting, with row-level provenance and fail-closed validation.
-- Fundamentals-only behavior for unpolled or unresolved races—no invented poll estimate.
-- Atomic, fail-closed publication with immutable source snapshots and explicit degraded status.
-- Synthetic recovery, behavioral verification, output schemas, and a rolling-origin backtest promotion gate.
+The forecast follows six auditable steps:
 
-## Reproduce a forecast
+1. Fetch and validate Silver Bulletin polling, five FRED economic series, and FEC/Clerk candidate records.
+2. Turn the five economic changes into a broad, economy-only national prior.
+3. Update that prior once with a chamber-specific national polling input.
+4. Build a fundamentals distribution for every race from partisan lean, incumbency, national conditions, regional movement, and local error.
+5. Update covered races with the latest valid Silver Democratic-versus-Republican maintained average.
+6. Count seats in 10,000 correlated simulations.
+
+The House uses one influence-weighted aggregate of Silver's adjusted generic-ballot poll file. The Senate uses Silver's latest published likely-voter average once. The published Silver average, the model polling input, the poll-updated current margin, and the Election Day forecast are separate quantities and are labeled separately everywhere.
+
+In this project, “fundamentals prior” means economics only.
+
+## Model sketch
+
+```text
+economic composite:   z_econ = standardize(weighted five-series changes)
+fundamentals prior:   theta_election ~ Normal(-0.34 * z_econ, sigma_fundamentals)
+national update:      chamber_polling_input ~ Student-t(theta_current, sigma_input)
+House race prior:     margin[r] ~ Student-t(intercept + lean + incumbency + national + region, sigma_race)
+race update:          silver_average_latest[r] ~ Student-t(margin[r], sigma_average + common_error)
+control probability:  share of correlated simulations reaching 218 House or 51 Senate seats
+```
+
+The prior standard deviation includes a 3.5-point structural term, uncertainty in the economic coefficient, and uncertainty in the standardized economic input. Economics enters only in the prior; it is not added again after polling.
+
+## Reproduce the forecast
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python -m pytest -q
-python scripts/generate_forecast.py
+python3 -m pytest -q
+python3 scripts/generate_forecast.py
 ```
 
-The live run uses only free public sources. `FEC_API_KEY` is optional because candidate identity uses the FEC bulk candidate master.
+Forecast generation is deterministic and network-free. Daily acquisition runs separately with `python3 scripts/fetch_inputs.py`, requires `FRED_API_KEY`, and writes a validated manifest. Invalid or catastrophically stale inputs cannot replace the existing public bundle.
 
-For an offline deterministic run using the latest valid cache:
+## Public outputs
 
-```bash
-python scripts/generate_forecast.py --skip-timeline
-```
+The House and Senate JSON artifacts contain:
 
-Daily acquisition runs separately with `python scripts/fetch_inputs.py`, requires `FRED_API_KEY`, and writes a validated input manifest. Forecast generation is network-free. If inputs are invalid, catastrophically stale, or diagnostics fail, the public bundle is not replaced. A valid cache may be used, but that fact is exposed in `metadata.fallbacks` and `metadata.model_status`.
+- An explicit `national_environment` object with the economy-only prior, published Silver sentiment, chamber polling input, posterior current margin, Election Day forecast, economic composite, and all five economic components.
+- Per-source observation dates and live freshness thresholds.
+- Race-level prior and posterior margins, 90% credible intervals, probabilities, polling use, source links, and data quality.
+- Internal schema and model versions for compatibility; these are not reader-facing branding.
 
-## Model sketch
-
-```text
-fundamentals prior:   election_margin ~ Normal(approval + economy, structural_error)
-national likelihood: bulletin_adjusted_poll_aggregate ~ Student-t(theta_current, sigma_aggregate)
-House race prior:     margin[r] ~ Student-t(intercept + lean + incumbency + national + region, sigma_race)
-race likelihood:      silver_average_latest[r] ~ Student-t(margin[r], sigma_aggregate + common_error)
-```
-
-The national update is analytic, so MCMC convergence statistics do not apply. Bulletin-adjusted polls are collapsed to one influence-weighted likelihood rather than treated as independent posterior updates. House parameter covariance and national-cycle variance retain explicit floors because hundreds of district rows represent only three election cycles.
-
-In practical terms, the forecast follows six steps: validate inputs, build a fundamentals prior, update national conditions once with polling, create a prior for every race, apply only valid latest candidate-race averages, and count seats across 10,000 correlated simulations. The displayed control probability is the share of those simulations in which a party reaches the chamber threshold—not a predicted vote share or a guarantee.
-
-## Outputs
-
-Every race exposes `prior_margin`, `posterior_margin`, a 90% credible interval, `prob_dem`, `polling_adjustment`, `polls_used`, `latest_poll_date`, source URLs, and `data_quality`. Forecast metadata includes stable schema and model versions, `run_id`, `data_through`, freshness, inference method, diagnostics, and fallbacks.
-
-See [METHODOLOGY.md](METHODOLOGY.md) for assumptions and [MODEL_CARD.md](MODEL_CARD.md) for validation and limitations.
+The public timeline begins on August 12, 2026. Same-day runs replace that date's baseline instead of adding a duplicate.
 
 ## Data sources
 
 | Purpose | Source |
 |---|---|
-| Generic-ballot polls | [Silver Bulletin generic ballot](https://www.natesilver.net/p/generic-ballot-average-2026-nate-silver-bulletin-congress-polls), adjusted public poll file |
-| Candidate-race likelihoods | [Silver Bulletin 2026 forecast](https://www.natesilver.net/p/nate-silver-2026-midterm-election-polls-model), public maintained-average feed |
-| Current House district lean | [Cook Political Report race table](https://www.cookpolitical.com/races), current-map Cook PVI |
-| Approval prior input | [VoteHub API](https://votehub.com/polls/api/) |
+| Published generic ballot and adjusted poll input | [Silver Bulletin generic ballot](https://www.natesilver.net/p/generic-ballot-average-2026-nate-silver-bulletin-congress-polls) |
+| Candidate-race maintained averages | [Silver Bulletin 2026 forecast](https://www.natesilver.net/p/nate-silver-2026-midterm-election-polls-model) |
+| Economic fundamentals | [FRED](https://fred.stlouisfed.org/) |
+| Current House district lean | [Cook Political Report](https://www.cookpolitical.com/races) |
 | Candidate identity | [FEC candidate master](https://www.fec.gov/campaign-finance-data/candidate-master-file-description/) |
 | Current House roster | [Clerk of the House](https://clerk.house.gov/xml/lists/MemberData.xml) |
-| District lean / historical results | Processed public election results with source and effective-date fields |
 
-## Validation
+## Validation and limits
 
-Run behavioral tests with `python -m pytest -q`. Rolling-origin evaluation expects frozen historical prediction snapshots:
+Run `python3 -m pytest -q` for the production contract and behavioral checks. The House structural layer passes whole-cycle 2022 and 2024 holdouts conditional on the realized national House margin: 0.0290 Brier score, 0.1002 log loss, -0.73-point signed error, and 95.4% coverage for nominal 90% district intervals. This validates the House margin-to-seat layer, not Silver's 2026 polling calibration.
 
-```bash
-python scripts/backtest_forecast.py --input data/backtests/predictions.csv
-```
-
-The House structural layer passes whole-cycle holdouts for 2022 and 2024 conditional on the realized national House margin. Across 740 contested, map-comparable districts, v4 records a 0.0290 Brier score, 0.1002 log loss, −0.73-point signed error, and 95.4% coverage for nominal 90% intervals, improving on legacy v3. Both official seat outcomes fall inside the 90% posterior interval. This validates the House margin-to-seat layer, not Bulletin's 2026 polling calibration.
+See [MODEL_CARD.md](MODEL_CARD.md) for intended use, validation, and limitations.
 
 ## License
 
-Code is MIT. Upstream data remain subject to their providers' terms; the repository stores only attributed maintained-average snapshots needed for reproducibility, not Silver Bulletin's underlying poll database or proprietary forecast outputs.
+Code is MIT. Upstream data remain subject to provider terms.

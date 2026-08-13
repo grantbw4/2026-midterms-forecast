@@ -69,6 +69,15 @@ def test_dynamic_model_recovers_trend_and_reports_analytic_diagnostics():
     assert len(result.trend) > 50
 
 
+def test_economy_only_prior_retains_economic_and_structural_uncertainty():
+    prior = build_fundamentals_prior(economic_index=-1.76, economic_std=1.0)
+    expected_mean = -0.34 * -1.76
+    expected_variance = 3.5**2 + (-0.34 * 1.0) ** 2 + (-1.76 * 0.33) ** 2
+    assert np.isclose(prior.mean, expected_mean)
+    assert np.isclose(prior.std**2, expected_variance)
+    assert set(prior.components) == {"economy", "structural_uncertainty"}
+
+
 def test_external_average_enters_national_likelihood_once():
     latest = {
         "date": "2026-08-11", "pollster": "Silver Bulletin maintained average",
@@ -345,10 +354,10 @@ def test_public_schema_and_website_artifacts_match():
         output = json.loads((PROJECT_ROOT / "outputs" / filename).read_text())
         website = json.loads((PROJECT_ROOT / "website" / filename).read_text())
         assert output == website
-        assert output["metadata"]["model_version"] == "4.0.0"
-        assert output["metadata"]["schema_version"] == "4.0.0"
+        assert output["metadata"]["model_version"] == "5.0.0"
+        assert output["metadata"]["schema_version"] == "5.0.0"
         assert output["metadata"]["forecast_epoch"] == "2026-08-12"
-        assert output["metadata"]["run_id"].startswith("v4-")
+        assert output["metadata"]["run_id"].startswith("forecast-")
         assert output["change_decomposition"] is None
         assert output["backtest"]["race_polling_gate"]["status"] == "production"
         assert len(output[race_key]) == expected
@@ -358,6 +367,20 @@ def test_public_schema_and_website_artifacts_match():
         assert "national_likelihood_margin" in output["summary"]
         assert "national_likelihood_date" in output["summary"]
         assert "poll_updated_current_margin" in output["summary"]
+        assert "approval_rating" not in output["summary"]
+        assert "net_approval" not in output["summary"]
+        assert "data_through" not in output["metadata"]
+        assert "data_through_definition" not in output["metadata"]
+        assert "approval" not in output["polling"]
+        assert "votehub_approval" not in output["metadata"]["source_freshness"]
+        environment = output["national_environment"]
+        assert set(environment) == {
+            "fundamentals_prior", "published_sentiment", "polling_input",
+            "poll_updated_current", "election_day", "economy",
+        }
+        assert len(environment["economy"]["components"]) == 5
+        for component in environment["economy"]["components"].values():
+            assert {"model_oriented_change", "weight", "contribution", "unit", "observation_date"} <= set(component)
 
     senate = json.loads((PROJECT_ROOT / "outputs" / "senate_forecast.json").read_text())
     assert senate["metadata"]["model_type"] == "senate_bayesian_external_average"
@@ -365,6 +388,9 @@ def test_public_schema_and_website_artifacts_match():
     assert senate["summary"]["dem_not_up"] == 34
     assert senate["summary"]["rep_not_up"] == 31
     assert senate["summary"]["national_likelihood_margin"] == senate["summary"]["published_generic_ballot_margin"]
+    assert senate["national_environment"]["polling_input"]["poll_rows"] == 1
+    house = json.loads((PROJECT_ROOT / "outputs" / "forecast.json").read_text())
+    assert house["national_environment"]["polling_input"]["poll_rows"] > 1
 
 
 def test_public_methodology_explains_model_and_probability():
@@ -372,16 +398,17 @@ def test_public_methodology_explains_model_and_probability():
     methodology = (PROJECT_ROOT / "METHODOLOGY.md").read_text()
     for phrase in (
         "One forecast, six auditable steps",
-        "Three national margins, three different jobs",
+        "What the model is tracking nationally",
+        "Five measured changes, fully exposed",
         "How to read the probability",
         "34 Democratic and 31 Republican not-up seats",
     ):
         assert phrase in page
     for phrase in (
         "The short version",
-        "Three national numbers that must not be confused",
-        "House national polling update",
-        "Senate national polling update",
+        "The national environment, metric by metric",
+        "Chamber polling input",
+        "Poll-updated current margin",
         "From race margins to chamber probabilities",
         "Glossary",
     ):
@@ -401,13 +428,37 @@ def test_rebaselined_timelines_match_public_summaries():
         assert len(timeline) == 1
         assert timeline.iloc[0]["date"] == "2026-08-12"
         assert timeline.iloc[0]["forecast_epoch"] == "2026-08-12"
-        assert timeline.iloc[0]["schema_version"] == "4.0.0"
+        assert timeline.iloc[0]["schema_version"] == "5.0.0"
         assert np.isclose(timeline.iloc[0][probability], output["summary"][probability])
         assert timeline.iloc[0]["median_dem_seats"] == output["summary"]["median_dem_seats"]
         assert np.isclose(
             timeline.iloc[0]["published_generic_ballot"],
             output["summary"]["published_generic_ballot_margin"],
         )
+        assert "approval" not in timeline.columns
+        assert "national_env" not in timeline.columns
+        assert np.isclose(
+            timeline.iloc[0]["election_day_national_margin"],
+            output["summary"]["election_day_national_margin"],
+        )
+
+
+def test_public_branding_and_copy_exclude_removed_concepts():
+    public_text = "\n".join(
+        path.read_text()
+        for path in (
+            PROJECT_ROOT / "README.md",
+            PROJECT_ROOT / "METHODOLOGY.md",
+            PROJECT_ROOT / "MODEL_CARD.md",
+            PROJECT_ROOT / "website" / "index.html",
+            PROJECT_ROOT / "website" / "js" / "app.js",
+        )
+    ).lower()
+    assert "grant's election forecast" in public_text
+    assert "model data through" not in public_text
+    assert "votehub" not in public_text
+    assert "approval" not in public_text
+    assert "forecast v4" not in public_text
 
 
 def test_invalid_staged_chamber_leaves_public_bundle_untouched(tmp_path):

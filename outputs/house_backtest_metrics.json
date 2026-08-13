@@ -13,7 +13,7 @@
     "NY"
   ],
   "metrics": {
-    "house_v4": {
+    "current_model": {
       "n": 740,
       "rmse": 7.368,
       "signed_error": -0.734,

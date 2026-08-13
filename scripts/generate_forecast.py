@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the v4 House and Senate forecast from validated local inputs."""
+"""Generate the House and Senate forecast from validated local inputs."""
 
 from __future__ import annotations
 
@@ -24,7 +24,6 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from models.dynamic_polling import (  # noqa: E402
     DynamicNationalModel,
     build_fundamentals_prior,
-    summarize_approval,
 )
 from models.economic_fundamentals import EconomicFundamentals  # noqa: E402
 from models.chamber_forecast import run_chamber_forecast  # noqa: E402
@@ -42,8 +41,8 @@ WEBSITE_DIR = PROJECT_ROOT / "website"
 ELECTION_DATE = date(2026, 11, 3)
 FORECAST_EPOCH = date(2026, 8, 12)
 FORECAST_TIMEZONE = ZoneInfo("America/Los_Angeles")
-MODEL_VERSION = "4.0.0"
-SCHEMA_VERSION = "4.0.0"
+MODEL_VERSION = "5.0.0"
+SCHEMA_VERSION = "5.0.0"
 MANIFEST_PATH = DATA_DIR / "processed" / "input_manifest.json"
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -55,12 +54,6 @@ def _atomic_json(path: Path, payload: dict[str, Any]) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, indent=2, allow_nan=False))
     temporary.replace(path)
-
-
-def _load_cached_approval() -> pd.DataFrame:
-    polling = DATA_DIR / "raw" / "polling"
-    approval_path = polling / "trump_approval.csv"
-    return pd.read_csv(approval_path) if approval_path.exists() else pd.DataFrame()
 
 
 def _load_manifest(allow_blocked: bool) -> dict[str, Any]:
@@ -76,7 +69,7 @@ def _load_manifest(allow_blocked: bool) -> dict[str, Any]:
     return manifest
 
 
-def _load_cached_inputs() -> tuple[Any, Any, pd.DataFrame, pd.DataFrame, dict[str, Any]]:
+def _load_cached_inputs() -> tuple[Any, Any, pd.DataFrame, dict[str, Any]]:
     registry = load_cached_candidate_registry(DATA_DIR)
     if registry is None:
         raise FileNotFoundError("No cached official candidate registry")
@@ -89,22 +82,19 @@ def _load_cached_inputs() -> tuple[Any, Any, pd.DataFrame, pd.DataFrame, dict[st
     generic_likelihood = prepare_generic_poll_likelihood(
         generic_polls, float(calibration["observation_std"])
     )
-    approval = _load_cached_approval()
-    if approval.empty:
-        raise FileNotFoundError("No cached VoteHub approval input")
-    return registry, silver, generic_likelihood, approval, calibration
+    return registry, silver, generic_likelihood, calibration
 
 
-def _economic_index() -> float:
+def _economic_calculation() -> dict[str, Any]:
     model = EconomicFundamentals()
     model.load_data()
     if len(model.data) != 5:
         raise ValueError("All five economic series are required")
-    return float(model.calculate_index()["normalized_index"])
+    return model.calculate_index()
 
 
-def format_polling_data(generic: pd.DataFrame, approval: pd.DataFrame, limit: int = 50) -> dict[str, Any]:
-    output: dict[str, Any] = {"generic_ballot": [], "approval": []}
+def format_polling_data(generic: pd.DataFrame, limit: int = 50) -> dict[str, Any]:
+    output: dict[str, Any] = {"generic_ballot": []}
     for _, row in generic.sort_values("date", ascending=False).head(limit).iterrows():
         sample_size = pd.to_numeric(row.get("sample_size"), errors="coerce")
         output["generic_ballot"].append({
@@ -116,17 +106,6 @@ def format_polling_data(generic: pd.DataFrame, approval: pd.DataFrame, limit: in
             "rep_pct": round(float(row.get("rep_pct", np.nan)), 1),
             "margin": round(float(row["margin"]), 1),
         })
-    if approval is not None and not approval.empty:
-        for _, row in approval.sort_values("date", ascending=False).head(limit).iterrows():
-            output["approval"].append({
-                "date": pd.to_datetime(row["date"]).strftime("%Y-%m-%d"),
-                "pollster": str(row["pollster"]),
-                "sample_size": int(row["sample_size"]),
-                "population": str(row.get("population", "a")),
-                "approve": round(float(row["approve"]), 1),
-                "disapprove": round(float(row["disapprove"]), 1),
-                "net_approval": round(float(row["net_approval"]), 1),
-            })
     return output
 
 
@@ -147,7 +126,7 @@ def _metadata(
         "degraded" if warnings or manifest.get("fallback_used") else "healthy"
     )
     digest = hashlib.sha256(
-        f"{national.data_through}|{national.election_mean:.5f}|{n_simulations}".encode()
+        f"{national.polling_input_date}|{national.election_mean:.5f}|{n_simulations}".encode()
     ).hexdigest()[:12]
     return {
         "updated_at": now.isoformat(),
@@ -157,13 +136,11 @@ def _metadata(
         "forecast_timezone": str(FORECAST_TIMEZONE),
         "model_type": "house_hierarchical_bayesian_bulletin_polls",
         "model_status": status,
-        "run_id": f"v4-{now.strftime('%Y%m%dT%H%M%SZ')}-{digest}",
+        "run_id": f"forecast-{now.strftime('%Y%m%dT%H%M%SZ')}-{digest}",
         "election_date": ELECTION_DATE.isoformat(),
         "days_until_election": max((ELECTION_DATE - local_today).days, 0),
         "n_simulations": n_simulations,
         "districts_total": 435,
-        "data_through": national.data_through,
-        "data_through_definition": "latest end date in the national polling likelihood",
         "inference_method": "bulletin_adjusted_poll_aggregate_bayesian_update + hierarchical_posterior_predictive_draws",
         "fallback_used": bool(manifest.get("fallback_used")),
         "fallbacks": [name for name, source in manifest["sources"].items() if source.get("fallback_used")],
@@ -241,8 +218,7 @@ def _timeline_frame(path: Path, summary: dict[str, Any], chamber: str) -> pd.Dat
         "mean_dem_seats": summary["mean_dem_seats"],
         "ci_90_low": summary["ci_90_low"],
         "ci_90_high": summary["ci_90_high"],
-        "national_env": summary["national_environment"],
-        "approval": summary.get("approval_rating", 0),
+        "election_day_national_margin": summary["election_day_national_margin"],
         "published_generic_ballot": summary["published_generic_ballot_margin"],
         "national_likelihood": summary["national_likelihood_margin"],
         "model_version": MODEL_VERSION,
@@ -292,8 +268,62 @@ def _load_previous_forecast(path: Path) -> dict[str, Any]:
         return {}
 
 
+def _interval(mean: float, std: float) -> list[float]:
+    return [round(mean - 1.64485363 * std, 3), round(mean + 1.64485363 * std, 3)]
+
+
+def _national_environment(
+    national: Any,
+    published: dict[str, Any],
+    polling_input: dict[str, Any],
+    economy: dict[str, Any],
+) -> dict[str, Any]:
+    """Build the explicit, chamber-specific national model explanation."""
+    return {
+        "fundamentals_prior": {
+            "description": "Economy-only pre-poll expectation for the Democratic two-party margin",
+            "mean": round(national.prior.mean, 3),
+            "std": round(national.prior.std, 3),
+            "ci_90": _interval(national.prior.mean, national.prior.std),
+            "economic_coefficient": national.prior.components["economy"],
+        },
+        "published_sentiment": {
+            "description": "Silver Bulletin published likely-voter maintained average",
+            "margin": published["margin"],
+            "date": published["date"],
+            "source_url": published["source_url"],
+        },
+        "polling_input": polling_input,
+        "poll_updated_current": {
+            "description": "Posterior national sentiment after one polling update",
+            "mean": round(national.current_mean, 3),
+            "std": round(national.current_std, 3),
+            "ci_90": _interval(national.current_mean, national.current_std),
+            "date": national.polling_input_date,
+        },
+        "election_day": {
+            "description": "Posterior after future movement and election-error uncertainty",
+            "mean": round(national.election_mean, 3),
+            "std": round(national.election_std, 3),
+            "ci_90": [
+                round(float(np.percentile(national.election_samples, 5)), 3),
+                round(float(np.percentile(national.election_samples, 95)), 3),
+            ],
+            "date": ELECTION_DATE.isoformat(),
+        },
+        "economy": {
+            "description": "Five-series economic composite; positive values favor the incumbent party",
+            "calculation_date": economy["date"],
+            "raw_index": economy["raw_index"],
+            "standardized_index": economy["normalized_index"],
+            "interpretation": economy["interpretation"],
+            "components": economy["components"],
+        },
+    }
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate the forecast v4 public artifacts")
+    parser = argparse.ArgumentParser(description="Generate the public forecast artifacts")
     parser.add_argument("--simulations", type=int, default=10_000)
     parser.add_argument("--skip-timeline", action="store_true")
     parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
@@ -307,18 +337,12 @@ def main() -> int:
     args = parser.parse_args()
 
     manifest = _load_manifest(args.allow_blocked_inputs)
-    registry, silver, generic_likelihood, approval, generic_calibration = _load_cached_inputs()
+    registry, silver, generic_likelihood, generic_calibration = _load_cached_inputs()
     generic = silver.generic_history
     race_polls = silver.race_likelihoods
     race_status = silver.status
-    approval_mean, approval_std = summarize_approval(approval)
-    economic_index = _economic_index()
-
-    prior = build_fundamentals_prior(
-        approval_mean=approval_mean,
-        approval_std=approval_std,
-        economic_index=economic_index,
-    )
+    economy = _economic_calculation()
+    prior = build_fundamentals_prior(economic_index=float(economy["normalized_index"]))
     process_calibration = DynamicNationalModel.calibrate_process_std(generic)
     national = DynamicNationalModel(
         process_std_per_day=float(process_calibration["process_std_per_day"]), random_seed=42
@@ -327,9 +351,8 @@ def main() -> int:
     )
     national.diagnostics["generic_average_calibration"] = generic_calibration
     national.diagnostics["process_calibration"] = process_calibration
-    # House v4 changes only the House national likelihood.  Preserve the
-    # existing Senate national layer until a separately scoped Senate
-    # recalibration passes its own promotion gate.
+    # The House and Senate intentionally retain distinct national polling
+    # inputs. Any future Senate recalibration requires its own promotion gate.
     senate_national = DynamicNationalModel(random_seed=42).fit_external_average(
         generic, prior, election_date=ELECTION_DATE, n_draws=args.simulations
     )
@@ -346,8 +369,6 @@ def main() -> int:
     senate_metadata = {
         **metadata,
         "model_type": "senate_bayesian_external_average",
-        "data_through": senate_national.data_through,
-        "data_through_definition": "latest date in the Senate national likelihood",
         "races_total": 35,
     }
     senate_metadata.pop("districts_total", None)
@@ -355,7 +376,7 @@ def main() -> int:
     previous_senate_path = args.output_dir / "senate_forecast.json"
     previous_house = _load_previous_forecast(previous_house_path)
     previous_senate = _load_previous_forecast(previous_senate_path)
-    polling_display = format_polling_data(generic, approval)
+    polling_display = format_polling_data(generic)
     published_row = generic.sort_values("date").iloc[-1]
     published_average = {
         "date": pd.to_datetime(published_row["date"]).strftime("%Y-%m-%d"),
@@ -388,7 +409,7 @@ def main() -> int:
             "national_polling_likelihood": "Silver Bulletin adjusted generic-ballot polls and influence weights",
             "race_polling_likelihood": "Silver Bulletin maintained candidate-race averages",
             "house_partisan_lean": "Cook Political Report current-map Cook PVI",
-            "approval_prior_input": "VoteHub",
+            "fundamentals_prior_input": "FRED economic composite",
             "candidate_registry": "Federal Election Commission",
             "national_polling_source_url": "https://www.natesilver.net/p/generic-ballot-average-2026-nate-silver-bulletin-congress-polls",
             "race_polling_source_url": "https://www.natesilver.net/p/nate-silver-2026-midterm-election-polls-model",
@@ -404,6 +425,31 @@ def main() -> int:
     senate["summary"]["national_likelihood_margin"] = published_average["margin"]
     senate["summary"]["national_likelihood_date"] = published_average["date"]
     senate["summary"]["poll_updated_current_margin"] = round(senate_national.current_mean, 2)
+    house_polling_input = {
+        "description": "Influence-weighted Silver adjusted-poll universe used once by the House model",
+        "margin": polling_display["national_likelihood"]["margin"],
+        "date": polling_display["national_likelihood"]["date"],
+        "std": polling_display["national_likelihood"]["observation_std"],
+        "poll_rows": polling_display["national_likelihood"]["poll_rows"],
+        "provenance": "Silver Bulletin adjusted generic-ballot polls and provider influence weights",
+    }
+    senate_poll_std = float(generic.sort_values("date").iloc[-1].get("observation_std", 1.5))
+    if not np.isfinite(senate_poll_std):
+        senate_poll_std = 1.5
+    senate_polling_input = {
+        "description": "Silver published likely-voter maintained average used once by the Senate model",
+        "margin": published_average["margin"],
+        "date": published_average["date"],
+        "std": round(senate_poll_std, 3),
+        "poll_rows": 1,
+        "provenance": "Silver Bulletin published likely-voter maintained average",
+    }
+    house["national_environment"] = _national_environment(
+        national, published_average, house_polling_input, economy
+    )
+    senate["national_environment"] = _national_environment(
+        senate_national, published_average, senate_polling_input, economy
+    )
     house["change_decomposition"] = _change_decomposition(previous_house, house, national, "house")
     senate["change_decomposition"] = _change_decomposition(previous_senate, senate, senate_national, "senate")
 
@@ -436,7 +482,7 @@ def main() -> int:
             (args.website_dir / f"{filename}.tmp").replace(args.website_dir / filename)
 
     logger.info(
-        "Published v4 forecast %s: House D majority %.1f%%, Senate D control %.1f%%",
+        "Published forecast %s: House D majority %.1f%%, Senate D control %.1f%%",
         metadata["run_id"], house["summary"]["prob_dem_majority"] * 100,
         senate["summary"]["prob_dem_control"] * 100,
     )

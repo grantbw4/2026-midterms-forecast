@@ -42,6 +42,22 @@ INDICATOR_WEIGHTS = {
     "cpi": 0.05,                 # Inflation (inverted - high is bad)
 }
 
+INDICATOR_UNITS = {
+    "consumer_sentiment": "index points",
+    "unemployment_rate": "percentage points",
+    "real_disposable_income": "percent",
+    "gdp": "percent",
+    "cpi": "index points",
+}
+
+INDICATOR_LABELS = {
+    "consumer_sentiment": "Consumer sentiment",
+    "unemployment_rate": "Unemployment rate",
+    "real_disposable_income": "Real disposable income",
+    "gdp": "Gross domestic product",
+    "cpi": "Consumer prices",
+}
+
 
 class EconomicFundamentals:
     """
@@ -143,6 +159,15 @@ class EconomicFundamentals:
                 return 0
             return ((current - past) / abs(past)) * 100
 
+    def _latest_source_date(self, indicator: str, target_date: datetime) -> Optional[str]:
+        """Return the newest observation that can enter the target-date calculation."""
+        if indicator not in self.data:
+            return None
+        dates = self.data[indicator].loc[self.data[indicator]["date"] <= target_date, "date"]
+        if dates.empty:
+            return None
+        return pd.Timestamp(dates.max()).strftime("%Y-%m-%d")
+
     def calculate_index(
         self,
         target_date: Optional[datetime] = None,
@@ -176,14 +201,26 @@ class EconomicFundamentals:
 
             if change is not None:
                 components[indicator] = {
-                    "yoy_change": round(change, 2),
+                    "label": INDICATOR_LABELS[indicator],
+                    "model_oriented_change": round(change, 2),
                     "weight": weight,
                     "contribution": round(change * weight, 2),
+                    "unit": INDICATOR_UNITS[indicator],
+                    "observation_date": self._latest_source_date(indicator, target_date),
+                    "direction": "positive values favor the incumbent party",
                 }
                 weighted_sum += change * weight
                 total_weight += weight
             else:
-                components[indicator] = {"yoy_change": None, "weight": weight}
+                components[indicator] = {
+                    "label": INDICATOR_LABELS[indicator],
+                    "model_oriented_change": None,
+                    "weight": weight,
+                    "contribution": None,
+                    "unit": INDICATOR_UNITS[indicator],
+                    "observation_date": self._latest_source_date(indicator, target_date),
+                    "direction": "positive values favor the incumbent party",
+                }
 
         # Normalize by actual weights used
         if total_weight > 0:
@@ -358,8 +395,8 @@ def main():
 
     logger.info("\nComponents:")
     for indicator, data in result["components"].items():
-        if data["yoy_change"] is not None:
-            logger.info(f"  {indicator:25s}: {data['yoy_change']:+.2f} (weight: {data['weight']})")
+        if data["model_oriented_change"] is not None:
+            logger.info(f"  {indicator:25s}: {data['model_oriented_change']:+.2f} (weight: {data['weight']})")
 
     # Historical comparison
     comparison = econ.get_historical_comparison()

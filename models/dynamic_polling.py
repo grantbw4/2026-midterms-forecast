@@ -33,58 +33,49 @@ class FundamentalsPrior:
 
     mean: float
     std: float
-    approval_mean: float
     economic_index: float
     components: dict[str, dict[str, float]]
 
 
 def build_fundamentals_prior(
-    approval_mean: float = 0.0,
-    approval_std: float = 4.0,
     economic_index: float = 0.0,
     economic_std: float = 1.0,
     incumbent_party: str = "R",
 ) -> FundamentalsPrior:
     """Build a regularized prior and propagate coefficient uncertainty.
 
-    Coefficients are deliberately weak.  Approval and economics inform the
-    prior; they are never added to a polling posterior after fitting.
+    The economic coefficient is deliberately weak and the structural error is
+    deliberately broad. Economics enters once here and is never added again
+    after the polling update.
     """
 
     party_sign = -1.0 if incumbent_party.upper() == "R" else 1.0
-    approval_beta, approval_beta_std = 0.08 * party_sign, 0.04
     economic_beta, economic_beta_std = 0.34 * party_sign, 0.33
 
-    approval_contribution = approval_beta * approval_mean
     economic_contribution = economic_beta * economic_index
-    mean = approval_contribution + economic_contribution
+    mean = economic_contribution
 
     # A broad structural-error term prevents five historical midterms from
     # creating false precision.
     structural_std = 3.5
     variance = (
         structural_std**2
-        + (approval_beta * approval_std) ** 2
-        + (approval_mean * approval_beta_std) ** 2
         + (economic_beta * economic_std) ** 2
         + (economic_index * economic_beta_std) ** 2
     )
     return FundamentalsPrior(
         mean=float(mean),
         std=float(np.sqrt(variance)),
-        approval_mean=float(approval_mean),
         economic_index=float(economic_index),
         components={
-            "approval": {
-                "coefficient_mean": approval_beta,
-                "coefficient_std": approval_beta_std,
-                "contribution_mean": approval_contribution,
-            },
             "economy": {
                 "coefficient_mean": economic_beta,
                 "coefficient_std": economic_beta_std,
                 "contribution_mean": economic_contribution,
+                "input_standardized_index": float(economic_index),
+                "input_std": float(economic_std),
             },
+            "structural_uncertainty": {"std": structural_std},
         },
     )
 
@@ -101,7 +92,7 @@ class DynamicPollingResult:
     population_effects: dict[str, float]
     prior: FundamentalsPrior
     diagnostics: dict[str, Any]
-    data_through: str
+    polling_input_date: str
 
     def to_public_dict(self) -> dict[str, Any]:
         current_50 = _normal_interval(self.current_mean, self.current_std, 0.50)
@@ -131,7 +122,6 @@ class DynamicPollingResult:
                 key: round(value, 3) for key, value in self.pollster_effects.items()
             },
             "diagnostics": self.diagnostics,
-            "data_through": self.data_through,
         }
 
 
@@ -377,7 +367,7 @@ class DynamicNationalModel:
             population_effects=population_effects,
             prior=prior,
             diagnostics=diagnostics,
-            data_through=data_date.isoformat(),
+            polling_input_date=data_date.isoformat(),
         )
 
     def fit_external_average(
@@ -465,21 +455,5 @@ class DynamicNationalModel:
                 "process_std_per_day": round(self.process_std_per_day, 4),
                 "election_error_floor": round(self.election_error_floor, 4),
             },
-            data_through=data_date.isoformat(),
+            polling_input_date=data_date.isoformat(),
         )
-
-
-def summarize_approval(polls: pd.DataFrame, days: int = 90) -> tuple[float, float]:
-    """Return a robust net-approval estimate and standard error."""
-    if polls is None or polls.empty or "net_approval" not in polls:
-        return 0.0, 6.0
-    work = polls.copy()
-    work["date"] = pd.to_datetime(work["date"], errors="coerce")
-    cutoff = work["date"].max() - pd.Timedelta(days=days)
-    values = pd.to_numeric(work.loc[work["date"] >= cutoff, "net_approval"], errors="coerce").dropna()
-    if values.empty:
-        return 0.0, 6.0
-    median = float(values.median())
-    mad = float(np.median(np.abs(values - median)))
-    robust_sd = max(1.4826 * mad, 2.0)
-    return median, robust_sd / np.sqrt(max(len(values), 1))

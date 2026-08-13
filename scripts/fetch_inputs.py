@@ -9,7 +9,7 @@ forecast bundle.
 from __future__ import annotations
 
 import argparse
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, timezone
 import gzip
 import hashlib
 import json
@@ -46,7 +46,6 @@ from models.silver_bulletin import (  # noqa: E402
 )
 DATA = PROJECT_ROOT / "data"
 PROCESSED = DATA / "processed"
-POLLING = DATA / "raw" / "polling"
 ECONOMIC = DATA / "raw" / "economic"
 SNAPSHOTS = DATA / "raw" / "snapshots"
 MANIFEST_PATH = PROCESSED / "input_manifest.json"
@@ -54,7 +53,6 @@ FORECAST_EPOCH = "2026-08-12"
 
 FRED_URL = "https://api.stlouisfed.org/fred/series/observations"
 FRED_GRAPH_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv"
-VOTEHUB_URL = "https://api.votehub.com/polls"
 FRED_SERIES = {
     "DSPIC96": "real_disposable_income",
     "UNRATE": "unemployment_rate",
@@ -66,7 +64,6 @@ FRED_SERIES = {
 FRESHNESS = {
     "silver_averages": (2, 7),
     "silver_generic_polls": (2, 7),
-    "votehub_approval": (14, 45),
     "fred_monthly": (75, 150),
     "fred_gdp": (180, 300),
     "candidate_registry": (2, 7),
@@ -182,60 +179,6 @@ def _fetch_silver(
         return load_silver_cache(DATA), pd.read_csv(generic_path), None, True
 
 
-def _fetch_approval(session: requests.Session) -> tuple[pd.DataFrame, bool]:
-    """Fetch and normalize the only VoteHub input used by production."""
-    try:
-        response = session.get(
-            VOTEHUB_URL,
-            params={"poll_type": "approval", "subject": "donald-trump"},
-            timeout=45,
-        )
-        response.raise_for_status()
-        payload = response.json()
-        polls = payload.get("polls", []) if isinstance(payload, dict) else payload
-        if not isinstance(polls, list):
-            raise ValueError("VoteHub approval response changed schema")
-        cutoff = datetime.now() - timedelta(days=365)
-        rows: list[dict[str, Any]] = []
-        for poll in polls:
-            if poll.get("poll_type") != "approval" or "trump" not in str(poll.get("subject", "")).lower():
-                continue
-            end_date = pd.to_datetime(poll.get("end_date"), errors="coerce")
-            if pd.isna(end_date) or end_date.to_pydatetime() < cutoff:
-                continue
-            answers = {str(answer.get("choice")): answer.get("pct") for answer in poll.get("answers", [])}
-            approve = pd.to_numeric(answers.get("Approve"), errors="coerce")
-            disapprove = pd.to_numeric(answers.get("Disapprove"), errors="coerce")
-            if pd.isna(approve) or pd.isna(disapprove):
-                continue
-            population = str(poll.get("population", "a")).lower()
-            sample_size = int(float(poll.get("sample_size") or 500))
-            days_old = max((datetime.now() - end_date.to_pydatetime()).days, 0)
-            population_weight = {"lv": 1.0, "rv": 0.85, "a": 0.7}.get(population, 0.7)
-            weight = population_weight * 0.5 ** (days_old / 30) * min(1.0, (sample_size / 1000) ** 0.5)
-            rows.append({
-                "date": end_date.strftime("%Y-%m-%d"),
-                "pollster": str(poll.get("pollster", "Unknown")),
-                "sample_size": sample_size,
-                "population": population,
-                "approve": float(approve),
-                "disapprove": float(disapprove),
-                "net_approval": float(approve - disapprove),
-                "weight": weight,
-            })
-        approval = pd.DataFrame(rows)
-        required = {"date", "pollster", "sample_size", "approve", "disapprove", "net_approval"}
-        if approval.empty or not required <= set(approval.columns):
-            raise ValueError("VoteHub returned no valid approval observations")
-        return approval.sort_values("date", ascending=False).reset_index(drop=True), False
-    except Exception:
-        pass
-    path = POLLING / "trump_approval.csv"
-    if not path.exists():
-        raise RuntimeError("VoteHub approval fetch failed and no cache exists")
-    return pd.read_csv(path), True
-
-
 def _fetch_fred_series(
     session: requests.Session,
     api_key: str,
@@ -313,13 +256,11 @@ def main() -> int:
         raise RuntimeError("FRED_API_KEY is required for the daily input refresh")
 
     session = requests.Session()
-    session.headers.update({"User-Agent": "2026-Midterms-Forecast/4.0"})
+    session.headers.update({"User-Agent": "Grants-Election-Forecast/1.0"})
     print("Refreshing candidate registry...", flush=True)
     registry, fec_rows, clerk_rows, candidate_fallback = _fetch_candidate_registry(session)
     print("Refreshing Silver Bulletin feeds...", flush=True)
     silver, generic_polls, raw_averages, silver_fallback = _fetch_silver(session, registry)
-    print("Refreshing VoteHub approval...", flush=True)
-    approval, approval_fallback = _fetch_approval(session)
     print("Refreshing FRED series...", flush=True)
     fred: dict[str, tuple[pd.DataFrame, bool]] = {
         name: _fetch_fred_series(requests.Session(), fred_key, series_id, name, args.allow_keyless_fred)
@@ -330,7 +271,6 @@ def main() -> int:
     generic_polls = generic_polls.copy()
     provider_model_date, latest_poll_date = _validate_generic_poll_feed(generic_polls)
     published_date = pd.to_datetime(silver.generic_history["date"], errors="raise").max().date()
-    approval_date = pd.to_datetime(approval["date"], errors="raise").max().date()
     now = datetime.now(timezone.utc)
 
     candidate_observed = min(
@@ -357,15 +297,6 @@ def main() -> int:
             freshness_key="silver_generic_polls",
             fallback_used=silver_fallback,
             provider_model_date=provider_model_date,
-        ),
-        "votehub_approval": _source_record(
-            provider="VoteHub",
-            source_url=VOTEHUB_URL,
-            observed=approval_date,
-            rows=len(approval),
-            payload=approval.to_csv(index=False).encode(),
-            freshness_key="votehub_approval",
-            fallback_used=approval_fallback,
         ),
         "candidate_registry": _source_record(
             provider="FEC and Clerk of the House",
@@ -416,7 +347,6 @@ def main() -> int:
             PROCESSED / "silver_generic_history.csv": _write_staged_csv(stage, Path("processed/silver_generic_history.csv"), silver.generic_history),
             PROCESSED / "silver_race_averages.csv": _write_staged_csv(stage, Path("processed/silver_race_averages.csv"), silver.race_likelihoods),
             PROCESSED / "silver_generic_polls.csv": _write_staged_csv(stage, Path("processed/silver_generic_polls.csv"), generic_polls),
-            POLLING / "trump_approval.csv": _write_staged_csv(stage, Path("polling/trump_approval.csv"), approval),
         }
         status_path = stage / "processed/silver_average_status.json"
         status_path.write_text(json.dumps(silver.status, indent=2, allow_nan=False))
@@ -447,13 +377,6 @@ def main() -> int:
             generic_polls.astype(object).where(pd.notna(generic_polls), None).to_dict("records"),
             GENERIC_POLLS_CSV_URL,
             SOURCE_NOTICE,
-        )
-    if not approval_fallback:
-        snapshots.save(
-            "votehub_approval",
-            approval.assign(date=approval["date"].astype(str)).to_dict("records"),
-            VOTEHUB_URL,
-            "Public API; no redistribution license stated",
         )
     if not candidate_fallback:
         snapshots.save("fec_candidates", fec_rows, FEC_CANDIDATE_MASTER_URL, "U.S. government public data")

@@ -410,16 +410,14 @@ def run_chamber_forecast(
         "ci_90_high": int(np.percentile(house_seats, 95)),
         "ci_50_low": int(np.percentile(house_seats, 25)),
         "ci_50_high": int(np.percentile(house_seats, 75)),
-        "national_environment": round(national.election_mean, 2),
+        "election_day_national_margin": round(national.election_mean, 2),
         "national_likelihood_margin": round(float(
             national.diagnostics.get("generic_average_calibration", {}).get(
                 "weighted_average_margin", national.current_mean
             )
         ), 2),
         "poll_updated_current_margin": round(national.current_mean, 2),
-        "approval_rating": round(national.prior.approval_mean, 2),
-        "net_approval": round(national.prior.approval_mean, 2),
-        "model_type": "house_margin_hierarchical_bayesian_v4",
+        "model_type": "house_margin_hierarchical_bayesian",
     }
     senate_summary = {
         "prob_dem_control": round(float(np.mean(senate_seats >= 51)), 4),
@@ -431,11 +429,9 @@ def run_chamber_forecast(
         "seats_up": len(senate),
         "dem_defending": int((senate["seat_held_by"] == "D").sum()),
         "rep_defending": int((senate["seat_held_by"] == "R").sum()),
-        "national_environment": round(senate_environment.election_mean, 2),
+        "election_day_national_margin": round(senate_environment.election_mean, 2),
         "national_uncertainty": round(senate_environment.election_std, 2),
         "national_likelihood_margin": round(senate_environment.current_mean, 2),
-        "approval_rating": round(senate_environment.prior.approval_mean, 2),
-        "net_approval": round(senate_environment.prior.approval_mean, 2),
         "model_type": "senate_bayesian_external_average",
         "dem_not_up": 34,
         "rep_not_up": 31,

@@ -1,5 +1,5 @@
 /**
- * 2026 Midterm Elections Forecast - Frontend Application
+ * Grant's Election Forecast - Frontend Application
  */
 
 // Global state
@@ -178,6 +178,7 @@ function initializePage() {
     createSeatChart();
     if (houseTimeline || senateTimeline) createTimelineChart();
     updateModelCard();
+    renderNationalEnvironment(houseData, 'house');
     createNationalTrendChart();
     populateStateFilter();
     renderTable();
@@ -197,14 +198,6 @@ function updateHouseStats() {
     document.getElementById('house-median-seats').textContent = summary.median_dem_seats;
     document.getElementById('house-confidence-interval').textContent = `${summary.ci_90_low}-${summary.ci_90_high}`;
 
-    // Environment
-    const envValue = summary.national_environment;
-    document.getElementById('national-env').textContent = envValue >= 0 ? `D+${envValue.toFixed(1)}` : `R+${Math.abs(envValue).toFixed(1)}`;
-    const gbValue = summary.published_generic_ballot_margin;
-    document.getElementById('generic-ballot').textContent = gbValue >= 0 ? `D+${gbValue.toFixed(1)}` : `R+${Math.abs(gbValue).toFixed(1)}`;
-    document.getElementById('approval').textContent = `${summary.approval_rating.toFixed(0)}%`;
-    document.getElementById('days-until').textContent = metadata.days_until_election;
-
     // Categories bar
     updateCategoriesBar('house-categories-bar', categories, 435);
 }
@@ -212,6 +205,55 @@ function updateHouseStats() {
 function formatMargin(value) {
     const number = Number(value || 0);
     return number >= 0 ? `D+${number.toFixed(1)}` : `R+${Math.abs(number).toFixed(1)}`;
+}
+
+function formatInterval(interval) {
+    if (!Array.isArray(interval) || interval.length !== 2) return '90% interval unavailable';
+    return `90% interval ${formatMargin(interval[0])} to ${formatMargin(interval[1])}`;
+}
+
+function formatEconomicChange(value, unit) {
+    const number = Number(value);
+    if (!Number.isFinite(number)) return '—';
+    const suffix = unit === 'percent' ? '%' : unit === 'percentage points' ? ' pp' : ' pts';
+    return `${number >= 0 ? '+' : ''}${number.toFixed(2)}${suffix}`;
+}
+
+function renderNationalEnvironment(data, chamber) {
+    if (!data?.national_environment) return;
+    const env = data.national_environment;
+    const prior = env.fundamentals_prior || {};
+    const published = env.published_sentiment || {};
+    const polling = env.polling_input || {};
+    const current = env.poll_updated_current || {};
+    const election = env.election_day || {};
+    const economy = env.economy || {};
+    const chamberName = chamber === 'house' ? 'House' : 'Senate';
+
+    document.getElementById('national-chamber-label').textContent = chamberName;
+    document.getElementById('ne-polling-label').textContent = `${chamberName} polling input`;
+    document.getElementById('ne-fundamentals').textContent = formatMargin(prior.mean);
+    document.getElementById('ne-fundamentals-detail').textContent = `${formatInterval(prior.ci_90)} · σ ${Number(prior.std || 0).toFixed(2)}`;
+    document.getElementById('ne-published').textContent = formatMargin(published.margin);
+    document.getElementById('ne-published-detail').textContent = `${published.date || '—'} · Silver likely-voter average`;
+    document.getElementById('ne-polling').textContent = formatMargin(polling.margin);
+    document.getElementById('ne-polling-detail').textContent = `${polling.date || '—'} · σ ${Number(polling.std || 0).toFixed(2)} · ${polling.poll_rows || 0} ${polling.poll_rows === 1 ? 'input' : 'weighted rows'}`;
+    document.getElementById('ne-current').textContent = formatMargin(current.mean);
+    document.getElementById('ne-current-detail').textContent = `${current.date || '—'} · ${formatInterval(current.ci_90)}`;
+    document.getElementById('ne-election').textContent = formatMargin(election.mean);
+    document.getElementById('ne-election-detail').textContent = `${election.date || '—'} · ${formatInterval(election.ci_90)} · σ ${Number(election.std || 0).toFixed(2)}`;
+    document.getElementById('ne-economy').textContent = `${Number(economy.standardized_index || 0) >= 0 ? '+' : ''}${Number(economy.standardized_index || 0).toFixed(2)} SD`;
+    document.getElementById('ne-economy-detail').textContent = `${economy.interpretation || '—'} · calculated ${economy.calculation_date || '—'}`;
+    document.getElementById('ne-days').textContent = data.metadata?.days_until_election ?? '—';
+
+    document.getElementById('economic-components').innerHTML = Object.values(economy.components || {}).map(component => `
+        <tr>
+            <td><strong>${component.label || 'Economic metric'}</strong></td>
+            <td>${formatEconomicChange(component.model_oriented_change, component.unit)}</td>
+            <td>${(Number(component.weight || 0) * 100).toFixed(0)}%</td>
+            <td>${Number(component.contribution) >= 0 ? '+' : ''}${Number(component.contribution || 0).toFixed(2)}</td>
+            <td>${component.observation_date || '—'}</td>
+        </tr>`).join('');
 }
 
 function updateModelCard() {
@@ -243,11 +285,6 @@ function updateModelCard() {
             detail: `average ${rowByKey.silver_averages?.observed || '—'} · poll model ${rowByKey.silver_generic_polls?.observed || '—'}`,
         },
         {
-            label: 'Approval',
-            rows: [rowByKey.votehub_approval],
-            detail: `VoteHub ${rowByKey.votehub_approval?.observed || '—'}`,
-        },
-        {
             label: 'Economics',
             rows: freshnessRows.filter(row => row.key.startsWith('fred_')),
             detail: freshnessRows.filter(row => row.key.startsWith('fred_')).map(row => `${sourceLabel(row.key).replace('FRED ', '')} ${row.observed || '—'}`).join(' · '),
@@ -259,7 +296,7 @@ function updateModelCard() {
         },
     ];
     status.className = `status-banner ${liveStatus}`;
-    status.innerHTML = `<div class="status-summary"><strong>${liveStatus.toUpperCase()}</strong> · Model data through ${metadata.data_through || 'unknown'} · Run ${metadata.run_id || 'unknown'}</div><div class="freshness-grid">${freshnessGroups.map(group => {
+    status.innerHTML = `<div class="status-summary"><strong>${liveStatus.toUpperCase()}</strong> · Updated ${formatDate(new Date(metadata.updated_at))} · Run ${metadata.run_id || 'unknown'}</div><div class="freshness-grid">${freshnessGroups.map(group => {
         const state = groupState(group.rows);
         return `<div class="freshness-item ${state}"><b>${group.label}</b><span>${group.detail}</span><em>${state}</em></div>`;
     }).join('')}</div>`;
@@ -307,7 +344,6 @@ function sourceLabel(key) {
     return {
         silver_averages: 'Silver published average',
         silver_generic_polls: 'Silver poll file',
-        votehub_approval: 'VoteHub approval',
         candidate_registry: 'FEC/Clerk candidates',
         fred_real_disposable_income: 'FRED income',
         fred_unemployment_rate: 'FRED unemployment',
@@ -907,6 +943,7 @@ function setupEventListeners() {
 
             document.querySelectorAll('.chamber-section').forEach(s => s.classList.remove('active'));
             document.querySelector(`.chamber-section[data-chamber="${currentChamber}"]`)?.classList.add('active');
+            renderNationalEnvironment(currentChamber === 'house' ? houseData : senateData, currentChamber);
 
             // Update map to show districts or states
             if (map) updateMapLayer();

@@ -18,6 +18,11 @@ correlated design-error floor prevents false precision. Silver's separately
 published likely-voter maintained average is displayed as current sentiment,
 but is not stacked as another House likelihood.
 
+The national fundamentals prior uses economics only. The existing economic
+coefficient, coefficient uncertainty, standardized-input uncertainty, and
+3.5-point structural standard deviation are retained; economics enters once
+before polling.
+
 The Senate retains its regularized production parameter prior pending a
 Senate-specific recalibration. It uses Silver's latest likely-voter maintained
 average once at the national level and the latest validated maintained average
