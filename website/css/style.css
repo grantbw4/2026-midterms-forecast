@@ -90,19 +90,6 @@ a:hover {
 
 .logo small { color: var(--color-accent); font-family: var(--font-mono); }
 .eyebrow { color: #60a5fa; font: 500 .75rem var(--font-mono); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; }
-.status-banner { max-width: 900px; margin: -28px auto 28px; padding: 12px 16px; border: 1px solid var(--color-border); border-radius: var(--radius); color: var(--color-text-muted); font: .76rem var(--font-mono); }
-.status-banner strong { color: #34d399; }
-.status-banner.degraded strong { color: #fbbf24; }
-.status-banner.blocked strong { color: #f87171; }
-.status-summary { margin-bottom: 10px; }
-.freshness-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.freshness-item { padding: 8px 10px; border: 1px solid var(--color-border); border-radius: 6px; background: rgba(255,255,255,.02); }
-.freshness-item b, .freshness-item span, .freshness-item em { display: block; }
-.freshness-item b { color: var(--color-text); font-family: var(--font-sans); }
-.freshness-item span { margin: 3px 0; color: var(--color-text-muted); line-height: 1.35; }
-.freshness-item em { color: #34d399; font-style: normal; text-transform: uppercase; }
-.freshness-item.degraded em { color: #fbbf24; }
-.freshness-item.blocked em { color: #f87171; }
 
 .likelihood-summary {
     display: grid;
@@ -1296,7 +1283,6 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-    .freshness-grid { grid-template-columns: 1fr; }
     .bayes-flow { grid-template-columns: 1fr; }
     .bayes-flow b { transform: rotate(90deg); text-align: center; }
     .method-steps, .margin-grid, .chamber-method-grid, .national-metric-grid { grid-template-columns: 1fr; }

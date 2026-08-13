@@ -264,43 +264,6 @@ function updateModelCard() {
     document.getElementById('current-margin').textContent = formatMargin(model.current_sentiment?.mean);
     document.getElementById('election-margin').textContent = formatMargin(model.election_day?.mean);
 
-    const status = document.getElementById('model-status');
-    const freshness = metadata.source_freshness || {};
-    const freshnessRows = Object.entries(freshness).map(([key, source]) => {
-        const observed = source.observation_date || source.provider_model_date;
-        const liveAge = observed ? Math.max(0, Math.floor((Date.now() - new Date(`${observed}T00:00:00Z`).getTime()) / 86400000)) : null;
-        const state = liveAge == null ? 'unknown' : (liveAge > Number(source.blocking_days) ? 'blocked' : (liveAge > Number(source.warning_days) ? 'degraded' : 'healthy'));
-        return { key, observed, liveAge, state };
-    });
-    const liveBlocked = freshnessRows.some(row => row.state === 'blocked');
-    const liveDegraded = freshnessRows.some(row => row.state === 'degraded');
-    const liveStatus = liveBlocked ? 'blocked' : (liveDegraded ? 'degraded' : (metadata.model_status || 'degraded'));
-    const rowByKey = Object.fromEntries(freshnessRows.map(row => [row.key, row]));
-    const groupState = rows => rows.some(row => row?.state === 'blocked') ? 'blocked'
-        : (rows.some(row => row?.state === 'degraded') ? 'degraded' : 'healthy');
-    const freshnessGroups = [
-        {
-            label: 'Silver',
-            rows: [rowByKey.silver_averages, rowByKey.silver_generic_polls],
-            detail: `average ${rowByKey.silver_averages?.observed || '—'} · poll model ${rowByKey.silver_generic_polls?.observed || '—'}`,
-        },
-        {
-            label: 'Economics',
-            rows: freshnessRows.filter(row => row.key.startsWith('fred_')),
-            detail: freshnessRows.filter(row => row.key.startsWith('fred_')).map(row => `${sourceLabel(row.key).replace('FRED ', '')} ${row.observed || '—'}`).join(' · '),
-        },
-        {
-            label: 'Candidates',
-            rows: [rowByKey.candidate_registry],
-            detail: `FEC/Clerk ${rowByKey.candidate_registry?.observed || '—'}`,
-        },
-    ];
-    status.className = `status-banner ${liveStatus}`;
-    status.innerHTML = `<div class="status-summary"><strong>${liveStatus.toUpperCase()}</strong> · Updated ${formatDate(new Date(metadata.updated_at))} · Run ${metadata.run_id || 'unknown'}</div><div class="freshness-grid">${freshnessGroups.map(group => {
-        const state = groupState(group.rows);
-        return `<div class="freshness-item ${state}"><b>${group.label}</b><span>${group.detail}</span><em>${state}</em></div>`;
-    }).join('')}</div>`;
-
     const published = houseData.polling?.published_average || {};
     const likelihood = houseData.polling?.national_likelihood || {};
     document.getElementById('likelihood-summary').innerHTML = `
@@ -338,19 +301,6 @@ function updateModelCard() {
         const national = change.national_update || {};
         document.getElementById('change-decomposition').innerHTML = `<strong>Latest change decomposition</strong><span>Control probability ${Number(change.probability_change || 0) >= 0 ? '+' : ''}${(Number(change.probability_change || 0) * 100).toFixed(1)} pp</span><span>Poll update ${formatMargin(national.polling_contribution || 0)}</span><span>Election-day SD ${Number(national.future_uncertainty_std || 0).toFixed(1)} points</span>`;
     }
-}
-
-function sourceLabel(key) {
-    return {
-        silver_averages: 'Silver published average',
-        silver_generic_polls: 'Silver poll file',
-        candidate_registry: 'FEC/Clerk candidates',
-        fred_real_disposable_income: 'FRED income',
-        fred_unemployment_rate: 'FRED unemployment',
-        fred_gdp: 'FRED GDP',
-        fred_cpi: 'FRED CPI',
-        fred_consumer_sentiment: 'FRED sentiment',
-    }[key] || key;
 }
 
 function createCalibrationChart(backtest) {
