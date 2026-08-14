@@ -27,7 +27,8 @@ from models.silver_bulletin import (
     prepare_generic_poll_likelihood,
     prepare_silver_averages,
 )
-from scripts.fetch_inputs import _freshness, _validate_generic_poll_feed
+import scripts.fetch_inputs as fetch_inputs
+from scripts.fetch_inputs import _environment_value, _freshness, _validate_generic_poll_feed
 from scripts.generate_forecast import _publish_staged_bundle
 
 
@@ -163,6 +164,18 @@ def test_freshness_thresholds_fail_closed():
     assert _freshness(today - timedelta(days=2), 2, 7)["state"] == "healthy"
     assert _freshness(today - timedelta(days=3), 2, 7)["state"] == "degraded"
     assert _freshness(today - timedelta(days=8), 2, 7)["state"] == "blocked"
+
+
+def test_environment_value_prefers_injected_secret(monkeypatch):
+    monkeypatch.setenv("FRED_API_KEY", "actions-secret")
+    assert _environment_value("FRED_API_KEY") == "actions-secret"
+
+
+def test_environment_value_reads_local_dotenv_without_dependency(tmp_path, monkeypatch):
+    monkeypatch.delenv("FRED_API_KEY", raising=False)
+    monkeypatch.setattr(fetch_inputs, "PROJECT_ROOT", tmp_path)
+    (tmp_path / ".env").write_text("FRED_API_KEY='local-secret'\n")
+    assert fetch_inputs._environment_value("FRED_API_KEY") == "local-secret"
 
 
 def test_silver_generic_feed_rejects_changed_columns_and_malformed_dates():
@@ -358,7 +371,15 @@ def test_public_schema_and_website_artifacts_match():
         assert output["metadata"]["schema_version"] == "5.0.0"
         assert output["metadata"]["forecast_epoch"] == "2026-08-12"
         assert output["metadata"]["run_id"].startswith("forecast-")
-        assert output["change_decomposition"] is None
+        change = output["change_decomposition"]
+        if change is not None:
+            assert set(change) == {
+                "probability_change", "median_seat_change", "national_update",
+            }
+            assert set(change["national_update"]) == {
+                "fundamentals_prior", "poll_updated_current", "election_day_mean",
+                "polling_contribution", "future_uncertainty_std",
+            }
         assert output["backtest"]["race_polling_gate"]["status"] == "production"
         assert len(output[race_key]) == expected
         assert all(required <= set(race) for race in output[race_key])
@@ -415,7 +436,7 @@ def test_public_methodology_explains_model_and_probability():
         assert phrase in methodology
 
 
-def test_rebaselined_timelines_match_public_summaries():
+def test_timeline_history_matches_latest_public_summaries():
     for filename, output_name, probability in (
         ("timeline.csv", "forecast.json", "prob_dem_majority"),
         ("senate_timeline.csv", "senate_forecast.json", "prob_dem_control"),
@@ -425,20 +446,24 @@ def test_rebaselined_timelines_match_public_summaries():
             dtype={"forecast_epoch": str, "schema_version": str, "model_version": str},
         )
         output = json.loads((PROJECT_ROOT / "outputs" / output_name).read_text())
-        assert len(timeline) == 1
+        assert not timeline.empty
         assert timeline.iloc[0]["date"] == "2026-08-12"
-        assert timeline.iloc[0]["forecast_epoch"] == "2026-08-12"
-        assert timeline.iloc[0]["schema_version"] == "5.0.0"
-        assert np.isclose(timeline.iloc[0][probability], output["summary"][probability])
-        assert timeline.iloc[0]["median_dem_seats"] == output["summary"]["median_dem_seats"]
+        assert timeline["date"].is_unique
+        assert timeline["date"].tolist() == sorted(timeline["date"].tolist())
+        assert (timeline["forecast_epoch"] == "2026-08-12").all()
+        assert (timeline["schema_version"] == "5.0.0").all()
+        assert (timeline["model_version"] == "5.0.0").all()
+        latest = timeline.iloc[-1]
+        assert np.isclose(latest[probability], output["summary"][probability])
+        assert latest["median_dem_seats"] == output["summary"]["median_dem_seats"]
         assert np.isclose(
-            timeline.iloc[0]["published_generic_ballot"],
+            latest["published_generic_ballot"],
             output["summary"]["published_generic_ballot_margin"],
         )
         assert "approval" not in timeline.columns
         assert "national_env" not in timeline.columns
         assert np.isclose(
-            timeline.iloc[0]["election_day_national_margin"],
+            latest["election_day_national_margin"],
             output["summary"]["election_day_national_margin"],
         )
 

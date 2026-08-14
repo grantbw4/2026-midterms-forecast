@@ -1,5 +1,6 @@
 # Environment and secrets
 .env
+env.txt
 *.env.local
 
 # Python

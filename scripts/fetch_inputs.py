@@ -70,6 +70,29 @@ FRESHNESS = {
 }
 
 
+def _environment_value(name: str) -> str:
+    """Read an environment value, with a minimal local ``.env`` fallback."""
+    value = os.getenv(name, "").strip()
+    if value:
+        return value
+    dotenv = PROJECT_ROOT / ".env"
+    if not dotenv.exists():
+        return ""
+    for raw_line in dotenv.read_text().splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("export "):
+            line = line.removeprefix("export ").strip()
+        key, separator, candidate = line.partition("=")
+        if separator and key.strip() == name:
+            candidate = candidate.strip()
+            if len(candidate) >= 2 and candidate[0] == candidate[-1] and candidate[0] in "\"'":
+                candidate = candidate[1:-1]
+            return candidate.strip()
+    return ""
+
+
 def _sha256_bytes(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
 
@@ -249,7 +272,7 @@ def main() -> int:
         help="Local bootstrap only: use FRED's public graph CSV instead of the authenticated API",
     )
     args = parser.parse_args()
-    fred_key = os.getenv("FRED_API_KEY", "").strip()
+    fred_key = _environment_value("FRED_API_KEY")
     if fred_key == "your_fred_api_key_here":
         fred_key = ""
     if not fred_key and not args.allow_keyless_fred:
