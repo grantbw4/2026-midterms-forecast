@@ -2,120 +2,50 @@
   "summary": {
     "accepted_aggregate_likelihoods": 21,
     "rejected": {
-      "candidate_unmapped": 2,
-      "not_two_party": 4
+      "not_two_party": 4,
+      "candidate_unmapped": 2
     },
     "provider": "Silver Bulletin",
     "likelihood_rule": "latest maintained average only"
   },
   "races": {
-    "NC": {
-      "status": "silver_average",
-      "matchup": "COOPER, ROY|WHATLEY, MICHAEL",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
-    },
-    "KS": {
+    "SD": {
       "status": "unresolved_matchup",
       "polls_used": 0
-    },
-    "NH-02": {
-      "status": "silver_average",
-      "matchup": "Maggie Goodlander|WILLIAMS, LILY TANG",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
-    },
-    "NH": {
-      "status": "silver_average",
-      "matchup": "PAPPAS, CHRIS|SUNUNU, JOHN E",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
-    },
-    "AK-01": {
-      "status": "unresolved_matchup",
-      "polls_used": 0
-    },
-    "NY-21": {
-      "status": "silver_average",
-      "matchup": "GENDEBIEN, BLAKE|CONSTANTINO, ANTHONY THOMAS",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
-    },
-    "OH-07": {
-      "status": "silver_average",
-      "matchup": "POINDEXTER, BRIAN|Max L. Miller",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
     },
     "OH": {
       "status": "silver_average",
       "matchup": "BROWN, SHERROD|HUSTED, JON",
       "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
+      "latest_poll_date": "2026-08-24"
     },
-    "AK": {
-      "status": "silver_average",
-      "matchup": "PELTOLA, MARY|SULLIVAN, DAN",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
-    },
-    "NC-01": {
-      "status": "silver_average",
-      "matchup": "Donald G. Davis|BUCKHOUT, LAURIE",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
-    },
-    "FL-13": {
-      "status": "silver_average",
-      "matchup": "GRAY, LEELA J|Anna Paulina Luna",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
-    },
-    "MT": {
+    "ID": {
       "status": "unresolved_matchup",
       "polls_used": 0
     },
-    "MN": {
+    "OH-07": {
       "status": "silver_average",
-      "matchup": "FLANAGAN, MARGARET|TAFOYA, MICHELE",
+      "matchup": "POINDEXTER, BRIAN|Max L. Miller",
       "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
+      "latest_poll_date": "2026-08-24"
     },
-    "MI": {
+    "NY-21": {
       "status": "silver_average",
-      "matchup": "EL-SAYED, ABDUL|ROGERS, MICHAEL J",
+      "matchup": "GENDEBIEN, BLAKE|CONSTANTINO, ANTHONY THOMAS",
       "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
+      "latest_poll_date": "2026-08-24"
     },
-    "FL": {
-      "status": "silver_average",
-      "matchup": "NIXON, ANGELA|MOODY, ASHLEY",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
-    },
-    "MI-04": {
-      "status": "silver_average",
-      "matchup": "MCCANN, SEAN|Bill Huizenga",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
-    },
-    "ME": {
-      "status": "silver_average",
-      "matchup": "JACKSON, TROY DALE|COLLINS, SUSAN M.",
-      "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
-    },
-    "GA": {
+    "KS": {
       "status": "unresolved_matchup",
       "polls_used": 0
     },
-    "ME-02": {
+    "NH": {
       "status": "silver_average",
-      "matchup": "DUNLAP, MATT|LEPAGE, PAUL",
+      "matchup": "PAPPAS, CHRIS|SUNUNU, JOHN E",
       "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
+      "latest_poll_date": "2026-08-24"
     },
-    "SD": {
+    "AK-01": {
       "status": "unresolved_matchup",
       "polls_used": 0
     },
@@ -123,41 +53,111 @@
       "status": "silver_average",
       "matchup": "TALARICO, JAMES|PAXTON, WARREN KENNETH JR.",
       "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
+      "latest_poll_date": "2026-08-24"
     },
-    "IA": {
+    "NH-02": {
       "status": "silver_average",
-      "matchup": "TUREK, JOSHUA|ARENHOLZ, ASHLEY HINSON",
+      "matchup": "Maggie Goodlander|WILLIAMS, LILY TANG",
       "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
+      "latest_poll_date": "2026-08-24"
     },
-    "MA": {
+    "GA": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
+    },
+    "NC": {
       "status": "silver_average",
-      "matchup": "MARKEY, EDWARD SEN.|DEATON, JOHN",
+      "matchup": "COOPER, ROY|WHATLEY, MICHAEL",
       "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
+      "latest_poll_date": "2026-08-24"
+    },
+    "AK": {
+      "status": "silver_average",
+      "matchup": "PELTOLA, MARY|SULLIVAN, DAN",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
+    },
+    "NC-01": {
+      "status": "silver_average",
+      "matchup": "Donald G. Davis|BUCKHOUT, LAURIE",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
+    },
+    "MT": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
     },
     "KY-06": {
       "status": "silver_average",
       "matchup": "DEMBO, ZACH|ALVARADO, RALPH A",
       "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
+      "latest_poll_date": "2026-08-24"
     },
-    "ID": {
-      "status": "unresolved_matchup",
-      "polls_used": 0
+    "MN": {
+      "status": "silver_average",
+      "matchup": "FLANAGAN, MARGARET|TAFOYA, MICHELE",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
     },
     "AR": {
       "status": "silver_average",
       "matchup": "SHOFFNER, HALLIE|COTTON, THOMAS",
       "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
+      "latest_poll_date": "2026-08-24"
+    },
+    "IA": {
+      "status": "silver_average",
+      "matchup": "TUREK, JOSHUA|ARENHOLZ, ASHLEY HINSON",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
+    },
+    "MI": {
+      "status": "silver_average",
+      "matchup": "EL-SAYED, ABDUL|ROGERS, MICHAEL J",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
+    },
+    "MA": {
+      "status": "silver_average",
+      "matchup": "MARKEY, EDWARD SEN.|DEATON, JOHN",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
+    },
+    "MI-04": {
+      "status": "silver_average",
+      "matchup": "MCCANN, SEAN|Bill Huizenga",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
+    },
+    "FL-13": {
+      "status": "silver_average",
+      "matchup": "GRAY, LEELA J|Anna Paulina Luna",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
+    },
+    "FL": {
+      "status": "silver_average",
+      "matchup": "NIXON, ANGELA|MOODY, ASHLEY",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
+    },
+    "ME": {
+      "status": "silver_average",
+      "matchup": "JACKSON, TROY DALE|COLLINS, SUSAN M.",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
+    },
+    "ME-02": {
+      "status": "silver_average",
+      "matchup": "DUNLAP, MATT|LEPAGE, PAUL",
+      "polls_used": 1,
+      "latest_poll_date": "2026-08-24"
     },
     "WI-03": {
       "status": "silver_average",
       "matchup": "COOKE, REBECCA|Derrick Van Orden",
       "polls_used": 1,
-      "latest_poll_date": "2026-08-23"
+      "latest_poll_date": "2026-08-24"
     }
   }
 }
