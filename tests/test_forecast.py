@@ -436,6 +436,13 @@ def test_public_methodology_explains_model_and_probability():
         assert phrase in methodology
 
 
+def test_public_map_uses_openstreetmap_without_carto():
+    app = (PROJECT_ROOT / "website" / "js" / "app.js").read_text()
+    assert "https://tile.openstreetmap.org/{z}/{x}/{y}.png" in app
+    assert "https://www.openstreetmap.org/copyright" in app
+    assert "carto" not in app.lower()
+
+
 def test_timeline_history_matches_latest_public_summaries():
     for filename, output_name, probability in (
         ("timeline.csv", "forecast.json", "prob_dem_majority"),

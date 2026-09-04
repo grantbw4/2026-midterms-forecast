@@ -19,6 +19,11 @@ let currentTimelineChamber = 'house';
 let sortColumn = 'prob_dem';
 let sortDirection = 'desc';
 
+const BASEMAP = {
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+};
+
 // Color scheme for ratings
 const COLORS = {
     safe_d: '#0015BC',
@@ -375,10 +380,9 @@ function initializeMap() {
         maxZoom: 10,
     });
 
-    // Add tile layer (dark theme)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap, &copy; CARTO',
-        subdomains: 'abcd',
+    // Add the API-key-free OpenStreetMap basemap
+    L.tileLayer(BASEMAP.url, {
+        attribution: BASEMAP.attribution,
         maxZoom: 19
     }).addTo(map);
 
