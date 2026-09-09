@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "forecast_epoch": "2026-08-12",
-  "generated_at": "2026-09-08T06:13:45.331544+00:00",
+  "generated_at": "2026-09-09T06:20:06.429526+00:00",
   "status": "healthy",
   "blocked_sources": [],
   "degraded_sources": [],
@@ -10,29 +10,29 @@
     "silver_averages": {
       "provider": "Silver Bulletin",
       "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSyuZYuGnnjFdpjryAiGq6SeRe0ZOoGHKYzPzbxF1X_Ee_cE7411tTGdUbpRerX8_Xe7uRfw_Rkd1Hj/pub?gid=0&single=true&output=csv",
-      "row_count": 4611,
-      "sha256": "7ecf524a52d74a02b7e50b0c32f52a6e311a56a137535b87a732fb985e72e190",
+      "row_count": 4707,
+      "sha256": "644502131cb9bae2f7d8248b0b74799a44c24699c61352e734ffc53b60bc2033",
       "fallback_used": false,
-      "observation_date": "2026-09-06",
-      "age_days": 2,
-      "warning_days": 2,
-      "blocking_days": 7,
-      "state": "healthy",
-      "provider_model_date": "2026-09-06"
-    },
-    "silver_generic_polls": {
-      "provider": "Silver Bulletin",
-      "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRsvXNCZ0ubJr8D_yNcU5q6C0_HBa35K7oDK03KpO7Ca43UwdXaIdvVLWoXEmHHph0EREz5430Hm5yZ/pub?output=csv",
-      "row_count": 575,
-      "sha256": "b3161f8e7cfd4e2e4fa679b01f57c5bdece6ce3ddad623a2b3512f818d2469ad",
-      "fallback_used": false,
-      "observation_date": "2026-09-07",
+      "observation_date": "2026-09-08",
       "age_days": 1,
       "warning_days": 2,
       "blocking_days": 7,
       "state": "healthy",
-      "provider_model_date": "2026-09-07",
-      "latest_poll_end_date": "2026-09-02"
+      "provider_model_date": "2026-09-08"
+    },
+    "silver_generic_polls": {
+      "provider": "Silver Bulletin",
+      "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRsvXNCZ0ubJr8D_yNcU5q6C0_HBa35K7oDK03KpO7Ca43UwdXaIdvVLWoXEmHHph0EREz5430Hm5yZ/pub?output=csv",
+      "row_count": 576,
+      "sha256": "681de692aa6b97ab533c7043c0ca18853076b05cf601c21fa99ae8ba2b6bc84e",
+      "fallback_used": false,
+      "observation_date": "2026-09-08",
+      "age_days": 1,
+      "warning_days": 2,
+      "blocking_days": 7,
+      "state": "healthy",
+      "provider_model_date": "2026-09-08",
+      "latest_poll_end_date": "2026-09-06"
     },
     "candidate_registry": {
       "provider": "FEC and Clerk of the House",
@@ -40,7 +40,7 @@
       "row_count": 7561,
       "sha256": "eca08ae4d7b45084ecb78d02739e2bb48236138fdbb1ddf9edbe34773d2671ba",
       "fallback_used": false,
-      "observation_date": "2026-09-08",
+      "observation_date": "2026-09-09",
       "age_days": 0,
       "warning_days": 2,
       "blocking_days": 7,
@@ -57,7 +57,7 @@
       "sha256": "05000d036583ac1d8b5c02fab5720ff0771ccee084eaffffecf02da42bcc91e9",
       "fallback_used": false,
       "observation_date": "2026-07-01",
-      "age_days": 69,
+      "age_days": 70,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -69,7 +69,7 @@
       "sha256": "f659f5dc7d9428a34f2a6cde2cebdaf95a05fcbce63b4de10294ab8eabea77dd",
       "fallback_used": false,
       "observation_date": "2026-08-01",
-      "age_days": 38,
+      "age_days": 39,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -81,7 +81,7 @@
       "sha256": "79d088cc83b9697041e0a99cfc5a7c591414837736cbf9daed9a1023dcb3330d",
       "fallback_used": false,
       "observation_date": "2026-04-01",
-      "age_days": 160,
+      "age_days": 161,
       "warning_days": 180,
       "blocking_days": 300,
       "state": "healthy"
@@ -93,7 +93,7 @@
       "sha256": "18b3aae26ca44c5449f222951df8e3dcd2981eef5d03561bc46d17517db39c71",
       "fallback_used": false,
       "observation_date": "2026-07-01",
-      "age_days": 69,
+      "age_days": 70,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -105,7 +105,7 @@
       "sha256": "721e32c3a9a7b9f22e82d49b5086dbdd302a2f736f7e96fba7c5a2467cd5725c",
       "fallback_used": false,
       "observation_date": "2026-07-01",
-      "age_days": 69,
+      "age_days": 70,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
