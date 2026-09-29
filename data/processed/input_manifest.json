@@ -1,10 +1,11 @@
 {
   "schema_version": "1.0.0",
   "forecast_epoch": "2026-08-12",
-  "generated_at": "2026-09-28T07:17:15.564357+00:00",
+  "generated_at": "2026-09-29T07:14:30.531747+00:00",
   "status": "degraded",
   "blocked_sources": [],
   "degraded_sources": [
+    "fred_gdp",
     "fred_real_disposable_income"
   ],
   "fallback_used": false,
@@ -12,28 +13,28 @@
     "silver_averages": {
       "provider": "Silver Bulletin",
       "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSyuZYuGnnjFdpjryAiGq6SeRe0ZOoGHKYzPzbxF1X_Ee_cE7411tTGdUbpRerX8_Xe7uRfw_Rkd1Hj/pub?gid=0&single=true&output=csv",
-      "row_count": 5679,
-      "sha256": "1bb964d3151ceda14472fc3875e504bf22e7e1072dba8f0aec35633d883bb8f8",
+      "row_count": 5807,
+      "sha256": "1babae88c874e25c3226a0588c5549eb3774abbf91873ded65efaa69e42ad679",
       "fallback_used": false,
-      "observation_date": "2026-09-26",
-      "age_days": 2,
+      "observation_date": "2026-09-28",
+      "age_days": 1,
       "warning_days": 2,
       "blocking_days": 7,
       "state": "healthy",
-      "provider_model_date": "2026-09-26"
+      "provider_model_date": "2026-09-28"
     },
     "silver_generic_polls": {
       "provider": "Silver Bulletin",
       "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRsvXNCZ0ubJr8D_yNcU5q6C0_HBa35K7oDK03KpO7Ca43UwdXaIdvVLWoXEmHHph0EREz5430Hm5yZ/pub?output=csv",
       "row_count": 608,
-      "sha256": "7aee8ce740d9b3b87abbc1e81ec0d065805656f2a01083851388fa52b274fe20",
+      "sha256": "e093cb622a10268ae04238e98b9bcd0b8b1f2dd7376d32d632e2f46201ca6aa4",
       "fallback_used": false,
-      "observation_date": "2026-09-27",
+      "observation_date": "2026-09-28",
       "age_days": 1,
       "warning_days": 2,
       "blocking_days": 7,
       "state": "healthy",
-      "provider_model_date": "2026-09-27",
+      "provider_model_date": "2026-09-28",
       "latest_poll_end_date": "2026-09-22"
     },
     "candidate_registry": {
@@ -42,7 +43,7 @@
       "row_count": 7654,
       "sha256": "e09719cecd59a5fdeadd0bfc47b884882bb89da1c8268886469e57d08c7eefc0",
       "fallback_used": false,
-      "observation_date": "2026-09-28",
+      "observation_date": "2026-09-29",
       "age_days": 0,
       "warning_days": 2,
       "blocking_days": 7,
@@ -59,7 +60,7 @@
       "sha256": "05000d036583ac1d8b5c02fab5720ff0771ccee084eaffffecf02da42bcc91e9",
       "fallback_used": false,
       "observation_date": "2026-07-01",
-      "age_days": 89,
+      "age_days": 90,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "degraded"
@@ -71,7 +72,7 @@
       "sha256": "f659f5dc7d9428a34f2a6cde2cebdaf95a05fcbce63b4de10294ab8eabea77dd",
       "fallback_used": false,
       "observation_date": "2026-08-01",
-      "age_days": 58,
+      "age_days": 59,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -83,10 +84,10 @@
       "sha256": "79d088cc83b9697041e0a99cfc5a7c591414837736cbf9daed9a1023dcb3330d",
       "fallback_used": false,
       "observation_date": "2026-04-01",
-      "age_days": 180,
+      "age_days": 181,
       "warning_days": 180,
       "blocking_days": 300,
-      "state": "healthy"
+      "state": "degraded"
     },
     "fred_cpi": {
       "provider": "FRED",
@@ -95,7 +96,7 @@
       "sha256": "49b7cd06782ef53bd4fd9931a1c15219fbd0df11661f32176dbedf19a97a6826",
       "fallback_used": false,
       "observation_date": "2026-08-01",
-      "age_days": 58,
+      "age_days": 59,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -107,7 +108,7 @@
       "sha256": "177fd0aa41f7055e638b658b6ba2bca18f8855621fc340e6b3ae38bd8b1fcf96",
       "fallback_used": false,
       "observation_date": "2026-08-01",
-      "age_days": 58,
+      "age_days": 59,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
