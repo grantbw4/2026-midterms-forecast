@@ -1,49 +1,48 @@
 {
   "schema_version": "1.0.0",
   "forecast_epoch": "2026-08-12",
-  "generated_at": "2026-09-30T07:04:11.806149+00:00",
+  "generated_at": "2026-10-01T07:29:33.519699+00:00",
   "status": "degraded",
   "blocked_sources": [],
   "degraded_sources": [
-    "fred_gdp",
-    "fred_real_disposable_income"
+    "fred_gdp"
   ],
   "fallback_used": false,
   "sources": {
     "silver_averages": {
       "provider": "Silver Bulletin",
       "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSyuZYuGnnjFdpjryAiGq6SeRe0ZOoGHKYzPzbxF1X_Ee_cE7411tTGdUbpRerX8_Xe7uRfw_Rkd1Hj/pub?gid=0&single=true&output=csv",
-      "row_count": 5873,
-      "sha256": "9300bd13d6226c07efdd2ebe941ba7a92d0328ee93a443e62a54316ad52d956a",
+      "row_count": 5939,
+      "sha256": "f8f0f9a983a7a8bc0c461d82ee380297729dc62596229e2378ebedc9b5aea641",
       "fallback_used": false,
-      "observation_date": "2026-09-29",
+      "observation_date": "2026-09-30",
       "age_days": 1,
       "warning_days": 2,
       "blocking_days": 7,
       "state": "healthy",
-      "provider_model_date": "2026-09-29"
+      "provider_model_date": "2026-09-30"
     },
     "silver_generic_polls": {
       "provider": "Silver Bulletin",
       "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRsvXNCZ0ubJr8D_yNcU5q6C0_HBa35K7oDK03KpO7Ca43UwdXaIdvVLWoXEmHHph0EREz5430Hm5yZ/pub?output=csv",
-      "row_count": 612,
-      "sha256": "04519e4c8c2833bd51bc263e6eed44b852b3aaba1134819e7bddd19df3bd3da5",
+      "row_count": 616,
+      "sha256": "3d3986566148204035f63cb838d3769f0d3d5b1968cc460ac806fca79f6a82e9",
       "fallback_used": false,
-      "observation_date": "2026-09-29",
+      "observation_date": "2026-09-30",
       "age_days": 1,
       "warning_days": 2,
       "blocking_days": 7,
       "state": "healthy",
-      "provider_model_date": "2026-09-29",
+      "provider_model_date": "2026-09-30",
       "latest_poll_end_date": "2026-09-28"
     },
     "candidate_registry": {
       "provider": "FEC and Clerk of the House",
       "source_url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip",
       "row_count": 7677,
-      "sha256": "18d58769c927f515a63b5128fbb8581d9066e8a63fb7000061f02236e5512c68",
+      "sha256": "c6f118553fcf6696b94bb2dab36f08aa5407f7049e17e7a94cfcaad78376a7cf",
       "fallback_used": false,
-      "observation_date": "2026-09-30",
+      "observation_date": "2026-10-01",
       "age_days": 0,
       "warning_days": 2,
       "blocking_days": 7,
@@ -56,14 +55,14 @@
     "fred_real_disposable_income": {
       "provider": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/DSPIC96",
-      "row_count": 271,
-      "sha256": "05000d036583ac1d8b5c02fab5720ff0771ccee084eaffffecf02da42bcc91e9",
+      "row_count": 272,
+      "sha256": "79e4641d9d1d91a323551e5fe56cd94260d67bf4c07ba8b4225637574ccb857d",
       "fallback_used": false,
-      "observation_date": "2026-07-01",
-      "age_days": 91,
+      "observation_date": "2026-08-01",
+      "age_days": 61,
       "warning_days": 75,
       "blocking_days": 150,
-      "state": "degraded"
+      "state": "healthy"
     },
     "fred_unemployment_rate": {
       "provider": "FRED",
@@ -72,7 +71,7 @@
       "sha256": "f659f5dc7d9428a34f2a6cde2cebdaf95a05fcbce63b4de10294ab8eabea77dd",
       "fallback_used": false,
       "observation_date": "2026-08-01",
-      "age_days": 60,
+      "age_days": 61,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -81,10 +80,10 @@
       "provider": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/GDP",
       "row_count": 90,
-      "sha256": "79d088cc83b9697041e0a99cfc5a7c591414837736cbf9daed9a1023dcb3330d",
+      "sha256": "d1e4300bc1d569bddb39f51ac0d8e1a7bf1b5f73490f387a73a5aada79a8e060",
       "fallback_used": false,
       "observation_date": "2026-04-01",
-      "age_days": 182,
+      "age_days": 183,
       "warning_days": 180,
       "blocking_days": 300,
       "state": "degraded"
@@ -96,7 +95,7 @@
       "sha256": "49b7cd06782ef53bd4fd9931a1c15219fbd0df11661f32176dbedf19a97a6826",
       "fallback_used": false,
       "observation_date": "2026-08-01",
-      "age_days": 60,
+      "age_days": 61,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -108,7 +107,7 @@
       "sha256": "177fd0aa41f7055e638b658b6ba2bca18f8855621fc340e6b3ae38bd8b1fcf96",
       "fallback_used": false,
       "observation_date": "2026-08-01",
-      "age_days": 60,
+      "age_days": 61,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
