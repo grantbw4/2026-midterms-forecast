@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "forecast_epoch": "2026-08-12",
-  "generated_at": "2026-10-25T06:30:59.944798+00:00",
+  "generated_at": "2026-10-26T06:41:04.914422+00:00",
   "status": "degraded",
   "blocked_sources": [],
   "degraded_sources": [
@@ -13,37 +13,37 @@
     "silver_averages": {
       "provider": "Silver Bulletin",
       "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSyuZYuGnnjFdpjryAiGq6SeRe0ZOoGHKYzPzbxF1X_Ee_cE7411tTGdUbpRerX8_Xe7uRfw_Rkd1Hj/pub?gid=0&single=true&output=csv",
-      "row_count": 7805,
-      "sha256": "83cf2ecf682382a1244101c70fff6bcff638afba927010923794ed15886fcd49",
+      "row_count": 7902,
+      "sha256": "6b0db5e988960d5ee6e4f8b5b6b236487bdc3425bde695a887d9e74f2fc7874e",
       "fallback_used": false,
-      "observation_date": "2026-10-24",
+      "observation_date": "2026-10-25",
       "age_days": 1,
       "warning_days": 2,
       "blocking_days": 7,
       "state": "healthy",
-      "provider_model_date": "2026-10-24"
+      "provider_model_date": "2026-10-25"
     },
     "silver_generic_polls": {
       "provider": "Silver Bulletin",
       "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRsvXNCZ0ubJr8D_yNcU5q6C0_HBa35K7oDK03KpO7Ca43UwdXaIdvVLWoXEmHHph0EREz5430Hm5yZ/pub?output=csv",
       "row_count": 657,
-      "sha256": "921408356e35546f51dfd59970c6bc6ffcd0e44de32b595a916a2bc58119950a",
+      "sha256": "077be54020057ca6e14618c19a7e4b713db82ab814248a2ef52846b76cb41afa",
       "fallback_used": false,
-      "observation_date": "2026-10-24",
+      "observation_date": "2026-10-25",
       "age_days": 1,
       "warning_days": 2,
       "blocking_days": 7,
       "state": "healthy",
-      "provider_model_date": "2026-10-24",
+      "provider_model_date": "2026-10-25",
       "latest_poll_end_date": "2026-10-20"
     },
     "candidate_registry": {
       "provider": "FEC and Clerk of the House",
       "source_url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip",
-      "row_count": 7858,
-      "sha256": "c868a50e286f83d6062e1af8e09ee17136be747accfd05595d2267c31dc5806b",
+      "row_count": 7859,
+      "sha256": "7eef33cd62c9fdf85c46a04b9bd6b6ba5858fd451b605b50f9f7688458d5ab01",
       "fallback_used": false,
-      "observation_date": "2026-10-25",
+      "observation_date": "2026-10-26",
       "age_days": 0,
       "warning_days": 2,
       "blocking_days": 7,
@@ -60,7 +60,7 @@
       "sha256": "79e4641d9d1d91a323551e5fe56cd94260d67bf4c07ba8b4225637574ccb857d",
       "fallback_used": false,
       "observation_date": "2026-08-01",
-      "age_days": 85,
+      "age_days": 86,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "degraded"
@@ -72,7 +72,7 @@
       "sha256": "612f97a82eb324895051d363420c7d123563ba418c414de47539555ea027d65d",
       "fallback_used": false,
       "observation_date": "2026-09-01",
-      "age_days": 54,
+      "age_days": 55,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -84,7 +84,7 @@
       "sha256": "d1e4300bc1d569bddb39f51ac0d8e1a7bf1b5f73490f387a73a5aada79a8e060",
       "fallback_used": false,
       "observation_date": "2026-04-01",
-      "age_days": 207,
+      "age_days": 208,
       "warning_days": 180,
       "blocking_days": 300,
       "state": "degraded"
@@ -96,7 +96,7 @@
       "sha256": "71987dc531b316234d3f14dbe0e562607c38900d302a02392d05a2bedb435d51",
       "fallback_used": false,
       "observation_date": "2026-09-01",
-      "age_days": 54,
+      "age_days": 55,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -108,7 +108,7 @@
       "sha256": "211ef2bd7e68752370ffa9d1aa52c5fe90b50759af664a89013980f27da111ca",
       "fallback_used": false,
       "observation_date": "2026-09-01",
-      "age_days": 54,
+      "age_days": 55,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
