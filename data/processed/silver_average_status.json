@@ -1,10 +1,10 @@
 {
   "summary": {
-    "accepted_aggregate_likelihoods": 57,
+    "accepted_aggregate_likelihoods": 58,
     "rejected": {
-      "candidate_unmapped": 5,
       "not_two_party": 5,
-      "not_d_vs_r": 2
+      "candidate_unmapped": 5,
+      "not_d_vs_r": 3
     },
     "provider": "Silver Bulletin",
     "likelihood_rule": "latest maintained average only"
@@ -16,193 +16,277 @@
       "polls_used": 1,
       "latest_poll_date": "2026-10-21"
     },
-    "NM": {
+    "AK-01": {
       "status": "unresolved_matchup",
       "polls_used": 0
     },
-    "PA-01": {
+    "AK": {
       "status": "silver_average",
-      "matchup": "HARVIE, ROBERT J|Brian K. Fitzpatrick",
+      "matchup": "PELTOLA, MARY|SULLIVAN, DAN",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "MT-01": {
-      "status": "silver_average",
-      "matchup": "FORSTAG, SAMUEL KELLEY|FLINT, AARON",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "NE-01": {
-      "status": "silver_average",
-      "matchup": "BACKEMEYER, CHRISTOPHER|Mike Flood",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "NY-21": {
-      "status": "silver_average",
-      "matchup": "GENDEBIEN, BLAKE|CONSTANTINO, ANTHONY THOMAS",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "NH-02": {
-      "status": "silver_average",
-      "matchup": "Maggie Goodlander|WILLIAMS, LILY TANG",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "MN-01": {
-      "status": "silver_average",
-      "matchup": "JOHNSON, JACOB|Brad Finstad",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "NC": {
-      "status": "silver_average",
-      "matchup": "COOPER, ROY|WHATLEY, MICHAEL",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "OH-01": {
-      "status": "silver_average",
-      "matchup": "Greg Landsman|CONROY, ERIC",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "MT": {
-      "status": "unresolved_matchup",
-      "polls_used": 0
-    },
-    "MN": {
-      "status": "silver_average",
-      "matchup": "FLANAGAN, MARGARET|TAFOYA, MICHELE",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "OH": {
-      "status": "silver_average",
-      "matchup": "BROWN, SHERROD|HUSTED, JON",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "NM-02": {
-      "status": "silver_average",
-      "matchup": "Gabe Vasquez|CUNNINGHAM, GREG",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "NH": {
-      "status": "silver_average",
-      "matchup": "PAPPAS, CHRIS|SUNUNU, JOHN E",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
     "OH-10": {
       "status": "silver_average",
       "matchup": "KNICKERBOCKER, KRISTINA|Michael R. Turner",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "OH-07": {
-      "status": "silver_average",
-      "matchup": "POINDEXTER, BRIAN|Max L. Miller",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "NV-02": {
-      "status": "silver_average",
-      "matchup": "BENITEZ-THOMPSON, TERESA|FLIPPO, DAVID",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "MO-02": {
-      "status": "silver_average",
-      "matchup": "WELLMAN, FREDERICK PAUL|Ann Wagner",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "NC-01": {
-      "status": "silver_average",
-      "matchup": "Donald G. Davis|BUCKHOUT, LAURIE",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "NE": {
-      "status": "unresolved_matchup",
-      "polls_used": 0
-    },
-    "MS": {
-      "status": "silver_average",
-      "matchup": "COLOM, SCOTT|HYDE-SMITH, CINDY",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "ME": {
-      "status": "silver_average",
-      "matchup": "JACKSON, TROY DALE|COLLINS, SUSAN M.",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "PA-10": {
-      "status": "silver_average",
-      "matchup": "STELSON, JANELLE|Scott Perry",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "AL-02": {
-      "status": "silver_average",
-      "matchup": "Shomari Figures|MARQUES, RHETT",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "IA-02": {
-      "status": "silver_average",
-      "matchup": "JAMES, LINDSAY|MITCHELL, JOE",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "GA": {
-      "status": "unresolved_matchup",
-      "polls_used": 0
-    },
-    "FL": {
-      "status": "silver_average",
-      "matchup": "NIXON, ANGELA|MOODY, ASHLEY",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
     "AL": {
       "status": "silver_average",
       "matchup": "WESS, EVERETT W|MOORE, FELIX BARRY",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
-    "FL-22": {
+    "MI-04": {
       "status": "silver_average",
-      "matchup": "DANDIYA, PIA|ASKAR, CASEY",
+      "matchup": "MCCANN, SEAN|Bill Huizenga",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
-    "FL-13": {
+    "MI-07": {
       "status": "silver_average",
-      "matchup": "GRAY, LEELA J|Anna Paulina Luna",
+      "matchup": "LAWRENCE, WILLIAM|Tom Barrett",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
+    },
+    "MI": {
+      "status": "silver_average",
+      "matchup": "EL-SAYED, ABDUL|ROGERS, MICHAEL J",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "MN-01": {
+      "status": "silver_average",
+      "matchup": "JOHNSON, JACOB|Brad Finstad",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "SC": {
+      "status": "silver_average",
+      "matchup": "ANDREWS, ANNIE|GRAHAM, LINDSEY O.",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "MN": {
+      "status": "silver_average",
+      "matchup": "FLANAGAN, MARGARET|TAFOYA, MICHELE",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "MO-02": {
+      "status": "silver_average",
+      "matchup": "WELLMAN, FREDERICK PAUL|Ann Wagner",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "MS": {
+      "status": "silver_average",
+      "matchup": "COLOM, SCOTT|HYDE-SMITH, CINDY",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "SC-01": {
+      "status": "silver_average",
+      "matchup": "LACORE, NANCY|HONEYCUTT, JENNY COSTA",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "RI": {
+      "status": "silver_average",
+      "matchup": "REED, JOHN F.|MCKAY, RAYMOND TYLER MR",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "PA-08": {
+      "status": "silver_average",
+      "matchup": "COGNETTI, PAIGE|Robert P. Bresnahan, Jr.",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "PA-07": {
+      "status": "silver_average",
+      "matchup": "BROOKS, BOB|Ryan Mackenzie",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "PA-10": {
+      "status": "silver_average",
+      "matchup": "STELSON, JANELLE|Scott Perry",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "MT-01": {
+      "status": "silver_average",
+      "matchup": "FORSTAG, SAMUEL KELLEY|FLINT, AARON",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "ME": {
+      "status": "silver_average",
+      "matchup": "JACKSON, TROY DALE|COLLINS, SUSAN M.",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "PA-01": {
+      "status": "silver_average",
+      "matchup": "HARVIE, ROBERT J|Brian K. Fitzpatrick",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "OH": {
+      "status": "silver_average",
+      "matchup": "BROWN, SHERROD|HUSTED, JON",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "NC-01": {
+      "status": "silver_average",
+      "matchup": "Donald G. Davis|BUCKHOUT, LAURIE",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "NC": {
+      "status": "silver_average",
+      "matchup": "COOPER, ROY|WHATLEY, MICHAEL",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "NE-01": {
+      "status": "silver_average",
+      "matchup": "BACKEMEYER, CHRISTOPHER|Mike Flood",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "NE": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
+    },
+    "NH-02": {
+      "status": "silver_average",
+      "matchup": "Maggie Goodlander|WILLIAMS, LILY TANG",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "NH": {
+      "status": "silver_average",
+      "matchup": "PAPPAS, CHRIS|SUNUNU, JOHN E",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "NM-02": {
+      "status": "silver_average",
+      "matchup": "Gabe Vasquez|CUNNINGHAM, GREG",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "NM": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
+    },
+    "NV-02": {
+      "status": "silver_average",
+      "matchup": "BENITEZ-THOMPSON, TERESA|FLIPPO, DAVID",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "NY-17": {
+      "status": "silver_average",
+      "matchup": "CONLEY, CAIT|Michael Lawler",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "OH-07": {
+      "status": "silver_average",
+      "matchup": "POINDEXTER, BRIAN|Max L. Miller",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "NY-21": {
+      "status": "silver_average",
+      "matchup": "GENDEBIEN, BLAKE|CONSTANTINO, ANTHONY THOMAS",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "OH-01": {
+      "status": "silver_average",
+      "matchup": "Greg Landsman|CONROY, ERIC",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "MT": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
+    },
+    "AL-02": {
+      "status": "silver_average",
+      "matchup": "Shomari Figures|MARQUES, RHETT",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "SD": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
+    },
+    "MA": {
+      "status": "silver_average",
+      "matchup": "MARKEY, EDWARD SEN.|DEATON, JOHN",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
     },
     "AR-02": {
       "status": "unresolved_matchup",
       "polls_used": 0
     },
-    "CO-05": {
+    "AR": {
       "status": "silver_average",
-      "matchup": "KILLIN, JESSICA WILLOW|Jeff Crank",
+      "matchup": "SHOFFNER, HALLIE|COTTON, THOMAS",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
-    "CA-48": {
+    "WI-01": {
       "status": "silver_average",
-      "matchup": "VON WILPERT, MARNI|DESMOND, JIM",
+      "matchup": "BERMAN, MITCHELL|Bryan Steil",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
+    },
+    "AZ-02": {
+      "status": "silver_average",
+      "matchup": "NEZ, JONATHAN MICHAEL|Elijah Crane",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "WA-03": {
+      "status": "silver_average",
+      "matchup": "Marie Gluesenkamp Perez|BRAUN, JOHN",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "CA-11": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
+    },
+    "CA-34": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
+    },
+    "VT-01": {
+      "status": "silver_average",
+      "matchup": "Becca Balint|MALLOY, GERALD MR.",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "VA-05": {
+      "status": "silver_average",
+      "matchup": "PERRIELLO, THOMAS STUART PRICE|John J. McGuire III",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "VA-01": {
+      "status": "silver_average",
+      "matchup": "TAYLOR, SHANNON LEIGH|Robert J. Wittman",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
     },
     "CA-40": {
       "status": "unresolved_matchup",
@@ -212,149 +296,87 @@
       "status": "silver_average",
       "matchup": "TALARICO, JAMES|PAXTON, WARREN KENNETH JR.",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
-    "CA-11": {
-      "status": "unresolved_matchup",
-      "polls_used": 0
-    },
-    "VA-01": {
+    "CA-48": {
       "status": "silver_average",
-      "matchup": "TAYLOR, SHANNON LEIGH|Robert J. Wittman",
+      "matchup": "VON WILPERT, MARNI|DESMOND, JIM",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
-    "VA-05": {
+    "CO-05": {
       "status": "silver_average",
-      "matchup": "PERRIELLO, THOMAS STUART PRICE|John J. McGuire III",
+      "matchup": "KILLIN, JESSICA WILLOW|Jeff Crank",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "AZ-02": {
-      "status": "silver_average",
-      "matchup": "NEZ, JONATHAN MICHAEL|Elijah Crane",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "WI-01": {
-      "status": "silver_average",
-      "matchup": "BERMAN, MITCHELL|Bryan Steil",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "VT-01": {
-      "status": "silver_average",
-      "matchup": "Becca Balint|MALLOY, GERALD MR.",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "AR": {
-      "status": "silver_average",
-      "matchup": "SHOFFNER, HALLIE|COTTON, THOMAS",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "IA": {
-      "status": "silver_average",
-      "matchup": "TUREK, JOSHUA|ARENHOLZ, ASHLEY HINSON",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "ID-01": {
-      "status": "silver_average",
-      "matchup": "PETERSON, KAYLEE JADE|Russ Fulcher",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "TX-09": {
-      "status": "silver_average",
-      "matchup": "GUTIERREZ, LETICIA|MEALER, ALEXANDRA",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "TX-35": {
-      "status": "silver_average",
-      "matchup": "GARCIA, JOHNNY|DE LA CRUZ, CARLOS JR.",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "PA-07": {
-      "status": "silver_average",
-      "matchup": "BROOKS, BOB|Ryan Mackenzie",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "PA-08": {
-      "status": "silver_average",
-      "matchup": "COGNETTI, PAIGE|Robert P. Bresnahan, Jr.",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "RI": {
-      "status": "silver_average",
-      "matchup": "REED, JOHN F.|MCKAY, RAYMOND TYLER MR",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "SC-01": {
-      "status": "silver_average",
-      "matchup": "LACORE, NANCY|HONEYCUTT, JENNY COSTA",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "MI": {
-      "status": "silver_average",
-      "matchup": "EL-SAYED, ABDUL|ROGERS, MICHAEL J",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "SC": {
-      "status": "silver_average",
-      "matchup": "ANDREWS, ANNIE|GRAHAM, LINDSEY O.",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "MI-07": {
-      "status": "silver_average",
-      "matchup": "LAWRENCE, WILLIAM|Tom Barrett",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "MI-04": {
-      "status": "silver_average",
-      "matchup": "MCCANN, SEAN|Bill Huizenga",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "WA-03": {
-      "status": "silver_average",
-      "matchup": "Marie Gluesenkamp Perez|BRAUN, JOHN",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "AK-01": {
-      "status": "unresolved_matchup",
-      "polls_used": 0
+      "latest_poll_date": "2026-10-28"
     },
     "ME-02": {
       "status": "silver_average",
       "matchup": "DUNLAP, MATT|LEPAGE, PAUL",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
-    "AK": {
+    "FL-13": {
       "status": "silver_average",
-      "matchup": "PELTOLA, MARY|SULLIVAN, DAN",
+      "matchup": "GRAY, LEELA J|Anna Paulina Luna",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
-    "NY-17": {
+    "FL": {
       "status": "silver_average",
-      "matchup": "CONLEY, CAIT|Michael Lawler",
+      "matchup": "NIXON, ANGELA|MOODY, ASHLEY",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
-    "SD": {
+    "GA": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
+    },
+    "IA-02": {
+      "status": "silver_average",
+      "matchup": "JAMES, LINDSAY|MITCHELL, JOE",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "IA": {
+      "status": "silver_average",
+      "matchup": "TUREK, JOSHUA|ARENHOLZ, ASHLEY HINSON",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "ID-01": {
+      "status": "silver_average",
+      "matchup": "PETERSON, KAYLEE JADE|Russ Fulcher",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "ID": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
+    },
+    "IN-05": {
+      "status": "silver_average",
+      "matchup": "FORD, JAMES (J.D.) DAVID|Victoria Spartz",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "KS": {
+      "status": "unresolved_matchup",
+      "polls_used": 0
+    },
+    "TX-09": {
+      "status": "silver_average",
+      "matchup": "GUTIERREZ, LETICIA|MEALER, ALEXANDRA",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "TX-35": {
+      "status": "silver_average",
+      "matchup": "GARCIA, JOHNNY|DE LA CRUZ, CARLOS JR.",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
+    },
+    "TX-34": {
       "status": "unresolved_matchup",
       "polls_used": 0
     },
@@ -362,43 +384,31 @@
       "status": "silver_average",
       "matchup": "DEMBO, ZACH|ALVARADO, RALPH A",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
-    },
-    "TX-15": {
-      "status": "silver_average",
-      "matchup": "PULIDO, BOBBY|Monica De La Cruz",
-      "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
     "TX-28": {
       "status": "silver_average",
       "matchup": "Henry Cuellar|TIJERINA, TANO",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     },
-    "KS": {
-      "status": "unresolved_matchup",
-      "polls_used": 0
-    },
-    "ID": {
-      "status": "unresolved_matchup",
-      "polls_used": 0
-    },
-    "TX-34": {
-      "status": "unresolved_matchup",
-      "polls_used": 0
-    },
-    "MA": {
+    "TX-15": {
       "status": "silver_average",
-      "matchup": "MARKEY, EDWARD SEN.|DEATON, JOHN",
+      "matchup": "PULIDO, BOBBY|Monica De La Cruz",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
+    },
+    "FL-22": {
+      "status": "silver_average",
+      "matchup": "DANDIYA, PIA|ASKAR, CASEY",
+      "polls_used": 1,
+      "latest_poll_date": "2026-10-28"
     },
     "WI-03": {
       "status": "silver_average",
       "matchup": "COOKE, REBECCA|Derrick Van Orden",
       "polls_used": 1,
-      "latest_poll_date": "2026-10-26"
+      "latest_poll_date": "2026-10-28"
     }
   }
 }
