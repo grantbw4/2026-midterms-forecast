@@ -1,49 +1,46 @@
 {
   "schema_version": "1.0.0",
   "forecast_epoch": "2026-08-12",
-  "generated_at": "2026-10-29T07:26:56.553903+00:00",
-  "status": "degraded",
+  "generated_at": "2026-10-30T07:30:21.645335+00:00",
+  "status": "healthy",
   "blocked_sources": [],
-  "degraded_sources": [
-    "fred_gdp",
-    "fred_real_disposable_income"
-  ],
+  "degraded_sources": [],
   "fallback_used": false,
   "sources": {
     "silver_averages": {
       "provider": "Silver Bulletin",
       "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSyuZYuGnnjFdpjryAiGq6SeRe0ZOoGHKYzPzbxF1X_Ee_cE7411tTGdUbpRerX8_Xe7uRfw_Rkd1Hj/pub?gid=0&single=true&output=csv",
-      "row_count": 8197,
-      "sha256": "da925aa38e3d92da80e627a787fb25b9577853bf127dce6e08113f82be0a4fd0",
+      "row_count": 8297,
+      "sha256": "79628c9910f6b60c4ba4b0ca49d8d26f2a26264fc5a7cef253da8bbad77eb41d",
       "fallback_used": false,
-      "observation_date": "2026-10-28",
+      "observation_date": "2026-10-29",
       "age_days": 1,
       "warning_days": 2,
       "blocking_days": 7,
       "state": "healthy",
-      "provider_model_date": "2026-10-28"
+      "provider_model_date": "2026-10-29"
     },
     "silver_generic_polls": {
       "provider": "Silver Bulletin",
       "source_url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRsvXNCZ0ubJr8D_yNcU5q6C0_HBa35K7oDK03KpO7Ca43UwdXaIdvVLWoXEmHHph0EREz5430Hm5yZ/pub?output=csv",
-      "row_count": 670,
-      "sha256": "6fc2df2306042ecceedd00004caf703c193600cd12a392ad34251abc57416513",
+      "row_count": 674,
+      "sha256": "cad022da3bb7018860f6d375fe7879599a1efe85375d813ab1d590ba52ff1ea1",
       "fallback_used": false,
-      "observation_date": "2026-10-28",
+      "observation_date": "2026-10-29",
       "age_days": 1,
       "warning_days": 2,
       "blocking_days": 7,
       "state": "healthy",
-      "provider_model_date": "2026-10-28",
-      "latest_poll_end_date": "2026-10-26"
+      "provider_model_date": "2026-10-29",
+      "latest_poll_end_date": "2026-10-27"
     },
     "candidate_registry": {
       "provider": "FEC and Clerk of the House",
       "source_url": "https://www.fec.gov/files/bulk-downloads/2026/cn26.zip",
-      "row_count": 7860,
-      "sha256": "18ea5ba4ca0acfd2737bd93de65177a351f473efca24de7c685124fff1b8c88f",
+      "row_count": 7863,
+      "sha256": "93b6af4fb5c4f3f7d7378bf061cfe4a0ff6b600630adfb47d057b88a8b22d697",
       "fallback_used": false,
-      "observation_date": "2026-10-29",
+      "observation_date": "2026-10-30",
       "age_days": 0,
       "warning_days": 2,
       "blocking_days": 7,
@@ -56,14 +53,14 @@
     "fred_real_disposable_income": {
       "provider": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/DSPIC96",
-      "row_count": 272,
-      "sha256": "79e4641d9d1d91a323551e5fe56cd94260d67bf4c07ba8b4225637574ccb857d",
+      "row_count": 273,
+      "sha256": "a668ccd64f8e0428a5a428dade7f976ae5d1dc4f5292c0ad3106ae7668898e7b",
       "fallback_used": false,
-      "observation_date": "2026-08-01",
-      "age_days": 89,
+      "observation_date": "2026-09-01",
+      "age_days": 59,
       "warning_days": 75,
       "blocking_days": 150,
-      "state": "degraded"
+      "state": "healthy"
     },
     "fred_unemployment_rate": {
       "provider": "FRED",
@@ -72,7 +69,7 @@
       "sha256": "612f97a82eb324895051d363420c7d123563ba418c414de47539555ea027d65d",
       "fallback_used": false,
       "observation_date": "2026-09-01",
-      "age_days": 58,
+      "age_days": 59,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -80,14 +77,14 @@
     "fred_gdp": {
       "provider": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/GDP",
-      "row_count": 90,
-      "sha256": "d1e4300bc1d569bddb39f51ac0d8e1a7bf1b5f73490f387a73a5aada79a8e060",
+      "row_count": 91,
+      "sha256": "d6535ec095a05204f1043939caf61eb4455caf7de2ab163c6b862201b74b3196",
       "fallback_used": false,
-      "observation_date": "2026-04-01",
-      "age_days": 211,
+      "observation_date": "2026-07-01",
+      "age_days": 121,
       "warning_days": 180,
       "blocking_days": 300,
-      "state": "degraded"
+      "state": "healthy"
     },
     "fred_cpi": {
       "provider": "FRED",
@@ -96,7 +93,7 @@
       "sha256": "71987dc531b316234d3f14dbe0e562607c38900d302a02392d05a2bedb435d51",
       "fallback_used": false,
       "observation_date": "2026-09-01",
-      "age_days": 58,
+      "age_days": 59,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
@@ -108,7 +105,7 @@
       "sha256": "211ef2bd7e68752370ffa9d1aa52c5fe90b50759af664a89013980f27da111ca",
       "fallback_used": false,
       "observation_date": "2026-09-01",
-      "age_days": 58,
+      "age_days": 59,
       "warning_days": 75,
       "blocking_days": 150,
       "state": "healthy"
