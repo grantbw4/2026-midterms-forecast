@@ -26,6 +26,7 @@ import requests
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from models.forecast_archive import guard_input_refresh  # noqa: E402
 from models.race_polling import (  # noqa: E402
     CandidateRegistry,
     FECClient,
@@ -272,6 +273,7 @@ def main() -> int:
         help="Local bootstrap only: use FRED's public graph CSV instead of the authenticated API",
     )
     args = parser.parse_args()
+    guard_input_refresh()
     fred_key = _environment_value("FRED_API_KEY")
     if fred_key == "your_fred_api_key_here":
         fred_key = ""

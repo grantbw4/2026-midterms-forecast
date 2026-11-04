@@ -62,6 +62,22 @@ a:hover {
 }
 
 /* Header */
+.archive-notice {
+    margin-bottom: 32px;
+    padding: 24px;
+    border: 1px solid #30476b;
+    border-left: 4px solid var(--color-accent);
+    border-radius: var(--radius-lg);
+    background: #111b2a;
+    text-align: left;
+}
+.archive-notice h2 { margin: 6px 0 12px; font-size: clamp(1.25rem, 3vw, 1.7rem); }
+.archive-notice p:last-child { color: #bdcbe0; max-width: 80ch; }
+.component-message { padding: 20px; color: #bdcbe0; }
+.chart-container.unavailable { height: auto; min-height: 0; }
+button:disabled { opacity: .45; cursor: default; }
+[hidden] { display: none !important; }
+
 .header {
     position: sticky;
     top: 0;
@@ -201,6 +217,7 @@ a:hover {
 /* Hero Section */
 .hero {
     padding: 60px 0 80px;
+    scroll-margin-top: 64px;
 }
 
 .hero-header {
@@ -415,7 +432,6 @@ a:hover {
 .probability-card strong { color: #93c5fd; font-family: var(--font-mono); }
 .methodology-link { margin-top: 24px; text-align: center; }
 .methodology-link a { font-weight: 600; }
-.decomposition { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; }
 .decomposition > * { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 999px; padding: 8px 14px; font: .78rem var(--font-mono); }
 
 .env-item {

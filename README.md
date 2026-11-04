@@ -2,7 +2,9 @@
 
 A transparent Bayesian forecast for the 2026 U.S. House and Senate elections.
 
-**Live dashboard:** [grantbw4.github.io/2026-midterms-forecast](https://grantbw4.github.io/2026-midterms-forecast/)
+**Final forecast archive:** [grantbw4.github.io/2026-midterms-forecast](https://grantbw4.github.io/2026-midterms-forecast/)
+
+Frozen at the forecast published November 3, 2026 at 12:16 a.m. Pacific: **91.62%** Democratic House majority probability and **76.40%** Democratic Senate control probability. Updates have ended. The site preserves forecast probabilities, not election results.
 
 **Start with the methodology:** [METHODOLOGY.md](METHODOLOGY.md) explains every national metric, the House/Senate differences, the race model, the simulation, and how to interpret the probabilities.
 
@@ -34,28 +36,32 @@ control probability:  share of correlated simulations reaching 218 House or 51 S
 
 The prior standard deviation includes a 3.5-point structural term, uncertainty in the economic coefficient, and uncertainty in the standardized economic input. Economics enters only in the prior; it is not added again after polling.
 
-## Reproduce the forecast
+## Verify the archive and run research
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python3 -m pytest -q
-python3 scripts/generate_forecast.py
+python3 -m models.forecast_archive
+node --test tests/frontend.test.cjs
+python3 scripts/generate_forecast.py --skip-timeline --skip-website-copy --allow-blocked-inputs --output-dir /tmp/forecast-research
 ```
 
-Forecast generation is deterministic and network-free. Daily acquisition runs separately with `python3 scripts/fetch_inputs.py`, requires `FRED_API_KEY`, and writes a validated manifest. Invalid or catastrophically stale inputs cannot replace the existing public bundle.
+The published artifacts are immutable. `website/archive.json` records their SHA-256 hashes, original timestamp, run ID, and source commit. CI and Pages deployment verify all four files and their `outputs` copies. Scheduled acquisition and publication have been removed; `scripts/fetch_inputs.py` refuses to refresh the frozen checkout.
+
+Research generation is network-free and requires both `--skip-website-copy` and an output directory outside this checkout. `--allow-blocked-inputs` permits research with aged cached inputs; it cannot bypass archive protection. Research runs are not guaranteed to reproduce the archived timestamp or exact numerical outputs, which are preserved in the original artifacts. No input refresh or model rerun was used to create the archive.
 
 ## Public outputs
 
 The House and Senate JSON artifacts contain:
 
 - An explicit `national_environment` object with the economy-only prior, published Silver sentiment, chamber polling input, posterior current margin, Election Day forecast, economic composite, and all five economic components.
-- Per-source observation dates and live freshness thresholds.
+- Per-source observation dates and freshness assessments at publication time.
 - Race-level prior and posterior margins, 90% credible intervals, probabilities, polling use, source links, and data quality.
 - Internal schema and model versions for compatibility; these are not reader-facing branding.
 
-The public timeline begins on August 12, 2026. Same-day runs replace that date's baseline instead of adding a duplicate.
+The public timeline preserves saved forecasts from August 12 through November 3, 2026, including gaps. The polling chart shows the saved Silver history and the final House polling input; historical House credible bands are omitted because the artifact contains only one House model estimate. Snapshot credible intervals remain available.
 
 ## Data sources
 

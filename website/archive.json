@@ -1,0 +1,14 @@
+{
+  "status": "frozen",
+  "election_date": "2026-11-03",
+  "forecast_updated_at": "2026-11-03T08:16:10.819058+00:00",
+  "forecast_timezone": "America/Los_Angeles",
+  "run_id": "forecast-20261103T081610Z-22f8084f3cb1",
+  "source_commit": "6e39b248d4531902b024a337bd43a11e35aafb66",
+  "sha256": {
+    "forecast.json": "2f8591af59c27b69dfd4f0e65cdc3c625b0ea614f4d96ad7b9f8a4694f2bc3e7",
+    "senate_forecast.json": "e8b4305b858adc7dc2de1d7fba207535a5a372fb538cfed811f8218cde1cf851",
+    "timeline.csv": "ca36ce3ef386bad79d75f18530ea936ae6210ae90a152a3f64d9d3290e2c13ee",
+    "senate_timeline.csv": "830da4968e375c420481f93eddf3ca0feff872c3236c49d1b95d586e1c214184"
+  }
+}

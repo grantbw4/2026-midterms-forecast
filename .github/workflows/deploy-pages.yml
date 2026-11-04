@@ -1,11 +1,6 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Run after daily forecast update
-  workflow_run:
-    workflows: ["Daily Forecast Update"]
-    types:
-      - completed
   # Allow manual deployment
   workflow_dispatch:
   # Deploy on pushes to website directory
@@ -14,6 +9,9 @@ on:
       - master
     paths:
       - 'website/**'
+      - 'outputs/**'
+      - 'models/forecast_archive.py'
+      - '.github/workflows/deploy-pages.yml'
 
 permissions:
   contents: read
@@ -27,8 +25,6 @@ concurrency:
 
 jobs:
   deploy:
-    # Only run if workflow_run succeeded (or if triggered manually/by push)
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -36,11 +32,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: master
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify frozen archive before publication
+        run: python -m models.forecast_archive
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

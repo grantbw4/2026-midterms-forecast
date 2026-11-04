@@ -57,11 +57,12 @@ function parseCSV(csvText) {
     const lines = csvText.trim().split('\n');
     if (lines.length < 2) return [];
 
-    const headers = lines[0].split(',');
+    const headers = lines[0].trim().split(',');
     const data = [];
 
     for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(',');
+        if (!lines[i].trim()) continue;
+        const values = lines[i].trim().split(',');
         const row = {};
         headers.forEach((header, idx) => {
             const val = values[idx];
@@ -79,114 +80,148 @@ function parseCSV(csvText) {
     return data;
 }
 
-// Load all data
+// Each optional resource can fail without hiding the rest of the archive.
+async function loadResource(path, format = 'json') {
+    try {
+        const response = await fetch(`${path}?v=archive-1`);
+        if (!response.ok) return null;
+        return format === 'csv' ? parseCSV(await response.text()) : await response.json();
+    } catch (error) {
+        console.warn(`Could not load ${path}`, error);
+        return null;
+    }
+}
+
 async function loadData() {
-    // Cache-busting timestamp to prevent stale data
-    const cacheBuster = `?v=${Date.now()}`;
-
-    const paths = ['./forecast.json', '../outputs/forecast.json'];
-    const senatePaths = ['./senate_forecast.json', '../outputs/senate_forecast.json'];
-    const geoPaths = ['./data/districts.geojson', '../website/data/districts.geojson'];
-    const statePaths = ['./data/states.geojson', '../website/data/states.geojson'];
-    const houseTimelinePaths = ['./timeline.csv', '../outputs/timeline.csv'];
-    const senateTimelinePaths = ['./senate_timeline.csv', '../outputs/senate_timeline.csv'];
-
-    // Load House forecast
-    for (const path of paths) {
-        try {
-            const response = await fetch(path + cacheBuster);
-            if (response.ok) {
-                houseData = await response.json();
-                break;
-            }
-        } catch (e) { }
-    }
-
-    // Load Senate forecast
-    for (const path of senatePaths) {
-        try {
-            const response = await fetch(path + cacheBuster);
-            if (response.ok) {
-                senateData = await response.json();
-                break;
-            }
-        } catch (e) { }
-    }
-
-    // Load district GeoJSON (static, no cache bust needed)
-    for (const path of geoPaths) {
-        try {
-            const response = await fetch(path);
-            if (response.ok) {
-                districtGeoJSON = await response.json();
-                break;
-            }
-        } catch (e) { }
-    }
-
-    // Load states GeoJSON (static, no cache bust needed)
-    for (const path of statePaths) {
-        try {
-            const response = await fetch(path);
-            if (response.ok) {
-                statesGeoJSON = await response.json();
-                break;
-            }
-        } catch (e) { }
-    }
-
-    // Load House timeline
-    for (const path of houseTimelinePaths) {
-        try {
-            const response = await fetch(path + cacheBuster);
-            if (response.ok) {
-                const csvText = await response.text();
-                houseTimeline = parseCSV(csvText);
-                break;
-            }
-        } catch (e) { }
-    }
-
-    // Load Senate timeline
-    for (const path of senateTimelinePaths) {
-        try {
-            const response = await fetch(path + cacheBuster);
-            if (response.ok) {
-                const csvText = await response.text();
-                senateTimeline = parseCSV(csvText);
-                break;
-            }
-        } catch (e) { }
-    }
-
-    if (!houseData) {
-        document.body.innerHTML = `
-            <div style="padding: 48px; text-align: center; color: #888;">
-                <h2>Unable to load forecast data</h2>
-                <p>Make sure forecast.json exists.</p>
-            </div>
-        `;
+    [houseData, senateData, districtGeoJSON, statesGeoJSON, houseTimeline, senateTimeline] = await Promise.all([
+        loadResource('./forecast.json'), loadResource('./senate_forecast.json'),
+        loadResource('./data/districts.geojson'), loadResource('./data/states.geojson'),
+        loadResource('./timeline.csv', 'csv'), loadResource('./senate_timeline.csv', 'csv'),
+    ]);
+    if (!houseData && !senateData) {
+        const error = document.getElementById('forecast-error');
+        error.hidden = false;
+        error.textContent = 'The archived forecast data could not be loaded. Please reload the page.';
         return;
     }
-
     initializePage();
 }
 
-// Initialize all page components
+function componentMessage(id, message = '') {
+    const target = document.getElementById(id);
+    if (!target) return;
+    let status = document.querySelector(`[data-status-for="${id}"]`);
+    if (!status) {
+        status = document.createElement('p');
+        status.dataset.statusFor = id;
+        status.className = 'component-message';
+        status.setAttribute('role', 'status');
+        target.before(status);
+    }
+    status.textContent = message;
+    status.hidden = !message;
+    target.hidden = Boolean(message);
+    if (target.tagName === 'CANVAS') target.parentElement?.classList.toggle('unavailable', Boolean(message));
+}
+
+function renderOptional(id, action) {
+    try {
+        action();
+    } catch (error) {
+        console.warn(`Could not display ${id}`, error);
+        componentMessage(id, 'This visualization is unavailable. The archived statistics and race table remain available.');
+    }
+}
+
+function chartAvailable(id) {
+    if (typeof Chart !== 'function') {
+        componentMessage(id, 'Chart unavailable. The archived statistics and race table remain available.');
+        return false;
+    }
+    componentMessage(id);
+    return true;
+}
+
+function renderMap() {
+    const geometry = currentChamber === 'house' ? districtGeoJSON : statesGeoJSON;
+    if (typeof L === 'undefined' || !geometry) {
+        componentMessage('map-container', 'Map unavailable. Explore the archived races in the table below.');
+        return;
+    }
+    componentMessage('map-container');
+    if (!map) initializeMap();
+    else {
+        updateMapLayer();
+        map.invalidateSize();
+    }
+}
+
+// Calendar dates use UTC consistently, independent of the visitor's timezone.
+function dateValue(date) {
+    return Date.parse(`${date}T00:00:00Z`);
+}
+
+function chartDate(value) {
+    return new Date(value).toLocaleDateString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC'});
+}
+
+function dateAxis(points) {
+    const dates = points.map(point => point.x);
+    return {
+        type: 'linear', min: Math.min(...dates), max: Math.max(...dates),
+        title: {display: true, text: 'Date', color: '#aaa'},
+        ticks: {color: '#aaa', maxTicksLimit: 6, callback: chartDate},
+        grid: {display: false},
+    };
+}
+
 function initializePage() {
-    const timelineDescription = document.querySelector('#timeline .section-desc');
-    if (timelineDescription) timelineDescription.textContent = 'Daily probability of Democratic chamber control since the current methodology began on August 12, 2026.';
-    updateHouseStats();
+    if (houseData) updateHouseStats();
     if (senateData) updateSenateStats();
-    if (districtGeoJSON) initializeMap();
-    createSeatChart();
-    if (houseTimeline || senateTimeline) createTimelineChart();
-    updateModelCard();
-    renderNationalEnvironment(houseData, 'house');
-    createNationalTrendChart();
-    populateStateFilter();
-    renderTable();
+    document.querySelectorAll('.chamber-btn').forEach(button => {
+        button.disabled = !(button.dataset.chamber === 'house' ? houseData : senateData);
+        if (button.disabled) button.title = 'Archived chamber data unavailable';
+    });
+    if (!houseData || !senateData) {
+        const error = document.getElementById('forecast-error');
+        error.hidden = false;
+        error.textContent = `${houseData ? 'Senate' : 'House'} archive data is unavailable. The other chamber remains available.`;
+    }
+    if (houseData) {
+        updateModelCard();
+        renderOptional('national-trend-chart', createNationalTrendChart);
+    } else {
+        componentMessage('polling-model', 'The archived House polling explanation is unavailable.');
+    }
     setupEventListeners();
+    selectChamber(houseData ? 'house' : 'senate');
+    currentTimelineChamber = houseTimeline?.length ? 'house' : 'senate';
+    document.querySelectorAll('.timeline-btn').forEach(button => {
+        button.classList.toggle('active', button.dataset.timeline === currentTimelineChamber);
+    });
+    renderOptional('timeline-chart', createTimelineChart);
+}
+
+function selectChamber(chamber) {
+    const data = chamber === 'house' ? houseData : senateData;
+    if (!data) return;
+    currentChamber = chamber;
+    document.querySelectorAll('.chamber-btn').forEach(button => {
+        button.classList.toggle('active', button.dataset.chamber === chamber);
+        button.setAttribute('aria-pressed', String(button.dataset.chamber === chamber));
+    });
+    document.querySelectorAll('.chamber-section').forEach(section => {
+        section.classList.toggle('active', section.dataset.chamber === chamber);
+    });
+    renderNationalEnvironment(data, chamber);
+    renderOptional('map-container', renderMap);
+    updateMapLegend();
+    renderOptional('seat-chart', createSeatChart);
+    populateStateFilter();
+    document.getElementById('category-filter').value = '';
+    document.getElementById('search-filter').value = '';
+    closeModal();
+    renderTable();
 }
 
 // Update House statistics
@@ -224,7 +259,11 @@ function formatEconomicChange(value, unit) {
 }
 
 function renderNationalEnvironment(data, chamber) {
-    if (!data?.national_environment) return;
+    if (!data?.national_environment) {
+        componentMessage('national-environment', 'Archived national environment data is unavailable for this chamber.');
+        return;
+    }
+    componentMessage('national-environment');
     const env = data.national_environment;
     const prior = env.fundamentals_prior || {};
     const published = env.published_sentiment || {};
@@ -248,7 +287,7 @@ function renderNationalEnvironment(data, chamber) {
     document.getElementById('ne-election-detail').textContent = `${election.date || '—'} · ${formatInterval(election.ci_90)} · σ ${Number(election.std || 0).toFixed(2)}`;
     document.getElementById('ne-economy').textContent = `${Number(economy.standardized_index || 0) >= 0 ? '+' : ''}${Number(economy.standardized_index || 0).toFixed(2)} SD`;
     document.getElementById('ne-economy-detail').textContent = `${economy.interpretation || '—'} · calculated ${economy.calculation_date || '—'}`;
-    document.getElementById('ne-days').textContent = data.metadata?.days_until_election ?? '—';
+    document.getElementById('ne-archive-date').textContent = chartDate(dateValue(data.metadata.election_date)) + ', 2026';
 
     document.getElementById('economic-components').innerHTML = Object.values(economy.components || {}).map(component => `
         <tr>
@@ -262,7 +301,6 @@ function renderNationalEnvironment(data, chamber) {
 
 function updateModelCard() {
     const model = houseData.national_model || {};
-    const metadata = houseData.metadata || {};
     document.getElementById('prior-margin').textContent = formatMargin(model.prior?.mean);
     document.getElementById('current-margin').textContent = formatMargin(model.current_sentiment?.mean);
     document.getElementById('election-margin').textContent = formatMargin(model.election_day?.mean);
@@ -277,33 +315,39 @@ function updateModelCard() {
     document.getElementById('method-election-margin').textContent = formatMargin(model.election_day?.mean);
     document.getElementById('method-probability-example').textContent = `${Math.round(houseData.summary.prob_dem_majority * 100)}% Democratic-majority probability`;
 
-    const change = houseData.change_decomposition;
-    if (!change) {
-        document.getElementById('change-decomposition').innerHTML = '<strong>New methodology baseline</strong><span>No prior comparable forecast.</span>';
-    } else {
-        const national = change.national_update || {};
-        document.getElementById('change-decomposition').innerHTML = `<strong>Latest change decomposition</strong><span>Control probability ${Number(change.probability_change || 0) >= 0 ? '+' : ''}${(Number(change.probability_change || 0) * 100).toFixed(1)} pp</span><span>Poll update ${formatMargin(national.polling_contribution || 0)}</span><span>Election-day SD ${Number(national.future_uncertainty_std || 0).toFixed(1)} points</span>`;
-    }
 }
 
 function createNationalTrendChart() {
     const canvas = document.getElementById('national-trend-chart');
-    const trend = houseData.national_model?.trend || [];
-    if (!canvas || !trend.length) return;
+    const history = (houseData.polling?.generic_ballot || [])
+        .map(row => ({x: dateValue(row.date), y: row.margin}))
+        .filter(point => Number.isFinite(point.x) && Number.isFinite(point.y))
+        .sort((a, b) => a.x - b.x);
+    const likelihood = houseData.polling?.national_likelihood;
+    if (!history.length) {
+        componentMessage('national-trend-chart', 'Archived polling history is unavailable.');
+        return;
+    }
+    if (!chartAvailable('national-trend-chart')) return;
     if (nationalTrendChart) nationalTrendChart.destroy();
-    const raw = houseData.polling?.generic_ballot || [];
+    const finalInput = likelihood ? [{x: dateValue(likelihood.date), y: likelihood.margin}] : [];
     nationalTrendChart = new Chart(canvas, {
         type: 'line',
-        data: { datasets: [
-            { label: '90% credible band', data: trend.map(d => ({x: d.date, y: d.ci_90_high})), borderWidth: 0, pointRadius: 0, backgroundColor: 'rgba(59,130,246,.10)', fill: '+1' },
-            { label: '', data: trend.map(d => ({x: d.date, y: d.ci_90_low})), borderWidth: 0, pointRadius: 0, fill: false },
-            { label: '50% credible band', data: trend.map(d => ({x: d.date, y: d.ci_50_high})), borderWidth: 0, pointRadius: 0, backgroundColor: 'rgba(59,130,246,.22)', fill: '+1' },
-            { label: '', data: trend.map(d => ({x: d.date, y: d.ci_50_low})), borderWidth: 0, pointRadius: 0, fill: false },
-            { label: 'Latent sentiment', data: trend.map(d => ({x: d.date, y: d.mean})), borderColor: '#60a5fa', borderWidth: 2, pointRadius: 0 },
-            { type: 'scatter', label: 'Silver published LV average', data: raw.map(d => ({x: d.date, y: d.margin})), backgroundColor: 'rgba(255,255,255,.42)', pointRadius: 2 },
-            { type: 'scatter', label: 'Today’s House likelihood', data: houseData.polling?.national_likelihood ? [{x: houseData.polling.national_likelihood.date, y: houseData.polling.national_likelihood.margin}] : [], backgroundColor: '#fbbf24', borderColor: '#fbbf24', pointRadius: 6, pointStyle: 'rectRot' },
+        data: {datasets: [
+            {label: 'Silver published LV average', data: history, borderColor: '#60a5fa', backgroundColor: '#60a5fa', borderWidth: 2, pointRadius: 2, tension: 0, fill: false},
+            {type: 'scatter', label: 'Final House polling input', data: finalInput, backgroundColor: '#fbbf24', borderColor: '#fbbf24', pointRadius: 6, pointStyle: 'rectRot'},
         ]},
-        options: { responsive: true, maintainAspectRatio: false, parsing: false, scales: { x: { type: 'category', ticks: { color: '#888', maxTicksLimit: 8 }, grid: { display: false } }, y: { ticks: { color: '#888', callback: value => formatMargin(value) }, grid: { color: '#2a2a2a' } } }, plugins: { legend: { labels: { color: '#aaa', filter: item => item.text } } } }
+        options: {
+            responsive: true, maintainAspectRatio: false, parsing: false,
+            scales: {
+                x: dateAxis([...history, ...finalInput]),
+                y: {title: {display: true, text: 'Democratic minus Republican margin', color: '#aaa'}, ticks: {color: '#aaa', callback: value => formatMargin(value)}, grid: {color: '#2a2a2a'}},
+            },
+            plugins: {
+                legend: {labels: {color: '#aaa'}},
+                tooltip: {callbacks: {title: items => chartDate(items[0].parsed.x), label: context => `${context.dataset.label}: ${formatMargin(context.parsed.y)}`}},
+            },
+        },
     });
 }
 
@@ -599,167 +643,99 @@ function renderSenateMap() {
 function createSeatChart() {
     const data = currentChamber === 'house' ? houseData : senateData;
     if (!data) return;
-
-    const { seat_distribution, summary } = data;
-    const ctx = document.getElementById('seat-chart').getContext('2d');
-
-    // Destroy existing chart
-    if (seatChart) seatChart.destroy();
-
-    const threshold = currentChamber === 'house' ? 218 : 50;
-    const backgroundColors = seat_distribution.dem_seats.map(seats =>
-        seats >= threshold ? 'rgba(0, 21, 188, 0.8)' : 'rgba(188, 0, 0, 0.8)'
-    );
-
-    seatChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: seat_distribution.dem_seats,
-            datasets: [{
-                data: seat_distribution.probabilities.map(p => p * 100),
-                backgroundColor: backgroundColors,
-                borderWidth: 0,
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (ctx) => `${ctx.parsed.y.toFixed(2)}% probability`
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    title: { display: true, text: 'Democratic Seats', color: '#888' },
-                    ticks: { color: '#888', maxTicksLimit: 20 },
-                    grid: { display: false }
-                },
-                y: {
-                    title: { display: true, text: 'Probability (%)', color: '#888' },
-                    ticks: { color: '#888' },
-                    grid: { color: 'rgba(255,255,255,0.1)' }
-                }
-            }
-        }
-    });
-
-    // Update stats
+    const {seat_distribution, summary} = data;
     const key = currentChamber === 'house' ? 'prob_dem_majority' : 'prob_dem_control';
     const probLabel = currentChamber === 'house' ? 'Majority' : 'Control';
     document.getElementById('chart-stats').innerHTML = `
         <div><span>Dem ${probLabel}:</span> <strong>${Math.round(summary[key] * 100)}%</strong></div>
         <div><span>Median:</span> <strong>${summary.median_dem_seats} seats</strong></div>
-        <div><span>90% CI:</span> <strong>${summary.ci_90_low}-${summary.ci_90_high}</strong></div>
-    `;
-}
-
-// Create timeline chart
-function createTimelineChart() {
-    const data = currentTimelineChamber === 'house' ? houseTimeline : senateTimeline;
-    if (!data || data.length === 0) {
-        document.getElementById('timeline-stats').innerHTML = '<p style="color: var(--color-text-muted);">No timeline data available yet.</p>';
+        <div><span>90% CI:</span> <strong>${summary.ci_90_low}-${summary.ci_90_high}</strong></div>`;
+    if (!chartAvailable('seat-chart')) return;
+    if (!seat_distribution?.dem_seats?.length) {
+        componentMessage('seat-chart', 'Archived seat distribution is unavailable.');
         return;
     }
-
-    const ctx = document.getElementById('timeline-chart').getContext('2d');
-
-    // Destroy existing chart
-    if (timelineChart) timelineChart.destroy();
-
-    const probKey = currentTimelineChamber === 'house' ? 'prob_dem_majority' : 'prob_dem_control';
-
-    // Format dates for display (parse as local time to avoid timezone issues)
-    const labels = data.map(d => {
-        const dateStr = String(d.date);
-        const [year, month, day] = dateStr.split('-').map(Number);
-        const date = new Date(year, month - 1, day);
-        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    });
-
-    const probabilities = data.map(d => d[probKey] * 100);
-
-    // Calculate gradient based on 50% threshold
-    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(0, 21, 188, 0.3)');
-    gradient.addColorStop(0.5, 'rgba(136, 136, 136, 0.1)');
-    gradient.addColorStop(1, 'rgba(188, 0, 0, 0.3)');
-
-    timelineChart = new Chart(ctx, {
-        type: 'line',
+    if (seatChart) seatChart.destroy();
+    const threshold = currentChamber === 'house' ? 218 : 51;
+    seatChart = new Chart(document.getElementById('seat-chart').getContext('2d'), {
+        type: 'bar',
         data: {
-            labels: labels,
+            labels: seat_distribution.dem_seats,
             datasets: [{
-                label: 'Dem Win Probability',
-                data: probabilities,
-                borderColor: '#3b82f6',
-                backgroundColor: gradient,
-                borderWidth: 3,
-                fill: true,
-                tension: 0.3,
-                pointRadius: 4,
-                pointBackgroundColor: '#3b82f6',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2,
-                pointHoverRadius: 6,
-            }]
+                data: seat_distribution.probabilities.map(p => p * 100),
+                backgroundColor: seat_distribution.dem_seats.map(seats => seats >= threshold ? 'rgba(0, 21, 188, 0.8)' : 'rgba(188, 0, 0, 0.8)'),
+                borderWidth: 0,
+            }],
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (ctx) => `${ctx.parsed.y.toFixed(1)}% probability`,
-                        afterLabel: (ctx) => {
-                            const idx = ctx.dataIndex;
-                            const row = data[idx];
-                            return `Median: ${row.median_dem_seats} seats`;
-                        }
-                    }
-                }
-            },
+            responsive: true, maintainAspectRatio: false,
+            plugins: {legend: {display: false}, tooltip: {callbacks: {label: context => `${context.parsed.y.toFixed(2)}% probability`}}},
             scales: {
-                x: {
-                    title: { display: true, text: 'Date', color: '#888' },
-                    ticks: { color: '#888' },
-                    grid: { display: false }
-                },
-                y: {
-                    title: { display: true, text: 'Dem Win Probability (%)', color: '#888' },
-                    ticks: { color: '#888' },
-                    grid: { color: 'rgba(255,255,255,0.1)' },
-                    min: 0,
-                    max: 100,
-                    // Add a line at 50%
-                }
+                x: {title: {display: true, text: 'Democratic seats', color: '#aaa'}, ticks: {color: '#aaa', maxTicksLimit: 20}, grid: {display: false}},
+                y: {title: {display: true, text: 'Probability (%)', color: '#aaa'}, ticks: {color: '#aaa'}, grid: {color: '#2a2a2a'}},
             },
-            annotation: {
-                annotations: {
-                    line1: {
-                        type: 'line',
-                        yMin: 50,
-                        yMax: 50,
-                        borderColor: 'rgba(255, 255, 255, 0.3)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                    }
-                }
-            }
-        }
+        },
     });
-
-    // Update timeline stats
-    updateTimelineStats();
 }
 
-// Update timeline statistics
-function updateTimelineStats() {
-    document.getElementById('timeline-stats').innerHTML = '';
+function timelineRows() {
+    const key = currentTimelineChamber === 'house' ? 'prob_dem_majority' : 'prob_dem_control';
+    return [...(currentTimelineChamber === 'house' ? houseTimeline || [] : senateTimeline || [])]
+        .filter(row => Number.isFinite(dateValue(row.date)) && Number.isFinite(row[key]))
+        .sort((a, b) => dateValue(a.date) - dateValue(b.date));
+}
+
+function createTimelineChart() {
+    const data = timelineRows();
+    updateTimelineStats(data);
+    if (timelineChart) {
+        timelineChart.destroy();
+        timelineChart = null;
+    }
+    if (!data.length) {
+        componentMessage('timeline-chart', 'Archived timeline data is unavailable for this chamber.');
+        return;
+    }
+    if (!chartAvailable('timeline-chart')) return;
+    const key = currentTimelineChamber === 'house' ? 'prob_dem_majority' : 'prob_dem_control';
+    const points = data.map(row => ({x: dateValue(row.date), y: row[key] * 100}));
+    timelineChart = new Chart(document.getElementById('timeline-chart').getContext('2d'), {
+        type: 'line',
+        data: {datasets: [{
+            label: 'Democratic control probability', data: points,
+            borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,.15)',
+            borderWidth: 2, fill: true, tension: 0, pointRadius: 2, pointHoverRadius: 6,
+        }]},
+        options: {
+            responsive: true, maintainAspectRatio: false, parsing: false,
+            plugins: {
+                legend: {display: false},
+                tooltip: {callbacks: {
+                    title: items => chartDate(items[0].parsed.x),
+                    label: context => `${context.parsed.y.toFixed(2)}% probability`,
+                    afterLabel: context => `Median: ${data[context.dataIndex].median_dem_seats} seats`,
+                }},
+            },
+            scales: {
+                x: dateAxis(points),
+                y: {title: {display: true, text: 'Democratic control probability (%)', color: '#aaa'}, ticks: {color: '#aaa'}, grid: {color: '#2a2a2a'}, min: 0, max: 100},
+            },
+        },
+    });
+}
+
+function updateTimelineStats(data) {
+    const target = document.getElementById('timeline-stats');
+    if (data.length < 2) {
+        target.textContent = 'Two saved forecasts are needed to compare changes.';
+        return;
+    }
+    const key = currentTimelineChamber === 'house' ? 'prob_dem_majority' : 'prob_dem_control';
+    const previous = data[data.length - 2];
+    const latest = data[data.length - 1];
+    const change = (latest[key] - previous[key]) * 100;
+    const chamber = currentTimelineChamber === 'house' ? 'House' : 'Senate';
+    target.textContent = `${chamber} Democratic control probability: ${(previous[key] * 100).toFixed(2)}% on ${chartDate(dateValue(previous.date))}, 2026 → ${(latest[key] * 100).toFixed(2)}% on ${chartDate(dateValue(latest.date))}, 2026 (${change >= 0 ? '+' : ''}${change.toFixed(2)} percentage points).`;
 }
 
 // Populate state filter
@@ -852,24 +828,7 @@ function setupEventListeners() {
     // Chamber toggle
     document.querySelectorAll('.chamber-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.chamber-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            currentChamber = btn.dataset.chamber;
-
-            document.querySelectorAll('.chamber-section').forEach(s => s.classList.remove('active'));
-            document.querySelector(`.chamber-section[data-chamber="${currentChamber}"]`)?.classList.add('active');
-            renderNationalEnvironment(currentChamber === 'house' ? houseData : senateData, currentChamber);
-
-            // Update map to show districts or states
-            if (map) updateMapLayer();
-
-            // Update map legend
-            updateMapLegend();
-
-            createSeatChart();
-            populateStateFilter();
-            renderTable();
+            selectChamber(btn.dataset.chamber);
         });
     });
 
@@ -879,7 +838,7 @@ function setupEventListeners() {
             document.querySelectorAll('.timeline-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentTimelineChamber = btn.dataset.timeline;
-            createTimelineChart();
+            renderOptional('timeline-chart', createTimelineChart);
         });
     });
 
@@ -1021,7 +980,7 @@ function updateMapLegend() {
 function formatDate(date) {
     return date.toLocaleDateString('en-US', {
         month: 'long', day: 'numeric', year: 'numeric',
-        hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
+        hour: 'numeric', minute: '2-digit', timeZoneName: 'short', timeZone: 'America/Los_Angeles'
     });
 }
 

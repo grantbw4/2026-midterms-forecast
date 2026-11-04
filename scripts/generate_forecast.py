@@ -21,6 +21,7 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from models.forecast_archive import guard_forecast_output  # noqa: E402
 from models.dynamic_polling import (  # noqa: E402
     DynamicNationalModel,
     build_fundamentals_prior,
@@ -335,6 +336,7 @@ def main() -> int:
         help="Development/bootstrap only: generate from a manifest containing blocked inputs",
     )
     args = parser.parse_args()
+    guard_forecast_output(args.output_dir, args.skip_website_copy)
 
     manifest = _load_manifest(args.allow_blocked_inputs)
     registry, silver, generic_likelihood, generic_calibration = _load_cached_inputs()

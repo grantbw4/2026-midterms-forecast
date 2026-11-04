@@ -18,8 +18,15 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: pip install -r requirements.txt
+      - name: Verify frozen archive integrity
+        run: python -m models.forecast_archive
       - run: python -m pytest -q
         env:
           XDG_CACHE_HOME: /tmp/cache
       - name: Deterministic cached forecast smoke test
         run: python scripts/generate_forecast.py --skip-timeline --skip-website-copy --allow-blocked-inputs --simulations 2000 --output-dir /tmp/forecast-smoke
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify dashboard behavior
+        run: node --test tests/frontend.test.cjs
